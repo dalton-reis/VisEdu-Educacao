@@ -1,0 +1,82 @@
+Questionário sobre a experiência de uso do aplicativo didático VisEdu-CG
+
+VisEdu-CG - Versão 2.0
+Aplicação Didática para Visualizar Material Educacional 
+Módulo Computação Gráfica
+Aplicação que faz parte do Trabalho de Conclusão de Curso submetido à Universidade Regional de Blumenau (FURB) para a obtenção dos créditos na disciplina Trabalho de Conclusão de Curso II do curso de Ciência da Computação - Bacharelado
+Acadêmico: James Perkison Montibeler
+Orientador: Dalton Solano dos Reis
+
+Qual o seu nível de conhecimento sobre conceitos de "Computação Gráfica"?
+[  ] Nenhum
+[  ] Ruim
+[  ] Bom
+[  ] Ótimo
+
+O que você achou do "layout" do aplicativo?
+[  ] Inadequado
+[  ] Ultrapassado
+[  ] Normal
+[  ] Moderno
+
+O que você achou da "usabilidade" do aplicativo?
+[  ] Difícil, nada intuitivo
+[  ] Mediano, mas pouco intuitivo
+[  ] Mediano, mas intuitivo
+[  ] Fácil e intuitivo
+
+O que você achou do tamanho e disponibilidade das "janelas"?
+[  ] Péssimo
+[  ] Ruim
+[  ] Bom
+[  ] Ótimo
+
+O código fonte visualizado no painel "Comandos JOGL" é legível e fácil de compreender?
+[  ] Ilegível e difícil de compreender
+[  ] Legível, mas poderia ser mais sucinto
+[  ] Legível, mas poderia ser melhor organizado
+[  ] Legível e compreensível
+
+O aplicativo ajudou a entender o conceito de "Câmera Sintética" e suas propriedades (posição, look at, near, far e fov)?
+[  ] Não ajudou
+[  ] Ajudou pouco
+[  ] Ajudou
+[  ] Ajudou muito
+
+O aplicativo ajudou a entender o conceito de "Grafo de Cena" (uso do glPushMatrix/glPopMatrix)?
+[  ] Não ajudou
+[  ] Ajudou pouco
+[  ] Ajudou
+[  ] Ajudou muito
+
+O aplicativo ajudou a entender o conceito de "Transformações Geométricas" (translação, escala e rotação)?
+[  ] Não ajudou
+[  ] Ajudou pouco
+[  ] Ajudou
+[  ] Ajudou muito
+
+O aplicativo ajudou a entender o conceito de "Composição de Transformações Geométricas" (rotação em torno de um ponto fixo)?
+[  ] Não ajudou
+[  ] Ajudou pouco
+[  ] Ajudou
+[  ] Ajudou muito
+
+O aplicativo ajudou a entender a aplicação de "texturas" nos objetos gráficos?
+[  ] Não ajudou
+[  ] Ajudou pouco
+[  ] Ajudou
+[  ] Ajudou muito
+
+Com base nas respostas anteriores, quais seriam os principais "Pontos Positivos" no uso do aplicativo?
+
+
+
+Com base nas respostas anteriores, quais seriam os principais "Pontos Negativos" no uso do aplicativo?
+
+
+
+Com base nas respostas anteriores, quais seriam as suas "Sugestões" de melhoria para o aplicativo?
+
+
+
+

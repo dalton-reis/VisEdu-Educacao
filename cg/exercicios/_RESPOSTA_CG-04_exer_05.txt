@@ -1,0 +1,111 @@
+{
+	"metadata": {
+		"formatVersion": 1,
+		"type": "VisEduCG",
+		"generatedBy": "ExportadorJSON",
+		"objects": 11,
+		"textures": 3
+	},
+	"urlBaseType": "relativeToVisEduCG",
+	"viewPos": [-2.4170051860884274,14.337465679120024,930.768693310971],
+	"viewRot": [-0.015402679360532322,-0.002596469952308229,0.024596999686739077],
+	"itens": {
+		"Item_7": {
+			"nome": "Renderizador",
+			"visible": true,
+			"corLimpar": 0,
+			"tipo": 6,
+			"filhos": {
+				"Item_8": {
+					"nome": "Camera 1",
+					"visible": true,
+					"valorXYZ": [0,300,300],
+					"lookAt": [0,0,0],
+					"near": 50,
+					"far": 500,
+					"fov": 45,
+					"tipo": 0
+				},
+				"Item_9": {
+					"nome": "Objeto Grafico 1",
+					"visible": true,
+					"tipo": 5,
+					"filhos": {
+						"Item_15": {
+							"nome": "Escalar 1",
+							"visible": true,
+							"valorXYZ": [1,2,1],
+							"tipo": 3
+						},
+						"Item_12": {
+							"nome": "Cubo 1",
+							"visible": true,
+							"valorXYZ": [100,100,100],
+							"posicao": [0,0,0],
+							"propriedadeCor": 16777215,
+							"textura": "",
+							"usarTextura": true,
+							"tipo": 4
+						},
+						"Item_10": {
+							"nome": "Objeto Grafico 2",
+							"visible": true,
+							"tipo": 5,
+							"filhos": {
+								"Item_16": {
+									"nome": "Transladar 1",
+									"visible": true,
+									"valorXYZ": [100,50,0],
+									"tipo": 1
+								},
+								"Item_13": {
+									"nome": "Cubo 2",
+									"visible": true,
+									"valorXYZ": [100,100,100],
+									"posicao": [0,0,0],
+									"propriedadeCor": 16777215,
+									"textura": "",
+									"usarTextura": true,
+									"tipo": 4
+								}
+							}
+						},
+						"Item_11": {
+							"nome": "Objeto Grafico 3",
+							"visible": true,
+							"tipo": 5,
+							"filhos": {
+								"Item_17": {
+									"nome": "Transladar 2",
+									"visible": true,
+									"valorXYZ": [-100,50,0],
+									"tipo": 1
+								},
+								"Item_14": {
+									"nome": "Cubo 3",
+									"visible": true,
+									"valorXYZ": [100,100,100],
+									"posicao": [0,0,0],
+									"propriedadeCor": 16777215,
+									"textura": "",
+									"usarTextura": true,
+									"tipo": 4
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"textures": {
+		"": {
+			"url": "img/texturas/caixaMadeira.jpg",
+			"repeat": [1,1],
+			"offset": [0,0],
+			"magFilter": "LinearFilter",
+			"minFilter": "LinearMipMapLinearFilter",
+			"anisotropy": 1
+		}
+	}
+}

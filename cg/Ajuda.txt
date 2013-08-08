@@ -1,0 +1,75 @@
+O trabalho se resume aos artefatos:
+index.html
+js\*.js - nosso scripts de Classes - salvo o arquivo "Detector.js" que é do Three.js
+O resto são da biblioteca do Three.js
+
+MANUAL VISEDU-CG GL:
+
+1) PAINEL DE EDIÇÂO:
+
+1.1) Iclusão de itens:
+1.1.1) Para incluir um novo item deve-se selecionar o painel Fábrica, pressionando com o mouse, e depois arrastando o mesmo até o encaixe desejado;
+1.1.2) Itens poderão ser arrastados para o painel de edição e ficarão fluando no painel, na posição onde foram soltos, até que sejam encaixados em algum encaixe.
+
+1.2) Exlusão de item:
+1.2.1) Para excluir um item deve-se arrastar o item até que o mesmo fique sobre o painel fábrica;
+1.2.2) Quando um item estiver sendo arrastado sobre o painel fábrica, a cor da lixeira será destacada;
+1.2.3) Quando um item for excluído, todos os seus filhos também serão excluídos.
+
+1.3) Transferir itens:
+1.3.1) Para transferir um item para outro item, deve-se arrastar o item até o encaixe do item desejado; 
+1.2.2) Quando um item for transferido, todos os seus filhos também serão transferidos.
+
+1.4) Quando ao encanxe de itens:
+1.4.1) Itens poderão ser encaixados apenas em encaixes do mesmo tipo que o item;
+1.4.2) O sistema irá habilitar o encaixe (a cor do encaixe será destacada) quando o ponteiro do mouse estiver sobre ou em frente (largura de uma peça) ao encaixe desejado;
+1.4.3) Quando um item for encaixado, caso seja possível, será criado outro encaixe identico ao ocupado logo abaixo para peritir o encaixe de outro item.
+
+
+
+1.5) Relação de Items e suas propriedades:
+
+1.5.2) Item "Camera":
+1.5.2.1) Possui as propriedades editáveis "Nome", "Posicao" e "Look At";
+1.5.2.2) Este item é representado no visualizador gráfico por uma esfera de cor preta.
+
+1.5.1) Item "Objeto Gráfico":
+1.5.1.1) Possui a propriedade editável "Nome";
+1.5.1.2) Permite a inclusão de items filhos (formas geométricas, transformações e outros objetos gráficos).
+
+1.5.3) Item "Cubo":
+1.5.3.1) Possui as propriedades editáveis "Nome", "Tamanho", "Cor" e "Textura". Por padrão a propriedade "Cor" é branca e a "Tamanho" é 100x100x100;
+1.5.3.3) Este item é representado no visualizador gráfico por um cubo;
+1.5.3.4) As propriedades "Cor" e "Textura" do cubo no visualizador gráfico são dependentes da posição da luz.
+
+1.5.4) Item "Transladar":
+1.5.4.1) Possui as propriedades editáveis "Nome" e "Valores";
+1.5.4.2) Este item modifica a posição (no visualizador gráfico) da forma geométrica encaixada ao item "Objeto Gráfico" em que este item esta encaixado, assim como a posição das formas geométricas dos filhos do item "Objeto Gráfico" em que este item esta encaixado. 
+
+1.5.5) Item "Rotacionar":
+1.5.5.1) Possui as propriedades editáveis "Nome" e "Valores";
+1.5.5.2) Este item modifica a rotação em relação ao ponto [0,0,0] (no visualizador gráfico) da forma geométrica encaixada ao item "Objeto Gráfico" em que este item esta encaixado, assim como a rotação das formas geométricas dos filhos do item "Objeto Gráfico" em que este item esta encaixado. 
+
+1.5.6) Item "Redimensionar":
+1.5.6.1) Possui as propriedades editáveis "Nome" e "Valores". Por padrão a propriedade "Valores" é [1,1,1];
+1.5.6.2) Este item modifica a escala tridimensional (no visualizador gráfico) da forma geométrica encaixada ao item "Objeto Gráfico" em que este item esta encaixado, assim como a rotação das formas geométricas dos filhos do item "Objeto Gráfico" em que este item esta encaixado. 
+
+1.6) Painel de propriedades:
+1.6.1) Este painel exibe as propriedades do item selecionado; 
+1.6.2) Para visualizar as propriedades de um item, deve-se selecionar um item do editor clicando sobre o mesmo ou usando a lista de items;
+1.6.3) Se não existir um item selecionado, no painel será exibida uma mensagem solicitado que seja selecionado um item do editor.
+
+2) PAINEIS DE VISUALIZAÇÃO:
+
+2.1) Painel "Visualização Gráfica":
+2.1.1) Exibe em tempo real o resultado dos encaixes realizados no painel de edição;
+2.1.2) Possui um ponto de luz fixo no ponto [0,0,0];
+2.1.3) Possui uma grade percorrendo os eixos x e z para criar uma pré-visualização de piso do espaço tridimensional. Tamanho da grade: 500x500, com o centro alinhado no ponto [0,0,0];
+2.1.4) Possui uma reta vermelha percorrendo o eixo x, uma verde percorrendo o eixo y e uma azul percorrendo o eixo z, para permitir a visualição das 3 dimensações no espaço grafico. Comprimento das retas: 700, com inicio no ponto [0,0,0];
+2.1.5) Permite girar a visão do mundo ao mover o mouse sobre o painel com o botão esquerdo pressionado;
+2.1.6) Permite mover a visão do mundo ao mover o mouse sobre o painel com o botão direto pressionado;
+2.1.7) Permite aumentar ou diminuir o zoom da visão do mundo ao girar o scroll do mouse.
+
+2.2) Painel "Visão Câmera":
+2.2.1) Exibe em tempo real o resultado dos encaixes realizados no painel de edição, usando as propriedades do item "Camera"; 
+2.2.1) Se o item "Camera" não for iserido no painel de edição, a visão ficará com a cor preta.

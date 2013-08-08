@@ -1,0 +1,7 @@
+VisEdu-CG - comentários:
+
+1) classes do framework baixadas no link: "https://github.com/mrdoob/three.js/tree/master/src";
+
+2) Créditos: http://threejs.org/;
+
+3) as classes tiveram seu nome original alterados. Dos nomes foi removido o termo ".three" do final e adicionado "CG" no começo.
