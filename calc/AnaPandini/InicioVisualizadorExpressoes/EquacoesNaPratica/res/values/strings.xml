@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">EquacoesNaPratica</string>
+    <string name="action_deleteAllEquations">Limpar</string>
+    <string name="visualizar_message">Visualizar</string>
+    <string name="adicionar_equacao">+</string>
+    <string name="adiciona_equacao_titulo">Nova equação</string>
+    <string name="edita_equacao_titulo">Edição da equação</string>
+    <string name="ok_botao">OK</string>
+    <string name="cancela_botao">Cancelar</string>
+
+</resources>

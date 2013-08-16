@@ -1,0 +1,49 @@
+#Options
+GenerateScanner = true
+GenerateParser = true
+Language = Java
+ScannerName = NumExpLexico
+ParserName = NumExpSintatico
+SemanticName = NumExpSemantico
+Package = br.furb.expressoesnumericas.interpretador
+ScannerCaseSensitive = true
+ScannerTable = Full
+Input = Stream
+Parser = SLR
+#RegularDefinitions
+D: [0-9]|y|Y
+Fun: sen|cos|tan
+#Tokens
+"+"
+"-"
+"*"
+"/"
+"("
+")"
+"^"
+X: x
+EQUALS: =
+FUNCAO: {Fun}
+NUMERO: {D}+
+ : [\s\t\n\r]*
+#NonTerminals
+<Expressao>
+<T>
+<Formula>
+<funcao>
+<inicio>
+#Grammar
+<Expressao> ::= <Expressao> "+" <T> #4
+      | <Expressao> "-" <T> #5
+      | <T>;
+<T> ::= <T> "^" <Formula> #6
+|	<T> "*" <Formula> #7
+      | <T> "/" <Formula> #8
+      | <Formula>
+|<funcao>;
+
+<funcao> ::= FUNCAO #9 "(" <Expressao> ")" #3;
+
+<Formula> ::= "(" <Expressao> ")" | NUMERO #2;
+
+<inicio> ::= X  EQUALS #1 <Formula>;
