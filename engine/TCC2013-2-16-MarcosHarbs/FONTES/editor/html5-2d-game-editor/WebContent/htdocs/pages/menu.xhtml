@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="formMenu">	
+		<p:menubar style="width: 1000;">
+			<p:submenu label="File" icon="ui-icon-document">
+				<p:menuitem value="New Project"
+			                actionListener="#{gameProjectMBean.onCreateNewProject}"
+			                update=":formGameProject:gameProjectTree" />
+				<p:menuitem value="Open Project" 
+				            onclick="dialogVarImportProject.show();"/>
+				<p:menuitem value="Save Project"
+				            actionListener="#{gameProjectMBean.onExportProject}" 
+				            ajax="false">
+					 <p:fileDownload value="#{gameProjectMBean.file}" />
+				</p:menuitem>
+				<p:menuitem value="Export Project"
+				            actionListener="#{gameProjectMBean.onBuildProject}"
+				            ajax="false">
+					 <p:fileDownload value="#{gameProjectMBean.buildFile}" />
+				</p:menuitem>
+			</p:submenu>
+			<p:menuitem value="Components"   
+			            icon="ui-icon-gear" 
+			            actionListener="#{componentMBean.onConsultComponents}" 
+			            oncomplete="dialogVarComponents.show();"
+			            update=":formComponents:componentsTable" />
+			<p:menuitem value="Game Objects"   
+			            icon="ui-icon-gear" 
+			            actionListener="#{gameObjectMBean.onConsultGameObjects}" 
+			            oncomplete="dialogVarGameObjects.show();"
+			            update=":formGameObjects:gameObjectsTable" />
+			<p:menuitem value="Assets"   
+			            icon="ui-icon-gear" 
+			            actionListener="#{assetMBean.onConsultAssets}" 
+			            oncomplete="dialogVarAssets.show();"
+			            update=":formAssets" />
+			<p:submenu label="Help" icon="ui-icon-help">
+				<p:menuitem value="About" 
+				            onclick="dialogVarAbout.show();" />
+				<p:menuitem value="Documentation" 
+				            target="_blank"
+				            url="/htdocs/js/engine/doc/index.html"/>
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+	
+	<p:dialog id="dialogImportProject"
+	          widgetVar="dialogVarImportProject"
+	          header="Open Project"
+	          modal="true"
+	          resizable="false">
+	          
+		<h:form id="formImportProject" style="width: 500px;">
+		
+			<p:fileUpload fileUploadListener="#{gameProjectMBean.onImportProject}" 
+			              mode="advanced"  
+                          update=":formMessages:messages,:formImportProject,:formGameProject" 
+                          auto="true" 
+                          sizeLimit="999999999" 
+                          allowTypes="/(\.|\/)(json)$/"
+                          style="width: 500px; margin-bottom: 20px;"
+                          oncomplete="dialogVarImportProject.hide();"/>
+		
+		</h:form>
+	          
+	</p:dialog>
+			
+	<ui:include src="./components.xhtml"/>
+	<ui:include src="./game_objects.xhtml"/>
+	<ui:include src="./assets.xhtml"/>
+	<ui:include src="./help.xhtml"/>
+	
+</html>
