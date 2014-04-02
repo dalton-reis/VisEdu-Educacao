@@ -1,0 +1,153 @@
+<html>
+<head>
+<script src="./js/engine/lib/prototype-1.6.0.2.js"></script>
+<script src="./js/engine/src/physic/box2d/common/b2Settings.js"></script>
+<script src="./js/engine/src/physic/box2d/common/math/b2Vec2.js"></script>
+<script src="./js/engine/src/physic/box2d/common/math/b2Mat22.js"></script>
+<script src="./js/engine/src/physic/box2d/common/math/b2Math.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2AABB.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2Bound.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2BoundValues.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2Pair.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2PairCallback.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2BufferedPair.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2PairManager.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2BroadPhase.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2Collision.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/Features.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2ContactID.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2ContactPoint.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2Distance.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2Manifold.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2OBB.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/b2Proxy.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/ClipVertex.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/shapes/b2Shape.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/shapes/b2ShapeDef.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/shapes/b2BoxDef.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/shapes/b2CircleDef.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/shapes/b2CircleShape.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/shapes/b2MassData.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/shapes/b2PolyDef.js"></script>
+<script src="./js/engine/src/physic/box2d/collision/shapes/b2PolyShape.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/b2Body.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/b2BodyDef.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/b2CollisionFilter.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/b2Island.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/b2TimeStep.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/contacts/b2ContactNode.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/contacts/b2Contact.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/contacts/b2ContactConstraint.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/contacts/b2ContactConstraintPoint.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/contacts/b2ContactRegister.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/contacts/b2ContactSolver.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/contacts/b2CircleContact.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/contacts/b2Conservative.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/contacts/b2NullContact.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/contacts/b2PolyAndCircleContact.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/contacts/b2PolyContact.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/b2ContactManager.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/b2World.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/b2WorldListener.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2JointNode.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2Joint.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2JointDef.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2DistanceJoint.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2DistanceJointDef.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2Jacobian.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2GearJoint.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2GearJointDef.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2MouseJoint.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2MouseJointDef.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2PrismaticJoint.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2PrismaticJointDef.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2PulleyJoint.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2PulleyJointDef.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2RevoluteJoint.js"></script>
+<script src="./js/engine/src/physic/box2d/dynamics/joints/b2RevoluteJointDef.js"></script>
+<script src="./js/engine/src/utils/ArrayUtils.js"></script>
+<script src="./js/engine/src/utils/ComponentUtils.js"></script>
+<script src="./js/engine/src/utils/JSUtils.js"></script>
+<script src="./js/engine/src/utils/StringUtils.js"></script>
+<script src="./js/engine/src/collide/CollideInfo.js"></script>
+<script src="./js/engine/src/component/Component.js"></script>
+<script src="./js/engine/src/component/RigidBodyComponent.js"></script>
+<script src="./js/engine/src/component/MoveCameraComponent.js"></script>
+<script src="./js/engine/src/component/ImageRenderComponent.js"></script>
+<script src="./js/engine/src/component/CircleRenderComponent.js"></script>
+<script src="./js/engine/src/component/RotateComponent.js"></script>
+<script src="./js/engine/src/component/FpsMeterComponent.js"></script>
+<script src="./js/engine/src/component/PolygonRenderComponent.js"></script>
+<script src="./js/engine/src/component/MoveTangramComponent.js"></script>
+<script src="./js/engine/src/component/BoxRenderComponent.js"></script>
+<script src="./js/engine/src/component/MoveSpaceShipComponent.js"></script>
+<script src="./js/engine/src/component/AnimationRenderComponent.js"></script>
+<script src="./js/engine/src/component/TranslateComponent.js"></script>
+<script src="./js/engine/src/component/ScaleComponent.js"></script>
+<script src="./js/engine/src/game/Asset.js"></script>
+<script src="./js/engine/src/game/AssetStore.js"></script>
+<script src="./js/engine/src/game/Camera.js"></script>
+<script src="./js/engine/src/game/Game.js"></script>
+<script src="./js/engine/src/game/Layer.js"></script>
+<script src="./js/engine/src/game/Scene.js"></script>
+<script src="./js/engine/src/gameobject/GameObject.js"></script>
+<script src="./js/engine/src/gameobject/PolygonObject.js"></script>
+<script src="./js/engine/src/gameobject/SpaceShipObject.js"></script>
+<script src="./js/engine/src/gameobject/CircleObject.js"></script>
+<script src="./js/engine/src/gameobject/BoxObject.js"></script>
+<script src="./js/engine/src/geometric/Point2D.js"></script>
+<script src="./js/engine/src/system/KeySystem.js"></script>
+<script src="./js/engine/src/system/LogicSystem.js"></script>
+<script src="./js/engine/src/system/MouseSystem.js"></script>
+<script src="./js/engine/src/system/RenderSystem.js"></script>
+<script type="text/javascript">
+function truncate(n) {
+  return n | 0; // bitwise operators convert operands to 32-bit integers
+}
+
+AssetStore.addAsset(new Asset().initialize("block", "./assets/block.png", "IMAGE"));
+
+var groundRB = new RigidBodyComponent().initialize(0,0,false,true,0.2);
+var groundImg = new ImageRenderComponent().initialize(AssetStore.getAsset("block").getAssetInstance(), true, "HORIZONTAL");
+var fpsMeter = new FpsMeterComponent().initialize();
+var mcc = new MoveCameraComponent().initialize(65, 68, 87, 83, 33, 34, 72, 75, 20, 0.1, 5);
+var mtc = new MoveTangramComponent().initialize();
+
+var ground = new BoxObject().initialize(500, 700, 1888, 235, "red", "black");
+var layer = new Layer().initialize();
+var scene = new Scene().initialize(-2000, -2000, 2000, 2000);
+
+var num = prompt("Número de Objetos", 0);
+
+var x = 0;
+var y =0;
+
+for(var i=0;i<num;i++){
+    x = (i*50) - (truncate(i/20) * 20 * 50);
+	y = (100 + 50*(truncate(i/20)));
+	var rb = new RigidBodyComponent().initialize(0,1,false,false,0.2);
+	var ob = new BoxObject().initialize(x, y, 50, 50, "purple", "black");
+	ComponentUtils.addComponent(ob,rb);
+	layer.addGameObject(ob);
+}
+
+ComponentUtils.addComponent(ground,groundRB);
+ComponentUtils.addComponent(ground,groundImg);
+ComponentUtils.addComponent(Game,fpsMeter);
+ComponentUtils.addComponent(Game,mcc);
+ComponentUtils.addComponent(Game,mtc);
+
+layer.addGameObject(ground);
+scene.addLayer(layer);
+ComponentUtils.removeComponent(ground, ComponentUtils.getComponent(ground, "BOX_RENDER_COMPONENT"));
+
+function createGame(){
+Game.init(document.getElementById("gameCanvas"), scene);
+Game.camera.centerPoint.x = 425; Game.camera.centerPoint.y = 365;
+}
+</script>
+</head>
+<body onload="createGame();">
+<canvas id="gameCanvas" width="1900" height="900" style="border: 1px solid black;" />
+</body>
+</html>
