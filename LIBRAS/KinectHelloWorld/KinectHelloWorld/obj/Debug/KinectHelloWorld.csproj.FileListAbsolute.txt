@@ -1,0 +1,14 @@
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\bin\Debug\KinectHelloWorld.exe.config
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\bin\Debug\KinectHelloWorld.exe
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\bin\Debug\KinectHelloWorld.pdb
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\bin\Debug\Microsoft.Kinect.Toolkit.dll
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\obj\Debug\KinectHelloWorld.csprojResolveAssemblyReference.cache
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\obj\Debug\MainWindow.baml
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\obj\Debug\MainWindow.g.cs
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\obj\Debug\App.g.cs
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\obj\Debug\KinectHelloWorld_MarkupCompile.cache
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\obj\Debug\KinectHelloWorld.g.resources
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\obj\Debug\KinectHelloWorld.Properties.Resources.resources
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\obj\Debug\KinectHelloWorld.csproj.GenerateResource.Cache
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\obj\Debug\KinectHelloWorld.exe
+C:\Users\JulioCesar\Projects\visedu-educacao\LIBRAS\KinectHelloWorld\KinectHelloWorld\obj\Debug\KinectHelloWorld.pdb
