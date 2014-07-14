@@ -1,0 +1,145 @@
+{
+	"metadata": {
+		"formatVersion": 1,
+		"type": "VisEduCG",
+		"generatedBy": "ExportadorJSON",
+		"objects": 12,
+		"textures": 3
+	},
+	"urlBaseType": "relativeToVisEduCG",
+	"viewPos": [0,194.63114338995206,583.8934301698544],
+	"viewRot": [-0.3217505484695941,0,0],
+	"itens": {
+		"Item_10": {
+			"nome": "Renderizador",
+			"visible": true,
+			"corLimpar": 0,
+			"corFundo": 15461355,
+			"verGrade": true,
+			"verEixos": true,
+			"tipoGrafico": 3,
+			"tipo": 9,
+			"filhos": {
+				"Item_11": {
+					"nome": "Câmera 1",
+					"visible": true,
+					"valorXYZ": [0,300,300],
+					"lookAt": [0,0,0],
+					"near": 100,
+					"far": 500,
+					"fov": 45,
+					"tipo": 0
+				},
+				"Item_12": {
+					"nome": "Objeto Gráfico 1",
+					"visible": true,
+					"tipo": 8,
+					"filhos": {
+						"Item_19": {
+							"nome": "Escalar 1",
+							"visible": true,
+							"valorXYZ": [1,2,1],
+							"tipo": 3
+						},
+						"Item_15": {
+							"nome": "Cubo 1",
+							"visible": true,
+							"valorXYZ": [100,100,100],
+							"posicao": [0,0,0],
+							"propriedadeCor": 16777215,
+							"textura": "Texture_Logo Grupo CG",
+							"usarTextura": true,
+							"tipo": 4
+						},
+						"Item_13": {
+							"nome": "Objeto Gráfico 2",
+							"visible": true,
+							"tipo": 8,
+							"filhos": {
+								"Item_20": {
+									"nome": "Transladar 1",
+									"visible": true,
+									"valorXYZ": [-100,50,0],
+									"tipo": 1
+								},
+								"Item_16": {
+									"nome": "Cubo 2",
+									"visible": true,
+									"valorXYZ": [100,100,100],
+									"posicao": [0,0,0],
+									"propriedadeCor": 16777215,
+									"textura": "Texture_Caixa de Madeira",
+									"usarTextura": true,
+									"tipo": 4
+								}
+							}
+						},
+						"Item_14": {
+							"nome": "Objeto Gráfico 3",
+							"visible": true,
+							"tipo": 8,
+							"filhos": {
+								"Item_21": {
+									"nome": "Transladar 2",
+									"visible": true,
+									"valorXYZ": [100,50,0],
+									"tipo": 1
+								},
+								"Item_17": {
+									"nome": "Cubo 3",
+									"visible": true,
+									"valorXYZ": [100,100,100],
+									"posicao": [0,0,0],
+									"propriedadeCor": 16777215,
+									"textura": "Texture_Olho",
+									"usarTextura": true,
+									"tipo": 4
+								}
+							}
+						}
+					}
+				},
+				"Item_18": {
+					"nome": "Iluminação 1",
+					"visible": true,
+					"posicao": [100,400,0],
+					"propriedadeCor": 16777215,
+					"tipoLuz": 0,
+					"intensidade": 1.5,
+					"corFundoLuz": 16755200,
+					"distancia": 0,
+					"angulo": 0.3141592653589793,
+					"expoente": 10,
+					"posicaoTarget": [0,0,0],
+					"tipo": 7
+				}
+			}
+		}
+	},
+	"textures": {
+		"Texture_Logo Grupo CG": {
+			"url": "img/texturas/logoGCG.png",
+			"repeat": [1,1],
+			"offset": [0,0],
+			"magFilter": "LinearFilter",
+			"minFilter": "LinearMipMapLinearFilter",
+			"anisotropy": 1
+		},
+		"Texture_Caixa de Madeira": {
+			"url": "img/texturas/caixaMadeira.jpg",
+			"repeat": [1,1],
+			"offset": [0,0],
+			"magFilter": "LinearFilter",
+			"minFilter": "LinearMipMapLinearFilter",
+			"anisotropy": 1
+		},
+		"Texture_Olho": {
+			"url": "img/texturas/olho.jpg",
+			"repeat": [1,1],
+			"offset": [0,0],
+			"magFilter": "LinearFilter",
+			"minFilter": "LinearMipMapLinearFilter",
+			"anisotropy": 1
+		}
+	}
+}

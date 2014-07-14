@@ -1,0 +1,73 @@
+{
+	"metadata": {
+		"formatVersion": 1,
+		"type": "VisEduCG",
+		"generatedBy": "ExportadorJSON",
+		"objects": 6,
+		"textures": 0
+	},
+	"urlBaseType": "relativeToVisEduCG",
+	"viewPos": [-529.9421761651873,507.0190507915377,1749.8837024352633],
+	"viewRot": [-0.2820216600650698,-0.28306924938822803,-0.04932047542824499],
+	"itens": {
+		"Item_10": {
+			"nome": "Renderizador",
+			"visible": true,
+			"corLimpar": 0,
+			"corFundo": 15461355,
+			"verGrade": true,
+			"verEixos": true,
+			"tipoGrafico": 3,
+			"tipo": 9,
+			"filhos": {
+				"Item_11": {
+					"nome": "Câmera 1",
+					"visible": true,
+					"valorXYZ": [300,300,300],
+					"lookAt": [0,0,0],
+					"near": 100,
+					"far": 700,
+					"fov": 45,
+					"tipo": 0
+				},
+				"Item_12": {
+					"nome": "Objeto Gráfico 1",
+					"visible": true,
+					"tipo": 8,
+					"filhos": {
+						"Item_15": {
+							"nome": "Rotacionar 1",
+							"visible": false,
+							"valorXYZ": [0,25,0],
+							"tipo": 2
+						},
+						"Item_13": {
+							"nome": "Cubo 1",
+							"visible": true,
+							"valorXYZ": [100,100,100],
+							"posicao": [0,0,0],
+							"propriedadeCor": 16777215,
+							"usarTextura": false,
+							"tipo": 4
+						}
+					}
+				},
+				"Item_14": {
+					"nome": "Iluminação 1",
+					"visible": true,
+					"posicao": [100,400,0],
+					"propriedadeCor": 16777215,
+					"tipoLuz": 2,
+					"intensidade": 1.5,
+					"corFundoLuz": 16755200,
+					"distancia": 0,
+					"angulo": 0.31,
+					"expoente": 10,
+					"posicaoTarget": [0,0,0],
+					"tipo": 7
+				}
+			}
+		}
+	},
+	"textures": {}
+}

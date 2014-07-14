@@ -1,0 +1,113 @@
+{
+	"metadata": {
+		"formatVersion": 1,
+		"type": "VisEduCG",
+		"generatedBy": "ExportadorJSON",
+		"objects": 9,
+		"textures": 1
+	},
+	"urlBaseType": "relativeToVisEduCG",
+	"viewPos": [1020.430129770341,402.5665878091487,837.1699748892333],
+	"viewRot": [-0.44822357098777976,0.8323015584211585,0.1746466156157654],
+	"itens": {
+		"Item_10": {
+			"nome": "Renderizador",
+			"visible": true,
+			"corLimpar": 0,
+			"corFundo": 15461355,
+			"verGrade": true,
+			"verEixos": true,
+			"tipoGrafico": 3,
+			"tipo": 9,
+			"filhos": {
+				"Item_11": {
+					"nome": "Câmera 1",
+					"visible": true,
+					"valorXYZ": [0,300,500],
+					"lookAt": [0,0,0],
+					"near": 100,
+					"far": 700,
+					"fov": 45,
+					"tipo": 0
+				},
+				"Item_13": {
+					"nome": "Objeto Gráfico 1",
+					"visible": true,
+					"tipo": 8,
+					"filhos": {
+						"Item_16": {
+							"nome": "Cubo 1",
+							"visible": true,
+							"valorXYZ": [100,100,100],
+							"posicao": [-100,50,0],
+							"propriedadeCor": 16777215,
+							"textura": "Texture_Olho",
+							"usarTextura": true,
+							"tipo": 4
+						}
+					}
+				},
+				"Item_14": {
+					"nome": "Objeto Gráfico 2",
+					"visible": true,
+					"tipo": 8,
+					"filhos": {
+						"Item_17": {
+							"nome": "Polígono 1",
+							"visible": true,
+							"propriedadeCor": 10027212,
+							"qtdPontos": 4,
+							"listaPontos": "[50,0,0]|[50,100,0]|[150,100,0]|[150,0,0]",
+							"pontos": [50,0,0],
+							"primitiva": "GL_POLYGON",
+							"pontoSelecionado": 1,
+							"tipo": 5
+						}
+					}
+				},
+				"Item_15": {
+					"nome": "Objeto Gráfico 3",
+					"visible": true,
+					"tipo": 8,
+					"filhos": {
+						"Item_18": {
+							"nome": "Spline 1",
+							"visible": true,
+							"propriedadeCor": 622609,
+							"qtdPontos": 20,
+							"listaPontos": "[-50,0,0]|[-50,100,0]|[50,100,0]|[50,0,0]",
+							"tipoSpline": 0,
+							"poliedro": true,
+							"corPoliedro": 10397872,
+							"tipo": 6
+						}
+					}
+				},
+				"Item_12": {
+					"nome": "Iluminação 1",
+					"visible": true,
+					"posicao": [100,400,0],
+					"propriedadeCor": 16777215,
+					"tipoLuz": 0,
+					"intensidade": 1.5,
+					"corFundoLuz": 16755200,
+					"distancia": 0,
+					"angulo": 0.3141592653589793,
+					"expoente": 10,
+					"posicaoTarget": [0,0,0],
+					"tipo": 7
+				}
+			}
+		}
+	},
+	"textures": {
+		"Texture_Olho": {
+			"url": "img/texturas/olho.jpg",
+			"repeat": [1,1],
+			"offset": [0,0],
+			"magFilter": "LinearFilter",
+			"minFilter": "LinearMipMapLinearFilter",
+			"anisotropy": 1
+		}
+	}
+}

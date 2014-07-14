@@ -1,0 +1,120 @@
+/* VisEdu-CG */
+
+body {
+
+	font-size:0.75em;
+	font-family: Arial,sans-serif;
+	font-weight:bold; 
+	font-size:12px;
+	background-color: #fff;
+	margin: 0px;
+	overflow: hidden;
+	
+}
+
+.TextDir {
+
+	text-align: right;
+	
+}
+						
+.titulo  { 	
+			
+	background-image:url("img/gradienttitulos.png");
+	padding: 3px;	
+	z-index: 10;
+	
+}			
+
+.painel {	
+
+	background: #EEEEEE;	
+	color: #555555;
+	padding: 15px;
+	overflow: auto;				
+	z-index: 5;
+	margin: 0 auto;
+	text-align: left;
+	
+}
+
+.painelEstreito {	
+	
+	padding: 4px;
+	overflow: auto;				
+	z-index: 5;
+	margin: 3 0;
+	text-align: left;
+	
+}
+
+.painelEscuro {	
+
+	background: #000000;
+	z-index: 20;
+	opacity: .30; 
+	
+}
+
+.painelAjuda{	
+
+	overflow: auto;
+	font-weight:normal;	
+	
+}
+
+.painelInvisivel{	
+
+	visibility: hidden;	
+	
+}
+
+.afterPainelEscuro {	
+
+	background: #EEEEEE;	
+	color: #555555;
+	padding: 15px;
+	overflow: auto;	
+	margin: 0 auto;
+	text-align: left;
+	z-index: 30; 
+	border-bottom-left-radius: 5px 5px;
+	border-bottom-right-radius: 5px 5px;
+	border-top-left-radius: 5px 5px;
+	border-top-right-radius: 5px 5px;
+	-moz-box-shadow: 0px 0px 10px rgba(0,0,0,1);
+	-khtml-box-shadow: 0px 0px 10px rgba(0,0,0,1);
+	-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,1);
+}
+
+.painelBotao {	
+
+	background: #000000;
+	color: #ffffff;
+	opacity: .50; 
+	text-align: center;
+	border-bottom-left-radius: 3px 3px;
+	border-bottom-right-radius: 3px 3px;
+	border-top-left-radius: 3px 3px;
+	border-top-right-radius: 3px 3px;		
+	
+}
+
+#painelCodigoFonte {
+	background: #DDDDDD;	
+	color: #555555;
+}
+
+#painelListaItens {
+	background: #FFFFFF;	
+	color: #000000;
+}
+
+#divCarregando {
+
+	margin: 100px auto 0px auto; /* centered */
+	width: 400px;
+	height: 400px;
+	z-index: 50;
+	
+}

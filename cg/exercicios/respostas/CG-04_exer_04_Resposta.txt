@@ -1,0 +1,91 @@
+{
+	"metadata": {
+		"formatVersion": 1,
+		"type": "VisEduCG",
+		"generatedBy": "ExportadorJSON",
+		"objects": 6,
+		"textures": 1
+	},
+	"urlBaseType": "relativeToVisEduCG",
+	"viewPos": [-34.00914164450322,827.8806103260994,1706.8851962930562],
+	"viewRot": [-0.4515953468803347,-0.017925350900648476,0.022190277590957312],
+	"itens": {
+		"Item_10": {
+			"nome": "Renderizador",
+			"visible": true,
+			"corLimpar": 0,
+			"corFundo": 15461355,
+			"verGrade": true,
+			"verEixos": true,
+			"tipoGrafico": 3,
+			"tipo": 9,
+			"filhos": {
+				"Item_12": {
+					"nome": "Câmera 1",
+					"visible": true,
+					"valorXYZ": [400,400,400],
+					"lookAt": [0,0,0],
+					"near": 100,
+					"far": 900,
+					"fov": 45,
+					"tipo": 0
+				},
+				"Item_11": {
+					"nome": "Objeto Gráfico 1",
+					"visible": true,
+					"tipo": 8,
+					"filhos": {
+						"Item_13": {
+							"nome": "Cubo 1",
+							"visible": true,
+							"valorXYZ": [100,100,100],
+							"posicao": [0,0,0],
+							"propriedadeCor": 16777215,
+							"textura": "Texture_Logo Grupo CG",
+							"usarTextura": true,
+							"tipo": 4
+						}
+					}
+				},
+				"Item_14": {
+					"nome": "Iluminação 1",
+					"visible": true,
+					"posicao": [0,400,0],
+					"propriedadeCor": 16777215,
+					"tipoLuz": 4,
+					"intensidade": 1.5,
+					"corFundoLuz": 16755200,
+					"distancia": 0,
+					"angulo": 0.1,
+					"expoente": 10,
+					"posicaoTarget": [0,0,0],
+					"tipo": 7
+				},
+				"Item_15": {
+					"nome": "Iluminação 2",
+					"visible": true,
+					"posicao": [100,400,0],
+					"propriedadeCor": 1553248,
+					"tipoLuz": 0,
+					"intensidade": 1.5,
+					"corFundoLuz": 16755200,
+					"distancia": 0,
+					"angulo": 0.3141592653589793,
+					"expoente": 10,
+					"posicaoTarget": [0,0,0],
+					"tipo": 7
+				}
+			}
+		}
+	},
+	"textures": {
+		"Texture_Logo Grupo CG": {
+			"url": "img/texturas/logoGCG.png",
+			"repeat": [1,1],
+			"offset": [0,0],
+			"magFilter": "LinearFilter",
+			"minFilter": "LinearMipMapLinearFilter",
+			"anisotropy": 1
+		}
+	}
+}
