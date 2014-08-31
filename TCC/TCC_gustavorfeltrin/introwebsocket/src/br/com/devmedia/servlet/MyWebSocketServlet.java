@@ -38,6 +38,7 @@ public class MyWebSocketServlet extends WebSocketServlet {
 			} catch (IOException ioe) {  
 				ioe.printStackTrace();
 				System.out.println("Aconteceu um erro"); } 
-		} 
+		}
+		
 	} 
 }
