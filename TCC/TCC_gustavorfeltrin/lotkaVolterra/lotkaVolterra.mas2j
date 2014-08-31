@@ -1,0 +1,12 @@
+MAS lotkaVolterra {
+
+	infrastructure: Centralised
+
+	environment: LotkaVolterraEnvironment(ui)
+
+	agents:
+		agent1 sample_agent;
+
+	aslSourcePath:
+		"src/asl";
+}
