@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 
 import br.com.furb.html5.game.editor.model.Asset;
+import br.com.furb.html5.game.editor.utils.UserUtils;
 
 /**
  * 
@@ -16,7 +17,8 @@ import br.com.furb.html5.game.editor.model.Asset;
  */
 public class AssetController {
 	
-	public static final String DATA_PATH = "/home/marcos/editor_data/assets/";
+	//public static final String DATA_PATH = "/home/marcos/editor_data/assets/";
+	public static final String DATA_PATH = String.format("%s%s", UserUtils.getUserHome(), "/editor_data/assets/");
 
 	public List<Asset> getAssets() throws Exception{
 		List<Asset> assets = new ArrayList<Asset>();

@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 
 import br.com.furb.html5.game.editor.model.GameObject;
+import br.com.furb.html5.game.editor.utils.UserUtils;
 
 /**
  * 
@@ -17,7 +18,8 @@ import br.com.furb.html5.game.editor.model.GameObject;
  */
 public class GameObjectController {
 	
-	public static final String DATA_PATH = "/home/marcos/editor_data/game_objects/";
+	public static final String DATA_PATH = String.format("%s%s", UserUtils.getUserHome(), "/editor_data/game_objects/");
+	
 
 	public List<GameObject> getGameObjects() throws Exception{
 		List<GameObject> gameObjects = new ArrayList<GameObject>();

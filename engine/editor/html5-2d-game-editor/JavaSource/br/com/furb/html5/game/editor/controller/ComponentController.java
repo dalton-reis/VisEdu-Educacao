@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 
 import br.com.furb.html5.game.editor.model.Component;
+import br.com.furb.html5.game.editor.utils.UserUtils;
 
 /**
  * 
@@ -17,7 +18,8 @@ import br.com.furb.html5.game.editor.model.Component;
  */
 public class ComponentController {
 	
-	public static final String DATA_PATH = "/home/marcos/editor_data/components/";
+	//public static final String DATA_PATH = "/home/marcos/editor_data/components/";
+	public static final String DATA_PATH = String.format("%s%s", UserUtils.getUserHome(), "/editor_data/components/");
 
 	public List<Component> getComponents() throws Exception{
 		List<Component> components = new ArrayList<Component>();
