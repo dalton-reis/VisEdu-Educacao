@@ -27,7 +27,6 @@ JSUtils.addMethod(GameObject.prototype, "initialize",
 		this.body = null;
 		this.layer = null;
 		this.listComponents = new Array();
-		this.webSocket = null;
 		return this;
 	}
 );
@@ -236,12 +235,3 @@ GameObject.prototype.createBodyShape = function(){return null;}
 * @return {String} tag
 */
 GameObject.prototype.getTag = function(){return null;}
-
-GameObject.prototype.onPercept = function(message){
-	if (webSocket != null) {
-		webSocket.send(message);
-	};
-}
-
-GameObject.prototype.onAct = function(message){}
-
