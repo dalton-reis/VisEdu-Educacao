@@ -39,6 +39,7 @@
 			} else { 
 				alert("Browser não suporta WebSocket"); 
 			} 
+			alert("ws://" + document.location.host + "/introwebsocket/websocket?username=" + username);
 			if (websocket != undefined) { 
 				websocket.onopen = function() { 
 					log("Conectou com sucesso"); 

@@ -18,7 +18,8 @@ public final class ConnectionWS extends MessageInbound {
 	} 
 	
 	@Override 
-	protected void onOpen(WsOutbound outbound) { 
+	protected void onOpen(WsOutbound outbound) {
+		System.out.println( "onOpen" );
 		// Adiciona essa nova conexão a lista de conexões 
 		MyWebSocketServlet.getConnections().add(this); 
 		String message = String.format("\"%s\" se conectou.", username); 
@@ -31,7 +32,8 @@ public final class ConnectionWS extends MessageInbound {
 	} 
 	
 	@Override 
-	protected void onTextMessage(CharBuffer msg) throws IOException { 
+	protected void onTextMessage(CharBuffer msg) throws IOException {
+		System.out.println("onTextMessage");
 		String message = String.format("\"%s\": %s", username, msg.toString()); 
 		MyWebSocketServlet.broadcast(message);
 	}

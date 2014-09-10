@@ -21,16 +21,19 @@ public class MyWebSocketServlet extends WebSocketServlet {
 	private static final List<ConnectionWS> connections = new ArrayList<ConnectionWS>();
 
 	@Override 
-	protected StreamInbound createWebSocketInbound(String subProtocol, HttpServletRequest request) { 
+	protected StreamInbound createWebSocketInbound(String subProtocol, HttpServletRequest request) {
+		System.out.println("createWebSocketInbound");
 		String username = request.getParameter("username"); 
 		return new ConnectionWS(username); 
 	} 
 
-	public static final List<ConnectionWS> getConnections(){ 
+	public static final List<ConnectionWS> getConnections(){
+		System.out.println("getConnections");
 		return connections; 
 	} 
 
-	public static final void broadcast(String message){ 
+	public static final void broadcast(String message){
+		System.out.println("broadcast");
 		for (ConnectionWS con : MyWebSocketServlet.getConnections()) { 
 			try { 
 				con.getWsOutbound().writeTextMessage( CharBuffer.wrap(message) ) ; 
