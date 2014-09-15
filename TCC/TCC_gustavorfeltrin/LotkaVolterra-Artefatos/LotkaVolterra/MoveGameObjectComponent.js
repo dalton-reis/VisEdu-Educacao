@@ -2,18 +2,29 @@ function MoveGameObjectComponent(){}
 
 MoveGameObjectComponent.prototype = new Component();
 
+JSUtils.addMethod(MoveGameObjectComponent.prototype, "initialize", 
+  function(left, up, right, down){
+    this.initialize();
+    this.left = left;
+    this.up = up;
+    this.right = right;
+    this.down = down;
+    return this;
+  }
+);
+
 MoveGameObjectComponent.prototype.onKeyDown = function(keyCode){
   
 }
 
 MoveGameObjectComponent.prototype.onKeyUp = function(keyCode){
-  if(keyCode == 37){
+  if(keyCode == this.left){    
      this.owner.addMove(-60, 0); 
-  }else if(keyCode == 38){
+  }else if(keyCode == this.up){
      this.owner.addMove(0, -60); 
-  }else if(keyCode == 39){
+  }else if(keyCode == this.right){
      this.owner.addMove(60, 0); 
-  }else if(keyCode == 40){
+  }else if(keyCode == this.down){
      this.owner.addMove(0, 60); 
   }
 }
@@ -25,5 +36,5 @@ MoveGameObjectComponent.prototype.getSystems = function(){
 }
 
 MoveGameObjectComponent.prototype.getTag = function(){
-  return "MOVE_PREDATOR_COMPONENT";
+  return "MOVE_GAME_OBJECT_COMPONENT";
 }

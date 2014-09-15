@@ -5,8 +5,16 @@ PerceptionVisionComponent.prototype = new Component();
 JSUtils.addMethod(PerceptionVisionComponent.prototype, "initialize", 
 	function(uri){
 		this.initialize();
-		this.webSocket = new WebSocket(uri);
-		this.webSocket.onmessage = function(data) { onAction(data) };
+		if ('WebSocket' in window || 'MozWebSocket' in window) {
+			this.webSocket = new WebSocket(uri);
+		} else {
+			alert("Browser não suporta WebSocket");
+			return this;
+		}
+		this.webSocket.onmessage = function(data) { onMessage(data) };
+		this.webSocket.onopen = function(evt) { onOpen(evt) };
+		this.webSocket.onclose = function(evt) { onClose(evt) };
+		this.webSocket.onerror = function(evt) { onError(evt) };
 		return this;
 	}
 );
@@ -17,10 +25,24 @@ PerceptionVisionComponent.prototype.onCollide = function(otherGameObject){
 }
 
 PerceptionVisionComponent.prototype.onPercept = function(message){
-	this.webSocket.send(message);
+	if (this.webSocket!=undefined) {
+		this.webSocket.send(message);
+	}
 }
 
-onAction = function(evt){ 
+onClose = function(evt) {
+	alert("onClose: " + evt.data);
+}
+
+onError = function(evt) {
+	alert("onError" + evt.data);	
+}
+
+onOpen = function(evt) {
+	
+}
+
+onMessage = function(evt){ 
 	var message = evt.data;
 	var arrMsg = message.split("#");
 	for(var i in layer.listGameObjects){
@@ -35,6 +57,9 @@ onAction = function(evt){
 			}
 		}
 	}
+	if (this.webSocket!=undefined) {
+		this.webSocket.close();
+	}	
 }
 
 PerceptionVisionComponent.prototype.getSystems = function(){

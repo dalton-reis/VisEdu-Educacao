@@ -43,7 +43,7 @@ public class ConnectionWS extends MessageInbound {
 		 * Quando houver o que perceber adicionar. 
 		 */
 		// AgentManager.get().addPerception(mWs.getUuid(), mWs.getMensagem());
-		sendMessage( String.format("%s#%s#%s", mWs.getMensagem(), "green", "green") );
+		sendMessage( String.format("%s#%s#%s", mWs.getMensagem(), "green", "black") );
 	}
 	
 	private void sendMessage(String message) {

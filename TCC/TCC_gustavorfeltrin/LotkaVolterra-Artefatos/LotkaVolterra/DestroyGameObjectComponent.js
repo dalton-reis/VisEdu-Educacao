@@ -3,7 +3,11 @@ function DestroyGameObjectComponent() {}
 DestroyGameObjectComponent.prototype = new Component();
 
 DestroyGameObjectComponent.prototype.onCollide = function(otherGameObject) {
-	otherGameObject.destroy();
+	var token = ComponentUtils.getComponent(otherGameObject, "TOKEN_COMPONENT");
+	if (token && token.getToken() == "PREY_TOKEN") {
+		otherGameObject.destroy();		
+	} 
+	
 }
 
 DestroyGameObjectComponent.prototype.getSystems = function(){
