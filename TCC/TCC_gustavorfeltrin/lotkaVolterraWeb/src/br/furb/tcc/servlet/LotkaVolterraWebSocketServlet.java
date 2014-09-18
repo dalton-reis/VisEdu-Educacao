@@ -14,9 +14,9 @@ public class LotkaVolterraWebSocketServlet extends WebSocketServlet {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Override
 	protected StreamInbound createWebSocketInbound(String subProtocol, HttpServletRequest request) {
-		return new ConnectionWS("");
+		String agentName = request.getParameter("agentName");
+		return new ConnectionWS( agentName );
 	}
 	
 }
