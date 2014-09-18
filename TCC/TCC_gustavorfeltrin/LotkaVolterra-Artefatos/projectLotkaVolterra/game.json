@@ -130,7 +130,7 @@
     "type": "COMPONENT",
     "displayNodeName": "PerceptionVisionComponent",
     "jsVarName": "circle1FrustumPvc",
-    "jsInitialFunction": "new PerceptionVisionComponent().initialize(\"ws://localhost:8081/lotkaVolterraWeb/websocket\");",
+    "jsInitialFunction": "new PerceptionVisionComponent().initialize(\"ws://localhost:8081/lotkaVolterraWeb/websocket?agentName\u003dprey\");",
     "jsCode": ""
   },
   {

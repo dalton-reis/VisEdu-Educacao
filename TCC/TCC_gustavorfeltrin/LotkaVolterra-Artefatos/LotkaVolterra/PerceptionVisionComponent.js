@@ -21,7 +21,7 @@ JSUtils.addMethod(PerceptionVisionComponent.prototype, "initialize",
 
 
 PerceptionVisionComponent.prototype.onCollide = function(otherGameObject){
-	this.onPercept(this.owner.id + "#" + otherGameObject.id);	
+	this.onPercept(this.owner.id + "#onPercept(\"" + otherGameObject.id + "\")");	
 }
 
 PerceptionVisionComponent.prototype.onPercept = function(message){
