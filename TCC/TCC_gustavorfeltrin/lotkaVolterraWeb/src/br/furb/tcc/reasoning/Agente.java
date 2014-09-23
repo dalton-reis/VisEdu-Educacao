@@ -74,20 +74,7 @@ public class Agente extends AgArch {
 	@Override
 	public void act(ActionExec action, List<ActionExec> feedback) {
 		showInfo("Agent " + getAgName() + " is doing: " + action.getActionTerm());
-		System.out.println( "------------------------------------" );
-		System.out.println( getAgName() );
-		System.out.println( action.getActionTerm().getFunctor() );
-		System.out.println( action.getActionTerm().getTerm(0) );
-		System.out.println( action.getActionTerm().getTerm(1) );
-		System.out.println( action.getActionTerm().getTerm(2) );
-		System.out.println( "------------------------------------" );
-		
-		String msg = String.format("%s#%s#%s", 
-									  action.getActionTerm().getTerm(0).toString().replaceAll("\"", ""),
-									  //action.getActionTerm().getFunctor(),
-									  action.getActionTerm().getTerm(1), 
-									  action.getActionTerm().getTerm(2));
-		ws.sendMessage( msg );
+		ws.sendMessage( action.getActionTerm().toString() );
 		action.setResult(true); // define que a execução foi executada
 		feedback.add(action);
 	}
