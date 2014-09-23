@@ -98,7 +98,7 @@
     "jsCode": ""
   },
   {
-    "id": "6779cd66-30ce-417b-9620-6cc57b9dff62",
+    "id": "07cb8baf-14d0-4126-83b5-52d3a00c4d8f",
     "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
     "type": "COMPONENT",
     "displayNodeName": "DestroyGameObjectComponent",
@@ -112,7 +112,7 @@
     "type": "GAME_OBJECT",
     "displayNodeName": "PolygonObject",
     "jsVarName": "circle1Frustum",
-    "jsInitialFunction": "new PolygonObject().initialize(300, 200,\r\n[\r\nnew Point2D().initialize(   0,   0),\r\nnew Point2D().initialize( 30, 150),\r\nnew Point2D().initialize(-30, 150)\r\n],\r\n\"yellow\",\"black\");",
+    "jsInitialFunction": "new PolygonObject().initialize(300, 200,\r\n[\r\nnew Point2D().initialize(   0,   0),\r\nnew Point2D().initialize( 30, 150),\r\nnew Point2D().initialize(-30, 150)\r\n],\r\n\"rgba(0, 0, 255, 0.5)\",\"blue\");",
     "jsCode": ""
   },
   {
@@ -121,7 +121,7 @@
     "type": "COMPONENT",
     "displayNodeName": "RigidBodyComponent",
     "jsVarName": "circle1FrustumRbc",
-    "jsInitialFunction": "new RigidBodyComponent().initialize(0, 0, false, false, 0.2);",
+    "jsInitialFunction": "new RigidBodyComponent().initialize(0, 1, false, false, 0.2);",
     "jsCode": ""
   },
   {
@@ -140,6 +140,15 @@
     "displayNodeName": "MoveGameObjectComponent",
     "jsVarName": "circle1FrustumMgoc",
     "jsInitialFunction": "new MoveGameObjectComponent().initialize(65, 87, 68, 83);",
+    "jsCode": ""
+  },
+  {
+    "id": "bc68bc80-f169-49d4-bc08-fccd2ded58c9",
+    "idParent": "251009be-22ee-4ecb-bf75-e78f380c501c",
+    "type": "COMPONENT",
+    "displayNodeName": "SensorComponent",
+    "jsVarName": "box1Sc",
+    "jsInitialFunction": "new SensorComponent().initialize();",
     "jsCode": ""
   },
   {
