@@ -27,6 +27,7 @@ JSUtils.addMethod(GameObject.prototype, "initialize",
 		this.body = null;
 		this.layer = null;
 		this.listComponents = new Array();
+		this.isSensor = false;
 		return this;
 	}
 );
