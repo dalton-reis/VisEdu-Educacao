@@ -386,6 +386,15 @@ b2World.prototype =
 						continue;
 					}
 
+					//BOX2D_CUSTOMIZACAO - Gustavo Rufino Feltrin: 
+					//Alteração feita para ignorar a colisão quando um dos objetos da mesma se tratar 
+					//de um “sensor de percepção”, pois para representar o mesmo está sendo utilizado 
+					//um objeto gráfico.
+					if ( PerceptionSystem.isSensorialCollision(cn.contact.GetShape1().GetBody().GetUserData(), 
+														       cn.contact.GetShape2().GetBody().GetUserData()) ) {
+						continue;
+					}
+
 					//BOX2D_CUSTOMIZACAO - Marcos Harbs: Alteração feita para disparar um evento
 					//customizado quando ocorrer a colisão entre dois objetos.
 					//Foi necessário pois a Box2DJS não implementa a classe
@@ -393,14 +402,6 @@ b2World.prototype =
 					LogicSystem.putCollideInfo(cn.contact.GetShape1().GetBody().GetUserData(),
 				                               cn.contact.GetShape2().GetBody().GetUserData());
 
-					//BOX2D_CUSTOMIZACAO - Gustavo Rufino Feltrin: 
-					//Alteração feita para ignorar a colisão quando um dos objetos da mesma se tratar 
-					//de um “sensor de percepção”, pois para representar o mesmo está sendo utilizado 
-					//um objeto gráfico.
-					if ( SensorSystem.isSensorialCollision(cn.contact.GetShape1().GetBody().GetUserData(), 
-															cn.contact.GetShape2().GetBody().GetUserData()) ) {
-						continue;
-					}
 
 					island.AddContact(cn.contact);
 					cn.contact.m_flags |= b2Contact.e_islandFlag;

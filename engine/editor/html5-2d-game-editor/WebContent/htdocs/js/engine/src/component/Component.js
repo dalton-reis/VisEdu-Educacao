@@ -225,3 +225,5 @@ Component.prototype.onStickMoved = function(value, stick, direction){}
 * @return {String} tag
 */
 Component.prototype.getTag = function(){return null;}
+
+Component.prototype.onPercept = function(gameObject){}

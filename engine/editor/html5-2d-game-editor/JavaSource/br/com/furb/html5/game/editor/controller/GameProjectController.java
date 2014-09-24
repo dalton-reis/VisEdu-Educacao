@@ -338,7 +338,9 @@ public class GameProjectController {
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/system/RenderSystem.js\"></script>").append(QR);
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/system/KinectSystem.js\"></script>").append(QR);
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/system/GamepadSystem.js\"></script>").append(QR);
-		js.append("<script src=\"").append(prefix).append("/js/engine/src/system/SensorSystem.js\"></script>").append(QR);
+		js.append("<script src=\"").append(prefix).append("/js/engine/src/system/PerceptionSystem.js\"></script>").append(QR);
+		js.append("<script src=\"").append(prefix).append("/js/engine/src/perception/PerceptionInfo.js\"></script>").append(QR);
+		
 		
 		return js.toString();
 	}

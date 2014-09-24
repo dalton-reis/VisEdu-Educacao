@@ -19,14 +19,13 @@ JSUtils.addMethod(PerceptionVisionComponent.prototype, "initialize",
 	}
 );
 
-
-PerceptionVisionComponent.prototype.onCollide = function(otherGameObject){
-	this.onPercept(this.owner.id + "#onPercept(\"" + otherGameObject.id + "\")");	
+PerceptionVisionComponent.prototype.onLoad = function(){
+	this.owner.isSensor = true;
 }
 
-PerceptionVisionComponent.prototype.onPercept = function(message){
+PerceptionVisionComponent.prototype.onPercept = function( gameObjectPerceived ) {
 	if (this.webSocket!=undefined) {
-		this.webSocket.send(message);
+		this.webSocket.send( this.owner.id + "#onPercept(\"" + gameObjectPerceived.id + "\")" );
 	}
 }
 
@@ -43,8 +42,7 @@ onOpen = function(evt) {
 }
 
 onMessage = function(evt){ 
-	var message = evt.data;
-	
+	var message = evt.data;	
 	var arrMsg = message.split("(");
 	arrMsg = arrMsg[1].split(")");
 	arrMsg = arrMsg[0].split(",");
@@ -68,7 +66,7 @@ onMessage = function(evt){
 
 PerceptionVisionComponent.prototype.getSystems = function(){
   var systems = new Array();
-  systems = ArrayUtils.addElement(systems, LogicSystem.getTag());
+  systems = ArrayUtils.addElement(systems, PerceptionSystem.getTag());
   return systems;	
 }
 

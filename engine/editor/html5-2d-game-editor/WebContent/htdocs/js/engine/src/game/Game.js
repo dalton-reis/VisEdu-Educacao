@@ -118,6 +118,7 @@ var Game = new function(){
 		if(!Game.paused){
 			this.updateGame(deltaTime);
 			this.stepGame();
+			this.perceptGame();
 			this.renderGame();
 		}
 		this.lastUpdateTime = Date.now();
@@ -150,6 +151,10 @@ var Game = new function(){
 			}
 		}
 		LogicSystem.fireCollideListener();
+	}
+
+	this.perceptGame = function() {
+		PerceptionSystem.firePerceptionListener();
 	}
 
 	/**
