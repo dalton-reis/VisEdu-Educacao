@@ -1,54 +1,40 @@
 package br.furb.tcc.websocket;
 
-import jason.asSyntax.Literal;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
-import java.util.Arrays;
 
 import org.apache.catalina.websocket.MessageInbound;
 import org.apache.catalina.websocket.WsOutbound;
 
-import br.furb.tcc.log.Log;
-import br.furb.tcc.reasoning.Agente;
+import br.furb.tcc.servlet.MyWebSocketServlet;
 
-@SuppressWarnings("deprecation")
-public class ConnectionWS extends MessageInbound {
+public final class ConnectionWS extends MessageInbound { 
 	
-	private String agentName;
+	private final String username; 
 	
-	public ConnectionWS(String agentName) {
-		this.agentName = agentName;
-		Log.sysout("ConnectionWS: " + agentName);		
-	}
+	public ConnectionWS(String username) { 
+		this.username = username; 
+	} 
 	
-	@Override
+	@Override 
 	protected void onOpen(WsOutbound outbound) {
-		Log.sysout("onOpen: ");			
-	}
-
-	@Override
-	protected void onBinaryMessage(ByteBuffer arg0) throws IOException {
-		System.err.println( "Método não aceito" );
-	}
+		System.out.println( "onOpen" );
+		// Adiciona essa nova conexão a lista de conexões 
+		MyWebSocketServlet.getConnections().add(this); 
+		String message = String.format("\"%s\" se conectou.", username); 
+		MyWebSocketServlet.broadcast(message); 
+	} 
 	
-	@Override
+	@Override 
+	protected void onBinaryMessage(ByteBuffer arg0) throws IOException { 
+		throw new RuntimeException("Metodo não aceito"); 
+	} 
+	
+	@Override 
 	protected void onTextMessage(CharBuffer msg) throws IOException {
-		Log.sysout("onTextMessage: " + msg);		
-		String[] arrMsg = msg.toString().split("#");		
-		Agente ag = new Agente(agentName, Arrays.asList( Literal.parseLiteral( arrMsg[1] ) ), this);		
-		ag.run();
-//		sendMessage( String.format("%s#%s#%s", mWs.getMensagem(), "green", "black") );
+		System.out.println("onTextMessage");
+		String message = String.format("\"%s\": %s", username, msg.toString()); 
+		MyWebSocketServlet.broadcast(message);
 	}
-	
-	public void sendMessage(String message) {
-		Log.sysout("sendMessage: " + message);
-		try {
-			getWsOutbound().writeTextMessage( CharBuffer.wrap(message) );
-		} catch (IOException e) {
-			e.printStackTrace();			
-		}
-	}	
-
 }

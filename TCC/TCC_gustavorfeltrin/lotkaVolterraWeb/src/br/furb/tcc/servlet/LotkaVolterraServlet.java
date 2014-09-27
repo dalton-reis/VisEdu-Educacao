@@ -6,17 +6,17 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.catalina.websocket.StreamInbound;
 import org.apache.catalina.websocket.WebSocketServlet;
 
-import br.furb.tcc.websocket.ConnectionWS;
+import br.furb.tcc.websocket.LotkaVolterraWebSocket;
 
 @SuppressWarnings("deprecation")
-@WebServlet("/websocket")
-public class LotkaVolterraWebSocketServlet extends WebSocketServlet {
+@WebServlet("/ws")
+public class LotkaVolterraServlet extends WebSocketServlet {
 
 	private static final long serialVersionUID = 1L;
 	
 	protected StreamInbound createWebSocketInbound(String subProtocol, HttpServletRequest request) {
 		String agentName = request.getParameter("agentName");
-		return new ConnectionWS( agentName );
+		return new LotkaVolterraWebSocket( agentName );
 	}
 	
 }

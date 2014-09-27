@@ -12,13 +12,13 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.furb.tcc.websocket.ConnectionWS;
+import br.furb.tcc.websocket.LotkaVolterraWebSocket;
 
 public class Agente extends AgArch {
 	
 	private String agName;
 	private List<Literal> perceptions = new ArrayList<Literal>();
-	private ConnectionWS ws;
+	private LotkaVolterraWebSocket ws;
 	
 	private void showInfo(String info) {
 		System.out.println( info );
@@ -28,9 +28,10 @@ public class Agente extends AgArch {
 		System.err.println(error);
 	}
 	
-	public Agente(String agentName, List<Literal> perceptions, ConnectionWS ws) {
+	public Agente(String agentName, List<Literal> perceptions, LotkaVolterraWebSocket ws) {
 		setAgName(agentName);
 		setPerceptions(perceptions);
+		
 		this.ws = ws;
 		
 		// configurando o agente Jason
@@ -117,7 +118,7 @@ public class Agente extends AgArch {
 		this.perceptions = perceptions;
 	}
 	
-	public void setWs(ConnectionWS ws) {
+	public void setWs(LotkaVolterraWebSocket ws) {
 		this.ws = ws;
 	}
 

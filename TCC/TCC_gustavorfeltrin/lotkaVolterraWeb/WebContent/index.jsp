@@ -18,7 +18,7 @@
 		</style> 
 	</head> 
 	<body> 
-		<h2>Introdução WebSocket</h2> 
+		<h2>Chat WebSocket</h2> 
 		<div id="messageArea"></div> 
 		<div> 
 			<form onsubmit="return false;"> 
@@ -31,12 +31,11 @@
 				if (typeof console !== "undefined") 
 					console.log(msg); 
 			} 			
-			var username = prompt("Conectar como?");
-			var agentName = prompt("Nome do agente?"); 
-			if ( ('WebSocket' in window) || ('MozWebSocket' in window) ) { 
-				var websocket = new WebSocket("ws://" + document.location.host + "/lotkaVolterraWeb/websocket?username=" + username + "&agentName=" + agentName); 
+			var username = prompt("Conectar como?"); 
+			if ( 'WebSocket' in window || 'MozWebSocket' in window ) { 
+				var websocket = new WebSocket("ws://" + document.location.host + "/lotkaVolterraWeb/websocket?username=" + username); 
 			} else { 
-				alert("Browser nÃ£o suporta WebSocket"); 
+				alert("Browser não suporta WebSocket"); 
 			} 
 			if (websocket != undefined) { 
 				websocket.onopen = function() { 
@@ -60,9 +59,10 @@
 					log("Enviar mensagem (" + msg + ")"); 
 					websocket.send(msg); 
 				} 
-				document.getElementById("btnEnviar").onclick = function() { 
-					var msg = document.getElementById("iptMessage").value; 
-					sendMessage(msg); 
+				document.getElementById("btnEnviar").onclick = function() {
+					var input = document.getElementById("iptMessage");
+					sendMessage(input.value);
+					input.value = ""; 
 					return false; 
 				}; 
 			} 

@@ -10,15 +10,15 @@ import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.furb.tcc.websocket.ConnectionWS;
+import br.furb.tcc.websocket.LotkaVolterraWebSocket;
 
 public abstract class AbstractAgent extends AgArch {
 
-	private ConnectionWS connectionWS = null;
+	private LotkaVolterraWebSocket connectionWS = null;
 	private List<Literal> perceptions = new ArrayList<Literal>();
 	private String uuid;
 	
-	public AbstractAgent(String uuid, ConnectionWS connectionWS) {
+	public AbstractAgent(String uuid, LotkaVolterraWebSocket connectionWS) {
 		this.uuid = uuid;
 		this.connectionWS = connectionWS;
 	}
