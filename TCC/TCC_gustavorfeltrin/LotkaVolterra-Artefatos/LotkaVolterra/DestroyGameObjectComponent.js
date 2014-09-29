@@ -2,9 +2,17 @@ function DestroyGameObjectComponent() {}
 
 DestroyGameObjectComponent.prototype = new Component();
 
+JSUtils.addMethod(DestroyGameObjectComponent.prototype, "initialize", 
+	function(preyToken){
+		this.initialize();
+		this.preyToken = preyToken;
+		return this;
+	}
+);
+
 DestroyGameObjectComponent.prototype.onCollide = function(otherGameObject) {
 	var token = ComponentUtils.getComponent(otherGameObject, "TOKEN_COMPONENT");
-	if (token && token.getToken() == "PREY_TOKEN") {
+	if (token && token.getToken() == this.preyToken ) {
 		otherGameObject.destroy();		
 	} 
 	

@@ -11,10 +11,10 @@ JSUtils.addMethod(PerceptionVisionComponent.prototype, "initialize",
 			alert("Browser não suporta WebSocket");
 			return this;
 		}
-		this.webSocket.onmessage = function(data) { onMessage(data) };
-		this.webSocket.onopen = function(evt) { onOpen(evt) };
-		this.webSocket.onclose = function(evt) { onClose(evt) };
-		this.webSocket.onerror = function(evt) { onError(evt) };
+		this.webSocket.onmessage = function(evt) { onMessage (evt) };
+		this.webSocket.onopen    = function(evt) { onOpen    (evt) };
+		this.webSocket.onclose   = function(evt) { onClose   (evt) };
+		this.webSocket.onerror   = function(evt) { onError   (evt) };
 		return this;
 	}
 );
