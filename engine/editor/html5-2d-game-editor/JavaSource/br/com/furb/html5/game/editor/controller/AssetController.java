@@ -36,6 +36,10 @@ public class AssetController {
 			   ext.equalsIgnoreCase("gif")) {
 				type = "IMAGE";
 			}
+			
+			if (ext.equalsIgnoreCase("asl")) {
+				type = "JASON MIND";
+			}
 
 			Asset asset = new Asset(name, path, type, null, ext);
 			assets.add(asset);

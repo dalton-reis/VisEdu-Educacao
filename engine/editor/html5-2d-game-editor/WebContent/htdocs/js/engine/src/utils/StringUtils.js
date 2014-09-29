@@ -26,4 +26,8 @@
 		return string;
 	}
 
+	this.startsWith = function(string, prefix) {
+	    return string.indexOf( prefix ) == 0;
+	}
+
 }
