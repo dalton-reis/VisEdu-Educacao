@@ -1,0 +1,4 @@
+ws furb:
+
+velho: "ws://campeche.inf.furb.br:8080/viseduap/lotkaVolterraWeb/websocket?agent=prey"
+novo: "ws://campeche.inf.furb.br:8080/viseduap/lotkaVolterraWeb/ws?agent=prey&assetsDir=" + DirectoryUtils.getAssetsDir()"
