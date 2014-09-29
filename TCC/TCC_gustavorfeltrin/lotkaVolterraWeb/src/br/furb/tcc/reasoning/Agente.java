@@ -12,34 +12,43 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.furb.tcc.log.Log;
 import br.furb.tcc.websocket.LotkaVolterraWebSocket;
 
 public class Agente extends AgArch {
 	
 	private String agName;
+	private String aslDir;
 	private List<Literal> perceptions = new ArrayList<Literal>();
 	private LotkaVolterraWebSocket ws;
 	
 	private void showInfo(String info) {
-		System.out.println( info );
+		Log.info(info);		
 	}
 	
 	private void showError(String error) {
-		System.err.println(error);
+		Log.err(error);
 	}
 	
-	public Agente(String agentName, List<Literal> perceptions, LotkaVolterraWebSocket ws) {
+	public Agente(String agentName, String aslDir, LotkaVolterraWebSocket ws) {
 		setAgName(agentName);
-		setPerceptions(perceptions);
-		
-		this.ws = ws;
-		
+		setAslDir(aslDir);		
+		setWs(ws);		
+	}
+
+	public void configureAgent() {
 		// configurando o agente Jason
 		Agent ag = new Agent();
 		new TransitionSystem(ag, null, null, this);
 		try {
-			String uri = getClass().getClassLoader().getResource( String.format("%s.asl", getAgName()) ).toURI().toString();
-			ag.initAg( uri );
+			if ( getAslDir()==null ) {
+				String uri = getClass().getClassLoader().getResource( String.format("%s.asl", getAgName()) ).toURI().toString();
+				ag.initAg( uri );
+				showInfo( String.format("Agent \"%s\" using static mind @ %s", getAgName(), uri) );
+			} else {
+				ag.initAg( getAslDir() );
+				showInfo( String.format("Agent \"%s\" using downloaded mind @ %s", getAgName(), getAslDir()) );
+			}
 		} catch (JasonException e) {			
 			showError("Init error");
 			e.printStackTrace();
@@ -75,7 +84,7 @@ public class Agente extends AgArch {
 	@Override
 	public void act(ActionExec action, List<ActionExec> feedback) {
 		showInfo("Agent " + getAgName() + " is doing: " + action.getActionTerm());
-		ws.sendMessage( action.getActionTerm().toString() );
+		getWs().sendMessage( action.getActionTerm().toString() );
 		action.setResult(true); // define que a execução foi executada
 		feedback.add(action);
 	}
@@ -95,7 +104,7 @@ public class Agente extends AgArch {
 		sleep(1000);
 	}
 	
-	private void sleep(final long millis) { try { Thread.sleep(millis); } catch (Exception e) { } }
+	private void sleep(final long millis) { try { Thread.sleep(millis); } catch (Exception e) { e.printStackTrace(); } }
 	
 	@Override
 	public void sendMsg(Message m) throws Exception {		
@@ -120,6 +129,22 @@ public class Agente extends AgArch {
 	
 	public void setWs(LotkaVolterraWebSocket ws) {
 		this.ws = ws;
+	}
+	
+	public void setAslDir(String aslDir) {
+		this.aslDir = aslDir;
+	}
+
+	public String getAslDir() {
+		return aslDir;
+	}
+
+	public List<Literal> getPerceptions() {
+		return perceptions;
+	}
+
+	public LotkaVolterraWebSocket getWs() {
+		return ws;
 	}
 
 }

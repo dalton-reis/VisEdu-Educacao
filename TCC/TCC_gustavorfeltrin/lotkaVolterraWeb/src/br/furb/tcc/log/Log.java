@@ -4,12 +4,12 @@ import java.io.PrintStream;
 
 public class Log {
 	
-	public static void sysout(String msg) {
-		print(System.out, msg);
+	public static void info(String msg) {
+		print(System.out, String.format("[inf] %s", msg));
 	}
 	
-	public static void syserr(String msg) {
-		print(System.err, msg);
+	public static void err(String msg) {
+		print(System.err, String.format("[err] %s", msg));
 	}
 	
 	private static void print(PrintStream ps, String msg) {
