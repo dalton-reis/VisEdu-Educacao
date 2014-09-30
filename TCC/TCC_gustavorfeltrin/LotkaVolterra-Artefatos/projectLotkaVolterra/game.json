@@ -58,7 +58,7 @@
     "type": "COMPONENT",
     "displayNodeName": "PerceptionVisionComponent",
     "jsVarName": "circle1FrustumPvc",
-    "jsInitialFunction": "new PerceptionVisionComponent().initialize(\"ws://localhost:8081/lotkaVolterraWeb/ws?agent\u003dprey\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir());",
+    "jsInitialFunction": "new PerceptionVisionComponent().initialize(\"ws://campeche.inf.furb.br:8094/lotkaVolterraWeb/ws?agent\u003dprey\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir());",
     "jsCode": ""
   },
   {
@@ -167,6 +167,24 @@
     "displayNodeName": "DestroyGameObjectComponent",
     "jsVarName": "box1Dgoc",
     "jsInitialFunction": "new DestroyGameObjectComponent().initialize(\"PREY\");",
+    "jsCode": ""
+  },
+  {
+    "id": "0680a300-418c-40c5-832b-8bbba8461d22",
+    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "type": "GAME_OBJECT",
+    "displayNodeName": "PolygonObject",
+    "jsVarName": "temp",
+    "jsInitialFunction": "new PolygonObject().initialize(0, 0,\r\n[\r\nnew Point2D().initialize(   0,   0),\r\nnew Point2D().initialize( 30, 150),\r\nnew Point2D().initialize(-30, 150)\r\n],\r\n\"rgba(255, 255, 0, 0.5)\",\"rgba(0, 0, 0, 0.5)\");",
+    "jsCode": ""
+  },
+  {
+    "id": "d79f6ad6-252d-4117-9561-3c46c3d4abf7",
+    "idParent": "0680a300-418c-40c5-832b-8bbba8461d22",
+    "type": "COMPONENT",
+    "displayNodeName": "RigidBodyComponent",
+    "jsVarName": "tempRbc",
+    "jsInitialFunction": "new RigidBodyComponent().initialize(0, 1, false, false, 0.2);",
     "jsCode": ""
   },
   {
