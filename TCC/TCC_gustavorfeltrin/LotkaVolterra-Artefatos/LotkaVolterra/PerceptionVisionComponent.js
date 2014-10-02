@@ -30,11 +30,13 @@ PerceptionVisionComponent.prototype.onPercept = function( gameObjectPerceived ) 
 }
 
 onClose = function(evt) {
+	console.log( "onClose: " + evt.data );
 	alert("onClose: " + evt.data);
 }
 
 onError = function(evt) {
-	alert("onError" + evt.data);	
+	console.log("onError: " + evt.data);
+	alert("onError: " + evt.data);	
 }
 
 onOpen = function(evt) {
