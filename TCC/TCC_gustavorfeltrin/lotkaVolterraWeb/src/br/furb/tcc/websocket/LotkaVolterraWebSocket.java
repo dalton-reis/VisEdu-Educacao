@@ -37,8 +37,7 @@ public class LotkaVolterraWebSocket extends MessageInbound {
 	@Override
 	protected void onTextMessage(CharBuffer msg) throws IOException {
 		Log.info("onTextMessage: " + msg);		
-		String[] arrMsg = msg.toString().split("#");		
-		List<Literal> perceptions = Arrays.asList( Literal.parseLiteral( arrMsg[1] ) );
+		List<Literal> perceptions = Arrays.asList( Literal.parseLiteral( msg.toString() ) );
 		ag.configureAgent();
 		ag.setPerceptions(perceptions);
 		ag.run();
