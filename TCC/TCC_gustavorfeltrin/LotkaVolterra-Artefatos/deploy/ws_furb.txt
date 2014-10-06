@@ -1,8 +1,16 @@
 [TCC]
+
+## Impl
 Furb:
 "ws://campeche.inf.furb.br:8094/lotkaVolterraWeb/ws?agent=prey&assetsDir=" + DirectoryUtils.getAssetsDir()
 localhost:
 "ws://localhost:8081/lotkaVolterraWeb/ws?agent=prey&assetsDir=" + DirectoryUtils.getAssetsDir()
+
+## Performance
+Furb:
+"ws://campeche.inf.furb.br:8094/lotkaVolterraWeb/ws?agent=performance&assetsDir=" + DirectoryUtils.getAssetsDir()
+localhost:
+"ws://localhost:8081/lotkaVolterraWeb/ws?agent=performance&assetsDir=" + DirectoryUtils.getAssetsDir()
 
 
 [Hora Servidor]
@@ -10,3 +18,5 @@ Furb:
 "ws://campeche.inf.furb.br:8094/lotkaVolterraWeb/server"
 server:
 "ws://localhost:8081/lotkaVolterraWeb/server"
+
+prompt("Informe a quantidade de elementos desejada.", "5")
