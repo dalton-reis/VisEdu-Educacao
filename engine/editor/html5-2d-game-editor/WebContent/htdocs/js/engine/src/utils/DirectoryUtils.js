@@ -8,7 +8,8 @@ var DirectoryUtils = new function(){
 	}
 
 	this.getAssetsDir = function() {
-		return this.getCurrentDir() + "assets/";
+		var assetDir = this.getCurrentDir() + "assets/";
+		return assetDir;
 	}
 
 }

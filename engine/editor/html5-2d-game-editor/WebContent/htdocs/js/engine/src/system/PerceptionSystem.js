@@ -34,20 +34,10 @@ var PerceptionSystem = new function(){
 	this.putPerceiveInfo = function(gameObjectSensor, gameObjectPerceived){
 		var perceptionKey = this.getPerceiveKey(gameObjectSensor, gameObjectPerceived);
 		if( (!ArrayUtils.getElementByKey(this.listPerceived, perceptionKey) ||
-		    ArrayUtils.getElementByKey(this.listPerceived, perceptionKey) == "undefined" ) && !this.isParent(gameObjectSensor, gameObjectPerceived)){
+		    ArrayUtils.getElementByKey(this.listPerceived, perceptionKey) == "undefined" ) && ! TokenParentUtils.isParent(gameObjectSensor, gameObjectPerceived)){
 			var perceivedInfo = new PerceptionInfo().initialize(gameObjectSensor, gameObjectPerceived);
 			this.listPerceived = ArrayUtils.putElement(this.listPerceived, perceptionKey, perceivedInfo);
 		}
-	}
-
-	this.isParent = function(gameObjectSensor, gameObjectPerceived){
-		var sensorToken = ComponentUtils.getComponent(gameObjectSensor, "TOKEN_COMPONENT");
-		var perceivedToken = ComponentUtils.getComponent(gameObjectPerceived, "TOKEN_COMPONENT");
-		if ( sensorToken && perceivedToken ) {
-			return StringUtils.startsWith(perceivedToken.getToken(),
-										  sensorToken.getToken().split("_")[0]);
-		}
-		return false;
 	}
 
 	this.getPerceiveKey = function(gameObjectSensor, gameObjectPerceived){

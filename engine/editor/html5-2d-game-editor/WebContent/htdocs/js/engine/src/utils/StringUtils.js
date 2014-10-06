@@ -30,4 +30,8 @@
 	    return string.indexOf( prefix ) == 0;
 	}
 
+	this.isEmpty = function(string) {
+		return string.length == 0;
+	}
+
 }

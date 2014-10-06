@@ -298,9 +298,10 @@ public class GameProjectController {
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/utils/JSUtils.js\"></script>").append(QR);
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/utils/StringUtils.js\"></script>").append(QR);
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/utils/DirectoryUtils.js\"></script>").append(QR);
+		js.append("<script src=\"").append(prefix).append("/js/engine/src/utils/TokenParentUtils.js\"></script>").append(QR);
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/collide/CollideInfo.js\"></script>").append(QR);
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/component/Component.js\"></script>").append(QR);
-
+		
 		if(!build){
 			FileUtils.createTempFiles(ComponentController.DATA_PATH, "components");
 			FileUtils.createTempFiles(GameObjectController.DATA_PATH, "game_objects");
