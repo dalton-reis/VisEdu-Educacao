@@ -2,13 +2,6 @@ function PerceptionVisionLotkaVolterraComponent(){}
 
 PerceptionVisionLotkaVolterraComponent.prototype = new PerceptionVisionComponent();
 
-JSUtils.addMethod(PerceptionVisionLotkaVolterraComponent.prototype, "initialize", 
-	function(uri, tmp){
-		this.initialize(uri);
-		return this;
-	}
-);
-
 PerceptionVisionLotkaVolterraComponent.prototype.createPerceptionMessage = function( gameObjectPerceived ) {
 	return "onPercept(\"" + this.owner.id + "\",\"" + gameObjectPerceived.id + "\")";
 }

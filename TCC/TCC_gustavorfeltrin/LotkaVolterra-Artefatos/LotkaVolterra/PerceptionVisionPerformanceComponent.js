@@ -4,13 +4,6 @@ PerceptionVisionPerformanceComponent.prototype = new PerceptionVisionComponent()
 
 PerceptionVisionPerformanceComponent.prototype.queue = [];
 
-JSUtils.addMethod(PerceptionVisionPerformanceComponent.prototype, "initialize", 
-	function(uri, tmp){
-		this.initialize(uri);
-		return this;
-	}
-);
-
 PerceptionVisionPerformanceComponent.prototype.createPerceptionMessage = function( gameObjectPerceived ) {
 	var render = null;
 	if ( gameObjectPerceived instanceof BoxObject ) {
@@ -23,7 +16,7 @@ PerceptionVisionPerformanceComponent.prototype.createPerceptionMessage = functio
 	if (render) {
 		var token = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT").getToken();
 		var now = new Date();
-		var msg = "onPercept(" + render.fillStyle + ")";
+		var msg = "onPercept(\"" + render.fillStyle + "\")";
 
 		this.queue.push(now);
 		console.log( "[" + token + ": send @ " + now.toLocaleString() + "] " + msg );
@@ -36,42 +29,27 @@ PerceptionVisionPerformanceComponent.prototype.processesMessagesReceived = funct
 	var now = new Date();
 	var sendDate = this.queue.shift();
 	var token = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT").getToken();
-	console.log( "[" + token + ": recp @ " + now.toLocaleString() + "] " + message );
+	console.log( "[" + token + ": receive @ " + now.toLocaleString() + "] " + message );
 	console.log( "[" + token + ": reasoning time] " + Math.abs(now-sendDate)/1000 );
-
-
-	/*if (Game.scene) {
-		for(var i in Game.scene.listLayers){
-			var layer = this.scene.listLayers[i];
-			if(layer instanceof Layer){
-				for(var j in layer.listGameObjects){
-					var gameObject = layer.listGameObjects[j];
-					if(gameObject instanceof GameObject){
-						if ( TokenParentUtils.isParent(this.owner, go) ) {
-							var parent = go;
-						}
-					}
-				}
-			}
-		}
-	}*/
-
 	if ( this.owner.parent ) {
 		var arrMsg = message.split("(");
-		arrMsg = arrMsg[1].split(")");
+		arrMsg = arrMsg[1].split(")")[0];
+		arrMsg = StringUtils.replaceAll(arrMsg, "\"", "");
 		var render = null;
 		if ( this.owner.parent instanceof BoxObject ) {
-			render = ComponentUtils.getComponent(this.owner.parent, "BOX_RENDER_COMPONENT");	
+			render = ComponentUtils.getComponent(this.owner.parent, "BOX_RENDER_COMPONENT");
 		} else if ( this.owner.parent instanceof CircleObject ) {
-			render = ComponentUtils.getComponent(this.owner.parent, "CIRCLE_RENDER_COMPONENT");		
+			render = ComponentUtils.getComponent(this.owner.parent, "CIRCLE_RENDER_COMPONENT");
 		} else if ( this.owner.parent instanceof PolygonObject ) {
-			render = ComponentUtils.getComponent(this.owner.parent, "POLYGON_RENDER_COMPONENT");		
+			render = ComponentUtils.getComponent(this.owner.parent, "POLYGON_RENDER_COMPONENT");
 		}	
 		if (render) {
-			console.log("old fillStyle: " + render.fillStyle);
-			render.fillStyle = arrMsg;
-			console.log("new fillStyle: " + render.fillStyle);
+			render.fillStyle = 	arrMsg;
 		}
+	}
+
+	if ( this.queue.length == 0 ) {
+		console.log("[" + token + ": queue is empty] ");
 	}
 
 }

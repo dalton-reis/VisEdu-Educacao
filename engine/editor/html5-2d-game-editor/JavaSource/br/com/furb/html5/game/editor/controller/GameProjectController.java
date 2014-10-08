@@ -299,6 +299,7 @@ public class GameProjectController {
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/utils/StringUtils.js\"></script>").append(QR);
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/utils/DirectoryUtils.js\"></script>").append(QR);
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/utils/TokenParentUtils.js\"></script>").append(QR);
+		js.append("<script src=\"").append(prefix).append("/js/engine/src/utils/ColorUtils.js\"></script>").append(QR);
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/collide/CollideInfo.js\"></script>").append(QR);
 		js.append("<script src=\"").append(prefix).append("/js/engine/src/component/Component.js\"></script>").append(QR);
 		
