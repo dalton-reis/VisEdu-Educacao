@@ -9,9 +9,9 @@ JSUtils.addMethod(PuzzlePieceObject.prototype, "initialize",
 		this.rightSocket = null;
 		this.topSocket = null;
 		this.bottomSocket = null;
-		ComponentUtils.addComponent(this, new TranslateComponent().initialize(0, 0));
-		ComponentUtils.addComponent(this, new ScaleComponent().initialize(1, 1));
-		ComponentUtils.addComponent(this, new RotateComponent().initialize(0));
+		//ComponentUtils.addComponent(this, new TranslateComponent().initialize(0, 0));
+		//ComponentUtils.addComponent(this, new ScaleComponent().initialize(1, 1));
+		//ComponentUtils.addComponent(this, new RotateComponent().initialize(0));
 		ComponentUtils.addComponent(this, new DraggableComponent().initialize());
 		ComponentUtils.addComponent(this, new PuzzlePieceRenderComponent().initialize(imageObj, width, height, offsetLeft, offsetTop));
 		ComponentUtils.addComponent(this, new RigidBodyComponent().initialize(0, 1, false, false, 0, true));

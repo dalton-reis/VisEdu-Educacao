@@ -4,12 +4,13 @@ PuzzleSocketObject.prototype = new GameObject();
 
 JSUtils.addMethod(PuzzleSocketObject.prototype, "initialize", 
 	function(x, y){
-		this.initialize(x, y, 6, 6);
-		ComponentUtils.addComponent(this, new TranslateComponent().initialize(0, 0));
-		ComponentUtils.addComponent(this, new ScaleComponent().initialize(1, 1));
-		ComponentUtils.addComponent(this, new RotateComponent().initialize(0));
+		this.initialize(x, y, 2, 2);
+		//ComponentUtils.addComponent(this, new TranslateComponent().initialize(0, 0));
+		//ComponentUtils.addComponent(this, new ScaleComponent().initialize(1, 1));
+		//ComponentUtils.addComponent(this, new RotateComponent().initialize(0));
 		ComponentUtils.addComponent(this, new BoxRenderComponent().initialize("red", "red"));
 		ComponentUtils.addComponent(this, new RigidBodyComponent().initialize(0, 1, false, false, 0, true));
+		this.slave = null;
 		return this;
 	}
 );

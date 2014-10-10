@@ -25,6 +25,12 @@ PuzzlePieceRenderComponent.prototype.onRender = function(context){
 		              this.owner.getCenterY()-(this.imgHeight/2),
 		              this.imgWidth, 
 		              this.imgHeight);
+
+	context.strokeStyle = "gray";
+	context.strokeRect(this.owner.getCenterX()-(this.imgWidth/2), 
+		               this.owner.getCenterY()-(this.imgHeight/2), 
+			           this.imgWidth, 
+		               this.imgHeight);
 }
 
 PuzzlePieceRenderComponent.prototype.getSystems = function(){
