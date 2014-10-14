@@ -37,36 +37,40 @@ function createPieces(layer){
     		var h = pieceHeight / 2;
 
     		if(pieceObj.leftSocket == null && i > 0){
-    			pieceObj.leftSocket = new PuzzleSocketObject().initialize(pieceObj.getCenterX() - w, pieceObj.getCenterY());
+    			pieceObj.leftSocket = new PuzzleSocketObject().initialize(pieceObj.getCenterX() - w, pieceObj.getCenterY(), pieceObj);
     		
     			var leftPiece = pieces[i-1][j];
-    			leftPiece.rightSocket = new PuzzleSocketObject().initialize(leftPiece.getCenterX() + w, leftPiece.getCenterY());
+    			leftPiece.rightSocket = new PuzzleSocketObject().initialize(leftPiece.getCenterX() + w, leftPiece.getCenterY(), leftPiece);
     		
     			pieceObj.leftSocket.slave = leftPiece.rightSocket;
+                leftPiece.rightSocket.slave = pieceObj.leftSocket;
     		}
 			if(pieceObj.rightSocket == null && i < (columns-1)){
-				pieceObj.rightSocket = new PuzzleSocketObject().initialize(pieceObj.getCenterX() + w, pieceObj.getCenterY());
+				pieceObj.rightSocket = new PuzzleSocketObject().initialize(pieceObj.getCenterX() + w, pieceObj.getCenterY(), pieceObj);
 			
 				var rightPiece = pieces[i+1][j];
-				rightPiece.leftSocket = new PuzzleSocketObject().initialize(rightPiece.getCenterX() - w, rightPiece.getCenterY());
+				rightPiece.leftSocket = new PuzzleSocketObject().initialize(rightPiece.getCenterX() - w, rightPiece.getCenterY(), rightPiece);
 			
 				pieceObj.rightSocket.slave = rightPiece.leftSocket;
+                rightPiece.leftSocket.slave = pieceObj.rightSocket;
 			}
 			if(pieceObj.topSocket == null && j > 0){
-				pieceObj.topSocket = new PuzzleSocketObject().initialize(pieceObj.getCenterX(), pieceObj.getCenterY() - h);
+				pieceObj.topSocket = new PuzzleSocketObject().initialize(pieceObj.getCenterX(), pieceObj.getCenterY() - h, pieceObj);
 			
 				var topPiece = pieces[i][j-1];
-				topPiece.bottomSocket = new PuzzleSocketObject().initialize(topPiece.getCenterX(), topPiece.getCenterY() + h);
+				topPiece.bottomSocket = new PuzzleSocketObject().initialize(topPiece.getCenterX(), topPiece.getCenterY() + h, topPiece);
 			
 				pieceObj.topSocket.slave = topPiece.bottomSocket;
+                topPiece.bottomSocket.slave = pieceObj.topSocket;
 			}
 			if(pieceObj.bottomSocket == null && j < (rows-1)){
-				pieceObj.bottomSocket = new PuzzleSocketObject().initialize(pieceObj.getCenterX(), pieceObj.getCenterY() + h);
+				pieceObj.bottomSocket = new PuzzleSocketObject().initialize(pieceObj.getCenterX(), pieceObj.getCenterY() + h, pieceObj);
 				
 				var bottomPiece = pieces[i][j+1];
-				bottomPiece.topSocket = new PuzzleSocketObject().initialize(bottomPiece.getCenterX(), bottomPiece.getCenterY() - h);
+				bottomPiece.topSocket = new PuzzleSocketObject().initialize(bottomPiece.getCenterX(), bottomPiece.getCenterY() - h, bottomPiece);
 			
 				pieceObj.bottomSocket.slave = bottomPiece.topSocket;
+                bottomPiece.topSocket.slave = pieceObj.bottomSocket;
 			}
     		
     		layer.addGameObject(pieceObj);
@@ -95,6 +99,8 @@ function createPuzzle(){
 
     scene.addLayer(layer);
 	layer.setGravity(0);
+
+    ComponentUtils.addComponent(layer, new DropPieceLayerComponent().initialize("red", "red"));
 
 	Game.init(document.getElementById('canvas'), scene);
 	Game.camera.centerPoint.x = 500; Game.camera.centerPoint.y = 275;
