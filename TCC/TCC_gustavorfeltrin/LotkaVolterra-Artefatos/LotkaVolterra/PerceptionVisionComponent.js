@@ -2,6 +2,8 @@ function PerceptionVisionComponent(){}
 
 PerceptionVisionComponent.prototype = new Component();
 
+PerceptionVisionComponent.prototype.HAND_SHAKE = "HAND_SHAKE";
+
 JSUtils.addMethod(PerceptionVisionComponent.prototype, "initialize", 
 	function(uri){
 		this.initialize();
@@ -41,9 +43,7 @@ PerceptionVisionComponent.prototype.onPercept = function( gameObjectPerceived ) 
 	}
 }
 
-PerceptionVisionComponent.prototype.createPerceptionMessage = function( gameObjectPerceived ) {
-	return null;
-}
+PerceptionVisionComponent.prototype.createPerceptionMessage = function( gameObjectPerceived ) { return null; }
 
 PerceptionVisionComponent.prototype.onClose = function(evt) {
 	console.log( "onClose: " + evt.data );	
@@ -54,10 +54,14 @@ PerceptionVisionComponent.prototype.onError = function(evt) {
 	alert("onError: " + evt.data);	
 }
 
-PerceptionVisionComponent.prototype.onOpen = function(evt) {}
+PerceptionVisionComponent.prototype.onOpen = function(evt) {
+	this.webSocket.send( this.HAND_SHAKE );
+}
 
 PerceptionVisionComponent.prototype.onMessage = function(evt){ 
-	this.processesMessagesReceived(evt.data);
+	if ( this.HAND_SHAKE != evt.data ) {
+		this.processesMessagesReceived(evt.data);
+	}
 	//if (this.webSocket!=undefined) {
 	//		this.webSocket.close();
 	//}	

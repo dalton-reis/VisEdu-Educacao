@@ -3,6 +3,7 @@ function PerceptionVisionPerformanceComponent(){}
 PerceptionVisionPerformanceComponent.prototype = new PerceptionVisionComponent();
 
 PerceptionVisionPerformanceComponent.prototype.queue = [];
+PerceptionVisionPerformanceComponent.prototype.averageReasoningTime = null;
 
 PerceptionVisionPerformanceComponent.prototype.createPerceptionMessage = function( gameObjectPerceived ) {
 	var render = null;
@@ -19,7 +20,7 @@ PerceptionVisionPerformanceComponent.prototype.createPerceptionMessage = functio
 		var msg = "onPercept(\"" + render.fillStyle + "\")";
 
 		this.queue.push(now);
-		console.log( "[" + token + ": send @ " + now.toLocaleString() + "] " + msg );
+		//console.log( "[" + token + ": send @ " + now.toLocaleString() + "] " + msg );
 		return msg;
 	}
 	return null;
@@ -29,8 +30,14 @@ PerceptionVisionPerformanceComponent.prototype.processesMessagesReceived = funct
 	var now = new Date();
 	var sendDate = this.queue.shift();
 	var token = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT").getToken();
-	console.log( "[" + token + ": receive @ " + now.toLocaleString() + "] " + message );
-	console.log( "[" + token + ": reasoning time] " + Math.abs(now-sendDate)/1000 );
+	//console.log( "[" + token + ": receive @ " + now.toLocaleString() + "] " + message );
+	var reasoningTime = Math.abs(now-sendDate)/1000;
+	console.log( "[" + token + ": reasoning time] " + reasoningTime);
+	if ( this.averageReasoningTime==null ) {
+		this.averageReasoningTime = reasoningTime;
+	} else {
+		this.averageReasoningTime = (this.averageReasoningTime+reasoningTime)/2;
+	}
 	if ( this.owner.parent ) {
 		var arrMsg = message.split("(");
 		arrMsg = arrMsg[1].split(")")[0];
@@ -48,9 +55,9 @@ PerceptionVisionPerformanceComponent.prototype.processesMessagesReceived = funct
 		}
 	}
 
-	if ( this.queue.length == 0 ) {
+	/*if ( this.queue.length == 0 ) {
 		console.log("[" + token + ": queue is empty] ");
-	}
+	}*/
 
 }
 

@@ -17,6 +17,8 @@ import br.furb.tcc.reasoning.Agente;
 @SuppressWarnings("deprecation")
 public class LotkaVolterraWebSocket extends MessageInbound {
 	
+	private static final String HAND_SHAKE = "HAND_SHAKE";
+	
 	private Agente ag;
 	
 	public LotkaVolterraWebSocket(String agentName, String aslDir) {
@@ -24,7 +26,7 @@ public class LotkaVolterraWebSocket extends MessageInbound {
 		ag = new Agente(agentName, aslDir, this);				
 	}
 	
-	@Override
+	@Override	
 	protected void onOpen(WsOutbound outbound) {
 		Log.info("onOpen: ");
 	}
@@ -36,7 +38,13 @@ public class LotkaVolterraWebSocket extends MessageInbound {
 	
 	@Override
 	protected void onTextMessage(CharBuffer msg) throws IOException {
-		Log.info("onTextMessage: " + msg);		
+		Log.info("onTextMessage: " + msg);
+		
+		if ( HAND_SHAKE.equalsIgnoreCase(msg.toString()) ) {
+			sendMessage(HAND_SHAKE);
+			return;
+		}
+		
 		List<Literal> perceptions = Arrays.asList( Literal.parseLiteral( msg.toString() ) );
 		ag.configureAgent();
 		ag.setPerceptions(perceptions);
