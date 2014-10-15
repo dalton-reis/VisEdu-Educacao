@@ -4,7 +4,7 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-function createPieces(layer){
+function createPieces(layer, canvas){
 	var columns = window.prompt("Informe a quantidade de colunas!", 0);
     var rows = window.prompt("Informe a quantidade de linhas!", 0);
 
@@ -17,8 +17,8 @@ function createPieces(layer){
     for(var i=0; i<columns; i++){
     	var piecesAux = new Array(rows);
     	for(var j=0; j<rows; j++){
-    		var pieceObj = new PuzzlePieceObject().initialize(getRandomArbitrary(0, 900), 
-    			                                              getRandomArbitrary(0, 380), 
+    		var pieceObj = new PuzzlePieceObject().initialize(getRandomArbitrary(0, canvas.width), 
+    			                                              getRandomArbitrary(0, canvas.height), 
     			                                              pieceWidth, 
     			                                              pieceHeight, 
     			                                              imgObj, 
@@ -92,18 +92,21 @@ function createPieces(layer){
 }
 
 function createPuzzle(){
+    var canvas = document.getElementById('canvas');
+
 	layer = new Layer().initialize();
     var scene = new Scene().initialize(-5000, -5000, 5000, 5000);
 
-    createPieces(layer);
+    createPieces(layer, canvas);
 
     scene.addLayer(layer);
 	layer.setGravity(0);
 
     ComponentUtils.addComponent(layer, new DropPieceLayerComponent().initialize("red", "red"));
 
-	Game.init(document.getElementById('canvas'), scene);
-	Game.camera.centerPoint.x = 450; Game.camera.centerPoint.y = 190;
+	Game.init(canvas, scene);
+	Game.camera.centerPoint.x = canvas.width / 2; 
+    Game.camera.centerPoint.y = canvas.height / 2;
 }
 
 function handleImageSelect(evt) {
