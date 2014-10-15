@@ -3,7 +3,15 @@ function DropPieceLayerComponent(){}
 DropPieceLayerComponent.prototype = new Component();
 
 DropPieceLayerComponent.prototype.onMouseMove = function(x, y){
-	layer.movedObjects = new Array();
+	this.resetMovedObject();
+}
+
+DropPieceLayerComponent.prototype.onTouchMove = function(touchList){
+	this.resetMovedObject();
+}
+
+DropPieceLayerComponent.prototype.resetMovedObject = function(){
+	this.owner.movedObjects = new Array();	
 }
 
 DropPieceLayerComponent.prototype.getSystems = function(){

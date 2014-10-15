@@ -2,43 +2,53 @@ function DropPuzzlePieceComponent(){}
 
 DropPuzzlePieceComponent.prototype = new Component();
 
-DropPuzzlePieceComponent.prototype.onMouseUp = function(x, y, wich){
-	var point = MouseSystem.getNormalizedCoordinate(x, y);
-    x = point.x;
-    y = point.y;
-    var selected = layer.queryGameObjects(x, y, 2, 2, 20);
-    var objectSelected = selected[0] || null;
-    if(objectSelected != null &&
-       objectSelected.id == this.owner.id){
-    	if(this.owner.leftSocket != null
-    	   && this.owner.leftSocket.isJoined == false 
-    	   && this.owner.leftSocket.slave != null 
-    	   && this.owner.leftSocket.isColliding()){
-    		this.owner.leftSocket.isJoined = true;
-    		this.owner.leftSocket.slave.isJoined = true;
-    	}
-    	if(this.owner.rightSocket != null 
-    		     && this.owner.rightSocket.isJoined == false
-    		     && this.owner.rightSocket.slave != null 
-    		     && this.owner.rightSocket.isColliding()){
-    		this.owner.rightSocket.isJoined = true;
-    		this.owner.rightSocket.slave.isJoined = true;
-    	}
-    	if(this.owner.topSocket != null 
-    		     && this.owner.topSocket.isJoined == false
-    		     && this.owner.topSocket.slave != null 
-    		     && this.owner.topSocket.isColliding()){
-    		this.owner.topSocket.isJoined = true;
-    		this.owner.topSocket.slave.isJoined = true;
-    	}
-    	if(this.owner.bottomSocket != null 
-    		     && this.owner.bottomSocket.isJoined == false
-    		     && this.owner.bottomSocket.slave != null 
-    		     && this.owner.bottomSocket.isColliding()){
-    		this.owner.bottomSocket.isJoined = true;
-    		this.owner.bottomSocket.slave.isJoined = true;
-    	}
+DropPuzzlePieceComponent.prototype.testSocketColision = function(socket){
+    if(socket != null && socket.isJoined == false && socket.isColliding()){
+        this.fitSocket(socket);
+        socket.isJoined = true;
+        socket.slave.isJoined = true;
     }
+}
+
+DropPuzzlePieceComponent.prototype.fitSocket = function(socket){
+    var diffX = socket.slave.getCenterX() - socket.getCenterX();
+    var diffY = socket.slave.getCenterY() - socket.getCenterY();
+    var dropLayer = ComponentUtils.getComponent(layer, "DROP_PUZZLE_PIECE_COMPONENT");
+    dropLayer.resetMovedObject();
+    socket.parentPiece.addMoveAll(diffX, diffY, true);
+}
+
+DropPuzzlePieceComponent.prototype.onDropSockets = function(){
+    this.testSocketColision(this.owner.leftSocket);
+    this.testSocketColision(this.owner.rightSocket);
+    this.testSocketColision(this.owner.topSocket);
+    this.testSocketColision(this.owner.bottomSocket);
+}
+
+DropPuzzlePieceComponent.prototype.onDropSocketsJoined = function(socket){
+    if(socket != null && socket.isJoined == true){
+        var dropComponent = ComponentUtils.getComponent(socket.slave.parentPiece, "DROP_PUZZLE_PIECE_COMPONENT");
+        dropComponent.onDropSockets();
+    }
+}
+
+DropPuzzlePieceComponent.prototype.onDropPuzzlePiece = function(){
+    var dragComponent = ComponentUtils.getComponent(this.owner, "DRAGGABLE_COMPONENT");
+    if(dragComponent.dragging == true){
+        this.onDropSockets();
+    }
+    this.onDropSocketsJoined(this.owner.leftSocket);
+    this.onDropSocketsJoined(this.owner.rightSocket);
+    this.onDropSocketsJoined(this.owner.topSocket);
+    this.onDropSocketsJoined(this.owner.bottomSocket);
+}
+
+DropPuzzlePieceComponent.prototype.onMouseUp = function(x, y, wich){
+    this.onDropPuzzlePiece();
+}
+
+DropPuzzlePieceComponent.prototype.onTouchEnd = function(touchList){
+    this.onDropPuzzlePiece();
 }
 
 DropPuzzlePieceComponent.prototype.getSystems = function(){

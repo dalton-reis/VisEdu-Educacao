@@ -17,8 +17,8 @@ function createPieces(layer){
     for(var i=0; i<columns; i++){
     	var piecesAux = new Array(rows);
     	for(var j=0; j<rows; j++){
-    		var pieceObj = new PuzzlePieceObject().initialize(getRandomArbitrary(0, 1000), 
-    			                                              getRandomArbitrary(0, 550), 
+    		var pieceObj = new PuzzlePieceObject().initialize(getRandomArbitrary(0, 900), 
+    			                                              getRandomArbitrary(0, 380), 
     			                                              pieceWidth, 
     			                                              pieceHeight, 
     			                                              imgObj, 
@@ -103,7 +103,7 @@ function createPuzzle(){
     ComponentUtils.addComponent(layer, new DropPieceLayerComponent().initialize("red", "red"));
 
 	Game.init(document.getElementById('canvas'), scene);
-	Game.camera.centerPoint.x = 500; Game.camera.centerPoint.y = 275;
+	Game.camera.centerPoint.x = 450; Game.camera.centerPoint.y = 190;
 }
 
 function handleImageSelect(evt) {
