@@ -10,10 +10,11 @@ JSUtils.addMethod(PuzzleSocketObject.prototype, "initialize",
 		this.slave = null;
 		this.isJoined = false;
 		this.parentPiece = parentPiece;
+		this.enterFlg = 0;
 
 		//componentes
 		//TODO: Componente apenas para desenvolvimento, retirar antes da versão final.
-		ComponentUtils.addComponent(this, new BoxRenderComponent().initialize("red", "red"));
+		//ComponentUtils.addComponent(this, new BoxRenderComponent().initialize("red", "red"));
 		ComponentUtils.addComponent(this, new RigidBodyComponent().initialize(0, 1, false, false, 0, false, false));
 		
 		return this;

@@ -16,21 +16,11 @@ JSUtils.addMethod(PuzzlePieceRenderComponent.prototype, "initialize",
 );
 
 PuzzlePieceRenderComponent.prototype.onRender = function(context){
-	context.drawImage(this.image,
-				      this.offsetLeft * this.imgWidth, 
-				      this.offsetTop * this.imgHeight,
-				      this.imgWidth, 
-				      this.imgHeight,
-				      this.owner.getCenterX()-(this.imgWidth/2), 
-		              this.owner.getCenterY()-(this.imgHeight/2),
-		              this.imgWidth, 
-		              this.imgHeight);
+	var segX = ((this.owner.width / 5) * 1.1 * 5) / 2;
+    var segY = ((this.owner.height / 5) * 1.1 * 5) / 2;
 
-	context.strokeStyle = "gray";
-	context.strokeRect(this.owner.getCenterX()-(this.imgWidth/2), 
-		               this.owner.getCenterY()-(this.imgHeight/2), 
-			           this.imgWidth, 
-		               this.imgHeight);
+	this.owner.tileImage.position.x = this.owner.getCenterX() - segX;
+	this.owner.tileImage.position.y = this.owner.getCenterY() - segY;
 }
 
 PuzzlePieceRenderComponent.prototype.getSystems = function(){

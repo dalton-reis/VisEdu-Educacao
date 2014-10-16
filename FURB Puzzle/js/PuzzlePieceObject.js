@@ -11,6 +11,9 @@ JSUtils.addMethod(PuzzlePieceObject.prototype, "initialize",
 		this.rightSocket = null;
 		this.topSocket = null;
 		this.bottomSocket = null;
+		this.tileImage = null;
+		this.offsetLeft = offsetLeft;
+		this.offsetTop = offsetTop;
 
 		//componentes
 		ComponentUtils.addComponent(this, new DropPuzzlePieceComponent().initialize());
