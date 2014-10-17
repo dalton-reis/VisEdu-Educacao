@@ -1,88 +1,114 @@
+
+var SCENE_LEFT      = -5000;
+var SCENE_TOP       = -5000;
+var SCENE_WIDTH     = 5000;
+var SCENE_HEIGHT    = 5000;
+var CANVAS_ID       = 'canvas';
+var UPLOAD_ID       = 'imageUpload';
+var COLUMN_QUESTION = "Informe a quantidade de colunas!";
+var ROW_QUESTION    = "Informe a quantidade de linhas!";
+
 var layer = null;
 
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-function createPieces(layer, canvas){
-	var columns = window.prompt("Informe a quantidade de colunas!", 0);
-    var rows = window.prompt("Informe a quantidade de linhas!", 0);
-
-    var imgObj = AssetStore.getAsset("PUZZLE_IMAGE").getAssetInstance();
-    var pieceWidth = imgObj.width / columns;
-    var pieceHeight = imgObj.height / rows;
-
+function createPiecesArray(columns, rows, pieceWidth, pieceHeight) {
     var pieces = new Array(columns);
 
     for(var i=0; i<columns; i++){
-    	var piecesAux = new Array(rows);
-    	for(var j=0; j<rows; j++){
-    		var pieceObj = new PuzzlePieceObject().initialize(getRandomArbitrary(0, canvas.width), 
-    			                                              getRandomArbitrary(0, canvas.height), 
-    			                                              pieceWidth, 
-    			                                              pieceHeight, 
-    			                                              imgObj, 
-    			                                              i, 
-    			                                              j);
-			piecesAux[j] = pieceObj;
-    	}
-    	pieces[i] = piecesAux;
+        var piecesAux = new Array(rows);
+        for(var j=0; j<rows; j++){
+            var pieceObj = new PuzzlePieceObject().initialize(getRandomArbitrary(0, canvas.width), 
+                                                              getRandomArbitrary(0, canvas.height), 
+                                                              pieceWidth, 
+                                                              pieceHeight,
+                                                              i, 
+                                                              j);
+            piecesAux[j] = pieceObj;
+        }
+        pieces[i] = piecesAux;
     }
+
+    return pieces;
+}
+
+function createSockets(pieceObj, socket, otherPiece, otherSocket, hw1, hh1, hw2, hh2){
+    var index = (getRandomArbitrary(0, 10) % 2) == 0 ? 1 : -1;
+    pieceObj[socket] = new PuzzleSocketObject().initialize(pieceObj.getCenterX() + hw1, 
+                                                 pieceObj.getCenterY() + hh1, 
+                                                 pieceObj);
+    pieceObj[socket].enterFlg = index;
+
+    otherPiece[otherSocket] = new PuzzleSocketObject().initialize(otherPiece.getCenterX() + hw2, 
+                                                      otherPiece.getCenterY() + hh2, 
+                                                      otherPiece);
+    otherPiece[otherSocket].enterFlg = index;
+
+    pieceObj[socket].slave = otherPiece[otherSocket];
+    otherPiece[otherSocket].slave = pieceObj[socket];
+}
+
+function createPieces(canvas, imgData){
+	var columns = window.prompt(COLUMN_QUESTION, 0);
+    var rows = window.prompt(ROW_QUESTION, 0);
+
+    var imgObj = new Image();
+    imgObj.src = imgData;
+
+    var pieceWidth = imgObj.width / columns;
+    var pieceHeight = imgObj.height / rows;
+
+    var pieces = createPiecesArray(columns, rows, pieceWidth, pieceHeight);
+
+    var halfW = pieceWidth / 2;
+    var halfH = pieceHeight / 2;
 
     for(var i=0; i<columns; i++){
     	for(var j=0; j<rows; j++){
+
     		var pieceObj = pieces[i][j];
 
-    		var w = pieceWidth / 2;
-    		var h = pieceHeight / 2;
-
     		if(pieceObj.leftSocket == null && i > 0){
-                var index = (getRandomArbitrary(0, 10) % 2) == 0 ? 1 : -1;
-    			pieceObj.leftSocket = new PuzzleSocketObject().initialize(pieceObj.getCenterX() - w, pieceObj.getCenterY(), pieceObj);
-    		    pieceObj.leftSocket.enterFlg = index;
-
-    			var leftPiece = pieces[i-1][j];
-    			leftPiece.rightSocket = new PuzzleSocketObject().initialize(leftPiece.getCenterX() + w, leftPiece.getCenterY(), leftPiece);
-    		    leftPiece.rightSocket.enterFlg = index;
-
-    			pieceObj.leftSocket.slave = leftPiece.rightSocket;
-                leftPiece.rightSocket.slave = pieceObj.leftSocket;
+                createSockets(pieceObj, 
+                              'leftSocket', 
+                              pieces[i-1][j], 
+                              'rightSocket', 
+                              -halfW,
+                              0,
+                              halfW,
+                              0);
     		}
 			if(pieceObj.rightSocket == null && i < (columns-1)){
-                var index = (getRandomArbitrary(0, 10) % 2) == 0 ? 1 : -1;
-				pieceObj.rightSocket = new PuzzleSocketObject().initialize(pieceObj.getCenterX() + w, pieceObj.getCenterY(), pieceObj);
-			    pieceObj.rightSocket.enterFlg = index;
-
-				var rightPiece = pieces[i+1][j];
-				rightPiece.leftSocket = new PuzzleSocketObject().initialize(rightPiece.getCenterX() - w, rightPiece.getCenterY(), rightPiece);
-			    rightPiece.leftSocket.enterFlg = index;
-
-				pieceObj.rightSocket.slave = rightPiece.leftSocket;
-                rightPiece.leftSocket.slave = pieceObj.rightSocket;
+                createSockets(pieceObj, 
+                              'rightSocket', 
+                              pieces[i+1][j], 
+                              'leftSocket', 
+                              halfW,
+                              0,
+                              -halfW,
+                              0);
 			}
 			if(pieceObj.topSocket == null && j > 0){
-                var index = (getRandomArbitrary(0, 10) % 2) == 0 ? 1 : -1;
-				pieceObj.topSocket = new PuzzleSocketObject().initialize(pieceObj.getCenterX(), pieceObj.getCenterY() - h, pieceObj);
-			    pieceObj.topSocket.enterFlg = index;
-
-				var topPiece = pieces[i][j-1];
-				topPiece.bottomSocket = new PuzzleSocketObject().initialize(topPiece.getCenterX(), topPiece.getCenterY() + h, topPiece);
-			    topPiece.bottomSocket.enterFlg = index;
-
-				pieceObj.topSocket.slave = topPiece.bottomSocket;
-                topPiece.bottomSocket.slave = pieceObj.topSocket;
+                createSockets(pieceObj, 
+                              'topSocket', 
+                              pieces[i][j-1], 
+                              'bottomSocket', 
+                              0,
+                              -halfH,
+                              0,
+                              halfH);
 			}
 			if(pieceObj.bottomSocket == null && j < (rows-1)){
-                var index = (getRandomArbitrary(0, 10) % 2) == 0 ? 1 : -1;
-				pieceObj.bottomSocket = new PuzzleSocketObject().initialize(pieceObj.getCenterX(), pieceObj.getCenterY() + h, pieceObj);
-				pieceObj.bottomSocket.enterFlg = index;
-
-				var bottomPiece = pieces[i][j+1];
-				bottomPiece.topSocket = new PuzzleSocketObject().initialize(bottomPiece.getCenterX(), bottomPiece.getCenterY() - h, bottomPiece);
-			    bottomPiece.topSocket.enterFlg = index;
-
-				pieceObj.bottomSocket.slave = bottomPiece.topSocket;
-                bottomPiece.topSocket.slave = pieceObj.bottomSocket;
+                createSockets(pieceObj, 
+                              'bottomSocket', 
+                              pieces[i][j+1], 
+                              'topSocket', 
+                              0,
+                              halfH,
+                              0,
+                              -halfH);
 			}
     		
     		layer.addGameObject(pieceObj);
@@ -102,7 +128,7 @@ function createPieces(layer, canvas){
     	}
     }
 
-    var originalRaster = new paper.Raster(AssetStore.getAsset("PUZZLE_IMAGE").getAssetInstance().src);
+    var originalRaster = new paper.Raster(imgData);
     originalRaster.visible = false;
 
     for(var i=0; i<columns; i++){
@@ -191,40 +217,43 @@ function createPieces(layer, canvas){
     }
 }
 
-function createPuzzle(){
-    var canvas = document.getElementById('canvas');
+function createPuzzle(imgData){
+    var canvas = document.getElementById(CANVAS_ID);
 
     paper.setup(canvas);
 
 	layer = new Layer().initialize();
-    var scene = new Scene().initialize(-5000, -5000, 5000, 5000);
 
-    createPieces(layer, canvas);
+    var scene = new Scene().initialize(SCENE_LEFT, 
+                                       SCENE_TOP, 
+                                       SCENE_WIDTH, 
+                                       SCENE_HEIGHT);
+
+    createPieces(canvas, imgData);
 
     scene.addLayer(layer);
+
 	layer.setGravity(0);
 
-    ComponentUtils.addComponent(layer, new DropPieceLayerComponent().initialize("red", "red"));
+    ComponentUtils.addComponent(layer, new DropPieceLayerComponent().initialize());
 
 	Game.init(canvas, scene);
+
 	Game.camera.centerPoint.x = canvas.width / 2; 
     Game.camera.centerPoint.y = canvas.height / 2;
 
     RenderSystem.clearCanvas = false;
+
     ComponentUtils.addComponent(Game, new PaperJsRenderComponent().initialize());
 }
 
 function handleImageSelect(evt) {
-	var file = document.getElementById('imageUpload').files[0];
+	var file = document.getElementById(UPLOAD_ID).files[0];
 	
 	var reader  = new FileReader();
 
-	reader.onloadend = function () {
-		if(AssetStore.getAsset("PUZZLE_IMAGE") == null){
-			AssetStore.addAsset(new Asset().initialize("PUZZLE_IMAGE", "", "IMAGE"));
-		}
-		AssetStore.getAsset("PUZZLE_IMAGE").getAssetInstance().src = reader.result;
-		createPuzzle();
+	reader.onloadend = function () {;
+		createPuzzle(reader.result);
   	}
 
   	if (file) {
@@ -233,5 +262,5 @@ function handleImageSelect(evt) {
 }
 
 window.onload = function(){
-	document.getElementById('imageUpload').addEventListener('change', handleImageSelect, false);
+	document.getElementById(UPLOAD_ID).addEventListener('change', handleImageSelect, false);
 }

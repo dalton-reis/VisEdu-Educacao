@@ -14,7 +14,7 @@ DropPuzzlePieceComponent.prototype.fitSocket = function(socket){
     var diffX = socket.slave.getCenterX() - socket.getCenterX();
     var diffY = socket.slave.getCenterY() - socket.getCenterY();
     var dropLayer = ComponentUtils.getComponent(layer, "DROP_PUZZLE_PIECE_COMPONENT");
-    dropLayer.resetMovedObject();
+    dropLayer.resetMovedObjects();
     socket.parentPiece.addMoveAll(diffX, diffY, true);
 }
 

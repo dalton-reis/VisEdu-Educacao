@@ -3,7 +3,7 @@ function PuzzlePieceObject(){}
 PuzzlePieceObject.prototype = new BoxObject();
 
 JSUtils.addMethod(PuzzlePieceObject.prototype, "initialize", 
-	function(x, y, width, height, imageObj, offsetLeft, offsetTop){
+	function(x, y, width, height, offsetLeft, offsetTop){
 		this.initialize(x, y, width, height);
 		
 		//atributos
@@ -18,7 +18,7 @@ JSUtils.addMethod(PuzzlePieceObject.prototype, "initialize",
 		//componentes
 		ComponentUtils.addComponent(this, new DropPuzzlePieceComponent().initialize());
 		ComponentUtils.addComponent(this, new DraggableComponent().initialize());
-		ComponentUtils.addComponent(this, new PuzzlePieceRenderComponent().initialize(imageObj, width, height, offsetLeft, offsetTop));
+		ComponentUtils.addComponent(this, new PuzzlePieceRenderComponent().initialize());
 		ComponentUtils.addComponent(this, new RigidBodyComponent().initialize(0, 1, false, false, 0, false, false));
 		
 		return this;
