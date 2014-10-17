@@ -53,7 +53,7 @@ FpsMeterComponent.prototype.onRender = function(context){
 	this.fpsCount++;
 	context.fillStyle = "red";
 	context.font = "bold 20px Arial";
-	context.fillText("FPS: "+this.currentFps, 20, 30);
+	context.fillText("FPS: "+this.currentFps + " Objs: " + Game.scene.getAmountOfGameObjects(), 20, 30);
 }
 
 

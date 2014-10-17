@@ -59,3 +59,14 @@ Scene.prototype.removeLayer = function(layer){
 * @method onLoad
 */
 Scene.prototype.onLoad = function(){}
+
+Scene.prototype.getAmountOfGameObjects = function(){
+	var amount = 0;
+	for(var i in this.listLayers){
+		var layer = this.listLayers[i];
+		if ( layer && layer.listGameObjects && layer.listGameObjects.length ) {
+			amount += layer.listGameObjects.length;
+		}
+	}	
+	return amount;
+}
