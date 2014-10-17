@@ -1,4 +1,3 @@
-
 var SCENE_LEFT      = -5000;
 var SCENE_TOP       = -5000;
 var SCENE_WIDTH     = 5000;
@@ -7,6 +6,10 @@ var CANVAS_ID       = 'canvas';
 var UPLOAD_ID       = 'imageUpload';
 var COLUMN_QUESTION = "Informe a quantidade de colunas!";
 var ROW_QUESTION    = "Informe a quantidade de linhas!";
+var SOCKET_LEFT     = "leftSocket";
+var SOCKET_RIGHT    = "rightSocket";
+var SOCKET_TOP      = "topSocket";
+var SOCKET_BOTTOM   = "bottomSocket";
 
 var layer = null;
 
@@ -71,44 +74,16 @@ function createPieces(canvas, imgData){
     		var pieceObj = pieces[i][j];
 
     		if(pieceObj.leftSocket == null && i > 0){
-                createSockets(pieceObj, 
-                              'leftSocket', 
-                              pieces[i-1][j], 
-                              'rightSocket', 
-                              -halfW,
-                              0,
-                              halfW,
-                              0);
+                createSockets(pieceObj, SOCKET_LEFT, pieces[i-1][j], SOCKET_RIGHT, -halfW, 0, halfW, 0);
     		}
 			if(pieceObj.rightSocket == null && i < (columns-1)){
-                createSockets(pieceObj, 
-                              'rightSocket', 
-                              pieces[i+1][j], 
-                              'leftSocket', 
-                              halfW,
-                              0,
-                              -halfW,
-                              0);
+                createSockets(pieceObj, SOCKET_RIGHT, pieces[i+1][j], SOCKET_LEFT, halfW, 0, -halfW, 0);
 			}
 			if(pieceObj.topSocket == null && j > 0){
-                createSockets(pieceObj, 
-                              'topSocket', 
-                              pieces[i][j-1], 
-                              'bottomSocket', 
-                              0,
-                              -halfH,
-                              0,
-                              halfH);
+                createSockets(pieceObj, SOCKET_TOP, pieces[i][j-1], SOCKET_BOTTOM, 0, -halfH, 0, halfH);
 			}
 			if(pieceObj.bottomSocket == null && j < (rows-1)){
-                createSockets(pieceObj, 
-                              'bottomSocket', 
-                              pieces[i][j+1], 
-                              'topSocket', 
-                              0,
-                              halfH,
-                              0,
-                              -halfH);
+                createSockets(pieceObj, SOCKET_BOTTOM, pieces[i][j+1], SOCKET_TOP, 0, halfH, 0, -halfH);
 			}
     		
     		layer.addGameObject(pieceObj);
