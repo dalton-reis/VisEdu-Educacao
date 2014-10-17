@@ -18,5 +18,3 @@ Furb:
 "ws://campeche.inf.furb.br:8094/lotkaVolterraWeb/server"
 server:
 "ws://localhost:8081/lotkaVolterraWeb/server"
-
-prompt("Informe a quantidade de elementos desejada.", "5")

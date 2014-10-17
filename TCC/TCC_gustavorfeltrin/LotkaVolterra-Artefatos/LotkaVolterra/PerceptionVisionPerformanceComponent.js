@@ -15,10 +15,17 @@ PerceptionVisionPerformanceComponent.prototype.createPerceptionMessage = functio
 		render = ComponentUtils.getComponent(gameObjectPerceived, "POLYGON_RENDER_COMPONENT");		
 	}	
 	if (render) {
-		var token = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT").getToken();
-		var now = new Date();
-		var msg = "onPercept(\"" + render.fillStyle + "\")";
+		//var token = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT").getToken();
+		var perceptions = [];
+		perceptions.push( {"perception": "onPercept(\"" + render.fillStyle + "\")"} );
 
+		var obj = new Object();
+		obj.origin = this.owner.id;
+		obj.target = gameObjectPerceived.id;
+		obj.perceptions = perceptions;
+		obj.action = null;
+		var msg = JSON.stringify(obj);
+		var now = new Date();
 		this.queue.push(now);
 		//console.log( "[" + token + ": send @ " + now.toLocaleString() + "] " + msg );
 		return msg;
@@ -29,15 +36,17 @@ PerceptionVisionPerformanceComponent.prototype.createPerceptionMessage = functio
 PerceptionVisionPerformanceComponent.prototype.processesMessagesReceived = function( message ) {
 	var now = new Date();
 	var sendDate = this.queue.shift();
-	var token = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT").getToken();
+	//var token = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT").getToken();
 	//console.log( "[" + token + ": receive @ " + now.toLocaleString() + "] " + message );
 	var reasoningTime = Math.abs(now-sendDate)/1000;
-	console.log( "[" + token + ": reasoning time] " + reasoningTime);
+	//console.log( "[" + token + ": reasoning time] " + reasoningTime);
 	if ( this.averageReasoningTime==null ) {
 		this.averageReasoningTime = reasoningTime;
 	} else {
 		this.averageReasoningTime = (this.averageReasoningTime+reasoningTime)/2;
 	}
+	message = JSON.parse(message);
+	message = message.action;	
 	if ( this.owner.parent ) {
 		var arrMsg = message.split("(");
 		arrMsg = arrMsg[1].split(")")[0];

@@ -3,6 +3,8 @@ function PerceptionVisionComponent(){}
 PerceptionVisionComponent.prototype = new Component();
 
 PerceptionVisionComponent.prototype.HAND_SHAKE = "HAND_SHAKE";
+PerceptionVisionComponent.prototype.isOpen = false;
+PerceptionVisionComponent.prototype.timeOfInstantiation = null;
 
 JSUtils.addMethod(PerceptionVisionComponent.prototype, "initialize", 
 	function(uri){
@@ -10,6 +12,7 @@ JSUtils.addMethod(PerceptionVisionComponent.prototype, "initialize",
 		var pvc = this;
 		if ('WebSocket' in window || 'MozWebSocket' in window) {
 			this.webSocket = new WebSocket(uri);
+			this.timeOfInstantiation = Date.now();
 		} else {
 			alert("Browser não suporta WebSocket");
 			return this;
@@ -38,7 +41,11 @@ PerceptionVisionComponent.prototype.onPercept = function( gameObjectPerceived ) 
 	if (this.webSocket!=undefined) {
 		var message = this.createPerceptionMessage(gameObjectPerceived);
 		if ( message && !StringUtils.isEmpty(message) ) {
-			this.webSocket.send( message );
+			if ( this.isOpen ) {
+				this.webSocket.send( message );
+			} else {
+				console.warn("Mensagem não enviada: Socket não está aberta! " + message);
+			}
 		}
 	}
 }
@@ -46,6 +53,7 @@ PerceptionVisionComponent.prototype.onPercept = function( gameObjectPerceived ) 
 PerceptionVisionComponent.prototype.createPerceptionMessage = function( gameObjectPerceived ) { return null; }
 
 PerceptionVisionComponent.prototype.onClose = function(evt) {
+	this.isOpen = false;
 	console.log( "onClose: " + evt.data );	
 }
 
@@ -55,6 +63,12 @@ PerceptionVisionComponent.prototype.onError = function(evt) {
 }
 
 PerceptionVisionComponent.prototype.onOpen = function(evt) {
+	if ( this.timeOfInstantiation !=null ) {
+		var now = Date.now();
+		console.log("time to establish connection: " + Math.abs(now-this.timeOfInstantiation)/1000);	
+		this.timeOfInstantiation = null;
+	}
+	this.isOpen = true;	
 	this.webSocket.send( this.HAND_SHAKE );
 }
 
