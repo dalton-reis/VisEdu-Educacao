@@ -25,7 +25,7 @@ AgentAverageReasoningTimeComponent.prototype.onRender = function(context){
 			this.lastUpdate = now;
 			var pvpc = ComponentUtils.getComponent(this.currentAgent.frustum, "PERCEPTION_VISION_PERFORMANCE_COMPONENT");
 			this.reasoningAverage = Math.round(pvpc.averageReasoningTime * 10000) / 10000;
-			this.agentY = this.currentAgent.origin.y;
+			this.agentY = Math.round(this.currentAgent.origin.y * 10000) / 10000;
 		}		
 	}
 	context.fillStyle = "blue";

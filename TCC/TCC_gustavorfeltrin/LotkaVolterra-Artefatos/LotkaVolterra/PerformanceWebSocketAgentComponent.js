@@ -2,27 +2,27 @@ function PerformanceWebSocketAgentComponent(){}
 
 PerformanceWebSocketAgentComponent.prototype = new Component();
 PerformanceWebSocketAgentComponent.prototype.direita = true;
-PerformanceWebSocketAgentComponent.prototype.linearVelocityX = null;
 PerformanceWebSocketAgentComponent.prototype.minX = -100;
 PerformanceWebSocketAgentComponent.prototype.maxX = 1000;
 PerformanceWebSocketAgentComponent.prototype.mudou = false;
 PerformanceWebSocketAgentComponent.prototype.angle = Math.PI / 1;
-PerformanceWebSocketAgentComponent.prototype.maisObstaculos = false;
 PerformanceWebSocketAgentComponent.prototype.visionRange = 100;
 
 JSUtils.addMethod(PerformanceWebSocketAgentComponent.prototype, "initialize", 
-	function(agentHeight, y, uri, mind){
+	function(agentHeight, y, uri, mind, velocity, defaultAgentSize, qtdObstaculos){
 		this.initialize();
 		this.agentHeight = agentHeight;
 		this.y = y;
 		this.uri = uri;
 		this.mind = mind;
+		this.velocity = velocity;
+		this.defaultAgentSize = defaultAgentSize;
+		this.qtdObstaculos = qtdObstaculos;
 		return this;
 	}
 );
 
 PerformanceWebSocketAgentComponent.prototype.onLoad = function(){
-	this.linearVelocityX = Math.floor(Math.random() * (300 - 200 + 1)) + 200;
 	var pwsc = this;
 
 	/* Criação do objeto que representa o frustum de visão do agente */
@@ -34,21 +34,25 @@ PerformanceWebSocketAgentComponent.prototype.onLoad = function(){
 	var boFrustumRbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
 	boFrustumRbc.onUpdate = function(deltaTime){
 		if ( pwsc.direita ) {
-			this.owner.setLinearVelocityX( pwsc.linearVelocityX );
+			this.owner.setLinearVelocityX( pwsc.velocity );
 		} else {
-			this.owner.setLinearVelocityX( pwsc.linearVelocityX * -1 );
+			this.owner.setLinearVelocityX( pwsc.velocity * -1 );
 		}
 		if (pwsc.mudou) {
+			var compl = pwsc.visionRange/2;
+			if ( !pwsc.defaultAgentSize ) {
+				compl += pwsc.agentHeight/2;
+			}
 			if (pwsc.direita) {
 				var rotate = ComponentUtils.getComponent(this.owner, "ROTATE_COMPONENT");
 				rotate.setRotate( rotate.getAngle() + pwsc.angle);
 				var translate = ComponentUtils.getComponent(this.owner, "TRANSLATE_COMPONENT");
-				translate.setTranslate( 1 * ( this.owner.parent.getCenterX()-this.owner.getCenterX() + pwsc.visionRange/2 + pwsc.agentHeight/2), 0);				
+				translate.setTranslate( 1 * ( this.owner.parent.getCenterX()-this.owner.getCenterX() + compl), 0);				
 			} else {
 				var rotate = ComponentUtils.getComponent(this.owner, "ROTATE_COMPONENT");
 				rotate.setRotate( rotate.getAngle() - pwsc.angle);
 				var translate = ComponentUtils.getComponent(this.owner, "TRANSLATE_COMPONENT");
-				translate.setTranslate( -1 * (this.owner.getCenterX()-this.owner.parent.getCenterX() + pwsc.visionRange/2 + pwsc.agentHeight/2 ), 0);
+				translate.setTranslate( -1 * (this.owner.getCenterX()-this.owner.parent.getCenterX() + compl), 0);
 			}
 			pwsc.mudou = false;
 		}
@@ -82,9 +86,9 @@ PerformanceWebSocketAgentComponent.prototype.onLoad = function(){
 	}
 	rbc.onUpdate = function(deltaTime){
 		if ( pwsc.direita ) {
-			this.owner.setLinearVelocityX( pwsc.linearVelocityX );
+			this.owner.setLinearVelocityX( pwsc.velocity );
 		} else {
-			this.owner.setLinearVelocityX( pwsc.linearVelocityX * -1 );
+			this.owner.setLinearVelocityX( pwsc.velocity * -1 );
 		}
 		if (pwsc.direita && this.owner.getCenterX() > pwsc.maxX) {
 			pwsc.direita = false;
@@ -114,13 +118,15 @@ PerformanceWebSocketAgentComponent.prototype.onLoad = function(){
 }
 
 PerformanceWebSocketAgentComponent.prototype.createObjects = function(y){
-
+	if ( this.qtdObstaculos == 0 ) {
+		return;
+	}
 	var obstaclesSize = this.agentHeight/2;
 	var radius = obstaclesSize/2;
 	var edge = obstaclesSize/2;
 	var edgeNeg = edge * -1;
 	
-	if ( this.maisObstaculos ) {
+	if ( this.qtdObstaculos == 6 ) {
 		var obj1Rbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
 		var obj1 = new CircleObject().initialize(100, y, radius, ColorUtils.randomColor(), "black");
 		ComponentUtils.addComponent(obj1, obj1Rbc);

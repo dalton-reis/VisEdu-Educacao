@@ -12,9 +12,15 @@ JSUtils.addMethod(PerformanceWebSocketComponent.prototype, "initialize",
 	}
 );
 
-PerformanceWebSocketComponent.prototype.onLoad = function(){	
+PerformanceWebSocketComponent.prototype.onLoad = function(){
 	var minValue = 1;
-	var maxValue = 50;
+	/* { 1 agente ~= 5 objetos gráficos }
+	205 agentes lança "Uncaught TypeError: Cannot read property 'GetNext' of undefined [b2BroadPhase.js:157]"
+
+	Com 204 agentes são gerados até 1020 objetos na tela, e a Box2dJS aparentemente 
+	tem uma limitação em fazer proxy de até 1024 objetos.
+	 */
+	var maxValue = 204;
 	do {
 		var qtd = prompt("Informe a quantidade de agentes (" + minValue + ".." + maxValue + ")", "50");
 	}
@@ -31,18 +37,37 @@ PerformanceWebSocketComponent.prototype.onLoad = function(){
 	}
 	*/
 
+	do {
+		var done = false;
+		var qtdObstaculos = prompt("Informe a quantidade de obst&aacute;culos (0, 3, 6)", "3");
+		if ( qtdObstaculos && !isNaN(qtdObstaculos) ) {
+			qtdObstaculos = parseInt(qtdObstaculos);
+			if ( qtdObstaculos == 0 || qtdObstaculos == 3 || qtdObstaculos == 6 ) {
+				done = true;
+			}
+		}
+	}
+	while ( !done )
+
 	var mind = confirm("Utilizar mente?");
-	
+	var fixedSpeed = confirm("Velocidade fixa?");
+
 	var ocupy = this.canvasHeight * 0.9 / qtd;
 	var space = this.canvasHeight * 0.1 / qtd;
 	var jumpY = (ocupy + space);
 	var agentHeight = 30;
+	var defaultAgentSize = true;
 	if ( ((agentHeight+space) * qtd) > this.canvasHeight) {
 		agentHeight = ocupy;
+		defaultAgentSize = false;
 	}
 	for (var i = 1; i <= qtd; i++) {
 		var y = (jumpY * i) -90;
-		var pwsac = new PerformanceWebSocketAgentComponent().initialize(agentHeight, y, this.uri, mind);
+		var velocity = 200;
+		if ( !fixedSpeed ) {
+			velocity = Math.floor(Math.random() * (300 - 200 + 1)) + 200;
+		}
+		var pwsac = new PerformanceWebSocketAgentComponent().initialize(agentHeight, y, this.uri, mind, velocity, defaultAgentSize, qtdObstaculos);
 		pwsac.onLoad();
 	}
 }
