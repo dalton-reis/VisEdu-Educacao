@@ -40,24 +40,24 @@
     "type": "COMPONENT",
     "displayNodeName": "PerformanceWebSocketComponent",
     "jsVarName": "layerPwsc",
-    "jsInitialFunction": "new PerformanceWebSocketComponent().initialize(\"ws://localhost:8081/lotkaVolterraWeb/ws?agent\u003dperformance\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir(), prompt(\"Informe a quantidade de agentes\", \"10\"), confirm(\"Utilizar mente?\"));",
+    "jsInitialFunction": "new PerformanceWebSocketComponent().initialize(\"ws://localhost:8081/lotkaVolterraWeb/ws?agent\u003dperformance\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir());",
     "jsCode": ""
   },
   {
-    "id": "4aaa72ef-39c0-4ecf-b16a-6da7b50b807b",
-    "idParent": "f28f38df-09fd-4a8b-96f7-3bf5620a5eea",
+    "id": "d106db98-1ec4-44c0-8c95-e767841afff7",
+    "idParent": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
     "type": "COMPONENT",
     "displayNodeName": "AgentAverageReasoningTimeComponent",
-    "jsVarName": "sceneAartc",
+    "jsVarName": "gameAartc",
     "jsInitialFunction": "new AgentAverageReasoningTimeComponent().initialize();",
     "jsCode": ""
   },
   {
-    "id": "19798bcf-b683-446e-a7ee-e499a6b59fa4",
+    "id": "f6ad47b8-bf25-4e11-ab77-ca7ce729e904",
     "idParent": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
     "type": "COMPONENT",
     "displayNodeName": "FpsMeterComponent",
-    "jsVarName": "sceneFmc",
+    "jsVarName": "gameFmc",
     "jsInitialFunction": "new FpsMeterComponent().initialize();",
     "jsCode": ""
   }

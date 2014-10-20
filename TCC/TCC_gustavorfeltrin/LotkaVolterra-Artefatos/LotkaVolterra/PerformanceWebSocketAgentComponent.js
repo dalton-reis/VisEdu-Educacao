@@ -25,6 +25,55 @@ PerformanceWebSocketAgentComponent.prototype.onLoad = function(){
 	this.linearVelocityX = Math.floor(Math.random() * (300 - 200 + 1)) + 200;
 	var pwsc = this;
 
+	/* Criação do objeto que representa o frustum de visão do agente */
+	var boFrustum = new PolygonObject().initialize(this.minX - this.agentHeight/2,  this.y,[
+		new Point2D().initialize( 0, 0),
+		new Point2D().initialize( this.visionRange, - 1 * (this.agentHeight/2) ),
+		new Point2D().initialize( this.visionRange, this.agentHeight/2 )],
+		"rgba(255, 0, 0, 0.3)","rgba(0, 0, 0, 0.3)");
+	var boFrustumRbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
+	boFrustumRbc.onUpdate = function(deltaTime){
+		if ( pwsc.direita ) {
+			this.owner.setLinearVelocityX( pwsc.linearVelocityX );
+		} else {
+			this.owner.setLinearVelocityX( pwsc.linearVelocityX * -1 );
+		}
+		if (pwsc.mudou) {
+			if (pwsc.direita) {
+				var rotate = ComponentUtils.getComponent(this.owner, "ROTATE_COMPONENT");
+				rotate.setRotate( rotate.getAngle() + pwsc.angle);
+				var translate = ComponentUtils.getComponent(this.owner, "TRANSLATE_COMPONENT");
+				translate.setTranslate( 1 * ( this.owner.parent.getCenterX()-this.owner.getCenterX() + pwsc.visionRange/2 + pwsc.agentHeight/2), 0);				
+			} else {
+				var rotate = ComponentUtils.getComponent(this.owner, "ROTATE_COMPONENT");
+				rotate.setRotate( rotate.getAngle() - pwsc.angle);
+				var translate = ComponentUtils.getComponent(this.owner, "TRANSLATE_COMPONENT");
+				translate.setTranslate( -1 * (this.owner.getCenterX()-this.owner.parent.getCenterX() + pwsc.visionRange/2 + pwsc.agentHeight/2 ), 0);
+			}
+			pwsc.mudou = false;
+		}
+		var vision = ComponentUtils.getComponent(this.owner, "PERCEPTION_VISION_PERFORMANCE_COMPONENT");
+		if ( vision ) {
+			var render = ComponentUtils.getComponent(this.owner, "POLYGON_RENDER_COMPONENT");
+			if ( vision.isOpen ) {
+				render.fillStyle = "rgba(255, 255, 0, 0.3)";
+			} else {
+				render.fillStyle = "rgba(255, 0, 0, 0.5)";
+			}
+		}
+
+	}
+	ComponentUtils.addComponent(boFrustum, boFrustumRbc);	
+	var boFrustumTc = new TokenComponent().initialize("PERFORMANCE" + this.y +"_VISION");
+	ComponentUtils.addComponent(boFrustum, boFrustumTc);
+	if ( this.mind ) {
+		var boFrustumPvc = new PerceptionVisionPerformanceComponent().initialize(this.uri);
+		ComponentUtils.addComponent(boFrustum, boFrustumPvc);
+	} else {
+		var boFrustumSc = new SensorComponent().initialize();
+		ComponentUtils.addComponent(boFrustum, boFrustumSc);
+	}
+
 	/* Criação do objeto que representa o agente */
 	var bo = new BoxObject().initialize(this.minX, this.y, this.agentHeight, this.agentHeight, "green", "black");
 	var rbc = new RigidBodyComponent().initialize(0, 1, true, false, 0);
@@ -54,46 +103,8 @@ PerformanceWebSocketAgentComponent.prototype.onLoad = function(){
 	ComponentUtils.addComponent(bo, rbc);
 	var tc = new TokenComponent().initialize("PERFORMANCE" + this.y);
 	ComponentUtils.addComponent(bo, tc);
-	
-	/* Criação do objeto que representa o frustum de visão do agente */
-	var boFrustum = new PolygonObject().initialize(this.minX - this.agentHeight/2,  this.y,[
-		new Point2D().initialize( 0, 0),
-		new Point2D().initialize( this.visionRange, - 1 * (this.agentHeight/2) ),
-		new Point2D().initialize( this.visionRange, this.agentHeight/2 )],
-		"rgba(255, 255, 0, 0.3)","rgba(0, 0, 0, 0.3)");
-	var boFrustumRbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
-	// FIXME trocar a cor do agente, vermelho quado a mente estiver OFF.
-	boFrustumRbc.onUpdate = function(deltaTime){
-		if ( pwsc.direita ) {
-			this.owner.setLinearVelocityX( pwsc.linearVelocityX );
-		} else {
-			this.owner.setLinearVelocityX( pwsc.linearVelocityX * -1 );
-		}
-		if (pwsc.mudou) {
-			if (pwsc.direita) {
-				var rotate = ComponentUtils.getComponent(this.owner, "ROTATE_COMPONENT");
-				rotate.setRotate( rotate.getAngle() + pwsc.angle);
-				var translate = ComponentUtils.getComponent(this.owner, "TRANSLATE_COMPONENT");
-				translate.setTranslate( 1 * (this.owner.parent.getCenterX()-this.owner.getCenterX() + pwsc.visionRange/2 ), 0);
-			} else {
-				var rotate = ComponentUtils.getComponent(this.owner, "ROTATE_COMPONENT");
-				rotate.setRotate( rotate.getAngle() - pwsc.angle);
-				var translate = ComponentUtils.getComponent(this.owner, "TRANSLATE_COMPONENT");
-				translate.setTranslate( -1 * (this.owner.getCenterX()-this.owner.parent.getCenterX() + pwsc.visionRange/2 ), 0);
-			}
-			pwsc.mudou = false;
-		}
-	}
-	ComponentUtils.addComponent(boFrustum, boFrustumRbc);	
-	var boFrustumTc = new TokenComponent().initialize("PERFORMANCE" + this.y +"_VISION");
-	ComponentUtils.addComponent(boFrustum, boFrustumTc);
-	if ( this.mind ) {
-		var boFrustumPvc = new PerceptionVisionPerformanceComponent().initialize(this.uri);
-		ComponentUtils.addComponent(boFrustum, boFrustumPvc);
-	} else {
-		var boFrustumSc = new SensorComponent().initialize();
-		ComponentUtils.addComponent(boFrustum, boFrustumSc);
-	}
+
+	/* Relaciona agente e frustum */
 	boFrustum.parent = bo;
 	bo.frustum = boFrustum;
 
@@ -111,7 +122,7 @@ PerformanceWebSocketAgentComponent.prototype.createObjects = function(y){
 	
 	if ( this.maisObstaculos ) {
 		var obj1Rbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
-		var obj1 = new CircleObject().initialize(100, y, radius, ColorUtils.randomColor2(), "black");
+		var obj1 = new CircleObject().initialize(100, y, radius, ColorUtils.randomColor(), "black");
 		ComponentUtils.addComponent(obj1, obj1Rbc);
 		layer.addGameObject(obj1);
 
@@ -121,23 +132,23 @@ PerformanceWebSocketAgentComponent.prototype.createObjects = function(y){
 			new Point2D().initialize(  0,edgeNeg),
 			new Point2D().initialize( edge,  0),
 			new Point2D().initialize(  0, edge)],
-			ColorUtils.randomColor2(),"black");
+			ColorUtils.randomColor(),"black");
 		ComponentUtils.addComponent(obj3, obj3Rbc);
 		layer.addGameObject(obj3);
 
 		var obj5Rbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
-		var obj5 = new BoxObject().initialize(700, y, obstaclesSize, obstaclesSize, ColorUtils.randomColor2(), "black");
+		var obj5 = new BoxObject().initialize(700, y, obstaclesSize, obstaclesSize, ColorUtils.randomColor(), "black");
 		ComponentUtils.addComponent(obj5, obj5Rbc);
 		layer.addGameObject(obj5);
 	}
 
 	var obj2Rbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
-	var obj2 = new BoxObject().initialize(250, y, obstaclesSize, obstaclesSize, ColorUtils.randomColor2(), "black");
+	var obj2 = new BoxObject().initialize(250, y, obstaclesSize, obstaclesSize, ColorUtils.randomColor(), "black");
 	ComponentUtils.addComponent(obj2, obj2Rbc);
 	layer.addGameObject(obj2);
 
 	var obj4Rbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
-	var obj4 = new CircleObject().initialize(550, y, radius, ColorUtils.randomColor2(), "black");
+	var obj4 = new CircleObject().initialize(550, y, radius, ColorUtils.randomColor(), "black");
 	ComponentUtils.addComponent(obj4, obj4Rbc);
 	layer.addGameObject(obj4);
 
@@ -147,7 +158,7 @@ PerformanceWebSocketAgentComponent.prototype.createObjects = function(y){
 		new Point2D().initialize(  0,edgeNeg),
 		new Point2D().initialize( edge,  0),
 		new Point2D().initialize(  0, edge)],
-		ColorUtils.randomColor2(),"black");
+		ColorUtils.randomColor(),"black");
 	ComponentUtils.addComponent(obj6, obj6Rbc);
 	layer.addGameObject(obj6);
 

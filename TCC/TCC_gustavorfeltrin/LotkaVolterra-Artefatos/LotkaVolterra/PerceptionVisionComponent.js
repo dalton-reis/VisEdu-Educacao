@@ -59,7 +59,7 @@ PerceptionVisionComponent.prototype.onClose = function(evt) {
 
 PerceptionVisionComponent.prototype.onError = function(evt) {
 	console.log("onError: " + evt.data);
-	alert("onError: " + evt.data);	
+	//alert("onError: " + evt.data);	
 }
 
 PerceptionVisionComponent.prototype.onOpen = function(evt) {
