@@ -12,6 +12,9 @@ var SOCKET_TOP      = "topSocket";
 var SOCKET_BOTTOM   = "bottomSocket";
 
 var layer = null;
+var originalRaster = null;
+var socketsCount = 0;
+var currentSocketsCount = 0;
 
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
@@ -51,11 +54,16 @@ function createSockets(pieceObj, socket, otherPiece, otherSocket, hw1, hh1, hw2,
 
     pieceObj[socket].slave = otherPiece[otherSocket];
     otherPiece[otherSocket].slave = pieceObj[socket];
+
+    socketsCount += 2;
 }
 
 function createPieces(canvas, imgData){
 	var columns = window.prompt(COLUMN_QUESTION, 0);
     var rows = window.prompt(ROW_QUESTION, 0);
+
+    socketsCount = 0;
+    currentSocketsCount = 0;
 
     var imgObj = new Image();
     imgObj.src = imgData;
@@ -103,7 +111,7 @@ function createPieces(canvas, imgData){
     	}
     }
 
-    var originalRaster = new paper.Raster(imgData);
+    originalRaster = new paper.Raster(imgData);
     originalRaster.visible = false;
 
     for(var i=0; i<columns; i++){
@@ -175,19 +183,7 @@ function createPieces(canvas, imgData){
             var group = new paper.Group([path, raster]);
             group.clipped = true;
 
-            var segX = (pieceObj.width / 5) * 1.1 * 5;
-            var segY = (pieceObj.height / 5) * 1.1 * 5;
-
-            var groupRaster = group.rasterize();
-            pieceObj.tileImage = groupRaster.getSubRaster(new paper.Rectangle(
-                                                                               px - segX,
-                                                                               py - segY,
-                                                                               pieceObj.width + segX,
-                                                                               pieceObj.height + segY
-                                                                              ));
-            pieceObj.visible = true;
-            raster.visible = false;
-            groupRaster.visible = false;
+            pieceObj.tileImage = group;
         }
     }
 }
@@ -227,7 +223,7 @@ function handleImageSelect(evt) {
 	
 	var reader  = new FileReader();
 
-	reader.onloadend = function () {;
+	reader.onloadend = function () {
 		createPuzzle(reader.result);
   	}
 

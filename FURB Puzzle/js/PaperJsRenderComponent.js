@@ -2,6 +2,15 @@ function PaperJsRenderComponent(){}
 
 PaperJsRenderComponent.prototype = new Component();
 
+PaperJsRenderComponent.prototype.finished = false;
+
+PaperJsRenderComponent.prototype.onUpdate = function(delta){
+	if(currentSocketsCount == socketsCount && this.finished == false){
+		this.finished = true;
+		alert("Parabéns! Você terminou o quebra cabeça!");
+	}
+}
+
 PaperJsRenderComponent.prototype.onRender = function(context){
 	paper.view.draw();
 }

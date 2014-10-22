@@ -7,6 +7,7 @@ DropPuzzlePieceComponent.prototype.testSocketColision = function(socket){
         this.fitSocket(socket);
         socket.isJoined = true;
         socket.slave.isJoined = true;
+        currentSocketsCount += 2;
     }
 }
 

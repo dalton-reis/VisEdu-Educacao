@@ -3,12 +3,24 @@ function PuzzlePieceRenderComponent(){}
 
 PuzzlePieceRenderComponent.prototype = new Component();
 
-PuzzlePieceRenderComponent.prototype.onRender = function(context){
-	var segX = ((this.owner.width / 5) * 1.1 * 5) / 2;
-    var segY = ((this.owner.height / 5) * 1.1 * 5) / 2;
+PuzzlePieceRenderComponent.prototype.dx = null;
+PuzzlePieceRenderComponent.prototype.dy = null;
 
-	this.owner.tileImage.position.x = this.owner.getCenterX() - segX;
-	this.owner.tileImage.position.y = this.owner.getCenterY() - segY;
+PuzzlePieceRenderComponent.prototype.onRender = function(context){
+	if(this.dx == null){
+		this.dx = (originalRaster.size.width / 2) - 
+		          ((this.owner.offsetLeft * this.owner.width) + (this.owner.width / 2));
+	}
+	if(this.dy == null){
+		this.dy = (originalRaster.size.height / 2) - 
+		          ((this.owner.offsetTop * this.owner.height) + (this.owner.height / 2));
+	}
+
+	var px = this.owner.getCenterX() + this.dx;
+	var py = this.owner.getCenterY() + this.dy;
+
+	this.owner.tileImage.position.x = px;
+	this.owner.tileImage.position.y = py;
 }
 
 PuzzlePieceRenderComponent.prototype.getSystems = function(){
