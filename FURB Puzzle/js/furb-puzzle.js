@@ -11,9 +11,9 @@ var SOCKET_RIGHT    = "rightSocket";
 var SOCKET_TOP      = "topSocket";
 var SOCKET_BOTTOM   = "bottomSocket";
 
-var layer = null;
-var originalRaster = null;
-var socketsCount = 0;
+var layer               = null;
+var originalRaster      = null;
+var socketsCount        = 0;
 var currentSocketsCount = 0;
 
 function getRandomArbitrary(min, max) {

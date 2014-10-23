@@ -7,13 +7,13 @@ JSUtils.addMethod(PuzzlePieceObject.prototype, "initialize",
 		this.initialize(x, y, width, height);
 		
 		//atributos
-		this.leftSocket = null;
-		this.rightSocket = null;
-		this.topSocket = null;
+		this.leftSocket   = null;
+		this.rightSocket  = null;
+		this.topSocket    = null;
 		this.bottomSocket = null;
-		this.tileImage = null;
-		this.offsetLeft = offsetLeft;
-		this.offsetTop = offsetTop;
+		this.tileImage    = null;
+		this.offsetLeft   = offsetLeft;
+		this.offsetTop    = offsetTop;
 
 		//componentes
 		ComponentUtils.addComponent(this, new DropPuzzlePieceComponent().initialize());
@@ -55,9 +55,9 @@ PuzzlePieceObject.prototype.addMoveAll = function(x, y, moveAll){
 			layer.movedObjects = ArrayUtils.addElement(layer.movedObjects, this.id);
 		}	
 		this.addMoveObject(x, y);
-		this.addMoveSocket(this.leftSocket, x, y, moveAll);
-		this.addMoveSocket(this.rightSocket, x, y, moveAll);
-		this.addMoveSocket(this.topSocket, x, y, moveAll);
+		this.addMoveSocket(this.leftSocket,   x, y, moveAll);
+		this.addMoveSocket(this.rightSocket,  x, y, moveAll);
+		this.addMoveSocket(this.topSocket,    x, y, moveAll);
 		this.addMoveSocket(this.bottomSocket, x, y, moveAll);
 	}
 }
