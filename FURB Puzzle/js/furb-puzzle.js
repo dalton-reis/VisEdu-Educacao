@@ -67,11 +67,22 @@ function createPieces(canvas, imgData){
     socketsCount = 0;
     currentSocketsCount = 0;
 
-    var imgObj = new Image();
-    imgObj.src = imgData;
+    originalRaster = new paper.Raster(imgData);
+    originalRaster.visible = false;
 
-    var pieceWidth = imgObj.width / columns;
-    var pieceHeight = imgObj.height / rows;
+    if(originalRaster.size.width > canvas.width){
+        var wRatio = canvas.width / originalRaster.size.width;
+        originalRaster.size.width = originalRaster.size.width * wRatio; 
+        originalRaster.size.height = originalRaster.size.height * wRatio; 
+    }
+    if(originalRaster.size.height > canvas.height){
+        var hRatio = canvas.height / originalRaster.size.height;
+        originalRaster.size.width = originalRaster.size.width * hRatio; 
+        originalRaster.size.height = originalRaster.size.height * hRatio; 
+    }
+
+    var pieceWidth = originalRaster.size.width / columns;
+    var pieceHeight = originalRaster.size.height / rows;
 
     var pieces = createPiecesArray(columns, rows, pieceWidth, pieceHeight);
 
@@ -112,9 +123,6 @@ function createPieces(canvas, imgData){
     		}
     	}
     }
-
-    originalRaster = new paper.Raster(imgData);
-    originalRaster.visible = false;
 
     for(var i=0; i<columns; i++){
         for(var j=0; j<rows; j++){
