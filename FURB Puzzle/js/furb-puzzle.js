@@ -1,15 +1,17 @@
-var SCENE_LEFT      = -5000;
-var SCENE_TOP       = -5000;
-var SCENE_WIDTH     = 5000;
-var SCENE_HEIGHT    = 5000;
-var CANVAS_ID       = 'canvas';
-var UPLOAD_ID       = 'imageUpload';
-var COLUMN_QUESTION = "Informe a quantidade de colunas!";
-var ROW_QUESTION    = "Informe a quantidade de linhas!";
-var SOCKET_LEFT     = "leftSocket";
-var SOCKET_RIGHT    = "rightSocket";
-var SOCKET_TOP      = "topSocket";
-var SOCKET_BOTTOM   = "bottomSocket";
+var SCENE_LEFT       = -5000;
+var SCENE_TOP        = -5000;
+var SCENE_WIDTH      = 5000;
+var SCENE_HEIGHT     = 5000;
+var CANVAS_ID        = 'canvas';
+var UPLOAD_ID        = 'imageUpload';
+var SOCKET_LEFT      = "leftSocket";
+var SOCKET_RIGHT     = "rightSocket";
+var SOCKET_TOP       = "topSocket";
+var SOCKET_BOTTOM    = "bottomSocket";
+var COLUMNS_ID       = "columns";
+var ROWS_ID          = "rows";
+var CANVAS_HEIGHT_ID = "canvasHeight";
+var CANVAS_WIDTH_ID  = "canvasWidth";
 
 var layer               = null;
 var originalRaster      = null;
@@ -59,8 +61,8 @@ function createSockets(pieceObj, socket, otherPiece, otherSocket, hw1, hh1, hw2,
 }
 
 function createPieces(canvas, imgData){
-	var columns = window.prompt(COLUMN_QUESTION, 0);
-    var rows = window.prompt(ROW_QUESTION, 0);
+	var columns = document.getElementById(COLUMNS_ID).value;
+    var rows = document.getElementById(ROWS_ID).value;
 
     socketsCount = 0;
     currentSocketsCount = 0;
@@ -225,6 +227,11 @@ function handleImageSelect(evt) {
 
 	reader.onloadend = function () {
 		createPuzzle(reader.result);
+        document.getElementById(COLUMNS_ID).disabled       = true;
+        document.getElementById(ROWS_ID).disabled          = true;
+        document.getElementById(CANVAS_WIDTH_ID).disabled  = true;
+        document.getElementById(CANVAS_HEIGHT_ID).disabled = true;
+        document.getElementById(UPLOAD_ID).disabled        = true;
   	}
 
   	if (file) {

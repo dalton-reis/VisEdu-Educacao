@@ -13,13 +13,29 @@
   </head>
   <body>
     <div>
-      <h1>VisEdu - Furb Puzzle</h1>
+      <div class="column-div">
+        <h1>VisEdu - Furb Puzzle</h1>
+      </div>
+      <div class="column-div-right">
+        <div>
+          <label>Colunas</label>
+          <label>Linhas</label>
+          <label>Largura</label>
+          <label>Altura</label>
+          <label>Imagem</label>
+        </div>
+        <div>
+          <input id="columns"      type="text" value="5" />
+          <input id="rows"         type="text" value="5" />
+          <input id="canvasWidth"  type="text" value="1000" onkeyup="document.getElementById('canvas').width = this.value" />
+          <input id="canvasHeight" type="text" value="500"  onkeyup="document.getElementById('canvas').height = this.value" />
+          <div class="file_upload">
+              <input type="file" id="imageUpload" name="imageUpload" accept="image/*" >
+          </div>
+      </div>
     </div>
     <div>
-      <input id="imageUpload" type="file" />
-    </div>
-    <div>
-      <canvas id="canvas" width="1100" height="550" class="game-canvas" />
+      <canvas id="canvas" width="1000" height="500" class="game-canvas" />
     </div>
   </body>
 </html>
