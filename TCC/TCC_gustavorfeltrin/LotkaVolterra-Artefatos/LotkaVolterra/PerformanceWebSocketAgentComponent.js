@@ -148,25 +148,31 @@ PerformanceWebSocketAgentComponent.prototype.createObjects = function(y){
 		layer.addGameObject(obj5);
 	}
 
-	var obj2Rbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
-	var obj2 = new BoxObject().initialize(250, y, obstaclesSize, obstaclesSize, ColorUtils.randomColor(), "black");
-	ComponentUtils.addComponent(obj2, obj2Rbc);
-	layer.addGameObject(obj2);
+	if ( this.qtdObstaculos == 3 || this.qtdObstaculos == 1) {
+		var obj4Rbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
+		var obj4 = new CircleObject().initialize(550, y, radius, ColorUtils.randomColor(), "black");
+		ComponentUtils.addComponent(obj4, obj4Rbc);
+		layer.addGameObject(obj4);
+	}
 
-	var obj4Rbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
-	var obj4 = new CircleObject().initialize(550, y, radius, ColorUtils.randomColor(), "black");
-	ComponentUtils.addComponent(obj4, obj4Rbc);
-	layer.addGameObject(obj4);
 
-	var obj6Rbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
-	var obj6 = new PolygonObject().initialize(850,  y,[
-		new Point2D().initialize(edgeNeg,  0),
-		new Point2D().initialize(  0,edgeNeg),
-		new Point2D().initialize( edge,  0),
-		new Point2D().initialize(  0, edge)],
-		ColorUtils.randomColor(),"black");
-	ComponentUtils.addComponent(obj6, obj6Rbc);
-	layer.addGameObject(obj6);
+	if ( this.qtdObstaculos == 3 ) {		
+		var obj2Rbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
+		var obj2 = new BoxObject().initialize(250, y, obstaclesSize, obstaclesSize, ColorUtils.randomColor(), "black");
+		ComponentUtils.addComponent(obj2, obj2Rbc);
+		layer.addGameObject(obj2);
+
+		var obj6Rbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
+		var obj6 = new PolygonObject().initialize(850,  y,[
+			new Point2D().initialize(edgeNeg,  0),
+			new Point2D().initialize(  0,edgeNeg),
+			new Point2D().initialize( edge,  0),
+			new Point2D().initialize(  0, edge)],
+			ColorUtils.randomColor(),"black");
+		ComponentUtils.addComponent(obj6, obj6Rbc);
+		layer.addGameObject(obj6);
+	}
+
 
 }
 

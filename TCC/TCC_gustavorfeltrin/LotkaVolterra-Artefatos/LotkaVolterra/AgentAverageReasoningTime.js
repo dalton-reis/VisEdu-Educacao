@@ -7,6 +7,7 @@ AgentAverageReasoningTimeComponent.prototype.lastUpdate = 0;
 AgentAverageReasoningTimeComponent.prototype.reasoningAverage = 0;
 AgentAverageReasoningTimeComponent.prototype.agentY = 0;
 AgentAverageReasoningTimeComponent.prototype.levelLayer = 0;
+AgentAverageReasoningTimeComponent.prototype.overallAverage = 0;
 
 AgentAverageReasoningTimeComponent.prototype.onMouseDown = function(x, y, wich) {
 	var point = MouseSystem.getNormalizedCoordinate(x, y);
@@ -18,32 +19,60 @@ AgentAverageReasoningTimeComponent.prototype.onMouseDown = function(x, y, wich) 
 
 }
 
-AgentAverageReasoningTimeComponent.prototype.onRender = function(context){
-	if (this.currentAgent!=null) {
-		var now = Date.now();
-		if((now - this.lastUpdate)/1000 >= 1){
-			this.lastUpdate = now;
+AgentAverageReasoningTimeComponent.prototype.onUpdate = function(delta){
+	var now = Date.now();
+	if((now - this.lastUpdate)/1000 >= 1){
+		this.lastUpdate = now;
+		if (this.currentAgent!=null) {
 			var pvpc = ComponentUtils.getComponent(this.currentAgent.frustum, "PERCEPTION_VISION_PERFORMANCE_COMPONENT");
 			this.reasoningAverage = Math.round(pvpc.averageReasoningTime * 10000) / 10000;
 			this.agentY = Math.round(this.currentAgent.origin.y * 10000) / 10000;
 		}		
-	}
+		this.overallAverage = this.getOverallAverage();
+	}	
+}
+
+AgentAverageReasoningTimeComponent.prototype.onRender = function(context){
+	var fillStyle = context.fillStyle;
 	context.fillStyle = "blue";
 	context.font = "bold 20px Arial";
-	context.fillText("Reasoning: "+ this.reasoningAverage + "s ("+ this.agentY +")" , 20, 50);
+	context.fillText("Reasoning [OA: " + this.overallAverage +", @" + this.agentY + "y: " + this.reasoningAverage + "s .", 20, 50);
+	context.fillStyle = fillStyle;
+}
+
+AgentAverageReasoningTimeComponent.prototype.getAgents = function() {
+	var layer = Game.scene.listLayers[this.levelLayer];
+	var agents = [];
+	for(var i in layer.listGameObjects) {
+		var go = layer.listGameObjects[i];
+		if ( go!=null && go.frustum!=null ) {
+			agents.push(go);
+		}
+	}
+	return agents;
+}
+
+
+AgentAverageReasoningTimeComponent.prototype.getOverallAverage = function() {
+	var overallAverage = 0;
+	var agents = this.getAgents();
+	for(var i in agents) {
+		var agent = agents[i];
+		var vision = agent.frustum;
+		if ( vision instanceof PolygonObject ) {
+			var pvpc = ComponentUtils.getComponent(vision, "PERCEPTION_VISION_PERFORMANCE_COMPONENT");
+			if ( pvpc ) {
+				overallAverage += pvpc.averageReasoningTime;				
+			}
+		}
+	}
+	overallAverage = overallAverage/agents.length;
+	return Math.round(overallAverage * 10000) / 10000;
 }
 
 AgentAverageReasoningTimeComponent.prototype.onKeyUp = function(keyCode){
 	if(keyCode == 65) {
-		var layer = Game.scene.listLayers[this.levelLayer];
-		var agents = [];
-
-		for(var i in layer.listGameObjects) {
-			var go = layer.listGameObjects[i];
-			if ( go!=null && go.frustum!=null ) {
-				agents.push(go);
-			}
-		}
+		var agents = this.getAgents();
 		var newAgent = null;
 		for(var i in agents) {
 			var agent = agents[i];

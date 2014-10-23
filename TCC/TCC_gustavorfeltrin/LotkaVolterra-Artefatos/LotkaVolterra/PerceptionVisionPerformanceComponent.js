@@ -3,7 +3,7 @@ function PerceptionVisionPerformanceComponent(){}
 PerceptionVisionPerformanceComponent.prototype = new PerceptionVisionComponent();
 
 PerceptionVisionPerformanceComponent.prototype.queue = [];
-PerceptionVisionPerformanceComponent.prototype.averageReasoningTime = null;
+PerceptionVisionPerformanceComponent.prototype.averageReasoningTime = 0;
 
 PerceptionVisionPerformanceComponent.prototype.createPerceptionMessage = function( gameObjectPerceived ) {
 	var render = null;
@@ -40,7 +40,7 @@ PerceptionVisionPerformanceComponent.prototype.processesMessagesReceived = funct
 	//console.log( "[" + token + ": receive @ " + now.toLocaleString() + "] " + message );
 	var reasoningTime = Math.abs(now-sendDate)/1000;
 	//console.log( "[" + token + ": reasoning time] " + reasoningTime);
-	if ( this.averageReasoningTime==null ) {
+	if ( this.averageReasoningTime==0 ) {
 		this.averageReasoningTime = reasoningTime;
 	} else {
 		this.averageReasoningTime = (this.averageReasoningTime+reasoningTime)/2;

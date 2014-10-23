@@ -12,6 +12,7 @@ FpsMeterComponent.prototype = new Component();
 FpsMeterComponent.prototype.fpsCount = 0;
 FpsMeterComponent.prototype.currentFps = 0;
 FpsMeterComponent.prototype.lastUpdate = 0;
+FpsMeterComponent.prototype.amountOfGameObjects = 0;
 
 /**
 * Retorna os sistemas que deverão gerenciar este component.
@@ -51,11 +52,16 @@ FpsMeterComponent.prototype.onRender = function(context){
 		this.lastUpdate = now;
 	}
 	this.fpsCount++;
+	var fillStyle = context.fillStyle;
 	context.fillStyle = "red";
 	context.font = "bold 20px Arial";
-	context.fillText("FPS: "+this.currentFps + " Objs: " + Game.scene.getAmountOfGameObjects(), 20, 30);
+	context.fillText("FPS: "+this.currentFps + " Objs: " + this.amountOfGameObjects, 20, 30);
+	context.fillStyle = fillStyle;
 }
 
+FpsMeterComponent.prototype.onUpdate = function(delta){
+	this.amountOfGameObjects = Game.scene.getAmountOfGameObjects();	
+}
 
 /**
 * Método sobrescrito da classe Component.

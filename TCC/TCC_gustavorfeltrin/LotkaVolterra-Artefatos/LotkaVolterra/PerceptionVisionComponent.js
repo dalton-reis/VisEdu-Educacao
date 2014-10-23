@@ -38,15 +38,15 @@ PerceptionVisionComponent.prototype.onLoad = function(){
 }
 
 PerceptionVisionComponent.prototype.onPercept = function( gameObjectPerceived ) {
-	if (this.webSocket!=undefined) {
+	if (this.webSocket!=undefined && this.isOpen) {
 		var message = this.createPerceptionMessage(gameObjectPerceived);
 		if ( message && !StringUtils.isEmpty(message) ) {
-			if ( this.isOpen ) {
-				this.webSocket.send( message );
-			} else {
-				console.warn("Mensagem não enviada: Socket não está aberta! " + message);
-			}
+			this.webSocket.send( message );
+		} else {
+			console.warn("Mensagem não enviada: Mensagem não está definida ou em branco!");
 		}
+	} else {
+		console.warn("Mensagem não enviada: Socket não está definida/aberta!");
 	}
 }
 
