@@ -43,7 +43,7 @@ function createPiecesArray(columns, rows, pieceWidth, pieceHeight) {
 }
 
 function createSockets(pieceObj, socket, otherPiece, otherSocket, hw1, hh1, hw2, hh2){
-    var index = (getRandomArbitrary(0, 10) % 2) == 0 ? 1 : -1;
+    var index = ((Math.floor(Math.random() * 9) + 0) % 2) == 0 ? 1 : -1;
     pieceObj[socket] = new PuzzleSocketObject().initialize(pieceObj.getCenterX() + hw1, 
                                                  pieceObj.getCenterY() + hh1, 
                                                  pieceObj);
