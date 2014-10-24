@@ -36,7 +36,7 @@ AgentAverageReasoningTimeComponent.prototype.onRender = function(context){
 	var fillStyle = context.fillStyle;
 	context.fillStyle = "blue";
 	context.font = "bold 20px Arial";
-	context.fillText("Reasoning [OA: " + this.overallAverage +", @" + this.agentY + "y: " + this.reasoningAverage + "s .", 20, 50);
+	context.fillText("Reasoning [OA: " + this.overallAverage +", @" + this.agentY + "y: " + this.reasoningAverage + "s]", 20, 50);
 	context.fillStyle = fillStyle;
 }
 

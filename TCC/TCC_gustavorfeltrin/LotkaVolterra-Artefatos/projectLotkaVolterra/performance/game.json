@@ -40,7 +40,7 @@
     "type": "COMPONENT",
     "displayNodeName": "PerformanceWebSocketComponent",
     "jsVarName": "layerPwsc",
-    "jsInitialFunction": "new PerformanceWebSocketComponent().initialize(\"ws://localhost:8081/lotkaVolterraWeb/ws?agent\u003dperformance\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir());",
+    "jsInitialFunction": "new PerformanceWebSocketComponent().initialize(\"ws://campeche.inf.furb.br:8094/lotkaVolterraWeb/jason?agent\u003dperformance\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir());",
     "jsCode": ""
   },
   {
