@@ -1,0 +1,2 @@
++onPercept(C)
+   <- changeMyFillStyle(C).
