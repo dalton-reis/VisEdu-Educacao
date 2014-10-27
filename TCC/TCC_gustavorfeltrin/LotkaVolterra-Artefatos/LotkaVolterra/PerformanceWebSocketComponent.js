@@ -7,7 +7,7 @@ PerformanceWebSocketComponent.prototype.canvasHeight = 790;
 JSUtils.addMethod(PerformanceWebSocketComponent.prototype, "initialize", 
 	function(uri){
 		this.initialize();
-		this.uri = uri;		
+		this.uri = uri;
 		return this;
 	}
 );

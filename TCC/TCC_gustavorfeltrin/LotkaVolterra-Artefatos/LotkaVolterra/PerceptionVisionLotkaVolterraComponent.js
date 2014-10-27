@@ -2,30 +2,25 @@ function PerceptionVisionLotkaVolterraComponent(){}
 
 PerceptionVisionLotkaVolterraComponent.prototype = new PerceptionVisionComponent();
 
-PerceptionVisionLotkaVolterraComponent.prototype.createPerceptionMessage = function( gameObjectPerceived ) {
-	return "onPercept(\"" + this.owner.id + "\",\"" + gameObjectPerceived.id + "\")";
+PerceptionVisionLotkaVolterraComponent.prototype.getPerceptions = function( gameObjectPerceived ) {
+	var perceptions = [];
+	perceptions.push( "onPercept(\"" + this.owner.id + "\",\"" + gameObjectPerceived.id + "\")" );
+	return perceptions;
 }
 
-PerceptionVisionLotkaVolterraComponent.prototype.processesMessagesReceived = function( message ) {
-	var arrMsg = message.split("(");
-	arrMsg = arrMsg[1].split(")");
-	arrMsg = arrMsg[0].split(",");
-	var objId = StringUtils.replaceAll(arrMsg[0], "\"", "");
+PerceptionVisionLotkaVolterraComponent.prototype.executeAction = function( action ) {
+	var arrAction = action.split("(");
+	arrAction = arrAction[1].split(")");
+	arrAction = arrAction[0].split(",");
+	var objId = StringUtils.replaceAll(arrAction[1], "\"", "");
 	for(var i in layer.listGameObjects){
 		var gameObject = layer.listGameObjects[i];
-		if(gameObject instanceof BoxObject){
-			if ( gameObject.id == objId) {
-				var render = ComponentUtils.getComponent(gameObject, "BOX_RENDER_COMPONENT");
-				if (render) {
-					render.fillStyle = arrMsg[1];
-					render.strokeStyle = arrMsg[2];
-				}				
+		if(gameObject.id == objId && gameObject instanceof BoxObject){
+			var render = ComponentUtils.getComponent(gameObject, "BOX_RENDER_COMPONENT");
+			if (render) {
+				render.fillStyle = arrAction[2];
+				render.strokeStyle = arrAction[3];
 			}
 		}
 	}
-}
-
-
-PerceptionVisionLotkaVolterraComponent.prototype.getTag = function(){
-  return "PERCEPTION_VISION_LOTKAVOLTERRA_COMPONENT";
 }

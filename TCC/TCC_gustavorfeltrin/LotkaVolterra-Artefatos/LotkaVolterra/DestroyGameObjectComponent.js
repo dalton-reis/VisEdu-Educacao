@@ -13,7 +13,7 @@ JSUtils.addMethod(DestroyGameObjectComponent.prototype, "initialize",
 DestroyGameObjectComponent.prototype.onCollide = function(otherGameObject) {
 	var token = ComponentUtils.getComponent(otherGameObject, "TOKEN_COMPONENT");
 	if (token && token.getToken() == this.preyToken ) {
-		otherGameObject.destroy();		
+		otherGameObject.destroy();
 	} 
 	
 }

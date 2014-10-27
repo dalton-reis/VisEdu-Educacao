@@ -28,6 +28,7 @@ JSUtils.addMethod(GameObject.prototype, "initialize",
 		this.layer = null;
 		this.listComponents = new Array();
 		this.isSensor = false;
+		this.frustum = null;
 		return this;
 	}
 );
@@ -145,6 +146,19 @@ GameObject.prototype.setLinearVelocityX = function(x){
 	}
 }
 
+GameObject.prototype.getLinearVelocityX = function(){
+	if(this.body){
+		var linearVelocity = null;
+		if(this instanceof PolygonObject){
+			linearVelocity = this.body.m_shapeList.m_body.GetLinearVelocity();
+		}else{
+			linearVelocity = this.body.GetLinearVelocity();
+		}
+		return linearVelocity.x;
+	}
+	return null;
+}
+
 /**
 * Define a velocidade linear do objeto em y.
 *
@@ -162,6 +176,19 @@ GameObject.prototype.setLinearVelocityY = function(y){
 		}
 		linearVelocity.y = y;
 	}
+}
+
+GameObject.prototype.getLinearVelocityY = function(){
+	if(this.body){
+		var linearVelocity = null;
+		if(this instanceof PolygonObject){
+			linearVelocity = this.body.m_shapeList.m_body.GetLinearVelocity();
+		}else{
+			linearVelocity = this.body.GetLinearVelocity();
+		}
+		return linearVelocity.y;
+	}
+	return null;
 }
 
 /**

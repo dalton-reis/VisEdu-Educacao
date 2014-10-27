@@ -1,2 +1,2 @@
 +onPercept(X, Y)
-   <- changeColor(Y, green, black).
+   <- changeColor(X, Y, green, black).

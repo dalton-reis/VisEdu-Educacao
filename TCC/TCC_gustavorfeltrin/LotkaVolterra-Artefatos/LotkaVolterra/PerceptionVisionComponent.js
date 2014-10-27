@@ -5,6 +5,8 @@ PerceptionVisionComponent.prototype = new Component();
 PerceptionVisionComponent.prototype.HAND_SHAKE = "HAND_SHAKE";
 PerceptionVisionComponent.prototype.isOpen = false;
 PerceptionVisionComponent.prototype.timeOfInstantiation = null;
+PerceptionVisionComponent.prototype.queue = [];
+PerceptionVisionComponent.prototype.averageReasoningTime = 0;
 
 JSUtils.addMethod(PerceptionVisionComponent.prototype, "initialize", 
 	function(uri){
@@ -39,18 +41,35 @@ PerceptionVisionComponent.prototype.onLoad = function(){
 
 PerceptionVisionComponent.prototype.onPercept = function( gameObjectPerceived ) {
 	if (this.webSocket!=undefined && this.isOpen) {
-		var message = this.createPerceptionMessage(gameObjectPerceived);
-		if ( message && !StringUtils.isEmpty(message) ) {
+		var perceps = this.getPerceptions(gameObjectPerceived);
+		if ( perceps.length > 0 ) {
+
+			var perceptions = [];
+			for (var i = 0; i < perceps.length; i++) {
+				perceptions.push( {"perception": perceps[i]} );
+			}
+
+			var obj = new Object();
+			obj.origin = this.owner.id;
+			obj.target = gameObjectPerceived.id;
+			obj.perceptions = perceptions;
+			obj.action = null;
+			var message = JSON.stringify(obj);
+
+			//var token = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT").getToken();
+			var now = new Date();
+			this.queue.push(now);
+			//console.log( "[" + token + ": send @ " + now.toLocaleString() + "] " + msg );
 			this.webSocket.send( message );
 		} else {
-			console.warn("Mensagem não enviada: Mensagem não está definida ou em branco!");
+			console.warn("Mensagem não enviada: Nenhuma percepção identificada!");
 		}
 	} else {
 		console.warn("Mensagem não enviada: Socket não está definida/aberta!");
 	}
 }
 
-PerceptionVisionComponent.prototype.createPerceptionMessage = function( gameObjectPerceived ) { return null; }
+PerceptionVisionComponent.prototype.getPerceptions = function( gameObjectPerceived ) { return []; }
 
 PerceptionVisionComponent.prototype.onClose = function(evt) {
 	this.isOpen = false;
@@ -74,14 +93,26 @@ PerceptionVisionComponent.prototype.onOpen = function(evt) {
 
 PerceptionVisionComponent.prototype.onMessage = function(evt){ 
 	if ( this.HAND_SHAKE != evt.data ) {
-		this.processesMessagesReceived(evt.data);
+		var now = new Date();
+		var sendDate = this.queue.shift();
+		//var token = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT").getToken();
+		//console.log( "[" + token + ": receive @ " + now.toLocaleString() + "] " + message );
+		var reasoningTime = Math.abs(now-sendDate)/1000;
+		//console.log( "[" + token + ": reasoning time] " + reasoningTime);
+		if ( this.averageReasoningTime==0 ) {
+			this.averageReasoningTime = reasoningTime;
+		} else {
+			this.averageReasoningTime = (this.averageReasoningTime+reasoningTime)/2;
+		}
+		var action = JSON.parse(evt.data).action;
+		this.executeAction( action );
 	}
 	//if (this.webSocket!=undefined) {
 	//		this.webSocket.close();
 	//}	
 }
 
-PerceptionVisionComponent.prototype.processesMessagesReceived = function( message ) { }
+PerceptionVisionComponent.prototype.executeAction = function( action ) { }
 
 PerceptionVisionComponent.prototype.getSystems = function(){
   var systems = new Array();

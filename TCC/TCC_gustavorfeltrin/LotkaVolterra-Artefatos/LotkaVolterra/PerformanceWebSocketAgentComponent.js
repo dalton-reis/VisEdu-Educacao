@@ -56,7 +56,7 @@ PerformanceWebSocketAgentComponent.prototype.onLoad = function(){
 			}
 			pwsc.mudou = false;
 		}
-		var vision = ComponentUtils.getComponent(this.owner, "PERCEPTION_VISION_PERFORMANCE_COMPONENT");
+		var vision = ComponentUtils.getComponent(this.owner, "PERCEPTION_VISION_COMPONENT");
 		if ( vision ) {
 			var render = ComponentUtils.getComponent(this.owner, "POLYGON_RENDER_COMPONENT");
 			if ( vision.isOpen ) {

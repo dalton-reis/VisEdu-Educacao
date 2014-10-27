@@ -40,16 +40,7 @@
     "type": "COMPONENT",
     "displayNodeName": "PerformanceWebSocketComponent",
     "jsVarName": "layerPwsc",
-    "jsInitialFunction": "new PerformanceWebSocketComponent().initialize(\"ws://campeche.inf.furb.br:8094/lotkaVolterraWeb/jason?agent\u003dperformance\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir());",
-    "jsCode": ""
-  },
-  {
-    "id": "d106db98-1ec4-44c0-8c95-e767841afff7",
-    "idParent": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
-    "type": "COMPONENT",
-    "displayNodeName": "AgentAverageReasoningTimeComponent",
-    "jsVarName": "gameAartc",
-    "jsInitialFunction": "new AgentAverageReasoningTimeComponent().initialize();",
+    "jsInitialFunction": "new PerformanceWebSocketComponent().initialize(\"ws://localhost:8081/visedu-reasoner/jason?agent\u003dperformance\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir());",
     "jsCode": ""
   },
   {
@@ -59,6 +50,15 @@
     "displayNodeName": "FpsMeterComponent",
     "jsVarName": "gameFmc",
     "jsInitialFunction": "new FpsMeterComponent().initialize();",
+    "jsCode": ""
+  },
+  {
+    "id": "8c38c425-f256-488e-a598-53e8e7eed0b6",
+    "idParent": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
+    "type": "COMPONENT",
+    "displayNodeName": "AverageTimeReasoningComponent",
+    "jsVarName": "gameAtrc",
+    "jsInitialFunction": "new AverageTimeReasoningComponent().initialize(20, 50);",
     "jsCode": ""
   }
 ]

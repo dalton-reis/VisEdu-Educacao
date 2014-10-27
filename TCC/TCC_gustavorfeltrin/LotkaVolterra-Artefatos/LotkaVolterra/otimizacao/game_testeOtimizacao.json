@@ -1,0 +1,154 @@
+[
+  {
+    "id": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
+    "type": "GAME",
+    "displayNodeName": "Game",
+    "jsVarName": "Game",
+    "jsInitialFunction": "Game.init(document.getElementById(\"gameCanvas\"), scene);",
+    "jsCode": "Game.camera.centerPoint.x \u003d 455; Game.camera.centerPoint.y \u003d 315;"
+  },
+  {
+    "id": "f28f38df-09fd-4a8b-96f7-3bf5620a5eea",
+    "idParent": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
+    "type": "SCENE",
+    "displayNodeName": "Scene",
+    "jsVarName": "scene",
+    "jsInitialFunction": "new Scene().initialize(-1000, -1000, 1000, 1000);",
+    "jsCode": ""
+  },
+  {
+    "id": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "idParent": "f28f38df-09fd-4a8b-96f7-3bf5620a5eea",
+    "type": "LAYER",
+    "displayNodeName": "Layer",
+    "jsVarName": "layer",
+    "jsInitialFunction": "new Layer().initialize();",
+    "jsCode": ""
+  },
+  {
+    "id": "195f62a9-c407-453a-85cd-855367fb4574",
+    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "type": "COMPONENT",
+    "displayNodeName": "RemoveGravityComponent",
+    "jsVarName": "layerRgc",
+    "jsInitialFunction": "new RemoveGravityComponent().initialize();",
+    "jsCode": ""
+  },
+  {
+    "id": "61ee983d-053e-44a4-988f-a97843fd28af",
+    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "type": "GAME_OBJECT",
+    "displayNodeName": "BoxObject",
+    "jsVarName": "box",
+    "jsInitialFunction": "new BoxObject().initialize(300, 300, 50, 50, \"blue\", \"black\");",
+    "jsCode": ""
+  },
+  {
+    "id": "58c6416c-822f-4d4e-9a3d-372b9567dd85",
+    "idParent": "61ee983d-053e-44a4-988f-a97843fd28af",
+    "type": "COMPONENT",
+    "displayNodeName": "RigidBodyComponent",
+    "jsVarName": "boxRbc",
+    "jsInitialFunction": "new RigidBodyComponent().initialize(0, 1, true, false, 0);",
+    "jsCode": ""
+  },
+  {
+    "id": "0d675970-6c3f-4848-882f-0e0c08e1aeee",
+    "idParent": "61ee983d-053e-44a4-988f-a97843fd28af",
+    "type": "COMPONENT",
+    "displayNodeName": "TokenComponent",
+    "jsVarName": "boxTc",
+    "jsInitialFunction": "new TokenComponent().initialize(\"BOX\");",
+    "jsCode": ""
+  },
+  {
+    "id": "315db1e1-63b0-4c76-ac32-6f19395a13c1",
+    "idParent": "61ee983d-053e-44a4-988f-a97843fd28af",
+    "type": "COMPONENT",
+    "displayNodeName": "ChangeVelocityComponent",
+    "jsVarName": "box1Cvc",
+    "jsInitialFunction": "new ChangeVelocityComponent().initialize(68, 65, 87, 83, 30, 0, 0);",
+    "jsCode": ""
+  },
+  {
+    "id": "6fac986e-0e1e-426c-96c5-0ac7d1a7b2e2",
+    "idParent": "61ee983d-053e-44a4-988f-a97843fd28af",
+    "type": "COMPONENT",
+    "displayNodeName": "VisionComponent",
+    "jsVarName": "boxVc",
+    "jsInitialFunction": "new VisionComponent().initialize(100, 50, \"HORIZONTAL\", \"ws://localhost:8081/visedu-reasoner/jason?agent\u003dperformance\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir());",
+    "jsCode": ""
+  },
+  {
+    "id": "8dc8a9ab-85ca-4d3a-b177-424aff0d48d8",
+    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "type": "GAME_OBJECT",
+    "displayNodeName": "CircleObject",
+    "jsVarName": "circle",
+    "jsInitialFunction": "new CircleObject().initialize(600, 300, 25, \"red\", \"black\");",
+    "jsCode": ""
+  },
+  {
+    "id": "45e1d5d1-4339-4206-8be2-ece6f4a83e2d",
+    "idParent": "8dc8a9ab-85ca-4d3a-b177-424aff0d48d8",
+    "type": "COMPONENT",
+    "displayNodeName": "RigidBodyComponent",
+    "jsVarName": "circleRbc",
+    "jsInitialFunction": "new RigidBodyComponent().initialize(0, 1, true, false, 0);",
+    "jsCode": ""
+  },
+  {
+    "id": "c713e845-189e-4cd7-ab44-26f63bbf2237",
+    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "type": "GAME_OBJECT",
+    "displayNodeName": "PolygonObject",
+    "jsVarName": "polygon",
+    "jsInitialFunction": "new PolygonObject().initialize(430, 200, [new Point2D().initialize(-50, 100),\r\n                                                       new Point2D().initialize(-50, -100),\r\n                                                       new Point2D().initialize(50, 0)], \r\n                                            \"purple\", \"black\");",
+    "jsCode": ""
+  },
+  {
+    "id": "90512a2c-b623-4a6a-b386-b0954c37e627",
+    "idParent": "c713e845-189e-4cd7-ab44-26f63bbf2237",
+    "type": "COMPONENT",
+    "displayNodeName": "RigidBodyComponent",
+    "jsVarName": "polygonRbc",
+    "jsInitialFunction": "new RigidBodyComponent().initialize(0,1,false,false,0.2);",
+    "jsCode": ""
+  },
+  {
+    "id": "8d789d9f-a240-4c1c-a2ac-7470d6250948",
+    "idParent": "c713e845-189e-4cd7-ab44-26f63bbf2237",
+    "type": "COMPONENT",
+    "displayNodeName": "MoveGameObjectComponent",
+    "jsVarName": "polygonMgoc",
+    "jsInitialFunction": "new MoveGameObjectComponent().initialize(37, 38, 39, 40);",
+    "jsCode": ""
+  },
+  {
+    "id": "61dc7f70-767e-4c2a-95c8-379884057199",
+    "idParent": "c713e845-189e-4cd7-ab44-26f63bbf2237",
+    "type": "COMPONENT",
+    "displayNodeName": "SensorComponent",
+    "jsVarName": "polygonSc",
+    "jsInitialFunction": "new SensorComponent().initialize();",
+    "jsCode": ""
+  },
+  {
+    "id": "f6ad47b8-bf25-4e11-ab77-ca7ce729e904",
+    "idParent": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
+    "type": "COMPONENT",
+    "displayNodeName": "FpsMeterComponent",
+    "jsVarName": "gameFmc",
+    "jsInitialFunction": "new FpsMeterComponent().initialize();",
+    "jsCode": ""
+  },
+  {
+    "id": "47ca67f8-82fb-40ae-9f65-3bf237dcf40e",
+    "idParent": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
+    "type": "COMPONENT",
+    "displayNodeName": "AverageTimeReasoningComponent",
+    "jsVarName": "atrc",
+    "jsInitialFunction": "new AverageTimeReasoningComponent().initialize(20, 50);",
+    "jsCode": ""
+  }
+]

@@ -71,21 +71,12 @@
     "jsCode": ""
   },
   {
-    "id": "8dc0659e-cbb5-4d5e-98ef-2a9447b3a567",
-    "idParent": "251009be-22ee-4ecb-bf75-e78f380c501c",
-    "type": "COMPONENT",
-    "displayNodeName": "RotateRelativeComponent",
-    "jsVarName": "circle1FrustumRrc",
-    "jsInitialFunction": "new RotateRelativeComponent().initialize(81, 69);",
-    "jsCode": ""
-  },
-  {
     "id": "15f4caf3-d88b-4d39-bf44-b4da813af88b",
     "idParent": "251009be-22ee-4ecb-bf75-e78f380c501c",
     "type": "COMPONENT",
     "displayNodeName": "PerceptionVisionLotkaVolterraComponent",
     "jsVarName": "circle1FrustumPvlvc",
-    "jsInitialFunction": "new PerceptionVisionLotkaVolterraComponent().initialize(\"ws://campeche.inf.furb.br:8094/lotkaVolterraWeb/ws?agent\u003dprey\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir(), 1);",
+    "jsInitialFunction": "new PerceptionVisionLotkaVolterraComponent().initialize(\"ws://localhost:8081/visedu-reasoner/jason?agent\u003dprey\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir());",
     "jsCode": ""
   },
   {
