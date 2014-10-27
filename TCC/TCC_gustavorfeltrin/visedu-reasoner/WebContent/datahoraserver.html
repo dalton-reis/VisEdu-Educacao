@@ -31,10 +31,10 @@
 					console.log(msg); 
 			} 			
 			if ('WebSocket' in window || 'MozWebSocket' in window) { 
-				//var websocket = new WebSocket("ws://campeche.inf.furb.br:8094/visedu-reasoner/server"); 
-				var websocket = new WebSocket("ws://localhost:8081/visedu-reasoner/server");
+				var websocket = new WebSocket("ws://campeche.inf.furb.br:8094/lotkaVolterraWeb/server"); 
+				//var websocket = new WebSocket("ws://localhost:8081/visedu-reasoner/server");
 			} else { 
-				alert("Browser n√£o suporta WebSocket"); 
+				alert("Browser n„o suporta WebSocket"); 
 			} 
 			if (websocket != undefined) { 
 				websocket.onopen = function() { 

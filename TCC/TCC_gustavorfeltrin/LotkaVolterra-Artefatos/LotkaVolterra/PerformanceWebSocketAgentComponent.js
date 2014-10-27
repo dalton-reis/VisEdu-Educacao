@@ -1,10 +1,10 @@
 function PerformanceWebSocketAgentComponent(){}
 
 PerformanceWebSocketAgentComponent.prototype = new Component();
-PerformanceWebSocketAgentComponent.prototype.direita = true;
+PerformanceWebSocketAgentComponent.prototype.right = true;
 PerformanceWebSocketAgentComponent.prototype.minX = -100;
 PerformanceWebSocketAgentComponent.prototype.maxX = 1000;
-PerformanceWebSocketAgentComponent.prototype.mudou = false;
+PerformanceWebSocketAgentComponent.prototype.change = false;
 PerformanceWebSocketAgentComponent.prototype.angle = Math.PI / 1;
 PerformanceWebSocketAgentComponent.prototype.visionRange = 100;
 
@@ -33,17 +33,17 @@ PerformanceWebSocketAgentComponent.prototype.onLoad = function(){
 		"rgba(255, 0, 0, 0.3)","rgba(0, 0, 0, 0.3)");
 	var boFrustumRbc = new RigidBodyComponent().initialize(0, 1, false, false, 0.2);
 	boFrustumRbc.onUpdate = function(deltaTime){
-		if ( pwsc.direita ) {
+		if ( pwsc.right ) {
 			this.owner.setLinearVelocityX( pwsc.velocity );
 		} else {
 			this.owner.setLinearVelocityX( pwsc.velocity * -1 );
 		}
-		if (pwsc.mudou) {
+		if (pwsc.change) {
 			var compl = pwsc.visionRange/2;
 			if ( !pwsc.defaultAgentSize ) {
 				compl += pwsc.agentHeight/2;
 			}
-			if (pwsc.direita) {
+			if (pwsc.right) {
 				var rotate = ComponentUtils.getComponent(this.owner, "ROTATE_COMPONENT");
 				rotate.setRotate( rotate.getAngle() + pwsc.angle);
 				var translate = ComponentUtils.getComponent(this.owner, "TRANSLATE_COMPONENT");
@@ -54,7 +54,7 @@ PerformanceWebSocketAgentComponent.prototype.onLoad = function(){
 				var translate = ComponentUtils.getComponent(this.owner, "TRANSLATE_COMPONENT");
 				translate.setTranslate( -1 * (this.owner.getCenterX()-this.owner.parent.getCenterX() + compl), 0);
 			}
-			pwsc.mudou = false;
+			pwsc.change = false;
 		}
 		var vision = ComponentUtils.getComponent(this.owner, "PERCEPTION_VISION_COMPONENT");
 		if ( vision ) {
@@ -85,21 +85,21 @@ PerformanceWebSocketAgentComponent.prototype.onLoad = function(){
 		otherGameObject.destroy();
 	}
 	rbc.onUpdate = function(deltaTime){
-		if ( pwsc.direita ) {
+		if ( pwsc.right ) {
 			this.owner.setLinearVelocityX( pwsc.velocity );
 		} else {
 			this.owner.setLinearVelocityX( pwsc.velocity * -1 );
 		}
-		if (pwsc.direita && this.owner.getCenterX() > pwsc.maxX) {
-			pwsc.direita = false;
+		if (pwsc.right && this.owner.getCenterX() > pwsc.maxX) {
+			pwsc.right = false;
 			pwsc.createObjects(pwsc.y);
-			pwsc.mudou = true;
+			pwsc.change = true;
 			var rotate = ComponentUtils.getComponent(this.owner, "ROTATE_COMPONENT");
 			rotate.setRotate( rotate.getAngle() - pwsc.angle);
-		}  else if (!pwsc.direita && this.owner.getCenterX() < pwsc.minX) {
-			pwsc.direita = true;
+		}  else if (!pwsc.right && this.owner.getCenterX() < pwsc.minX) {
+			pwsc.right = true;
 			pwsc.createObjects(pwsc.y);
-			pwsc.mudou = true;
+			pwsc.change = true;
 			var rotate = ComponentUtils.getComponent(this.owner, "ROTATE_COMPONENT");
 			rotate.setRotate( rotate.getAngle() + pwsc.angle);
 		}
