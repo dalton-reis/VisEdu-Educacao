@@ -12,6 +12,7 @@ var COLUMNS_ID       = "columns";
 var ROWS_ID          = "rows";
 var CANVAS_HEIGHT_ID = "canvasHeight";
 var CANVAS_WIDTH_ID  = "canvasWidth";
+var CRUVE_SIZE       = 1.1;
 
 var layer               = null;
 var originalRaster      = null;
@@ -131,9 +132,8 @@ function createPieces(canvas, imgData){
             var raster = originalRaster.clone();
             raster.position = new paper.Point(raster.size.width/2, raster.size.height/2);
             raster.visible = true;
+
             var path = new paper.Path();
-            path.strokeColor = "red";
-            path.strokeWidth = 3;
 
             var px = pieceObj.offsetLeft * pieceObj.width;
             var py =  pieceObj.offsetTop * pieceObj.height;
@@ -146,49 +146,39 @@ function createPieces(canvas, imgData){
             path.moveTo(p1);
             path.lineTo(p1);
 
+            var wSeg = pieceObj.width / 5;
+            var hSeg = pieceObj.height / 5;
+
+            var wCurveSize = wSeg * CRUVE_SIZE;
+            var hCurveSize = hSeg * CRUVE_SIZE;
+
             if(pieceObj.topSocket != null){
-                var seg = pieceObj.width / 5;
-                var enterSize = seg * 1.1 * pieceObj.topSocket.enterFlg;
-                path.lineTo(new paper.Point(p1.x+(seg*2), p1.y));
-                path.arcTo(new paper.Point(p1.x+(seg*2), p1.y+enterSize), 
-                           new paper.Point(p1.x+(seg*3), p1.y));
-                path.lineTo(p2);
-            }else{
-                path.lineTo(p2);    
+                path.lineTo(new paper.Point(p1.x+(wSeg*2), p1.y));
+                path.arcTo(new paper.Point(p1.x+(wSeg*2), p1.y+(wCurveSize*pieceObj.topSocket.enterFlg)), 
+                           new paper.Point(p1.x+(wSeg*3), p1.y));
             }
+            path.lineTo(p2);
             
             if(pieceObj.rightSocket != null){
-                var seg = pieceObj.height / 5;
-                var enterSize = seg * 1.1 * pieceObj.rightSocket.enterFlg;
-                path.lineTo(new paper.Point(p2.x, p2.y+(seg*2)));
-                path.arcTo(new paper.Point(p2.x+enterSize, p2.y+(seg*2)), 
-                           new paper.Point(p2.x, p2.y+(seg*3)));
-                path.lineTo(p3);
-            }else{
-                path.lineTo(p3);    
+                path.lineTo(new paper.Point(p2.x, p2.y+(hSeg*2)));
+                path.arcTo(new paper.Point(p2.x+(hCurveSize*pieceObj.rightSocket.enterFlg), p2.y+(hSeg*2)), 
+                           new paper.Point(p2.x, p2.y+(hSeg*3)));
             }
+            path.lineTo(p3);    
             
             if(pieceObj.bottomSocket != null){
-                var seg = pieceObj.width / 5;
-                var enterSize = seg * 1.1 * pieceObj.bottomSocket.enterFlg;
-                path.lineTo(new paper.Point(p3.x-(seg*2), p3.y));
-                path.arcTo(new paper.Point(p3.x-(seg*2), p3.y+enterSize), 
-                           new paper.Point(p3.x-(seg*3), p3.y));
-                path.lineTo(p4);
-            }else{
-                path.lineTo(p4);    
+                path.lineTo(new paper.Point(p3.x-(wSeg*2), p3.y));
+                path.arcTo(new paper.Point(p3.x-(wSeg*2), p3.y+(wCurveSize*pieceObj.bottomSocket.enterFlg)), 
+                           new paper.Point(p3.x-(wSeg*3), p3.y));
             }
+            path.lineTo(p4);    
 
             if(pieceObj.leftSocket != null){
-                var seg = pieceObj.height / 5;
-                var enterSize = seg * 1.1 * pieceObj.leftSocket.enterFlg;
-                path.lineTo(new paper.Point(p4.x, p4.y-(seg*2)));
-                path.arcTo(new paper.Point(p4.x+enterSize, p4.y-(seg*2)), 
-                           new paper.Point(p4.x, p4.y-(seg*3)));
-                path.lineTo(p1);
-            }else{
-                path.lineTo(p1);    
+                path.lineTo(new paper.Point(p4.x, p4.y-(hSeg*2)));
+                path.arcTo(new paper.Point(p4.x+(hCurveSize*pieceObj.leftSocket.enterFlg), p4.y-(hSeg*2)), 
+                           new paper.Point(p4.x, p4.y-(hSeg*3)));
             }
+            path.lineTo(p1);    
 
             var group = new paper.Group([path, raster]);
             group.clipped = true;
