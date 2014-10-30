@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1498A108-BAF6-4CAF-B8E2-2855F91C03A3</string>
+	<key>IDESourceControlProjectName</key>
+	<string>AutoFlight</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F93A3C35819D98CBB64D9C3CE8B45F32EA820F3A</key>
+		<string>https://github.com/lukaslaobeyer/AutoFlight.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>XCode/AutoFlight/AutoFlight.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F93A3C35819D98CBB64D9C3CE8B45F32EA820F3A</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/lukaslaobeyer/AutoFlight.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F93A3C35819D98CBB64D9C3CE8B45F32EA820F3A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F93A3C35819D98CBB64D9C3CE8B45F32EA820F3A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>AutoFlight</string>
+		</dict>
+	</array>
+</dict>
+</plist>
