@@ -1,0 +1,1 @@
+VisEdu-RA: módulo de Processamento de Imagens.
