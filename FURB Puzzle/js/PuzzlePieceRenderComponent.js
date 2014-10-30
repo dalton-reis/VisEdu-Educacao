@@ -3,28 +3,24 @@ function PuzzlePieceRenderComponent(){}
 
 PuzzlePieceRenderComponent.prototype = new Component();
 
-JSUtils.addMethod(PuzzlePieceRenderComponent.prototype, "initialize", 
-	function(image, imgWidth, imgHeight, offsetLeft, offsetTop){
-		this.initialize();
-		this.image      = image;
-		this.imgWidth   = imgWidth;
-		this.imgHeight  = imgHeight;
-		this.offsetLeft = offsetLeft;
-		this.offsetTop  = offsetTop;
-		return this;
-	}
-);
+PuzzlePieceRenderComponent.prototype.dx = null;
+PuzzlePieceRenderComponent.prototype.dy = null;
 
 PuzzlePieceRenderComponent.prototype.onRender = function(context){
-	context.drawImage(this.image,
-				      this.offsetLeft * this.imgWidth, 
-				      this.offsetTop * this.imgHeight,
-				      this.imgWidth, 
-				      this.imgHeight,
-				      this.owner.getCenterX()-(this.imgWidth/2), 
-		              this.owner.getCenterY()-(this.imgHeight/2),
-		              this.imgWidth, 
-		              this.imgHeight);
+	if(this.dx == null){
+		this.dx = (originalRaster.size.width / 2) - 
+		          ((this.owner.offsetLeft * this.owner.width) + (this.owner.width / 2));
+	}
+	if(this.dy == null){
+		this.dy = (originalRaster.size.height / 2) - 
+		          ((this.owner.offsetTop * this.owner.height) + (this.owner.height / 2));
+	}
+
+	var px = this.owner.getCenterX() + this.dx;
+	var py = this.owner.getCenterY() + this.dy;
+
+	this.owner.tileImage.position.x = px;
+	this.owner.tileImage.position.y = py;
 }
 
 PuzzlePieceRenderComponent.prototype.getSystems = function(){
