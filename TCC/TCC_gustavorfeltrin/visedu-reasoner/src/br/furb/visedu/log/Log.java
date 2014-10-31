@@ -17,8 +17,8 @@ public class Log {
 	}
 	
 	private static void print(PrintStream ps, LogType tipo, String msg) {
-		if ( !Boolean.getBoolean(System.getProperty(LogType.ALL.getSysprop(), LogType.ALL.getSysPropDefValue())) ) {
-			if ( !Boolean.getBoolean( System.getProperty(tipo.getSysprop(), tipo.getSysPropDefValue()) )) {
+		if ( !Boolean.parseBoolean(System.getProperty(LogType.ALL.getSysprop(), LogType.ALL.getSysPropDefValue())) ) {
+			if ( !Boolean.parseBoolean( System.getProperty(tipo.getSysprop(), tipo.getSysPropDefValue()) )) {
 				return;
 			}			
 		}		

@@ -36,7 +36,10 @@ JSUtils.addMethod(PerceptionVisionComponent.prototype, "initialize",
 );
 
 PerceptionVisionComponent.prototype.onLoad = function(){
-	this.owner.isSensor = true;
+	var sc = new SensorComponent().initialize();
+	ComponentUtils.addComponent(this.owner, sc);
+	sc.onLoad();
+	//this.owner.isSensor = true;
 }
 
 PerceptionVisionComponent.prototype.onPercept = function( gameObjectPerceived ) {

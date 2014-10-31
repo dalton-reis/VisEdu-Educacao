@@ -52,7 +52,7 @@ AverageTimeReasoningComponent.prototype.onUpdate = function(delta){
 AverageTimeReasoningComponent.prototype.onRender = function(context){
 	var text = "Reasoning [OA: " + this.overallAverage;
 	if ( this.selApproxOrigin!=null ) {
-		text += ", @" + this.selApproxOrigin.origin.toString() + ": " + this.selReasoningAverage;
+		text += ", @" + this.selApproxOrigin.toString() + ": " + this.selReasoningAverage;
 	}
 	text += "]";
 	var fillStyle = context.fillStyle;
