@@ -2,8 +2,8 @@ var SCENE_LEFT       = -5000;
 var SCENE_TOP        = -5000;
 var SCENE_WIDTH      = 5000;
 var SCENE_HEIGHT     = 5000;
-var CANVAS_ID        = 'canvas';
-var UPLOAD_ID        = 'imageUpload';
+var CANVAS_ID        = "canvas";
+var UPLOAD_ID        = "imageUpload";
 var SOCKET_LEFT      = "leftSocket";
 var SOCKET_RIGHT     = "rightSocket";
 var SOCKET_TOP       = "topSocket";
@@ -13,6 +13,8 @@ var ROWS_ID          = "rows";
 var CANVAS_HEIGHT_ID = "canvasHeight";
 var CANVAS_WIDTH_ID  = "canvasWidth";
 var CRUVE_SIZE       = 1.1;
+var BORDER_COLOR     = "gray";
+var BORDER_WIDTH     = 6;
 
 var layer               = null;
 var originalRaster      = null;
@@ -180,10 +182,24 @@ function createPieces(canvas, imgData){
             }
             path.lineTo(p1);    
 
+            var borderPath = path.clone();
+            borderPath.strokeColor = BORDER_COLOR;
+            borderPath.strokeWodth = BORDER_WIDTH;
+
+            var borderGroupPath = new paper.Path();
+            borderGroupPath.moveTo(new paper.Point(0, 0));
+            borderGroupPath.lineTo(new paper.Point(raster.size.width, 0));
+            borderGroupPath.lineTo(new paper.Point(raster.size.width, raster.size.height));
+            borderGroupPath.lineTo(new paper.Point(0, raster.size.height));
+            borderGroupPath.lineTo(new paper.Point(0, 0));
+
             var group = new paper.Group([path, raster]);
             group.clipped = true;
 
+            var borderGroup = new paper.Group([borderPath, borderGroupPath]);
+
             pieceObj.tileImage = group;
+            pieceObj.borderImage = borderGroup;
         }
     }
 }
@@ -240,3 +256,7 @@ function handleImageSelect(evt) {
 window.onload = function(){
 	document.getElementById(UPLOAD_ID).addEventListener('change', handleImageSelect, false);
 }
+
+window.onbeforeunload = function(e) {
+    return 'Deseja realmente fechar o jogo?';
+};

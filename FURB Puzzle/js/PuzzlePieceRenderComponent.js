@@ -21,6 +21,8 @@ PuzzlePieceRenderComponent.prototype.onRender = function(context){
 
 	this.owner.tileImage.position.x = px;
 	this.owner.tileImage.position.y = py;
+	this.owner.borderImage.position.x = px;
+	this.owner.borderImage.position.y = py;
 }
 
 PuzzlePieceRenderComponent.prototype.getSystems = function(){
