@@ -150,9 +150,15 @@ var Game = new function(){
 				layer.world.Step((1.0/60), 1);
 			}
 		}
-		LogicSystem.fireCollideListener();
+		LogicSystem.fireCollideListener();	
 	}
 
+	/**
+	* Dispara o evento onPercept dos objetos do jogo.
+	*
+	* @author Gustavo R. Feltrin
+	* @method perceptGame
+	*/
 	this.perceptGame = function() {
 		PerceptionSystem.firePerceptionListener();
 	}

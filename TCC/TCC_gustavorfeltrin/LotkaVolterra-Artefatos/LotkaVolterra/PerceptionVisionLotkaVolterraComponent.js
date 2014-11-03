@@ -3,6 +3,7 @@ function PerceptionVisionLotkaVolterraComponent(){}
 PerceptionVisionLotkaVolterraComponent.prototype = new PerceptionVisionComponent();
 
 PerceptionVisionLotkaVolterraComponent.prototype.getPerceptions = function( gameObjectPerceived ) {
+	gameObjectPerceived.lastPerceived = Date.now();
 	var perceptions = [];
 	perceptions.push( "onPercept(\"" + this.owner.id + "\",\"" + gameObjectPerceived.id + "\")" );
 	return perceptions;

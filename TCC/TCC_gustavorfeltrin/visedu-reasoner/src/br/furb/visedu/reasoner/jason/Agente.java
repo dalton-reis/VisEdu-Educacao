@@ -35,13 +35,14 @@ public class Agente extends AgArch {
 		setWs(ws);		
 	}
 
+	// configurando o agente Jason
 	public void configureAgent() {
-		// configurando o agente Jason
 		Agent ag = new Agent();
 		new TransitionSystem(ag, null, null, this);
 		try {
 			if ( getAslDir()==null ) {
-				String uri = getClass().getClassLoader().getResource( String.format("%s.asl", getAgName()) ).toURI().toString();
+				String uri = getClass().getClassLoader().getResource( 
+						String.format("%s.asl", getAgName()) ).toURI().toString();
 				ag.initAg( uri );
 				showInfo( String.format("Agent \"%s\" using static mind @ %s", getAgName(), uri) );
 			} else {
@@ -57,18 +58,18 @@ public class Agente extends AgArch {
 		}
 	}
 	
-	public void run() {
 //        try {
 //            while (isRunning()) {
-                // chama o motor de Jason para realizar um ciclo de raciocínio
-            	showInfo("Reasoning....");
-                getTS().reasoningCycle();
+	// chama o motor de Jason para realizar um ciclo de raciocínio
 //            }
 //        } catch (Exception e) {
 //        	showError("Run error");
 //        	e.printStackTrace();
 //        }
-    }
+	public void run() {
+		showInfo("Reasoning....");
+		getTS().reasoningCycle();
+	}
 	
 	@Override
 	public String getAgName() {
@@ -80,14 +81,15 @@ public class Agente extends AgArch {
 		return perceptions;
 	}
 	
+	// define que a execução foi executada
 	@Override
 	public void act(ActionExec action, List<ActionExec> feedback) {
-		showInfo("Agent " + getAgName() + " is doing: " + action.getActionTerm());
+		showInfo("Agent " + getAgName() + ": doing: " + action.getActionTerm());
 		getWs().sendMessage( action.getActionTerm().toString() );
-		action.setResult(true); // define que a execução foi executada
+		action.setResult(true);
 		feedback.add(action);
 	}
-	
+		
 	@Override
 	public boolean canSleep() {
 		return true;

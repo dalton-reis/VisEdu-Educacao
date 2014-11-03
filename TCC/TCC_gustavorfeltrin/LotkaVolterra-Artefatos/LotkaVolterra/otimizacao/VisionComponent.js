@@ -45,10 +45,6 @@ VisionComponent.prototype.onLoad = function() {
 		[pt1, pt2, pt3], 
 		"rgba(255, 0, 0, 0.3)",
 		"rgba(0, 0, 0, 0.3)");
-	var sc = new SensorComponent().initialize();
-	//ComponentUtils.addComponent(frustum, sc);
-	//sc.onLoad();
-
 
 	var rbc = new RigidBodyComponent().initialize(0, 1, true, false, 0.2);
 	ComponentUtils.addComponent(frustum, rbc);
@@ -65,7 +61,7 @@ VisionComponent.prototype.onLoad = function() {
 		} else {
 			render.fillStyle = "rgba(255, 0, 0, 0.5)";
 		}
-		this.owner.addMove(pvc.agent.getCenterX()-this.owner.getCenterX(), pvc.agent.getCenterY()-this.owner.getCenterY());
+		this.owner.addMove(pvc.agent.getCenterX()-this.owner.origin.x, pvc.agent.getCenterY()-this.owner.origin.y);
 		this.owner.setLinearVelocityX( pvc.agent.getLinearVelocityX() );
 		this.owner.setLinearVelocityY( pvc.agent.getLinearVelocityY() );
 	}
@@ -73,17 +69,31 @@ VisionComponent.prototype.onLoad = function() {
 	var pvpc = new PerceptionVisionPerformanceComponent().initialize(this.uri);
 	ComponentUtils.addComponent(frustum, pvpc);
 
-	/*var ownerTc = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT");
+	var ownerTc = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT");
 	if ( ownerTc ) {
 		var tc = new TokenComponent().initialize(ownerTc.getToken() + "_VISION");
 		ComponentUtils.addComponent(frustum, tc);
-	}*/
+	}
 
 	pvpc.agent = this.owner;
 	this.owner.frustum = frustum;
 	this.owner.layer.addGameObject(frustum);
+
+	this.getLoadGameObject(this.owner.frustum);
 }
 
 VisionComponent.prototype.getTag = function(){
   return "VISION_COMPONENT";
+}
+
+VisionComponent.prototype.getLoadGameObject = function(gameObject){
+	if(gameObject instanceof GameObject){
+		gameObject.onLoad();
+		for(var i in gameObject.listComponents){
+			var component = gameObject.listComponents[i];
+			if(component instanceof Component){
+				component.onLoad();
+			}
+		}
+	}  
 }

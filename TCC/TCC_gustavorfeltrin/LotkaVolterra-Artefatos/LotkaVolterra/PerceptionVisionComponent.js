@@ -8,6 +8,8 @@ PerceptionVisionComponent.prototype.timeOfInstantiation = null;
 PerceptionVisionComponent.prototype.queue = [];
 PerceptionVisionComponent.prototype.averageReasoningTime = 0;
 
+PerceptionVisionComponent.prototype.agent = null;
+
 JSUtils.addMethod(PerceptionVisionComponent.prototype, "initialize", 
 	function(uri){
 		this.initialize();
@@ -49,20 +51,20 @@ PerceptionVisionComponent.prototype.onPercept = function( gameObjectPerceived ) 
 
 			var perceptions = [];
 			for (var i = 0; i < perceps.length; i++) {
-				perceptions.push( {"perception": perceps[i]} );
+				//perceptions.push( {"perception": perceps[i]} );
+				perceptions.push( perceps[i] );
 			}
 
 			var obj = new Object();
 			obj.origin = this.owner.id;
 			obj.target = gameObjectPerceived.id;
 			obj.perceptions = perceptions;
-			obj.action = null;
 			var message = JSON.stringify(obj);
 
 			//var token = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT").getToken();
 			var now = new Date();
 			this.queue.push(now);
-			//console.log( "[" + token + ": send @ " + now.toLocaleString() + "] " + msg );
+			//console.log( "[" + token + ": send @ " + now.toLocaleString() + "] " + message );
 			this.webSocket.send( message );
 		} else {
 			console.warn("Mensagem não enviada: Nenhuma percepção identificada!");
@@ -90,16 +92,17 @@ PerceptionVisionComponent.prototype.onOpen = function(evt) {
 		console.log("time to establish connection: " + Math.abs(now-this.timeOfInstantiation)/1000);	
 		this.timeOfInstantiation = null;
 	}
-	this.isOpen = true;	
 	this.webSocket.send( this.HAND_SHAKE );
 }
 
 PerceptionVisionComponent.prototype.onMessage = function(evt){ 
-	if ( this.HAND_SHAKE != evt.data ) {
+	if ( this.HAND_SHAKE == evt.data ) { // TESTAR
+		this.isOpen = true;
+	} else {
 		var now = new Date();
 		var sendDate = this.queue.shift();
 		//var token = ComponentUtils.getComponent(this.owner, "TOKEN_COMPONENT").getToken();
-		//console.log( "[" + token + ": receive @ " + now.toLocaleString() + "] " + message );
+		//console.log( "[" + token + ": receive @ " + now.toLocaleString() + "] " + evt.data );
 		var reasoningTime = Math.abs(now-sendDate)/1000;
 		//console.log( "[" + token + ": reasoning time] " + reasoningTime);
 		if ( this.averageReasoningTime==0 ) {

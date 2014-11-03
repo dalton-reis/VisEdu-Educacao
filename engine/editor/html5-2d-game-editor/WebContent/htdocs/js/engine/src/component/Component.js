@@ -217,6 +217,16 @@ Component.prototype.onButtonReleased = function(button){}
 Component.prototype.onStickMoved = function(value, stick, direction){}
 
 /**
+* Callback chamado quando o objeto perceber outro objeto.
+* Este método deve ser sobrescrito nas subclasses.
+*
+* @author Gustavo R. Feltrin
+* @method onPercept
+* @param {GameObject} gameObject
+*/
+Component.prototype.onPercept = function(gameObject){}
+
+/**
 * Retorna a tag deste objeto.
 * Este método deve ser sobrescrito nas subclasses.
 *
@@ -225,5 +235,3 @@ Component.prototype.onStickMoved = function(value, stick, direction){}
 * @return {String} tag
 */
 Component.prototype.getTag = function(){return null;}
-
-Component.prototype.onPercept = function(gameObject){}
