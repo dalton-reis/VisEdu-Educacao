@@ -9,7 +9,9 @@
     <script src="./js/PuzzleSocketObject.js"></script>
     <script src="./js/PuzzlePieceObject.js"></script>
     <script src="./js/furb-puzzle.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/furb-puzzle.css">
+    <link rel="stylesheet" 
+          type="text/css" 
+          href="./css/furb-puzzle.css">
   </head>
   <body>
     <div>
@@ -25,15 +27,31 @@
           <label>Imagem</label>
         </div>
         <div>
-          <input id="columns"      type="text" value="5" />
-          <input id="rows"         type="text" value="5" />
-          <input id="canvasWidth"  type="text" value="1000" onkeyup="document.getElementById('canvas').width = this.value" />
-          <input id="canvasHeight" type="text" value="500"  onkeyup="document.getElementById('canvas').height = this.value" />
-          <input type="file" id="imageUpload" name="imageUpload" accept="image/*" >
+          <input id="columns"      
+                 type="text" 
+                 value="5" />
+          <input id="rows"         
+                 type="text" 
+                 value="5" />
+          <input id="canvasWidth"  
+                 type="text" 
+                 value="1000" 
+                 onkeyup="document.getElementById('canvas').width = this.value" />
+          <input id="canvasHeight" 
+                 type="text" 
+                 value="500"  
+                 onkeyup="document.getElementById('canvas').height = this.value" />
+          <input type="file" 
+                 id="imageUpload" 
+                 name="imageUpload" 
+                 accept="image/*" >
       </div>
     </div>
     <div>
-      <canvas id="canvas" width="1000" height="500" class="game-canvas" />
+      <canvas id="canvas" 
+              width="1000" 
+              height="500" 
+              class="game-canvas" />
     </div>
   </body>
 </html>
