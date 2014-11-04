@@ -16,8 +16,8 @@ DropPieceLayerComponent.prototype.resetMovedObjects = function(){
 
 DropPieceLayerComponent.prototype.getSystems = function(){
 	var systems = new Array();
-	systems = ArrayUtils.addElement(systems, MouseSystem.getTag());
-	systems = ArrayUtils.addElement(systems, TouchSystem.getTag());
+	systems = ArrayUtils.addElement(systems, MouseSystem);
+	systems = ArrayUtils.addElement(systems, TouchSystem);
 	return systems;
 }
 

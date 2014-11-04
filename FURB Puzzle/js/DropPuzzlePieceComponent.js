@@ -48,14 +48,14 @@ DropPuzzlePieceComponent.prototype.onMouseUp = function(x, y, wich){
     this.onDropPuzzlePiece();
 }
 
-DropPuzzlePieceComponent.prototype.onTouchEnd = function(touchList){
+DropPuzzlePieceComponent.prototype.onTouchEnd = function(touchList, changedTouches){
     this.onDropPuzzlePiece();
 }
 
 DropPuzzlePieceComponent.prototype.getSystems = function(){
 	var systems = new Array();
-	systems = ArrayUtils.addElement(systems, MouseSystem.getTag());
-	systems = ArrayUtils.addElement(systems, TouchSystem.getTag());
+	systems = ArrayUtils.addElement(systems, MouseSystem);
+	systems = ArrayUtils.addElement(systems, TouchSystem);
 	return systems;
 }
 

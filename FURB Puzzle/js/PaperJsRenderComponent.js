@@ -17,7 +17,8 @@ PaperJsRenderComponent.prototype.onRender = function(context){
 
 PaperJsRenderComponent.prototype.getSystems = function(){
 	var systems = new Array();
-	systems = ArrayUtils.addElement(systems, RenderSystem.getTag());
+	systems = ArrayUtils.addElement(systems, RenderSystem);
+	systems = ArrayUtils.addElement(systems, LogicSystem);
 	return systems;
 }
 

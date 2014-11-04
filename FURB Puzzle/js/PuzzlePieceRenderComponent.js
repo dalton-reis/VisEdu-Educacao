@@ -27,7 +27,7 @@ PuzzlePieceRenderComponent.prototype.onRender = function(context){
 
 PuzzlePieceRenderComponent.prototype.getSystems = function(){
 	var systems = new Array();
-	systems = ArrayUtils.addElement(systems, RenderSystem.getTag());
+	systems = ArrayUtils.addElement(systems, RenderSystem);
 	return systems;
 }
 
