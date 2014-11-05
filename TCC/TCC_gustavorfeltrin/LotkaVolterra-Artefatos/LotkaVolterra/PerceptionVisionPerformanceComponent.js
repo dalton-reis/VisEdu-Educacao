@@ -3,6 +3,7 @@ function PerceptionVisionPerformanceComponent(){}
 PerceptionVisionPerformanceComponent.prototype = new PerceptionVisionComponent();
 
 PerceptionVisionPerformanceComponent.prototype.getPerceptions = function( gameObjectPerceived ) {
+	this.owner.parent.lastPerceived = Date.now();	
 	var render = null;
 	if ( gameObjectPerceived instanceof BoxObject ) {
 		render = ComponentUtils.getComponent(gameObjectPerceived, "BOX_RENDER_COMPONENT");	
@@ -11,12 +12,12 @@ PerceptionVisionPerformanceComponent.prototype.getPerceptions = function( gameOb
 	} else if ( gameObjectPerceived instanceof PolygonObject ) {
 		render = ComponentUtils.getComponent(gameObjectPerceived, "POLYGON_RENDER_COMPONENT");		
 	}	
+	var perceptions = [];
 	if (render) {
-		var perceptions = [];
 		perceptions.push( "onPercept(\"" + render.fillStyle + "\")" );
 		return perceptions;
 	}
-	return null;
+	return perceptions;
 }
 
 PerceptionVisionPerformanceComponent.prototype.executeAction = function( action ) {

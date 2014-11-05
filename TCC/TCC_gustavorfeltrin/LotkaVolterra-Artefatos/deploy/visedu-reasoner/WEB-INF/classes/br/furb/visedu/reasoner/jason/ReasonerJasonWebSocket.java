@@ -24,18 +24,18 @@ public class ReasonerJasonWebSocket extends MessageInbound {
 	private Agente ag;
 	
 	public ReasonerJasonWebSocket(String agentName, String aslDir) {
-		Log.info("ConnectionWS: " + agentName + " @ " + aslDir);		
+		Log.info("new Agent: " + agentName + " @ " + aslDir);		
 		ag = new Agente(agentName, aslDir, this);				
 	}
 	
 	@Override	
 	protected void onOpen(WsOutbound outbound) {
-		Log.info("onOpen: ");
+		Log.info("onOpen: " + ag.getAgName());
 	}
 
 	@Override
-	protected void onBinaryMessage(ByteBuffer arg0) throws IOException {
-		System.err.println( "Método não aceito" );
+	protected void onBinaryMessage(ByteBuffer bb) throws IOException {
+		throw new IOException("Method is not implemented!");
 	}
 	
 	@Override
@@ -53,10 +53,7 @@ public class ReasonerJasonWebSocket extends MessageInbound {
 		
 		List<Literal> perceptions = new ArrayList<Literal>();
 		for (int i = 0; i < ja.length(); i++) {
-			JSONObject perception = ja.getJSONObject(i);
-			if ( perception!=null ) {
-				perceptions.add( Literal.parseLiteral( perception.getString("perception") ) );			
-			}
+			perceptions.add( Literal.parseLiteral( ja.getString(i) ) );
 		}		
 		ag.configureAgent();
 		ag.setPerceptions(perceptions);

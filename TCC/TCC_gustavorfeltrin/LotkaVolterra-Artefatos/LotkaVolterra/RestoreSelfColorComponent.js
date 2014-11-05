@@ -12,7 +12,7 @@ JSUtils.addMethod(RestoreSelfColorComponent.prototype, "initialize",
 );
 
 RestoreSelfColorComponent.prototype.onUpdate = function(delta) {
-	if ( this.owner.lastPerceived && (this.owner.lastPerceived-Date.now() > this.timeWithoutRefresh) ) {
+	if ( this.owner.lastPerceived && (Date.now()-this.owner.lastPerceived > this.timeWithoutRefresh) ) {
 		if ( this.owner instanceof BoxObject ) {
 			var render = ComponentUtils.getComponent(this.owner, "BOX_RENDER_COMPONENT");	
 		} else if ( this.owner instanceof CircleObject ) {

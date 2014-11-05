@@ -38,14 +38,20 @@ public class ReasonerJasonServlet extends WebSocketServlet {
 		return new ReasonerJasonWebSocket( agent, aslDir );
 	}
 
-	private static String downloadAgentMind(String agent, String href) throws IOException {
-		File tmpAsl = File.createTempFile(agent, ".asl");		
-		URL urlFile = new URL( String.format("%s%s.asl", href, agent) );
+	/**
+	 * Realiza o download da mente do agente que será executado.
+	 * @param name Nome do agente
+	 * @param dir Diretório que está localizado o arquivo que representa a mente do agente.
+	 * @return Caminho do arquivo baixado 
+	 * @throws IOException
+	 */
+	private static String downloadAgentMind(String name, String dir) throws IOException {
+		File tmpAsl = File.createTempFile(name, ".asl");		
+		URL urlFile = new URL( String.format("%s%s.asl", dir, name) );
 		ReadableByteChannel rbc = Channels.newChannel(urlFile.openStream());
 		FileOutputStream fos = new FileOutputStream( tmpAsl );
 		fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-		return tmpAsl.getAbsolutePath();
-		
+		return tmpAsl.getAbsolutePath();		
 	}
 	
 }

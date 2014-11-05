@@ -40,7 +40,7 @@
     "type": "GAME_OBJECT",
     "displayNodeName": "PolygonObject",
     "jsVarName": "circle1Frustum",
-    "jsInitialFunction": "new PolygonObject().initialize(300, 160,\r\n[\r\nnew Point2D().initialize(   0,   0),\r\nnew Point2D().initialize( 30, 150),\r\nnew Point2D().initialize(-30, 150)\r\n],\r\n\"rgba(255, 255, 0, 0.5)\",\"rgba(0, 0, 0, 0.5)\");",
+    "jsInitialFunction": "new PolygonObject().initialize(300, 160,\r\n[\r\nnew Point2D().initialize(   0,   0),\r\nnew Point2D().initialize( 30, 150),\r\nnew Point2D().initialize(-30, 150)\r\n],\r\n\"rgba(255, 255, 0, 0.3)\",\"rgba(0, 0, 0, 0.3)\");",
     "jsCode": ""
   },
   {
@@ -80,6 +80,15 @@
     "jsCode": ""
   },
   {
+    "id": "082395e2-c718-4719-957f-c0cd92b730d0",
+    "idParent": "251009be-22ee-4ecb-bf75-e78f380c501c",
+    "type": "COMPONENT",
+    "displayNodeName": "DestroyWhenTokenParentNotFoundComponent",
+    "jsVarName": "circle1Dwtpnf",
+    "jsInitialFunction": "new DestroyWhenTokenParentNotFoundComponent().initialize(\"PREY\");",
+    "jsCode": ""
+  },
+  {
     "id": "8b20681b-f9fc-4245-8081-d779eb3f20d1",
     "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
     "type": "GAME_OBJECT",
@@ -94,7 +103,7 @@
     "type": "COMPONENT",
     "displayNodeName": "RigidBodyComponent",
     "jsVarName": "circle1Rbc",
-    "jsInitialFunction": "new RigidBodyComponent().initialize(0, 1, false, false, 0.2);",
+    "jsInitialFunction": "new RigidBodyComponent().initialize(0, 1000, false, false, 0.2);",
     "jsCode": ""
   },
   {
@@ -148,7 +157,16 @@
     "type": "COMPONENT",
     "displayNodeName": "DestroyGameObjectComponent",
     "jsVarName": "box1Dgoc",
-    "jsInitialFunction": "new DestroyGameObjectComponent().initialize(\"PREY\");",
+    "jsInitialFunction": "new DestroyGameObjectComponent().initialize(\"PREY\", \"red\");",
+    "jsCode": ""
+  },
+  {
+    "id": "cee37df6-7e17-4dce-8af3-3687ec269deb",
+    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
+    "type": "COMPONENT",
+    "displayNodeName": "RestoreSelfColorComponent",
+    "jsVarName": "boxRscc",
+    "jsInitialFunction": "new RestoreSelfColorComponent().initialize(\"red\", 50);",
     "jsCode": ""
   },
   {

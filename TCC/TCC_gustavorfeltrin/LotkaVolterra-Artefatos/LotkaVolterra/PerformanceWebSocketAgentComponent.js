@@ -80,6 +80,9 @@ PerformanceWebSocketAgentComponent.prototype.onLoad = function(){
 
 	/* Criação do objeto que representa o agente */
 	var bo = new BoxObject().initialize(this.minX, this.y, this.agentHeight, this.agentHeight, "green", "black");
+	
+	var rscc = new RestoreSelfColorComponent().initialize("green", 50);
+	ComponentUtils.addComponent(bo, rscc);
 	var rbc = new RigidBodyComponent().initialize(0, 1, true, false, 0);
 	rbc.onCollide = function(otherGameObject){
 		otherGameObject.destroy();

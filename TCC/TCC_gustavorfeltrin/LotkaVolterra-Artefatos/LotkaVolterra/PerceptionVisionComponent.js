@@ -41,17 +41,15 @@ PerceptionVisionComponent.prototype.onLoad = function(){
 	var sc = new SensorComponent().initialize();
 	ComponentUtils.addComponent(this.owner, sc);
 	sc.onLoad();
-	//this.owner.isSensor = true;
 }
 
 PerceptionVisionComponent.prototype.onPercept = function( gameObjectPerceived ) {
 	if (this.webSocket!=undefined && this.isOpen) {
 		var perceps = this.getPerceptions(gameObjectPerceived);
-		if ( perceps.length > 0 ) {
+		if ( perceps && perceps.length > 0 ) {
 
 			var perceptions = [];
 			for (var i = 0; i < perceps.length; i++) {
-				//perceptions.push( {"perception": perceps[i]} );
 				perceptions.push( perceps[i] );
 			}
 
