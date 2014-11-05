@@ -223,6 +223,9 @@ function createPuzzle(imgData){
 	layer.setGravity(0);
 
     ComponentUtils.addComponent(layer, new DropPieceLayerComponent().initialize());
+    ComponentUtils.addComponent(layer, 
+                                new DragControlComponent().
+                                                initialize(new DropPuzzlePieceUtils()));
 
 	Game.init(canvas, scene);
 

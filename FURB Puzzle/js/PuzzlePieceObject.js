@@ -16,7 +16,6 @@ JSUtils.addMethod(PuzzlePieceObject.prototype, "initialize",
 		this.offsetTop    = offsetTop;
 
 		//componentes
-		ComponentUtils.addComponent(this, new DropPuzzlePieceComponent().initialize());
 		ComponentUtils.addComponent(this, new DraggableComponent().initialize());
 		ComponentUtils.addComponent(this, new PuzzlePieceRenderComponent().initialize());
 		ComponentUtils.addComponent(this, new RigidBodyComponent().initialize(0, 1, false, false, 0, false, false));

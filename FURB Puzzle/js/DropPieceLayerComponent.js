@@ -6,7 +6,11 @@ DropPieceLayerComponent.prototype.onMouseMove = function(x, y){
 	this.resetMovedObjects();
 }
 
-DropPieceLayerComponent.prototype.onTouchMove = function(touchList){
+DropPieceLayerComponent.prototype.onTouchMove = function(touchList, changedTouches){
+	this.resetMovedObjects();
+}
+
+DropPieceLayerComponent.prototype.onLoad = function(){
 	this.resetMovedObjects();
 }
 
@@ -22,5 +26,5 @@ DropPieceLayerComponent.prototype.getSystems = function(){
 }
 
 DropPieceLayerComponent.prototype.getTag = function(){
-	return "DROP_PUZZLE_PIECE_COMPONENT";
+	return "DROP_PUZZLE_PIECE_LAYER_COMPONENT";
 }
