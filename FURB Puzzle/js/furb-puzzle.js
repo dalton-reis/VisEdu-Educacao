@@ -258,6 +258,12 @@ function handleImageSelect(evt) {
 
 window.onload = function(){
 	document.getElementById(UPLOAD_ID).addEventListener('change', handleImageSelect, false);
+    var w = screen.width - 50;
+    var h = screen.height - 250;
+    document.getElementById(CANVAS_ID).width = w;
+    document.getElementById(CANVAS_ID).height = h;
+    document.getElementById(CANVAS_WIDTH_ID).value = w;
+    document.getElementById(CANVAS_HEIGHT_ID).value = h;
 }
 
 window.onbeforeunload = function(e) {
