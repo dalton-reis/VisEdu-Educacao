@@ -35,6 +35,51 @@
     "jsCode": ""
   },
   {
+    "id": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
+    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "type": "GAME_OBJECT",
+    "displayNodeName": "BoxObject",
+    "jsVarName": "box1",
+    "jsInitialFunction": "new BoxObject().initialize(600, 400, 60, 60, \"red\", \"black\");",
+    "jsCode": ""
+  },
+  {
+    "id": "58e617ac-67ec-4cbf-b113-55b15832081d",
+    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
+    "type": "COMPONENT",
+    "displayNodeName": "RigidBodyComponent",
+    "jsVarName": "box1Rbc",
+    "jsInitialFunction": "new RigidBodyComponent().initialize(0, 1, false, false, 0.2);",
+    "jsCode": ""
+  },
+  {
+    "id": "428cd64b-60ec-486f-9feb-2a9c0f552a21",
+    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
+    "type": "COMPONENT",
+    "displayNodeName": "MoveGameObjectComponent",
+    "jsVarName": "box1Mgoc",
+    "jsInitialFunction": "new MoveGameObjectComponent().initialize(37, 38, 39, 40);",
+    "jsCode": ""
+  },
+  {
+    "id": "07cb8baf-14d0-4126-83b5-52d3a00c4d8f",
+    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
+    "type": "COMPONENT",
+    "displayNodeName": "DestroyGameObjectComponent",
+    "jsVarName": "box1Dgoc",
+    "jsInitialFunction": "new DestroyGameObjectComponent().initialize(\"PREY\", \"red\");",
+    "jsCode": ""
+  },
+  {
+    "id": "cee37df6-7e17-4dce-8af3-3687ec269deb",
+    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
+    "type": "COMPONENT",
+    "displayNodeName": "RestoreSelfColorComponent",
+    "jsVarName": "boxRscc",
+    "jsInitialFunction": "new RestoreSelfColorComponent().initialize(\"red\", 50);",
+    "jsCode": ""
+  },
+  {
     "id": "251009be-22ee-4ecb-bf75-e78f380c501c",
     "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
     "type": "GAME_OBJECT",
@@ -122,60 +167,6 @@
     "displayNodeName": "MoveGameObjectComponent",
     "jsVarName": "circle1Mgoc",
     "jsInitialFunction": "new MoveGameObjectComponent().initialize(65, 87, 68, 83);",
-    "jsCode": ""
-  },
-  {
-    "id": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
-    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
-    "type": "GAME_OBJECT",
-    "displayNodeName": "BoxObject",
-    "jsVarName": "box1",
-    "jsInitialFunction": "new BoxObject().initialize(600, 400, 60, 60, \"red\", \"black\");",
-    "jsCode": ""
-  },
-  {
-    "id": "58e617ac-67ec-4cbf-b113-55b15832081d",
-    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
-    "type": "COMPONENT",
-    "displayNodeName": "RigidBodyComponent",
-    "jsVarName": "box1Rbc",
-    "jsInitialFunction": "new RigidBodyComponent().initialize(0, 1, false, false, 0.2);",
-    "jsCode": ""
-  },
-  {
-    "id": "428cd64b-60ec-486f-9feb-2a9c0f552a21",
-    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
-    "type": "COMPONENT",
-    "displayNodeName": "MoveGameObjectComponent",
-    "jsVarName": "box1Mgoc",
-    "jsInitialFunction": "new MoveGameObjectComponent().initialize(37, 38, 39, 40);",
-    "jsCode": ""
-  },
-  {
-    "id": "07cb8baf-14d0-4126-83b5-52d3a00c4d8f",
-    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
-    "type": "COMPONENT",
-    "displayNodeName": "DestroyGameObjectComponent",
-    "jsVarName": "box1Dgoc",
-    "jsInitialFunction": "new DestroyGameObjectComponent().initialize(\"PREY\", \"red\");",
-    "jsCode": ""
-  },
-  {
-    "id": "cee37df6-7e17-4dce-8af3-3687ec269deb",
-    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
-    "type": "COMPONENT",
-    "displayNodeName": "RestoreSelfColorComponent",
-    "jsVarName": "boxRscc",
-    "jsInitialFunction": "new RestoreSelfColorComponent().initialize(\"red\", 50);",
-    "jsCode": ""
-  },
-  {
-    "id": "19798bcf-b683-446e-a7ee-e499a6b59fa4",
-    "idParent": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
-    "type": "COMPONENT",
-    "displayNodeName": "FpsMeterComponent",
-    "jsVarName": "fpsMeter",
-    "jsInitialFunction": "new FpsMeterComponent().initialize();",
     "jsCode": ""
   }
 ]
