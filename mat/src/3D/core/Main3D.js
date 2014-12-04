@@ -210,6 +210,19 @@ function exibeMenu(){
 	}
 };
 
+// Habilita e desabilita o slider do FOV para o Anaglifo
+function exibeRangeAnaglifo() {
+    if ($('#checkbox_Anaglifo:checked').val()) {
+        $( "#slider-range_anaglifo" ).slider('enable');
+        document.getElementById('label_orientacao').innerHTML = '3D Anaglifo';
+        $('#label_orientacao').addClass('label_orientacaoAnaglifo');
+    } else {
+        $( "#slider-range_anaglifo" ).slider('disable');
+        document.getElementById('label_orientacao').innerHTML = '3D';
+        $('#label_orientacao').removeClass('label_orientacaoAnaglifo');
+    }
+}
+
 //  -----------  FUNCOES JQUERY  ------------  //
 
 
@@ -443,6 +456,22 @@ $(function() {
 	$( "#slider-range_2" ).slider('disable');
 });
 
+// Configura o slider do FOV para o Anaglifo
+$(function() {
+    $( "#slider-range_anaglifo" ).slider({
+        range: false,
+        min: 1,
+        max: 1000,
+        step: 1,
+        values: [ 30 ],
+        slide: function( event, ui ) {
+            $( "#in_range_anaglifo" ).val(ui.values[ 0 ]);
+        }
+    });
+    $( "#in_range_anaglifo" ).val( $( "#slider-range_anaglifo" ).slider( "values", 0 ));
+    $( "#slider-range_anaglifo" ).slider('disable');
+});
+
 function recriaFuncaoGrafica(){
 	//Armazena a cor do Objeto atual selecionado
 	var cor = OBJETO_SELECIONADO.getMaterialEquacaoGrafica().color.getHex();
@@ -459,7 +488,7 @@ function recriaFuncaoGrafica(){
 	
 	//Captura o objeto da cena3D
 	var tmp = cena3D.getObjectByName(OBJETO_SELECIONADO.getMalhaGraficaFuncao().name);
-	//verfifica se o wirefram não está habilitado
+	//verfifica se o wirefram nã¯ está ¨abilitado
 	var wireframe = OBJETO_SELECIONADO.getMaterialEquacaoGrafica().wireframe == true ? true : false;
 	
 	//Remove a BBox do objeto atual selecionado
