@@ -76,7 +76,7 @@
     "type": "COMPONENT",
     "displayNodeName": "RestoreSelfColorComponent",
     "jsVarName": "boxRscc",
-    "jsInitialFunction": "new RestoreSelfColorComponent().initialize(\"red\", 50);",
+    "jsInitialFunction": "new RestoreSelfColorComponent().initialize(\"red\", 100);",
     "jsCode": ""
   },
   {

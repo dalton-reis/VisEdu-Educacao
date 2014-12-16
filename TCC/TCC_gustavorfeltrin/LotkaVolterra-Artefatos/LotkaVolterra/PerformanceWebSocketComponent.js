@@ -22,7 +22,7 @@ PerformanceWebSocketComponent.prototype.onLoad = function(){
 	 */
 	var maxValue = 204;
 	do {
-		var qtd = prompt("Informe a quantidade de agentes (" + minValue + ".." + maxValue + ")", "50");
+		var qtd = prompt("Informe a quantidade de agentes (" + minValue + ".." + maxValue + ")", "20");
 	}
 	while ( isNaN(qtd) || qtd < minValue || qtd > maxValue ) 
 
@@ -39,10 +39,10 @@ PerformanceWebSocketComponent.prototype.onLoad = function(){
 
 	do {
 		var done = false;
-		var qtdObstaculos = prompt("Informe a quantidade de obst&aacute;culos (0, 1, 3, 6)", "3");
+		var qtdObstaculos = prompt("Informe a quantidade de obst\u00E1culos (0, 1, 3)", "3");
 		if ( qtdObstaculos && !isNaN(qtdObstaculos) ) {
 			qtdObstaculos = parseInt(qtdObstaculos);
-			if ( qtdObstaculos == 0 || qtdObstaculos == 3 || qtdObstaculos == 6 || qtdObstaculos == 1) {
+			if ( qtdObstaculos == 0 || qtdObstaculos == 3 || qtdObstaculos == 1) {
 				done = true;
 			}
 		}
