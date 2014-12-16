@@ -1,0 +1,21 @@
+URIs:
+## Impl
+Furb:"ws://campeche.inf.furb.br:8094/lotkaVolterraWeb/jason?agent=prey&assetsDir=" + DirectoryUtils.getAssetsDir()
+localhost: "ws://localhost:8081/visedu-reasoner/jason?agent=prey&assetsDir=" + DirectoryUtils.getAssetsDir()
+
+## Performance
+Furb: "ws://campeche.inf.furb.br:8094/lotkaVolterraWeb/jason?agent=performance&assetsDir=" + DirectoryUtils.getAssetsDir()
+localhost: "ws://localhost:8081/visedu-reasoner/jason?agent=performance&assetsDir=" + DirectoryUtils.getAssetsDir()
+
+
+## Hora Servidor
+Furb: "ws://campeche.inf.furb.br:8094/lotkaVolterraWeb/server"
+localhost: "ws://localhost:8081/visedu-reasoner/server"
+
+1. Importar o Editor/Motor de jogos no eclipse (fontes\html5-2d-game-editor)
+2. Importar o reasoner no eclipse (fontes\visedu-reasoner)
+3. Disponibilizar na pasta de usuários a pasta \outros\editor_data
+4. Executar os projetos importados.
+5. Acessar o editor de jogos em host:8080/html5-2d-game-editor/htdocs/pages/home.jsf
+6. Criar component que acesse o raciocinador (URI's no inicio do arquivo)
+7. Executar/exportar Simulação.

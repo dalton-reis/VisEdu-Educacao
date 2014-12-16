@@ -1,0 +1,64 @@
+[
+  {
+    "id": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
+    "type": "GAME",
+    "displayNodeName": "Game",
+    "jsVarName": "Game",
+    "jsInitialFunction": "Game.init(document.getElementById(\"gameCanvas\"), scene);",
+    "jsCode": "Game.camera.centerPoint.x \u003d 455; Game.camera.centerPoint.y \u003d 315;"
+  },
+  {
+    "id": "f28f38df-09fd-4a8b-96f7-3bf5620a5eea",
+    "idParent": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
+    "type": "SCENE",
+    "displayNodeName": "Scene",
+    "jsVarName": "scene",
+    "jsInitialFunction": "new Scene().initialize(-1000, -1000, 1000, 1000);",
+    "jsCode": ""
+  },
+  {
+    "id": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "idParent": "f28f38df-09fd-4a8b-96f7-3bf5620a5eea",
+    "type": "LAYER",
+    "displayNodeName": "Layer",
+    "jsVarName": "layer",
+    "jsInitialFunction": "new Layer().initialize();",
+    "jsCode": ""
+  },
+  {
+    "id": "195f62a9-c407-453a-85cd-855367fb4574",
+    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "type": "COMPONENT",
+    "displayNodeName": "RemoveGravityComponent",
+    "jsVarName": "layerRgc",
+    "jsInitialFunction": "new RemoveGravityComponent().initialize();",
+    "jsCode": ""
+  },
+  {
+    "id": "b8698ed1-675f-4194-9f80-a5a1d746737c",
+    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "type": "COMPONENT",
+    "displayNodeName": "PerformanceWebSocketComponent",
+    "jsVarName": "layerPwsc",
+    "jsInitialFunction": "new PerformanceWebSocketComponent().initialize(\"ws://localhost:8081/visedu-reasoner/jason?agent\u003dperformance\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir());",
+    "jsCode": ""
+  },
+  {
+    "id": "f6ad47b8-bf25-4e11-ab77-ca7ce729e904",
+    "idParent": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
+    "type": "COMPONENT",
+    "displayNodeName": "FpsMeterComponent",
+    "jsVarName": "gameFmc",
+    "jsInitialFunction": "new FpsMeterComponent().initialize();",
+    "jsCode": ""
+  },
+  {
+    "id": "8c38c425-f256-488e-a598-53e8e7eed0b6",
+    "idParent": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
+    "type": "COMPONENT",
+    "displayNodeName": "AverageTimeReasoningComponent",
+    "jsVarName": "gameAtrc",
+    "jsInitialFunction": "new AverageTimeReasoningComponent().initialize(20, 50);",
+    "jsCode": ""
+  }
+]

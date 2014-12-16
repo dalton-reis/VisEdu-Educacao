@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="dialogAssets"
+	          widgetVar="dialogVarAssets"
+	          header="Assets"
+	          modal="true"
+	          resizable="false">
+	
+		<h:form id="formAssets" style="width: 500px;">
+			<p:fileUpload fileUploadListener="#{assetMBean.onAssetUpload}" 
+			              mode="advanced"  
+                          update=":formMessages:messages,:formAssets" 
+                          auto="true" 
+                          sizeLimit="999999999" 
+                          allowTypes="/(\.|\/)(gif|jpe?g|png|wav|mp3|ogg|asl)$/"
+                          style="width: 485px; margin-bottom: 20px;"/> 
+			<p:dataTable id="assetsTable" 
+			             var="asset" 
+			             value="#{assetMBean.assets}" 
+			             scrollable="true"
+				         scrollHeight="400">
+				<p:column headerText="Name">
+					<h:outputText value="#{asset.name}" />
+				</p:column>	
+				<p:column headerText="Type">
+					<h:outputText value="#{asset.type}" />
+				</p:column>	
+				<p:column width="40" style="text-align: center;">
+					<p:commandLink action="#{assetMBean.onDeleteAsset}"
+					               update=":formAssets,:formMessages:messages">
+						<f:setPropertyActionListener target="#{assetMBean.assetToRemove}" value="#{asset}" />
+						<p:graphicImage value="/htdocs/imgs/delete-icon.png" styleClass="image-button" />
+					</p:commandLink>
+				</p:column>	             
+			</p:dataTable>
+		
+		</h:form>
+	 
+	</p:dialog>
+	
+</html>

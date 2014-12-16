@@ -1,0 +1,172 @@
+[
+  {
+    "id": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
+    "type": "GAME",
+    "displayNodeName": "Game",
+    "jsVarName": "Game",
+    "jsInitialFunction": "Game.init(document.getElementById(\"gameCanvas\"), scene);",
+    "jsCode": "Game.camera.centerPoint.x \u003d 455; Game.camera.centerPoint.y \u003d 315;"
+  },
+  {
+    "id": "f28f38df-09fd-4a8b-96f7-3bf5620a5eea",
+    "idParent": "bc48cede-a136-46c4-8b36-5d9aa6c4db39",
+    "type": "SCENE",
+    "displayNodeName": "Scene",
+    "jsVarName": "scene",
+    "jsInitialFunction": "new Scene().initialize(-1000, -1000, 1000, 1000);",
+    "jsCode": ""
+  },
+  {
+    "id": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "idParent": "f28f38df-09fd-4a8b-96f7-3bf5620a5eea",
+    "type": "LAYER",
+    "displayNodeName": "Layer",
+    "jsVarName": "layer",
+    "jsInitialFunction": "new Layer().initialize();",
+    "jsCode": ""
+  },
+  {
+    "id": "195f62a9-c407-453a-85cd-855367fb4574",
+    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "type": "COMPONENT",
+    "displayNodeName": "RemoveGravityComponent",
+    "jsVarName": "layerRgc",
+    "jsInitialFunction": "new RemoveGravityComponent().initialize();",
+    "jsCode": ""
+  },
+  {
+    "id": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
+    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "type": "GAME_OBJECT",
+    "displayNodeName": "BoxObject",
+    "jsVarName": "box1",
+    "jsInitialFunction": "new BoxObject().initialize(600, 400, 60, 60, \"red\", \"black\");",
+    "jsCode": ""
+  },
+  {
+    "id": "58e617ac-67ec-4cbf-b113-55b15832081d",
+    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
+    "type": "COMPONENT",
+    "displayNodeName": "RigidBodyComponent",
+    "jsVarName": "box1Rbc",
+    "jsInitialFunction": "new RigidBodyComponent().initialize(0, 1, false, false, 0.2);",
+    "jsCode": ""
+  },
+  {
+    "id": "428cd64b-60ec-486f-9feb-2a9c0f552a21",
+    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
+    "type": "COMPONENT",
+    "displayNodeName": "MoveGameObjectComponent",
+    "jsVarName": "box1Mgoc",
+    "jsInitialFunction": "new MoveGameObjectComponent().initialize(37, 38, 39, 40);",
+    "jsCode": ""
+  },
+  {
+    "id": "07cb8baf-14d0-4126-83b5-52d3a00c4d8f",
+    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
+    "type": "COMPONENT",
+    "displayNodeName": "DestroyGameObjectComponent",
+    "jsVarName": "box1Dgoc",
+    "jsInitialFunction": "new DestroyGameObjectComponent().initialize(\"PREY\", \"red\");",
+    "jsCode": ""
+  },
+  {
+    "id": "cee37df6-7e17-4dce-8af3-3687ec269deb",
+    "idParent": "999e09c3-8d01-453b-b3ba-400f4c5c699f",
+    "type": "COMPONENT",
+    "displayNodeName": "RestoreSelfColorComponent",
+    "jsVarName": "boxRscc",
+    "jsInitialFunction": "new RestoreSelfColorComponent().initialize(\"red\", 100);",
+    "jsCode": ""
+  },
+  {
+    "id": "251009be-22ee-4ecb-bf75-e78f380c501c",
+    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "type": "GAME_OBJECT",
+    "displayNodeName": "PolygonObject",
+    "jsVarName": "circle1Frustum",
+    "jsInitialFunction": "new PolygonObject().initialize(300, 160,\r\n[\r\nnew Point2D().initialize(   0,   0),\r\nnew Point2D().initialize( 30, 150),\r\nnew Point2D().initialize(-30, 150)\r\n],\r\n\"rgba(255, 255, 0, 0.3)\",\"rgba(0, 0, 0, 0.3)\");",
+    "jsCode": ""
+  },
+  {
+    "id": "568dcf35-a0fb-4729-a4f7-914bcebd21cc",
+    "idParent": "251009be-22ee-4ecb-bf75-e78f380c501c",
+    "type": "COMPONENT",
+    "displayNodeName": "RigidBodyComponent",
+    "jsVarName": "circle1FrustumRbc",
+    "jsInitialFunction": "new RigidBodyComponent().initialize(0, 1, false, false, 0.2);",
+    "jsCode": ""
+  },
+  {
+    "id": "8aa71633-d786-46e3-a062-ed9d1b017d3e",
+    "idParent": "251009be-22ee-4ecb-bf75-e78f380c501c",
+    "type": "COMPONENT",
+    "displayNodeName": "MoveGameObjectComponent",
+    "jsVarName": "circle1FrustumMgoc",
+    "jsInitialFunction": "new MoveGameObjectComponent().initialize(65, 87, 68, 83);",
+    "jsCode": ""
+  },
+  {
+    "id": "bc16f7da-9c62-4b4c-9f97-ce61a978a79f",
+    "idParent": "251009be-22ee-4ecb-bf75-e78f380c501c",
+    "type": "COMPONENT",
+    "displayNodeName": "TokenComponent",
+    "jsVarName": "circle1FrustumTc",
+    "jsInitialFunction": "new TokenComponent().initialize(\"PREY_VISION\");",
+    "jsCode": ""
+  },
+  {
+    "id": "15f4caf3-d88b-4d39-bf44-b4da813af88b",
+    "idParent": "251009be-22ee-4ecb-bf75-e78f380c501c",
+    "type": "COMPONENT",
+    "displayNodeName": "PerceptionVisionLotkaVolterraComponent",
+    "jsVarName": "circle1FrustumPvlvc",
+    "jsInitialFunction": "new PerceptionVisionLotkaVolterraComponent().initialize(\"ws://localhost:8081/visedu-reasoner/jason?agent\u003dprey\u0026assetsDir\u003d\" + DirectoryUtils.getAssetsDir());",
+    "jsCode": ""
+  },
+  {
+    "id": "082395e2-c718-4719-957f-c0cd92b730d0",
+    "idParent": "251009be-22ee-4ecb-bf75-e78f380c501c",
+    "type": "COMPONENT",
+    "displayNodeName": "DestroyWhenTokenParentNotFoundComponent",
+    "jsVarName": "circle1Dwtpnf",
+    "jsInitialFunction": "new DestroyWhenTokenParentNotFoundComponent().initialize(\"PREY\");",
+    "jsCode": ""
+  },
+  {
+    "id": "8b20681b-f9fc-4245-8081-d779eb3f20d1",
+    "idParent": "173f26eb-d985-4cce-b48d-4d79bf1d1053",
+    "type": "GAME_OBJECT",
+    "displayNodeName": "CircleObject",
+    "jsVarName": "circle1",
+    "jsInitialFunction": "new CircleObject().initialize(300, 160, 30, \"blue\", \"black\");",
+    "jsCode": ""
+  },
+  {
+    "id": "a2418e20-e5e3-4e07-9d3f-3d01c1f78fe1",
+    "idParent": "8b20681b-f9fc-4245-8081-d779eb3f20d1",
+    "type": "COMPONENT",
+    "displayNodeName": "RigidBodyComponent",
+    "jsVarName": "circle1Rbc",
+    "jsInitialFunction": "new RigidBodyComponent().initialize(0, 1000, false, false, 0.2);",
+    "jsCode": ""
+  },
+  {
+    "id": "6a11e19d-9a29-4d20-9686-d6fe7269f78f",
+    "idParent": "8b20681b-f9fc-4245-8081-d779eb3f20d1",
+    "type": "COMPONENT",
+    "displayNodeName": "TokenComponent",
+    "jsVarName": "circle1Tc",
+    "jsInitialFunction": "new TokenComponent().initialize(\"PREY\");",
+    "jsCode": ""
+  },
+  {
+    "id": "b712b1ae-24c3-4275-a76a-4369ea7492b6",
+    "idParent": "8b20681b-f9fc-4245-8081-d779eb3f20d1",
+    "type": "COMPONENT",
+    "displayNodeName": "MoveGameObjectComponent",
+    "jsVarName": "circle1Mgoc",
+    "jsInitialFunction": "new MoveGameObjectComponent().initialize(65, 87, 68, 83);",
+    "jsCode": ""
+  }
+]

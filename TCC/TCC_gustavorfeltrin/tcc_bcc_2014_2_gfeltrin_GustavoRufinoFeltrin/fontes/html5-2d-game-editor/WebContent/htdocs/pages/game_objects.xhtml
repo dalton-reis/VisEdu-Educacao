@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="dialogGameObjects"
+	          widgetVar="dialogVarGameObjects"
+	          header="Game Objects"
+	          modal="true"
+	          resizable="false">
+	    
+	    <h:form id="formGameObjects" style="width: 500px;">
+	    	<p:commandButton value="New"
+	    	                 style="margin-bottom: 20px;"
+				             action="#{gameObjectMBean.onNewGameObject}"
+				             oncomplete="dialogVarEditGameObject.show();"
+					         update=":formEditGameObject"/>
+			<p:dataTable id="gameObjectsTable" 
+			             var="gao" 
+			             value="#{gameObjectMBean.gameObjects}" 
+			             scrollable="true"
+				         scrollHeight="400">
+				<p:column width="40" style="text-align: center;">
+					<p:commandLink action="#{gameObjectMBean.onEditGameObject}"
+					               oncomplete="dialogVarEditGameObject.show();"
+					               update=":formEditGameObject">
+						<f:setPropertyActionListener target="#{gameObjectMBean.gameObjectToEdit}" value="#{gao}" />
+						<p:graphicImage value="/htdocs/imgs/edit-icon.png" styleClass="image-button" />
+					</p:commandLink>
+				</p:column>
+				<p:column headerText="Name">
+					<h:outputText value="#{gao.name}" />
+				</p:column>
+				<p:column width="40" style="text-align: center;">
+					<p:commandLink action="#{gameObjectMBean.onDeleteGameObject}"
+					               update=":formGameObjects:gameObjectsTable,:formMessages:messages">
+						<f:setPropertyActionListener target="#{gameObjectMBean.gameObjectToRemove}" value="#{gao}" />
+						<p:graphicImage value="/htdocs/imgs/delete-icon.png" styleClass="image-button" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog id="dialogEditGameObject"
+	          widgetVar="dialogVarEditGameObject"
+	          header="Edit Game Object"
+	          modal="true"
+	          resizable="false">
+	          
+		<h:form id="formEditGameObject">
+			<h:panelGrid columns="1">
+				<p:outputLabel styleClass="mandatory-label" value="Name"/>
+				<p:inputText id="gameObjectName"
+				             value="#{gameObjectMBean.gameObjectToEdit.name}" 
+				             style="width: 700px;"
+				             disabled="#{gameObjectMBean.isEdit}"
+				             label="Name" />
+				<p:outputLabel styleClass="mandatory-label" value="Init Function"/>
+				<p:inputTextarea id="gameObjectInitialFunction"
+				                 value="#{gameObjectMBean.gameObjectToEdit.init}" 
+				                 style="width: 700px; height: 100px;" 
+				                 autoResize="false"
+				                 label="Init Function"  />
+				<p:outputLabel value="Code"/>
+				<p:inputTextarea value="#{gameObjectMBean.gameObjectToEdit.content}"
+				                 style="width: 700px; height: 400px;" 
+				                 autoResize="false" />
+				<p:commandButton value="Save"
+				                 action="#{gameObjectMBean.onSaveGameObject}"
+				                 update=":formMessages:messages,:formEditGameObject,:formGameObjects:gameObjectsTable"
+				                 oncomplete="addClassError(['formEditGameObject:gameObjectName','formEditGameObject:gameObjectInitialFunction']);"/>
+			</h:panelGrid>
+	    </h:form>
+	          
+	</p:dialog>
+	
+</html>

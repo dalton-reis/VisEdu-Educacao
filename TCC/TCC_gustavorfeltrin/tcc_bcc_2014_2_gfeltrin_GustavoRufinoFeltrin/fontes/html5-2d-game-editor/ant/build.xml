@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<project default="war" name="html5-2d-game-editor">
+	<path id="compile.classpath">
+		<fileset dir="../WebContent/WEB-INF/lib">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="/home/marcos/jboss/jboss-6.1.0.Final/common/lib">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="/home/marcos/jboss/jboss-6.1.0.Final/lib">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="/home/marcos/jboss/jboss-6.1.0.Final/lib/endorsed">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="/home/marcos/jboss/jboss-6.1.0.Final/client">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="/home/marcos/jboss/jboss-6.1.0.Final/server/default/deployers/resteasy.deployer">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="/home/marcos/jboss/jboss-6.1.0.Final/server/default/deployers/jsf.deployer/Mojarra-2.0/jsf-libs">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	<target name="init">
+		<mkdir dir="build/classes"/>
+		<mkdir dir="dist"/>
+	</target>
+	<target name="compile" depends="init">
+		<javac srcdir="../JavaSource" debug="false" destdir="build/classes">
+			<classpath refid="compile.classpath"/>
+		</javac>
+	</target>
+	<target name="war" depends="compile">
+		<war webxml="../WebContent/WEB-INF/web.xml" destfile="dist/html5-2d-game-editor.war">
+			<fileset dir="../WebContent">
+				<exclude name="**/*.jar"/>
+				<exclude name="**/*.class"/>
+			</fileset>
+			<lib dir="../WebContent/WEB-INF/lib"/>
+			<classes dir="build/classes"/>
+		</war>
+	</target>
+	<target name="clean">
+		<delete dir="dist"/>
+		<delete dir="build"/>
+	</target>
+</project>

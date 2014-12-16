@@ -1,0 +1,439 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="formGameProject">
+		<h:panelGrid cellpadding="0" cellspacing="0"
+			style="width: 210px; height: 50px;" styleClass="panel-editor-actions">
+			<p:outputLabel value="Game Project" styleClass="header-text" />
+		</h:panelGrid>
+		<p:contextMenu for="gameProjectTree" nodeType="GAME">
+			<p:menuitem value="Edit Game"
+			            onclick="dialogVarEditGameNode.show();"
+				        update=":formEditGameNode" />
+			<p:menuitem value="Add Component"
+			            actionListener="#{gameProjectMBean.onNewComponent}"
+			            oncomplete="dialogVarAddComponentNode.show();"
+			            update=":formMessages:messages,:formAddComponent" />
+		</p:contextMenu>
+		<p:contextMenu for="gameProjectTree" nodeType="SCENE">
+			<p:menuitem value="Edit Scene"
+			            onclick="dialogVarEditSceneNode.show();"
+				        update=":formEditSceneNode" />
+			<p:menuitem value="Add Layer"
+			            actionListener="#{gameProjectMBean.onNewLayer}"
+			            oncomplete="dialogVarAddLayerNode.show();"
+			            update=":formMessages:messages,:formAddLayer" />
+			<p:menuitem value="Add Component"
+			            actionListener="#{gameProjectMBean.onNewComponent}"
+			            oncomplete="dialogVarAddComponentNode.show();"
+			            update=":formMessages:messages,:formAddComponent" />
+		</p:contextMenu>
+		<p:contextMenu for="gameProjectTree" nodeType="LAYER">
+			<p:menuitem value="Edit Layer"
+			            onclick="dialogVarEditLayerNode.show();"
+				        update=":formEditLayerNode" />
+			<p:menuitem value="Add Game Object"
+			            actionListener="#{gameProjectMBean.onNewGameObject}"
+			            oncomplete="dialogVarAddGameObjectNode.show();"
+			            update=":formMessages:messages,:formAddGameObject" />
+			<p:menuitem value="Add Component"
+			            actionListener="#{gameProjectMBean.onNewComponent}"
+			            oncomplete="dialogVarAddComponentNode.show();"
+			            update=":formMessages:messages,:formAddComponent" />
+			<p:menuitem value="Move Up"
+			            actionListener="#{gameProjectMBean.onMoveUp}"
+			            update=":formMessages:messages,:formGameProject:gameProjectTree" />
+			<p:menuitem value="Move Down"
+			            actionListener="#{gameProjectMBean.onMoveDown}"
+			            update=":formMessages:messages,:formGameProject:gameProjectTree" />
+			<p:menuitem value="Delete Layer"
+			            actionListener="#{gameProjectMBean.onDeleteSelectedNode}"
+			            update=":formMessages:messages,:formGameProject:gameProjectTree" />
+		</p:contextMenu>
+		<p:contextMenu for="gameProjectTree" nodeType="COMPONENT">
+			<p:menuitem value="Edit Component"
+			            onclick="dialogVarEditComponentNode.show();"
+				        update=":formEditComponentNode" />
+			<p:menuitem value="Move Up"
+			            actionListener="#{gameProjectMBean.onMoveUp}"
+			            update=":formMessages:messages,:formGameProject:gameProjectTree" />
+			<p:menuitem value="Move Down"
+			            actionListener="#{gameProjectMBean.onMoveDown}"
+			            update=":formMessages:messages,:formGameProject:gameProjectTree" />
+			<p:menuitem value="Delete Component"
+			            actionListener="#{gameProjectMBean.onDeleteSelectedNode}"
+			            update=":formMessages:messages,:formGameProject:gameProjectTree" />
+		</p:contextMenu>
+		<p:contextMenu for="gameProjectTree" nodeType="GAME_OBJECT">
+			<p:menuitem value="Edit Game Object"
+			            onclick="dialogVarEditGameObjectNode.show();"
+				        update=":formEditGameObjectNode" />
+			<p:menuitem value="Add Component"
+			            actionListener="#{gameProjectMBean.onNewComponent}"
+			            oncomplete="dialogVarAddComponentNode.show();"
+			            update=":formMessages:messages,:formAddComponent" />
+			<p:menuitem value="Move Up"
+			            actionListener="#{gameProjectMBean.onMoveUp}"
+			            update=":formMessages:messages,:formGameProject:gameProjectTree" />
+			<p:menuitem value="Move Down"
+			            actionListener="#{gameProjectMBean.onMoveDown}"
+			            update=":formMessages:messages,:formGameProject:gameProjectTree" />
+			<p:menuitem value="Delete Game Object"
+			            actionListener="#{gameProjectMBean.onDeleteSelectedNode}"
+			            update=":formMessages:messages,:formGameProject:gameProjectTree" />
+		</p:contextMenu>
+		<p:tree id="gameProjectTree"
+		        value="#{gameProjectMBean.projectRoot}" 
+		        var="node"
+		        selectionMode="single"
+		        selection="#{gameProjectMBean.selectedNode}"
+		        style="width: 208px; height: 500px;"
+			    styleClass="no-border-radius">
+			
+			<p:ajax event="expand" listener="#{gameProjectMBean.nodeExpandListener}" />
+			<p:ajax event="collapse" listener="#{gameProjectMBean.nodeCollapseListener}" />    
+			    
+			<p:treeNode type="GAME">  
+	            <h:outputText value="#{node.displayNodeName}" />  
+	        </p:treeNode> 
+	        
+	        <p:treeNode type="SCENE">  
+	            <h:outputText value="#{node.displayNodeName}" />  
+	        </p:treeNode> 
+	        
+	        <p:treeNode id="layerNode" type="LAYER">  
+	            <h:outputText value="#{node.displayNodeName}" />  
+	        </p:treeNode>
+	        
+	        <p:treeNode id="componentNode" type="COMPONENT">  
+	            <h:outputText value="#{node.displayNodeName}" />  
+	        </p:treeNode>
+	        
+	        <p:treeNode id="gameObjectNode" type="GAME_OBJECT">  
+	            <h:outputText value="#{node.displayNodeName}" />  
+	        </p:treeNode> 
+	        
+		</p:tree>
+	</h:form>
+	
+	<p:dialog id="dialogAddLayerNode"
+	          widgetVar="dialogVarAddLayerNode"
+	          header="Layer Instance"
+	          modal="true"
+	          resizable="false"
+	          height="500"
+	          width="550">
+	
+		<h:form id="formAddLayer">
+		
+			<h:panelGrid columns="1">
+				<p:outputLabel styleClass="mandatory-label" value="Variable Name"/>
+				<p:inputText id="layerVariableName"
+				             value="#{gameProjectMBean.newObjectInstance.jsVarName}"
+				             style="width: 500px;"
+				             label="Variable Name" />
+				<p:outputLabel styleClass="mandatory-label" value="Initial Function"/>
+				<p:inputTextarea id="layerInitialFunction"
+				                 value="#{gameProjectMBean.newObjectInstance.jsInitialFunction}"
+				                 style="width: 500px; height: 100px;"
+				                 label="Initial Function" />
+				<p:outputLabel value="Code"/>
+				<p:inputTextarea id="layerCode"
+				                 value="#{gameProjectMBean.newObjectInstance.jsCode}"
+				                 style="width: 500px; height: 200px;"
+				                 autoResize="false" />
+				                 
+				<p:commandButton value="Save"
+				                 action="#{gameProjectMBean.onSaveNewLayer}"
+				                 update=":formMessages:messages,:formAddLayer,:formGameProject:gameProjectTree"
+				                 oncomplete="addClassError(['formAddLayer:layerVariableName','formAddLayer:layerInitialFunction']);"/>
+			</h:panelGrid>
+		
+		</h:form>
+	          
+	</p:dialog>
+	
+	<p:dialog id="dialogAddGameObjectNode"
+	          widgetVar="dialogVarAddGameObjectNode"
+	          header="Game Object Instance"
+	          modal="true"
+	          resizable="false">
+	
+		<h:form id="formAddGameObject" style="width: 600px;">
+		
+			<h:panelGrid columns="1">
+				<p:outputLabel value="Game Objects"/>
+				<p:dataTable id="gameObjectsTable" 
+				             var="gob" 
+				             value="#{gameProjectMBean.gameObjects}" 
+				             scrollable="true"
+				             scrollHeight="110">
+					<p:column headerText="Name" width="100">
+						<h:outputText value="#{gob.name}" />
+					</p:column>
+					<p:column headerText="" width="50" style="text-align: center;">
+						<p:commandButton value="Select"
+						                 action="#{gameProjectMBean.onGameObjectSelected}"
+						                 update=":formMessages:messages,:formAddGameObject">
+							<f:setPropertyActionListener target="#{gameProjectMBean.selectedGameObject}" value="#{gob}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				
+				<p:outputLabel styleClass="mandatory-label" value="Variable Name"/>
+				<p:inputText id="gameObjectVariableName"
+				             value="#{gameProjectMBean.newObjectInstance.jsVarName}"
+				             style="width: 570px;" />
+				<p:outputLabel styleClass="mandatory-label" value="Initial Function"/>
+				<p:inputTextarea id="gameObjectInitialFunction"
+				                 value="#{gameProjectMBean.newObjectInstance.jsInitialFunction}"
+				                 style="width: 570px; height: 100px;"
+				                 autoResize="false" />
+				<p:outputLabel value="Code"/>
+				<p:inputTextarea value="#{gameProjectMBean.newObjectInstance.jsCode}"
+				                 style="width: 570px; height: 200px;"
+				                 autoResize="false" />
+				                 
+				<p:commandButton value="Save"
+				                 action="#{gameProjectMBean.onSaveNewGameObject}"
+				                 update=":formMessages:messages,:formAddGameObject,:formGameProject:gameProjectTree"
+				                 oncomplete="addClassError(['formAddGameObject:gameObjectVariableName','formAddGameObject:gameObjectInitialFunction']);"/>
+			</h:panelGrid>
+		
+		</h:form>
+	          
+	</p:dialog>
+	
+	<p:dialog id="dialogAddComponentNode"
+	          widgetVar="dialogVarAddComponentNode"
+	          header="Component Instance"
+	          modal="true"
+	          resizable="false">
+	
+		<h:form id="formAddComponent" style="width: 600px;">
+		
+			<h:panelGrid columns="1">
+				<p:outputLabel value="Components"/>
+				<p:dataTable id="componentsTable" 
+				             var="comp" 
+				             value="#{gameProjectMBean.components}" 
+				             scrollable="true"
+				             scrollHeight="110">
+					<p:column headerText="Name" width="100">
+						<h:outputText value="#{comp.name}" />
+					</p:column>
+					<p:column headerText="" width="50" style="text-align: center;">
+						<p:commandButton value="Select"
+						                 action="#{gameProjectMBean.onComponentSelected}"
+						                 update=":formMessages:messages,:formAddComponent">
+							<f:setPropertyActionListener target="#{gameProjectMBean.selectedComponent}" value="#{comp}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				
+				<p:outputLabel styleClass="mandatory-label" value="Variable Name"/>
+				<p:inputText id="componentVariableName"
+				             value="#{gameProjectMBean.newObjectInstance.jsVarName}"
+				             style="width: 570px;" />
+				<p:outputLabel styleClass="mandatory-label" value="Initial Function"/>
+				<p:inputTextarea id="componentInitialFunction"
+				                 value="#{gameProjectMBean.newObjectInstance.jsInitialFunction}"
+				                 style="width: 570px; height: 100px;"
+				                 autoResize="false" />
+				<p:outputLabel value="Code"/>
+				<p:inputTextarea value="#{gameProjectMBean.newObjectInstance.jsCode}"
+				                 style="width: 570px; height: 200px;"
+				                 autoResize="false" />
+				                 
+				<p:commandButton value="Save"
+				                 action="#{gameProjectMBean.onSaveNewComponent}"
+				                 update=":formMessages:messages,:formAddComponent,:formGameProject:gameProjectTree"
+				                 oncomplete="addClassError(['formAddComponent:componentVariableName','formAddComponent:componentInitialFunction']);"/>
+			</h:panelGrid>
+		
+		</h:form>
+	          
+	</p:dialog>
+	
+	<p:dialog id="dialogEditGameNode"
+	          widgetVar="dialogVarEditGameNode"
+	          header="Game Instance"
+	          modal="true"
+	          resizable="false"
+	          height="500"
+	          width="550">
+	
+		<h:form id="formEditGameNode">
+		
+			<h:panelGrid columns="1">
+				<p:outputLabel styleClass="mandatory-label" value="Variable Name"/>
+				<p:inputText value="#{gameProjectMBean.selectedNode.data.jsVarName}"
+				             style="width: 500px;"
+				             disabled="true" />
+				<p:outputLabel styleClass="mandatory-label" value="Initial Function"/>
+				<p:inputTextarea value="#{gameProjectMBean.selectedNode.data.jsInitialFunction}"
+				                 style="width: 500px; height: 100px;"
+				                 disabled="true"
+				                 autoResize="false" />
+				<p:outputLabel value="Code"/>
+				<p:inputTextarea value="#{gameProjectMBean.selectedNode.data.jsCode}"
+				                 style="width: 500px; height: 200px;"
+				                 autoResize="false" />
+				<p:commandButton value="Save"
+				                 action="#{gameProjectMBean.onSaveGameInstance}"
+				                 update=":formMessages:messages,:formEditGameNode,:formGameProject:gameProjectTree"/>
+			</h:panelGrid>
+			
+		</h:form>
+	 
+	</p:dialog>
+	
+	<p:dialog id="dialogEditSceneNode"
+	          widgetVar="dialogVarEditSceneNode"
+	          header="Scene Instance"
+	          modal="true"
+	          resizable="false"
+	          height="500"
+	          width="550">
+	
+		<h:form id="formEditSceneNode">
+		
+			<h:panelGrid columns="1">
+				<p:outputLabel styleClass="mandatory-label" value="Variable Name"/>
+				<p:inputText value="#{gameProjectMBean.selectedNode.data.jsVarName}"
+				             style="width: 500px;"
+				             disabled="true" />
+				<p:outputLabel styleClass="mandatory-label" value="Initial Function"/>
+				<p:inputTextarea id="sceneNodeInitialFunction"
+				                 value="#{gameProjectMBean.selectedNode.data.jsInitialFunction}"
+				                 style="width: 500px; height: 100px;"
+				                 autoResize="false"
+				                 label="Initial Function" />
+				<p:outputLabel value="Code"/>
+				<p:inputTextarea value="#{gameProjectMBean.selectedNode.data.jsCode}"
+				                 style="width: 500px; height: 200px;"
+				                 autoResize="false" />
+				<p:commandButton value="Save"
+				                 action="#{gameProjectMBean.onSaveSceneInstance}"
+				                 update=":formMessages:messages,:formGameProject:gameProjectTree"
+				                 oncomplete="addClassError(['formEditSceneNode:sceneNodeInitialFunction']);"/>
+			</h:panelGrid>
+			
+		</h:form>
+	 
+	</p:dialog>
+	
+	<p:dialog id="dialogEditLayerNode"
+	          widgetVar="dialogVarEditLayerNode"
+	          header="Layer Instance"
+	          modal="true"
+	          resizable="false"
+	          height="500"
+	          width="550">
+	
+		<h:form id="formEditLayerNode">
+		
+			<h:panelGrid columns="1">
+				<p:outputLabel styleClass="mandatory-label" value="Variable Name"/>
+				<p:inputText id="layerVariableName"
+				             value="#{gameProjectMBean.selectedNode.data.jsVarName}"
+				             style="width: 500px;"
+				             label="Variable Name" />
+				<p:outputLabel styleClass="mandatory-label" value="Initial Function"/>
+				<p:inputTextarea id="layerInitialFunction"
+				                 value="#{gameProjectMBean.selectedNode.data.jsInitialFunction}"
+				                 style="width: 500px; height: 100px;"
+				                 autoResize="false"
+				                 label="Initial Function" />
+				<p:outputLabel value="Code"/>
+				<p:inputTextarea id="layerCode"
+				                 value="#{gameProjectMBean.selectedNode.data.jsCode}"
+				                 style="width: 500px; height: 200px;"
+				                 autoResize="false" />
+				<p:commandButton value="Save"
+				                 action="#{gameProjectMBean.onSaveLayerInstance}"
+				                 update=":formMessages:messages,:formGameProject:gameProjectTree"
+				                 oncomplete="addClassError(['formEditLayerNode:layerVariableName','formEditLayerNode:layerInitialFunction']);"/>
+			</h:panelGrid>
+			
+		</h:form>
+	 
+	</p:dialog>
+	
+	<p:dialog id="dialogEditComponentNode"
+	          widgetVar="dialogVarEditComponentNode"
+	          header="Component Instance"
+	          modal="true"
+	          resizable="false"
+	          height="500"
+	          width="550">
+	
+		<h:form id="formEditComponentNode">
+		
+			<h:panelGrid columns="1">
+				<p:outputLabel styleClass="mandatory-label" value="Variable Name"/>
+				<p:inputText id="componentVariableName"
+				             value="#{gameProjectMBean.selectedNode.data.jsVarName}"
+				             style="width: 500px;"
+				             label="Variable Name" />
+				<p:outputLabel styleClass="mandatory-label" value="Initial Function"/>
+				<p:inputTextarea id="componentInitialFunction"
+				                 value="#{gameProjectMBean.selectedNode.data.jsInitialFunction}"
+				                 style="width: 500px; height: 100px;"
+				                 autoResize="false"
+				                 label="Initial Function" />
+				<p:outputLabel value="Code"/>
+				<p:inputTextarea value="#{gameProjectMBean.selectedNode.data.jsCode}"
+				                 style="width: 500px; height: 200px;"
+				                 autoResize="false" />
+				<p:commandButton value="Save"
+				                 action="#{gameProjectMBean.onSaveComponentInstance}"
+				                 update=":formMessages:messages,:formGameProject:gameProjectTree"
+				                 oncomplete="addClassError(['formEditComponentNode:componentVariableName','formEditComponentNode:componentInitialFunction']);"/>
+			</h:panelGrid>
+			
+		</h:form>
+	 
+	</p:dialog>
+	
+	<p:dialog id="dialogEditGameObjectNode"
+	          widgetVar="dialogVarEditGameObjectNode"
+	          header="Game Object Instance"
+	          modal="true"
+	          resizable="false"
+	          height="500"
+	          width="550">
+	
+		<h:form id="formEditGameObjectNode">
+		
+			<h:panelGrid columns="1">
+				<p:outputLabel styleClass="mandatory-label" value="Variable Name"/>
+				<p:inputText id="gameObjectVariableName"
+				             value="#{gameProjectMBean.selectedNode.data.jsVarName}"
+				             style="width: 500px;"
+				             label="Variable Name" />
+				<p:outputLabel styleClass="mandatory-label" value="Initial Function"/>
+				<p:inputTextarea id="gameObjectInitialFunction"
+				                 value="#{gameProjectMBean.selectedNode.data.jsInitialFunction}"
+				                 style="width: 500px; height: 100px;"
+				                 autoResize="false"
+				                 label="Initial Function" />
+				<p:outputLabel value="Code"/>
+				<p:inputTextarea value="#{gameProjectMBean.selectedNode.data.jsCode}"
+				                 style="width: 500px; height: 200px;"
+				                 autoResize="false" />
+				<p:commandButton value="Save"
+				                 action="#{gameProjectMBean.onSaveGameObjectInstance}"
+				                 update=":formMessages:messages,:formGameProject:gameProjectTree"
+				                 oncomplete="addClassError(['formEditGameObjectNode:gameObjectVariableName','formEditGameObjectNode:gameObjectInitialFunction']);"/>
+			</h:panelGrid>
+			
+		</h:form>
+	 
+	</p:dialog>
+
+</html>
