@@ -1,18 +1,18 @@
 function FabricaDeItens () {
 
-	// define classe como singleton - unica instância 
+	// define classe como singleton - unica instância
 	if ( arguments.callee._singletonInstance )
 		return arguments.callee._singletonInstance;
 	arguments.callee._singletonInstance = this;
 
 	var scope = this;
-	
+
 	//propriedades
-	
-	scope.itensFabricados = []; 
-	
+
+	scope.itensFabricados = [];
+
 	//implementacao
-	
+
 	this.ehItemDaFabrica = function (item) {
 		for (var i = 0; i < scope.itensFabricados.length; i++) {
 			if	(scope.itensFabricados[i] == item) {
@@ -21,11 +21,11 @@ function FabricaDeItens () {
 		}
 		return false;
 	};
-	
-	scope.fabricarNovoItem = function (idItem, inserirNaLista) {		
-			
+
+	scope.fabricarNovoItem = function (idItem, inserirNaLista) {
+
 		var item = null;
-		
+
 		if	( idItem == EIdsItens.CAMERA) {
 			item = new ItemEditorCamera();
 		} else if ( idItem == EIdsItens.OBJETOGRAFICO ) {
@@ -40,29 +40,31 @@ function FabricaDeItens () {
 			item = new ItemEditorIluminacao();
 		} else if ( idItem == EIdsItens.TRANSLADAR ) {
 			item = new ItemEditorTransladar();
-		} else if ( idItem == EIdsItens.ROTACIONAR ) {	
+		} else if ( idItem == EIdsItens.ROTACIONAR ) {
 			item = new ItemEditorRotacionar();
-		} else if ( idItem == EIdsItens.REDIMENSIONAR ) {	
+		} else if ( idItem == EIdsItens.REDIMENSIONAR ) {
 			item = new ItemEditorEscalar();
+		} else if ( idItem == EIdsItens.DRONE ){
+			item = new ItemEditorDrone();
 		} else {
-			throw new Error ("Nao foi possível fabricar o item. Id informado não existe!");			
-		}		
-			
-		var nome = item.id.descricao; 
+			throw new Error ("Nao foi possível fabricar o item. Id informado não existe!");
+		}
+
+		var nome = item.id.descricao;
 		if	( !inserirNaLista ) {
 			item.id.count++;
-			nome += " " + item.id.count;	
+			nome += " " + item.id.count;
 		}
-		
-		item.setNome( nome );	
-		item.esconderDetalhes();		
-		
-		if	(( inserirNaLista !== undefined ) && (inserirNaLista)) {			
-			scope.itensFabricados.push(item);			
+
+		item.setNome( nome );
+		item.esconderDetalhes();
+
+		if	(( inserirNaLista !== undefined ) && (inserirNaLista)) {
+			scope.itensFabricados.push(item);
 		}
-		
+
 		return item;
 	};
-	
+
 }
 
