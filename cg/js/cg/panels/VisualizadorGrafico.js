@@ -296,31 +296,7 @@ VisualizadorGrafico = function ( editor, signals ) {
 
 				break;
 			case EIdsItens.DRONE:
-				/*
-				 * FIXME - Atualmente o drone eh uma copia do cubo. Mas isso vai ser corrigido no futuro.
-				 */
-				if	( item.visible ) {
-
-					var corCubo = item.propriedadeCor.getHex();
-
-					var geometria = new THREE.BoxGeometry( item.valorXYZ.x, item.valorXYZ.y, item.valorXYZ.z );
-					var material  = new THREE.MeshPhongMaterial({ color: corCubo, ambient: corCubo, overdraw: true });
-					var cubo = new THREE.Mesh( geometria, material);
-					cubo.material.color.setHex( corCubo );
-					cubo.material.map = item.usarTextura ? item.textura : null;
-					cubo.material.needsUpdate = true;
-					cubo.geometry.buffersNeedUpdate = true;
-					cubo.geometry.uvsNeedUpdate = true;
-					//cubo.visible = item.visible;
-
-					cubo.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
-					cubo.item = item;
-					objetoAux.add(cubo);
-					scope.listaObjetosSelecionaveis.push(cubo);
-
-					cubo.add(addBBox(item, cubo));
-				}
-
+				desenhaDrone(item, objetoAux);
 				break;
 
 			default:
@@ -839,6 +815,32 @@ VisualizadorGrafico = function ( editor, signals ) {
 			visualizarItem(scope.editor.painelMontagem, scene);
 		}
 	};
+
+	/*
+	 * Carrega um arquivo .obj com o 3D model do drone e adiciona ele para ser renderizado
+	 */
+	function desenhaDrone(item, objetoAux){
+		if ( item.visible ) {
+			var loader = new THREE.OBJLoader();
+			loader.load("resources/Drone_1.obj",
+					function ( drone ) {
+						console.log("obj loaded")
+						drone.item = item;
+						objetoAux.add(drone);
+						scope.listaObjetosSelecionaveis.push(drone);
+						drone.add(addBBox(item, drone));
+					},
+					function( progress ){
+						//TODO
+						console.log("loading obj...")
+					},
+					function( error ){
+						//TODO
+						console.log("obj loading error...")
+					})
+		}
+	}
+
 };
 
 VisualizadorGrafico.prototype = Object.create( UI.Panel.prototype );
