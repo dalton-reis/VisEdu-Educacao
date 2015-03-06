@@ -1,72 +1,75 @@
 /**
- * 
+ *
  */
 
 EIdsItens = {
 	//ENUMERAÇÂO
-	CAMERA: { 
-		descricao: "Câmera" 
+	CAMERA: {
+		descricao: "Câmera"
 	},
-	TRANSLADAR: { 	
-		descricao: "Transladar" 
+	TRANSLADAR: {
+		descricao: "Transladar"
 	},
-	ROTACIONAR: { 
-		descricao: "Rotacionar" 
+	ROTACIONAR: {
+		descricao: "Rotacionar"
 	},
-	REDIMENSIONAR: { 
-		descricao: "Escalar" 
+	REDIMENSIONAR: {
+		descricao: "Escalar"
 	},
-	CUBO: { 		
+	CUBO: {
 		descricao: "Cubo"
 	},
-	POLIGONO: { 		
+	POLIGONO: {
 		descricao: "Polígono"
 	},
-	SPLINE: { 		
+	SPLINE: {
 		descricao: "Spline"
 	},
-	ILUMINACAO: { 		
+	ILUMINACAO: {
 		descricao: "Iluminação"
 	},
-	OBJETOGRAFICO: { 
-		descricao: "Objeto Gráfico"	
+	OBJETOGRAFICO: {
+		descricao: "Objeto Gráfico"
 	},
-	RENDERIZADOR: { 
-		descricao: "Renderizador" 
+	RENDERIZADOR: {
+		descricao: "Renderizador"
 	},
-	LIXEIRA: { 
+	LIXEIRA: {
 		descricao: "Lixeira"
 	},
-		
+	DRONE: {
+		descricao: "Drone"
+	},
+
 	inicializar: function () {
 		var idObj;
 		var idCount = 0;
-		
-		for (var id in EIdsItens) {		
+
+		for (var id in EIdsItens) {
 			idObj = EIdsItens[ id ];
 
 			idObj.seq   = idCount++;
-			idObj.count = 0;		
-		}		
+			idObj.count = 0;
+		}
 	},
-	
-	zerarContadores: function () {	
+
+	zerarContadores: function () {
 		for (var id in EIdsItens) {
-			EIdsItens[ id ].count = 0;		
-		}		
+			EIdsItens[ id ].count = 0;
+		}
 	},
-	
-	getENumById: function ( seq ) {	
+
+	getENumById: function ( seq ) {
 		var idObj;
-		
-		for (var id in EIdsItens) {			
+
+		for (var id in EIdsItens) {
 			idObj = EIdsItens[id];
-			
-			if	(idObj.seq == seq)			
-				return idObj;					
-		}		
-		return null;		
-	}	
-};	
+
+			if	(idObj.seq == seq)
+				return idObj;
+		}
+		return null;
+	}
+};
 
 EIdsItens.inicializar();
