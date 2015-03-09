@@ -4,34 +4,10 @@
 		<meta charset="utf-8"/>
 		<script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
 		<script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+		<script type="text/javascript" src="js/cg/ros/ROSHandler.js"></script>
 		<script type="text/javascript" type="text/javascript">
-			//connect to ROS
-			var ros = new ROSLIB.Ros({ url : 'ws://localhost:9090'}); //connect to rosbridge
-			ros.on('connection', function(){
-					console.log('Connected to websocket server.');
-			});
-			ros.on('error', function( error ) {
-				console.log('Error connecting to websocket server: ', error);
-			});
-			ros.on('close', function(){
-				console.log('Connection to websocket server closed');
-			});
-			var takeoff_topic = new ROSLIB.Topic({
-				ros : ros,
-				name : '/ardrone/takeoff',
-				messageType : 'std_msgs/Empty'
-			});
-			var land_topic = new ROSLIB.Topic({
-				ros : ros,
-				name : '/ardrone/land',
-				messageType : 'std_msgs/Empty'
-			});
-			var cmdvel_topic = new ROSLIB.Topic({
-				ros : ros,
-				name : '/cmd_vel',
-				messageType : 'geometry_msgs/Twist'
-			});
 
+			var ros = new ROSHandler();
 
 			function on_load() {
 				var takeoffBtn = document.getElementById('takeoffbtn');
@@ -43,117 +19,29 @@
 				var leftBtn = document.getElementById('left');
 				var rightBtn = document.getElementById('right');
 				takeoffBtn.addEventListener('click', function(){
-						var takeoff = new ROSLIB.Message();
-						takeoff_topic.publish(takeoff);
+						ros.takeoff()
 				});
 				landBtn.addEventListener('click', function(){
-					var land = new ROSLIB.Message();
-					land_topic.publish(land);
+						ros.land()
 				});
 				upBtn.addEventListener('click', function(){
-					var land = new ROSLIB.Message();
-					cmdvel_topic.publish({
-						linear : {
-							x : 0.0,
-							y : 0.0,
-							z : 0.5
-						}, angular : {
-							x : 0.0,
-							y : 0.0,
-							z : 0.0
-						}
-					});
-				});
-				downBtn.addEventListener('click', function(){
-					var land = new ROSLIB.Message();
-					cmdvel_topic.publish({
-						linear : {
-							x : 0.0,
-							y : 0.0,
-							z : -0.5
-						}, angular : {
-							x : 0.0,
-							y : 0.0,
-							z : 0.0
-						}
-					});
-				});
-				forwardBtn.addEventListener('click', function(){
-					var land = new ROSLIB.Message();
-					cmdvel_topic.publish({
-						linear : {
-							x : 0.5,
-							y : 0.0,
-							z : 0.0
-						}, angular : {
-							x : 0.0,
-							y : 0.0,
-							z : 0.0
-						}
-					});
-
-				});
-				backwardBtn.addEventListener('click', function(){
-					var land = new ROSLIB.Message();
-					cmdvel_topic.publish({
-						linear : {
-							x : -0.5,
-							y : 0.0,
-							z : 0.0
-						}, angular : {
-							x : 0.0,
-							y : 0.0,
-							z : 0.0
-						}
-					});
-				});
-				leftBtn.addEventListener('click', function(){
-					var land = new ROSLIB.Message();
-					cmdvel_topic.publish({
-						linear : {
-							x : 0.0,
-							y : 0.5,
-							z : 0.0
-						}, angular : {
-							x : 0.0,
-							y : 0.0,
-							z : 0.0
-						}
-					});
-				});
-				rightBtn.addEventListener('click', function(){
-					var land = new ROSLIB.Message();
-					cmdvel_topic.publish({
-						linear : {
-							x : 0.0,
-							y : -0.5,
-							z : 0.0
-						}, angular : {
-							x : 0.0,
-							y : 0.0,
-							z : 0.0
-						}
-					});
-
 				});
 			}
-
-          		window.onload = on_load;
-
+				window.onload = on_load;
 		</script>
-	</head>
-	<body>
+		</head>
+		<body>
 		<div>
-		 	<button id='takeoffbtn' type="button">Takeoff</button>
-		 	<button id='landbtn' type="button">Land</button>
-	 	</div>
+			<button id='takeoffbtn' type="button">Takeoff</button>
+			<button id='landbtn' type="button">Land</button>
+		</div>
 		<div>
-		 	<button id='up' type="button">Up!</button>
-		 	<button id='down' type="button">Down!</button>
-		 	<button id='left' type="button">Left</button>
-		 	<button id='right' type="button">Right</button>
-		 	<button id='forward' type="button">Forward</button>
-		 	<button id='backward' type="button">Backward</button>
-	 	</div>
-	</body>
-</html>
+			<button id='up' type="button">Up!</button>
+			<button id='down' type="button">Down!</button>
+			<button id='left' type="button">Left</button>
+			<button id='right' type="button">Right</button>
+			<button id='forward' type="button">Forward</button>
+			<button id='backward' type="button">Backward</button>
+		</div>
+		</body>
+		</html>
