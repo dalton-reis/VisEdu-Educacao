@@ -298,6 +298,9 @@ VisualizadorGrafico = function ( editor, signals ) {
 			case EIdsItens.DRONE:
 				desenhaDrone(item, objetoAux);
 				break;
+			case EIdsItens.TARGET:
+				desenhaTarget(item, objetoAux);
+				break;
 
 			default:
 			  throw new Error ("Não foi possível processar a visualização do item. Id " + item.id + " não era esperada!");
@@ -816,7 +819,7 @@ VisualizadorGrafico = function ( editor, signals ) {
 		}
 	};
 
-	/*
+	/**
 	 * Carrega um arquivo .obj com o 3D model do drone e adiciona ele para ser renderizado
 	 */
 	function desenhaDrone(item, objetoAux){
@@ -841,6 +844,30 @@ VisualizadorGrafico = function ( editor, signals ) {
 		}
 	}
 
+	/**
+	 * Renderiza o plano que representa o target da cena
+	 */
+	function desenhaTarget(item, objetoAux){
+		if ( item.visible ) {
+			var cor = item.propriedadeCor.getHex();
+			var geometria = new THREE.PlaneGeometry( 10, 10);
+			var material  = new THREE.MeshPhongMaterial({ color: cor, ambient: cor, overdraw: true });
+			var plano = new THREE.Mesh( geometria, material);
+			plano.material.color.setHex( cor );
+			plano.material.map = item.usarTextura ? item.textura : null;
+			plano.material.needsUpdate = true;
+			plano.geometry.buffersNeedUpdate = true;
+			plano.geometry.uvsNeedUpdate = true;
+			//cubo.visible = item.visible;
+
+			plano.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
+			plano.item = item;
+			objetoAux.add(plano);
+			scope.listaObjetosSelecionaveis.push(plano);
+
+			plano.add(addBBox(item, plano));
+		}
+	}
 };
 
 VisualizadorGrafico.prototype = Object.create( UI.Panel.prototype );

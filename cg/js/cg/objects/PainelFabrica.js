@@ -42,15 +42,12 @@ function PainelFabrica( editor, signals ) {
 
 
 	var inserirItemFabrica = function ( idItem, x, y, z, inserirNaLista ) {
-
 		var item = scope.fabrica.fabricarNovoItem( idItem, inserirNaLista );
 		item.objeto.position.set( x, y, z );
-	    item.addMeshsIntersectedObjectsList( scope.editor.intersectableObjectsList );
+	    	item.addMeshsIntersectedObjectsList( scope.editor.intersectableObjectsList );
 		grupoItems.add( item.objeto );
 		item.grupoPai = grupoItems;
-
 		return item;
-
 	};
 
 	inserirItemFabrica( EIdsItens.CAMERA, 0, 0, 4, true );
@@ -59,6 +56,7 @@ function PainelFabrica( editor, signals ) {
 	inserirItemFabrica( EIdsItens.POLIGONO, 0, 0, 4, true );
 	inserirItemFabrica( EIdsItens.SPLINE, 0, 0, 4, true );
 	inserirItemFabrica( EIdsItens.DRONE, 0, 0, 4, true );
+	inserirItemFabrica( EIdsItens.TARGET, 0, 0, 4, true );
 	inserirItemFabrica( EIdsItens.TRANSLADAR, 0, 0, 4, true );
 	inserirItemFabrica( EIdsItens.ROTACIONAR, 0, 0, 4, true );
 	inserirItemFabrica( EIdsItens.REDIMENSIONAR, 0, 0, 4, true );

@@ -46,6 +46,8 @@ function FabricaDeItens () {
 			item = new ItemEditorEscalar();
 		} else if ( idItem == EIdsItens.DRONE ){
 			item = new ItemEditorDrone();
+		} else if ( idItem == EIdsItens.TARGET ){
+			 item = new ItemEditorTarget();
 		} else {
 			throw new Error ("Nao foi possível fabricar o item. Id informado não existe!");
 		}

@@ -40,6 +40,9 @@ EIdsItens = {
 	DRONE: {
 		descricao: "Drone"
 	},
+	TARGET: {
+		descricao: "Target"
+	},
 
 	inicializar: function () {
 		var idObj;
