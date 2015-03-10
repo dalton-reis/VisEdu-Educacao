@@ -1,6 +1,3 @@
-/*
- * FIXME - Atualmente o drone eh uma copia do cubo. Mas isso vai ser corrigido no futuro.
- */
 function ItemEditorDrone() {
 	AItemEditorEncaixeQuadrado.call( this );
 
@@ -22,12 +19,11 @@ function ItemEditorDrone() {
 	//propriedades
 
 	scope.id =  EIdsItens.DRONE;
-	scope.valorXYZ.set( 100, 100, 100 );
-	//scope.posicao.set( 0, 0, 0 );
 	scope.propriedadeCor.setHex( 0xFFFFFF );
 	scope.textura = null;
 	scope.usarTextura = false;
 	scope.listaPontos = undefined;
+	scope.rotation = 0
 }
 
 ItemEditorDrone.prototype = Object.create( AItemEditorEncaixeQuadrado.prototype );
