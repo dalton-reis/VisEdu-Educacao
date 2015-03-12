@@ -43,6 +43,9 @@ EIdsItens = {
 	TARGET: {
 		descricao: "Target"
 	},
+	ANIMACAO: {
+		descricao: "Animação"
+	},
 
 	inicializar: function () {
 		var idObj;

@@ -853,7 +853,11 @@ GeradorCodigoFonteJOGL = function ( ) {
 				 * Nem sei se vai existir geração de código para o item target
 				 * */
 				break;
-
+			case EIdsItens.ANIMACAO:
+				/* TODO - coloquei esse case aqui somente para não acontecer mais erros na página. Mas isso precisa ser revisado no futuro
+				 * Nem sei se vai existir geração de código para o item animacao
+				 * */
+				break;
 			default:
 			  throw new Error ('Não foi possível processar a visualização do item. Id ' + item.id + ' não era esperada!');
 		}

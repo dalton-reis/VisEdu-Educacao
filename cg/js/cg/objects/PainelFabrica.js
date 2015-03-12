@@ -6,7 +6,7 @@ function PainelFabrica( editor, signals ) {
 
 	//propriedades
 
-	if	( !(editor instanceof Editor) ) {
+	if ( !(editor instanceof Editor) ) {
 		throw new Error ( "argumento deve ser da classe Editor !" );
 	}
 	scope.editor = editor;
@@ -61,6 +61,7 @@ function PainelFabrica( editor, signals ) {
 	inserirItemFabrica( EIdsItens.ROTACIONAR, 0, 0, 4, true );
 	inserirItemFabrica( EIdsItens.REDIMENSIONAR, 0, 0, 4, true );
 	inserirItemFabrica( EIdsItens.ILUMINACAO, 0, 0, 4, true );
+	inserirItemFabrica( EIdsItens.ANIMACAO, 0, 0, 4, true );
 
 	scope.fabricarNovoItem = function ( idItem, x, y, z ) {
 
@@ -73,7 +74,7 @@ function PainelFabrica( editor, signals ) {
 		var y = scope.editor.pontoInicial.y - scope.painelHeight + 7;
 		scope.lixeira.objeto.position.set( x, y, 5 );
 
-		if	(meshPainelFundoFabrica.position.x !== scope.editor.pontoInicial.x) {
+		if (meshPainelFundoFabrica.position.x !== scope.editor.pontoInicial.x) {
 
 			meshPainelFundoFabrica.position.x = scope.editor.pontoInicial.x;
 			meshPainelFundoFabrica.position.y = scope.editor.pontoInicial.y;
@@ -87,19 +88,20 @@ function PainelFabrica( editor, signals ) {
 
 			for (var i = 0; i < scope.fabrica.itensFabricados.length; i++) {
 
-				if (scope.fabrica.itensFabricados[i].id == EIdsItens.POLIGONO || scope.fabrica.itensFabricados[i].id == EIdsItens.SPLINE) {
+				if (scope.fabrica.itensFabricados[i].id == EIdsItens.POLIGONO || scope.fabrica.itensFabricados[i].id == EIdsItens.SPLINE
+					|| scope.fabrica.itensFabricados[i].id == EIdsItens.DRONE || scope.fabrica.itensFabricados[i].id == EIdsItens.TARGET) {
 					scope.fabrica.itensFabricados[i].objeto.position.x = scope.editor.pontoInicial.x + (xQuadrado += 100);
 					scope.fabrica.itensFabricados[i].objeto.position.y = scope.editor.pontoInicial.y - 22 - (distanciaEntreItens * 2);
-				}
-				else if (scope.fabrica.itensFabricados[i].id == EIdsItens.ROTACIONAR) {
+				} else if (scope.fabrica.itensFabricados[i].id == EIdsItens.ROTACIONAR) {
 					scope.fabrica.itensFabricados[i].objeto.position.x = scope.editor.pontoInicial.x + 132;
 					scope.fabrica.itensFabricados[i].objeto.position.y = scope.editor.pontoInicial.y - 22 - (distanciaEntreItens * 3);
-				}
-				else if (scope.fabrica.itensFabricados[i].id == EIdsItens.REDIMENSIONAR) {
+				} else if (scope.fabrica.itensFabricados[i].id == EIdsItens.REDIMENSIONAR) {
 					scope.fabrica.itensFabricados[i].objeto.position.x = scope.editor.pontoInicial.x + 244;
 					scope.fabrica.itensFabricados[i].objeto.position.y = scope.editor.pontoInicial.y - 22 - (distanciaEntreItens * 3);
-				}
-				else {
+				} else if(scope.fabrica.itensFabricados[i].id == EIdsItens.ANIMACAO ){
+					scope.fabrica.itensFabricados[i].objeto.position.x = scope.editor.pontoInicial.x + 132;
+					scope.fabrica.itensFabricados[i].objeto.position.y = scope.editor.pontoInicial.y - 22 - (distanciaEntreItens * 4);
+				} else {
 					scope.fabrica.itensFabricados[i].objeto.position.x = xItem;
 					scope.fabrica.itensFabricados[i].objeto.position.y = yItem;
 

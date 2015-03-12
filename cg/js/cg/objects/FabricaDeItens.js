@@ -1,3 +1,6 @@
+/**
+ * TODO - documentação
+ */
 function FabricaDeItens () {
 
 	// define classe como singleton - unica instância
@@ -26,7 +29,7 @@ function FabricaDeItens () {
 
 		var item = null;
 
-		if	( idItem == EIdsItens.CAMERA) {
+		if ( idItem == EIdsItens.CAMERA) {
 			item = new ItemEditorCamera();
 		} else if ( idItem == EIdsItens.OBJETOGRAFICO ) {
 			item = new ItemEditorObjetoGrafico();
@@ -48,12 +51,14 @@ function FabricaDeItens () {
 			item = new ItemEditorDrone();
 		} else if ( idItem == EIdsItens.TARGET ){
 			 item = new ItemEditorTarget();
+		} else if ( idItem == EIdsItens.ANIMACAO ){
+			item = new ItemEditorAnimacao();
 		} else {
 			throw new Error ("Nao foi possível fabricar o item. Id informado não existe!");
 		}
 
 		var nome = item.id.descricao;
-		if	( !inserirNaLista ) {
+		if ( !inserirNaLista ) {
 			item.id.count++;
 			nome += " " + item.id.count;
 		}

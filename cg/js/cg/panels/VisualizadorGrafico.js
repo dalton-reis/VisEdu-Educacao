@@ -301,6 +301,9 @@ VisualizadorGrafico = function ( editor, signals ) {
 			case EIdsItens.TARGET:
 				desenhaTarget(item, objetoAux);
 				break;
+			case EIdsItens.ANIMACAO:
+				/* Nada aqui. Eh só para parar os pipocos =]*/
+				break;
 
 			default:
 			  throw new Error ("Não foi possível processar a visualização do item. Id " + item.id + " não era esperada!");
