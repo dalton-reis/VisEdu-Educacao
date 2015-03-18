@@ -810,6 +810,7 @@ VisualizadorGrafico = function ( editor, signals ) {
 			//cubo.visible = item.visible;
 
 			plano.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
+			plano.rotateX(Util.math.converteGrausParaRadianos(-90));
 			plano.item = item;
 			objetoAux.add(plano);
 			scope.listaObjetosSelecionaveis.push(plano);
