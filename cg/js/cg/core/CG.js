@@ -1,13 +1,13 @@
 /**
- * 
+ *
  */
 
 CG = { };
 
 CG.colors = {
-	corPecasSeta       : 0x32CD32,	
-	corPecasQuadrado   : 0x1C86EE,	
-	corPecasDiamante   : 0xEE5555,	
+	corPecasSeta       : 0x32CD32,
+	corPecasQuadrado   : 0x1C86EE,
+	corPecasDiamante   : 0xEE5555,
 	corPecasCruz       : 0xFFA500,
 	corPecaIluminacao  : 0xFFFF00,
 	corFundo           : 0xFFFFFF,
@@ -22,7 +22,7 @@ CG.colors = {
 	corEmissiveLixeira : 0xFF1493,
 	corObjetoEmEdicao  : 0xFF1493,
 	corScroll          : 0x000000
-	
+
 };
 
 CG.listaDeTexturas = {
@@ -36,7 +36,7 @@ CG.listaDeTexturas = {
 	'Olho'             : 'img/texturas/olho.jpg',
 	'Piso Metal 1'     : 'img/texturas/pisoMetal1.jpg',
 	'Piso Metal 2'     : 'img/texturas/pisoMetal2.jpg'
-	
+
 };
 
 CG.getIdListaDeTexturas = function( valor ) {
@@ -46,7 +46,7 @@ CG.getIdListaDeTexturas = function( valor ) {
 			return id;
 		}
 	}
-	
+
 	return null;
 };
 
@@ -58,12 +58,12 @@ CG.listaDePrimitivas = {
 };
 
 CG.listaTipoGraficos = {
-		'2D' : 2,		
+		'2D' : 2,
 		'3D' : 3
 };
 
 CG.listaItensGraficos = {
-		'Grade' : 0,		
+		'Grade' : 0,
 		'EixoX' : 1,
 		'EixoY' : 2,
 		'EixoZ' : 3
@@ -74,21 +74,56 @@ CG.listaTipoSpline = {
 };
 
 CG.listaTipoLuz = {
-		'Ambient'     : 0,		
+		'Ambient'     : 0,
 		'Hemisphere'  : 1,
 		'Directional' : 2,
 		'PointLight'  : 3,
-		'SpotLight'   : 4		
+		'SpotLight'   : 4
 };
 
 CG.listaDeExercicios = {
 	''              : 'nenhum',
 	//'CG-04_exer_02' : 'exercicios/CG-04_exer_02.txt',
-	//'CG-04_exer_04' : 'exercicios/CG-04_exer_04.txt'	
+	//'CG-04_exer_04' : 'exercicios/CG-04_exer_04.txt'
 };
 
 CG.msgs = {
-	selecionarItem: "Selecione um item usando o editor ou a lista de pecas."
+	selecionarItem: "Selecione um item usando o editor ou a lista de pecas.",
+	somenteUmaAnimacaoPorObjGrafico: "Não é permitido mais de um item de animação por objeto gráfico"
 };
 
+
 CG.objects = UtilCG;
+
+/**
+ * Objeto de cache para as referência aos arquivos obj carregados
+ * pela aplicação*/
+CG.ObjModels = {}
+
+/**
+ * Objeto utilizado para carregar os arquivos .obj
+ **/
+CG.OBJLoader = new THREE.OBJLoader();
+
+/**
+ * Função utilitária que carrega, se necessário, o arquivo obj passado
+ * como parâmetro. Após carrega uma vez, o arquivo eh mantido em cache para
+ * as próxima vezes que for solicitado
+ */
+CG.loadObjModel = function(modelName) {
+	if( !(modelName in CG.ObjModels) ){
+		CG.OBJLoader.load(modelName,
+			function ( model ) {
+				model.userData.nome = "drone";
+				CG.ObjModels[modelName] = model;
+
+			},
+			function( progress ){
+				//TODO
+			},
+			function( error ){
+				//TODO
+			});
+	}
+	return CG.ObjModels[modelName];
+}

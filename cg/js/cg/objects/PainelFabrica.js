@@ -1,3 +1,6 @@
+/**
+ * Painel onde são exibidas os item que podem ser adicionados no renderizador
+ */
 function PainelFabrica( editor, signals ) {
 
 	THREE.Object3D.call( this );
@@ -107,14 +110,9 @@ function PainelFabrica( editor, signals ) {
 
 					yItem -= distanciaEntreItens;
 				}
-
 			}
-
 		}
-
 	} );
-
-
 }
 
 PainelFabrica.prototype = Object.create( THREE.Object3D.prototype );

@@ -201,7 +201,6 @@ var Main =  {
 
 
 			//painel escuro
-
 			paineis.painelEscuro = new UI.Panel();
 			paineis.painelEscuro.setClass( 'painelEscuro' );
 			paineis.painelEscuro.setPosition( 'absolute' );
@@ -223,8 +222,6 @@ var Main =  {
 
 			new ControladorPaineis( labels, paineis ); //controla exibição dos paineis
 
-
-
 			function animador() {
 
 				requestAnimationFrame( animador ); //funcao do Three JS que faz redesenho em loop
@@ -233,26 +230,19 @@ var Main =  {
 				paineis.painelStats.updateFPS();
 
 				if (paineis.editor.editavel) {
-
 					paineis.editor.renderizar();
-
 				}
 
 				if (paineis.visualizadorGrafico.editavel) {
-
 					paineis.visualizadorGrafico.renderizar();
-
 				}
-
 			}
 
 			animador();
 
 
 			function onWindowResize( event ) {
-
 				signals.windowResize.dispatch();
-
 			}
 
 			onWindowResize(null);

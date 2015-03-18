@@ -59,19 +59,12 @@ function PainelListaItens( editor ) {
 
 
 	function gerarItensTreeView ( item, treeViewPai ) {
-
 		var itemTreeView = new  UI.ItemTreeView( treeViewPai );
-
 		var treeviewFilhos = null;
-
 		if	(item.filhos.length > 0 ) {
-
 			treeviewFilhos = new UI.TreeView();
-
 		}
-
 		var panel = new UI.Panel();
-
 		var nome;
 		if ( item.id == EIdsItens.RENDERIZADOR ) {
 			nome = item.nome.toUpperCase();
@@ -79,40 +72,25 @@ function PainelListaItens( editor ) {
 			nome = item.nome;
 			panel.add( new UI.Imagem().setSrc( item.tipoEncaixe.urlIcone ) );
 		}
-
-
 		panel.setWidth( (nome.getWidth() + 70) + 'px').setHeight( '23px' );//.setBackground( '#DDDDFF' );
 		panel.dom.verticalAlign = 'center';
 		panel.add( new UI.Text( "" ).setWidth( '5px' ).setHeight( '16px' ) );
-
 		var text = new UI.Text( nome ).setColor( '#666' ).setCursor( 'pointer' ).setHeight( '16px' );//.setBackground( '#DDFFDD' );
 		text.onClick( function () {
-
 			scope.editor.selecionarItem( item );
-
-			if	(treeviewFilhos) {
+			if (treeviewFilhos) {
 				treeviewFilhos.dom.onclick(); //chama o evento onclick pela segunda vez para desfaze-lo, pois
 			}
-
 		} );
 		panel.add( text );
-
 		itemTreeView.add( panel );
-
-		if	(item.filhos.length > 0 ) {
-
+		if (item.filhos.length > 0 ) {
 			itemTreeView.add( treeviewFilhos );
-
 			for (var i = 0; i < item.filhos.length; i++) {
-
 				gerarItensTreeView( item.filhos[i], treeviewFilhos );
-
 			}
 		}
-
 	}
-
-
 }
 
 PainelListaItens.prototype = Object.create( UI.Panel.prototype );

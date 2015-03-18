@@ -76,8 +76,6 @@ Editor = function ( signals ) {
 
 	function initEditor() {
 
-		//var container = document.getElementById("editor");
-
 		// SCENES
 
 		scene = new THREE.Scene();
@@ -632,10 +630,3 @@ Editor = function ( signals ) {
 };
 
 Editor.prototype = Object.create( UI.Panel.prototype );
-
-
-
-
-
-
-
