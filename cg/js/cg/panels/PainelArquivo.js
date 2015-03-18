@@ -92,7 +92,7 @@ function PainelArquivo( editor ) {
 	 * e vai iniciar as animações
 	 */
 	function startAnimations(item){
-		var animationChain = undefined;
+		var animationChain = []
 		var obj = undefined;
 		if (item.filhos.length > 0){
 			//percorre os filhos procurando um objeto grafico que tenha animação
@@ -105,32 +105,26 @@ function PainelArquivo( editor ) {
 							var animationItem = filho.filhos[q];
 							if( animationItem.id == EIdsItens.TRANSLADAR ){
 								animation = new TWEEN.Tween(filho.objetoScene.position)
-									.to({x: "+" + animationItem.valorXYZ.x,
-									     y: "+" + animationItem.valorXYZ.y,
-									     z: "+" + animationItem.valorXYZ.z}, 2000);
+									.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.x),
+									     y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.y),
+									     z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.z)}, 2000);
 							} else if( animationItem.id == EIdsItens.ROTACIONAR ){
 								animation = new TWEEN.Tween(filho.objetoScene.rotation)
-									.to({x: "+" + Util.math.converteGrausParaRadianos(animationItem.valorXYZ.x),
-									     y: "+" + Util.math.converteGrausParaRadianos(animationItem.valorXYZ.y),
-									     z: "+" + Util.math.converteGrausParaRadianos(animationItem.valorXYZ.z)}, 2000);
+									.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.x)),
+									     y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.y)),
+									     z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.z))}, 2000);
 							}
-							if( animationChain != undefined ){
-								animationChain.chain(animation);
-							} else {
-								animationChain = animation;
-							}
+							animationChain.push(animation);
 						}
-
 					}
 				}
 			}
 		}
-		if( animationChain != undefined ){
-			animationChain
-				.onUpdate(function() {
-					console.log(this);
-				})
-				.start();
+		for( var i = animationChain.length-1; i > 0; i-- ){
+			animationChain[i-1].chain(animationChain[i]);
+		}
+		if( animationChain[0] != undefined ){
+			animationChain[0].start();
 		}
 	}
 }
