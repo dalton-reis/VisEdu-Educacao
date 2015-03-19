@@ -729,7 +729,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 	var matrix43 = null;
 	var matrix44 = null;
 
-	if	( scope.item.matrix !== undefined ) {
+	if ( scope.item.matrix !== undefined ) {
 		var materialMatrixRow1 = new UI.Panel();
 		var materialMatrixRow2 = new UI.Panel();
 		var materialMatrixRow3 = new UI.Panel();
@@ -813,11 +813,11 @@ function PainelPropriedades( item, tipoGrafico ) {
 	}
 
 	function update() {
-		if	( ( item.nome !== undefined ) && ( scope.item.nomeReadOnly == undefined || !scope.item.nomeReadOnly )) {
+		if ( ( item.nome !== undefined ) && ( scope.item.nomeReadOnly == undefined || !scope.item.nomeReadOnly )) {
 			item.setNome( objectName.getValue() );
 		}
 
-		if	(item.qtdPontos !== undefined && item.qtdPontos != parseInt(objectQtdPontos.getValue()) && (item.id == EIdsItens.POLIGONO)) {
+		if (item.qtdPontos !== undefined && item.qtdPontos != parseInt(objectQtdPontos.getValue()) && (item.id == EIdsItens.POLIGONO)) {
 
 			if (item.qtdPontos < parseInt(objectQtdPontos.getValue())) {
 				var qtdNovosPontos = (parseInt(objectQtdPontos.getValue()) - item.qtdPontos);
@@ -838,8 +838,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 				objectListaPontos.setOptionsArray(item.getListaPontos());
 				objectListaPontos.setValue(item.qtdPontos);
-			}
-			else {
+			} else {
 				var qtdPontosRemovidos = (item.qtdPontos - parseInt(objectQtdPontos.getValue()));
 
 				for (var i = 0; i < qtdPontosRemovidos; i++) {
@@ -861,15 +860,15 @@ function PainelPropriedades( item, tipoGrafico ) {
 			}
 		}
 
-		if	((item.qtdPontos !== undefined) && (item.qtdPontos != parseInt(objectQtdPontos.getValue())) && (item.id == EIdsItens.SPLINE)) {
+		if ((item.qtdPontos !== undefined) && (item.qtdPontos != parseInt(objectQtdPontos.getValue())) && (item.id == EIdsItens.SPLINE)) {
 			item.qtdPontos = parseInt(objectQtdPontos.getValue());
 		}
 
-		if	(item.primitiva !== undefined) {
+		if (item.primitiva !== undefined) {
 			item.primitiva = objectListaPrimitiva.getValue();
 		}
 
-		if	(item.pontos !== undefined && (item.pontos.x != parseInt(objectPontoX.getValue()) || item.pontos.y != parseInt(objectPontoY.getValue()) || item.pontos.z != parseInt(objectPontoZ.getValue()))) {
+		if (item.pontos !== undefined && (item.pontos.x != parseInt(objectPontoX.getValue()) || item.pontos.y != parseInt(objectPontoY.getValue()) || item.pontos.z != parseInt(objectPontoZ.getValue()))) {
 			item.pontos.x = parseInt(objectPontoX.getValue());
 			item.pontos.y = parseInt(objectPontoY.getValue());
 			item.pontos.z = parseInt(objectPontoZ.getValue());
@@ -884,11 +883,11 @@ function PainelPropriedades( item, tipoGrafico ) {
 			objectListaPontos.setValue(posAnterior);
 		}
 
-		if	(item.tipoSpline !== undefined) {
+		if (item.tipoSpline !== undefined) {
 			item.tipoSpline = objectTipoSpline.getValue();
 		}
 
-		if	(item.pontoSelecionado !== undefined ) {
+		if (item.pontoSelecionado !== undefined ) {
 			item.pontosSelecionado = parseInt(objectListaPontos.getValue());
 			scope.item.pontos.x = item.listaPontos[(parseInt(objectListaPontos.getValue()) - 1)].x;
 			scope.item.pontos.y = item.listaPontos[(parseInt(objectListaPontos.getValue()) - 1)].y;
@@ -900,7 +899,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 			objectPontoZ.setValue(scope.item.pontos.z);
 		}
 
-		if	(scope.item.listaPontos !== undefined && (item.id == EIdsItens.SPLINE)) {
+		if (scope.item.listaPontos !== undefined && (item.id == EIdsItens.SPLINE)) {
 			if (scope.item.listaPontos[0].x != parseInt(objectPonto1X.getValue()) || scope.item.listaPontos[0].y != parseInt(objectPonto1Y.getValue()) || scope.item.listaPontos[0].z != parseInt(objectPonto1Z.getValue())) {
 				scope.item.listaPontos[0].x = parseInt(objectPonto1X.getValue());
 				scope.item.listaPontos[0].y = parseInt(objectPonto1Y.getValue());
@@ -931,22 +930,21 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 			if (item.poliedro == true) {
 				objectColorPoliedro.dom.disabled = false;
-				if	(item.corPoliedro !== undefined) {
+				if (item.corPoliedro !== undefined) {
 					item.corPoliedro.setHex(objectColorPoliedro.getHexValue());
 				}
-			}
-			else {
+			} else {
 				if (objectColorPoliedro != undefined) {
 					objectColorPoliedro.dom.disabled = true;
 				}
 			}
 		}
 
-		if	(item.tipoLuz !== undefined && scope.item.tipoLuz != CG.listaTipoLuz.Ambient) {
+		if (item.tipoLuz !== undefined && scope.item.tipoLuz != CG.listaTipoLuz.Ambient) {
 			item.intensidade = objectIntensidade.getValue();
 		}
 
-		if	(item.tipoLuz !== undefined) {
+		if (item.tipoLuz !== undefined) {
 			item.tipoLuz = objectTipoLuz.getValue();
 
 			if (item.tipoLuz != tipoLuzAtual) {
@@ -965,17 +963,17 @@ function PainelPropriedades( item, tipoGrafico ) {
 			item.distancia = objectDistancia.getValue();
 		}
 
-		if	(item.tipoLuz == CG.listaTipoLuz.SpotLight) {
+		if (item.tipoLuz == CG.listaTipoLuz.SpotLight) {
 			item.angulo = objectAngulo.getValue();
 			item.expoente = objectExpoente.getValue();
 		}
 
-		if	(item.corFundoLuz != undefined || item.tipoLuz == CG.listaTipoLuz.Hemisphere) {
+		if (item.corFundoLuz != undefined || item.tipoLuz == CG.listaTipoLuz.Hemisphere) {
 			item.corFundoLuz.setHex(objectCorFundoLuz.getHexValue());
 		}
 
 		if (scope.item.tipoLuz == CG.listaTipoLuz.Directional || scope.item.tipoLuz == CG.listaTipoLuz.SpotLight) {
-			if	(item.posicaoTarget !== undefined ) {
+			if (item.posicaoTarget !== undefined ) {
 				item.posicaoTarget.x = objectPosicaoTargetX.getValue();
 				item.posicaoTarget.y = objectPosicaoTargetY.getValue();
 				item.posicaoTarget.z = objectPosicaoTargetZ.getValue();
@@ -983,45 +981,45 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 		}
 
-		if	(item.valorXYZ !== undefined ) {
+		if (item.valorXYZ !== undefined ) {
 			item.valorXYZ.x = objectValueX.getValue();
 			item.valorXYZ.y = objectValueY.getValue();
 			item.valorXYZ.z = objectValueZ.getValue();
 		}
 
-		if	(item.posicao !== undefined ) {
+		if (item.posicao !== undefined ) {
 			item.posicao.x = objectPosicaoX.getValue();
 			item.posicao.y = objectPosicaoY.getValue();
 			item.posicao.z = objectPosicaoZ.getValue();
 		}
 
-		if	(item.lookAt !== undefined ) {
+		if (item.lookAt !== undefined ) {
 			item.lookAt.x = objectLookAtX.getValue();
 			item.lookAt.y = objectLookAtY.getValue();
 			item.lookAt.z = objectLookAtZ.getValue();
 		}
 
-		if	(item.near !== undefined ) {
+		if (item.near !== undefined ) {
 			item.near = objectNear.getValue();
 		}
 
-		if	(item.far !== undefined ) {
+		if (item.far !== undefined ) {
 			item.far = objectFar.getValue();
 		}
 
-		if	(item.fov !== undefined ) {
+		if (item.fov !== undefined ) {
 			item.fov = objectFov.getValue();
 		}
 
-		if	(item.propriedadeCor !== undefined ) {
+		if (item.propriedadeCor !== undefined ) {
 			item.propriedadeCor.setHex( objectColor.getHexValue() );
 		}
 
-		if	(item.corLimpar !== undefined ) {
+		if (item.corLimpar !== undefined ) {
 			item.corLimpar.setHex( objectCorLimpar.getHexValue() );
 		}
 
-		if	(item.corFundo !== undefined ) {
+		if (item.corFundo !== undefined ) {
 			item.corFundo.setHex(objectCorFundo.getHexValue());
 		}
 
@@ -1029,7 +1027,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 			var textura;
 
-			if	( imagemLocal.getValue() !== 'nenhum' ) {
+			if ( imagemLocal.getValue() !== 'nenhum' ) {
 				var imagem = imagemLocal.getValue();
 				textura = THREE.ImageUtils.loadTexture( imagem );
 				textura.needsUpdate = true;
@@ -1055,13 +1053,12 @@ function PainelPropriedades( item, tipoGrafico ) {
 			item.verEixos = objectEixos.getValue();
 		}
 
-		if	(item.tipoGrafico !== undefined) {
+		if (item.tipoGrafico !== undefined) {
 			if (parseInt(item.tipoGrafico) !== parseInt(objectTipoGrafico.getValue())) {
 				if (confirm("Deseja realmente alterar o tipo de gráfico para " + objectTipoGrafico.getValue() + "D? \n A cena atual será perdida." )) {
 					item.setTipoGrafico(objectTipoGrafico.getValue());
 					item.excluirCenaAtual = true;
-				}
-				else {
+				} else {
 					item.excluirCena = false;
 					objectTipoGrafico.setValue(item.tipoGrafico);
 				}
@@ -1072,7 +1069,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 		item.update();
 
-		if	(scope.item.matrix !== undefined) {
+		if (scope.item.matrix !== undefined) {
 			updateMatrix();
 		}
 	}
@@ -1165,7 +1162,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 		objectTargetRow.add( new UI.Text( "ALVO").setWidth( '90px' ).setColor( '#666' ) );
 		objectTargetRow.add(new UI.Break());
 
-		if	(scope.item.posicaoTarget !== undefined) {
+		if (scope.item.posicaoTarget !== undefined) {
 			objectPosicaoTargetX = new UI.Number().setWidth( '50px' ).onChange( update );
 			objectPosicaoTargetY = new UI.Number().setWidth( '50px' ).onChange( update );
 			objectPosicaoTargetZ = new UI.Number().setWidth( '50px' ).onChange( update );
@@ -1187,8 +1184,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 			if (tipoGrafico == 2) {
 				objectTargetRow.add( new UI.Text( 'z: ' + scope.item.posicaoTarget.z + '.00' ).setColor( '#666' ) );
-			}
-			else{
+			} else{
 				objectTargetRow.add( new UI.Text( 'z: ' ).setColor( '#666' ) );
 				objectTargetRow.add( objectPosicaoTargetZ );
 			}
