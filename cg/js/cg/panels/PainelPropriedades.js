@@ -49,7 +49,6 @@ function PainelPropriedades( item, tipoGrafico ) {
 	if	(scope.item.qtdPontos !== undefined && (item.id == EIdsItens.POLIGONO)) {
 		objectQtdPontosRow = new UI.Panel();
 		objectQtdPontos = new UI.Input().setWidth('60px').setColor('#444').setFontSize('12px').onChange(update);
-		//objectQtdPontos = new UI.Number().setWidth('50px').onChange(update);
 
 		objectQtdPontos.setValue(scope.item.qtdPontos);
 
@@ -103,7 +102,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 	var objectListaPontosRow;
 	var objectListaPontos;
 
-	if	(scope.item.listaPontos !== undefined && (item.id == EIdsItens.POLIGONO)) {
+	if (scope.item.listaPontos !== undefined && (item.id == EIdsItens.POLIGONO)) {
 		objectListaPontosRow = new UI.Panel().setHeight('20px');
 
 		if (tipoGrafico == 2) {
@@ -792,6 +791,22 @@ function PainelPropriedades( item, tipoGrafico ) {
 		scope.add( materialMatrixRow4 );
 	}
 
+	//Tipo de easing usado pela animação
+	var objectTipoEasingRow;
+	var objectTipoEasing;
+
+	if (scope.item.easing !== undefined) {
+		objectTipoEasingRow = new UI.Panel().setHeight('20px');
+		objectTipoEasing = new UI.Select().setOptions(CG.listaTiposEasing).setWidth('120px').setColor('#444').setFontSize('12px').onChange(update);
+
+		objectTipoEasing.setValue(item.easing);
+
+		objectTipoEasingRow.add(new UI.Text('Easing').setWidth('90px').setColor('#666'));
+		objectTipoEasingRow.add(objectTipoEasing);
+
+		scope.add(objectTipoEasingRow);
+	}
+
 	function updateMatrix() {
 		matrix11.setValue( scope.item.matrix.elements[0].toFixed(3) /*+ ","*/ );
 		matrix12.setValue( scope.item.matrix.elements[1].toFixed(3) /*+ ","*/ );
@@ -1071,6 +1086,10 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 		if (scope.item.matrix !== undefined) {
 			updateMatrix();
+		}
+
+		if( item.easing != undefined ){
+			item.easing = objectTipoEasing.getValue();
 		}
 	}
 

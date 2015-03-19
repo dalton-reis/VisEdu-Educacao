@@ -25,6 +25,8 @@ ItemEditorAnimacao = function() {
 	scope.id =  EIdsItens.ANIMACAO
 	scope.corHex = CG.colors.corPecaIluminacao;
 	scope.gerarMeshsPecaSuperior();
+	/** Função utilizada nas animações*/
+	scope.easing = TWEEN.Easing.Linear;
 
 };
 

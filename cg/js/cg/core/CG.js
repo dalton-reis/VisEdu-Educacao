@@ -127,3 +127,41 @@ CG.loadObjModel = function(modelName) {
 	}
 	return CG.ObjModels[modelName];
 }
+
+/**
+ * Lista com todas as possíveis funções de interpolação possíveis de
+ * serem utilizadas nas animações
+ */
+CG.listaTiposEasing = {
+	'Linear': TWEEN.Easing.Linear.None,
+	'Quadratic.In': TWEEN.Easing.Quadratic.In,
+	'Quadratic.Out': TWEEN.Easing.Quadratic.Out,
+	'Quadratic.InOut': TWEEN.Easing.Quadratic.InOut,
+	'Cubic.In': TWEEN.Easing.Cubic.In,
+	'Cubic.Out': TWEEN.Easing.Cubic.Out,
+	'Cubic.InOut': TWEEN.Easing.Cubic.InOut,
+	'Quartic.In': TWEEN.Easing.Quartic.In,
+	'Quartic.Out': TWEEN.Easing.Quartic.Out,
+	'Quartic.InOut': TWEEN.Easing.Quartic.InOut,
+	'Quintic.In': TWEEN.Easing.Quintic.In,
+	'Quintic.Out': TWEEN.Easing.Quintic.Out,
+	'Quintic.InOut': TWEEN.Easing.Quintic.InOut,
+	'Sinusoidal.In': TWEEN.Easing.Sinusoidal.In,
+	'Sinusoidal.Out': TWEEN.Easing.Sinusoidal.Out,
+	'Sinusoidal.InOut': TWEEN.Easing.Sinusoidal.InOut,
+	'Exponential.In': TWEEN.Easing.Exponential.In,
+	'Exponential.Out': TWEEN.Easing.Exponential.Out,
+	'Exponential.InOut': TWEEN.Easing.Exponential.InOut,
+	'Circular.In': TWEEN.Easing.Circular.In,
+	'Circular.Out': TWEEN.Easing.Circular.Out,
+	'Circular.InOut': TWEEN.Easing.Circular.InOut,
+	'Elastic.In': TWEEN.Easing.Elastic.In,
+	'Elastic.Out': TWEEN.Easing.Elastic.Out,
+	'Elastic.InOut': TWEEN.Easing.Elastic.InOut,
+	'Back.In': TWEEN.Easing.Back.In,
+	'Back.Out': TWEEN.Easing.Back.Out,
+	'Back.InOut': TWEEN.Easing.Back.InOut,
+	'Bounce.In': TWEEN.Easing.Bounce.In,
+	'Bounce.Out': TWEEN.Easing.Bounce.Out,
+	'Bounce.InOut': TWEEN.Easing.Bounce.InOut
+}
