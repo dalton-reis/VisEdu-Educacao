@@ -93,12 +93,19 @@ function PainelArquivo( editor ) {
 	 */
 	function startAnimations(item){
 		var animationChain = []
+		var easing = undefined;
 		var obj = undefined;
 		if (item.filhos.length > 0){
 			//percorre os filhos procurando um objeto grafico que tenha animação
 			for (var i = 0; i < item.filhos.length; i++) {
 				var filho = item.filhos[i];
 				if( filho.id == EIdsItens.OBJETOGRAFICO && filho.isAnimated ){
+					for( var q = 0; q < filho.filhos.length; q++ ){
+						if( filho.filhos[q].id == EIdsItens.ANIMACAO ){
+							easing = filho.filhos[q].easing;
+							break;
+						}
+					}
 					for( var q = 0; q < filho.filhos.length; q++ ){
 						var animation = null;
 						if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.DIAMANTE ){
@@ -107,12 +114,14 @@ function PainelArquivo( editor ) {
 								animation = new TWEEN.Tween(filho.objetoScene.position)
 									.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.x),
 									     y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.y),
-									     z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.z)}, 2000);
+									     z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.z)}, 2000)
+									.easing(CG.getEasingFunction(easing));
 							} else if( animationItem.id == EIdsItens.ROTACIONAR ){
 								animation = new TWEEN.Tween(filho.objetoScene.rotation)
 									.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.x)),
 									     y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.y)),
-									     z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.z))}, 2000);
+									     z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.z))}, 2000)
+									.easing(CG.getEasingFunction(easing));
 							}
 							animationChain.push(animation);
 						}

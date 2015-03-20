@@ -133,35 +133,135 @@ CG.loadObjModel = function(modelName) {
  * serem utilizadas nas animações
  */
 CG.listaTiposEasing = {
-	'Linear': TWEEN.Easing.Linear.None,
-	'Quadratic.In': TWEEN.Easing.Quadratic.In,
-	'Quadratic.Out': TWEEN.Easing.Quadratic.Out,
-	'Quadratic.InOut': TWEEN.Easing.Quadratic.InOut,
-	'Cubic.In': TWEEN.Easing.Cubic.In,
-	'Cubic.Out': TWEEN.Easing.Cubic.Out,
-	'Cubic.InOut': TWEEN.Easing.Cubic.InOut,
-	'Quartic.In': TWEEN.Easing.Quartic.In,
-	'Quartic.Out': TWEEN.Easing.Quartic.Out,
-	'Quartic.InOut': TWEEN.Easing.Quartic.InOut,
-	'Quintic.In': TWEEN.Easing.Quintic.In,
-	'Quintic.Out': TWEEN.Easing.Quintic.Out,
-	'Quintic.InOut': TWEEN.Easing.Quintic.InOut,
-	'Sinusoidal.In': TWEEN.Easing.Sinusoidal.In,
-	'Sinusoidal.Out': TWEEN.Easing.Sinusoidal.Out,
-	'Sinusoidal.InOut': TWEEN.Easing.Sinusoidal.InOut,
-	'Exponential.In': TWEEN.Easing.Exponential.In,
-	'Exponential.Out': TWEEN.Easing.Exponential.Out,
-	'Exponential.InOut': TWEEN.Easing.Exponential.InOut,
-	'Circular.In': TWEEN.Easing.Circular.In,
-	'Circular.Out': TWEEN.Easing.Circular.Out,
-	'Circular.InOut': TWEEN.Easing.Circular.InOut,
-	'Elastic.In': TWEEN.Easing.Elastic.In,
-	'Elastic.Out': TWEEN.Easing.Elastic.Out,
-	'Elastic.InOut': TWEEN.Easing.Elastic.InOut,
-	'Back.In': TWEEN.Easing.Back.In,
-	'Back.Out': TWEEN.Easing.Back.Out,
-	'Back.InOut': TWEEN.Easing.Back.InOut,
-	'Bounce.In': TWEEN.Easing.Bounce.In,
-	'Bounce.Out': TWEEN.Easing.Bounce.Out,
-	'Bounce.InOut': TWEEN.Easing.Bounce.InOut
+	'Linear': 		0,
+	'Quadratic.In': 	1,
+	'Quadratic.Out': 	2,
+	'Quadratic.InOut': 	3,
+	'Cubic.In': 		4,
+	'Cubic.Out': 		5,
+	'Cubic.InOut': 		6,
+	'Quartic.In': 		7,
+	'Quartic.Out': 		8,
+	'Quartic.InOut': 	9,
+	'Quintic.In': 		10,
+	'Quintic.Out':		11,
+	'Quintic.InOut': 	12,
+	'Sinusoidal.In': 	13,
+	'Sinusoidal.Out': 	14,
+	'Sinusoidal.InOut':	15,
+	'Exponential.In':	16,
+	'Exponential.Out': 	17,
+	'Exponential.InOut':	18,
+	'Circular.In':		19,
+	'Circular.Out':		20,
+	'Circular.InOut':	21,
+	'Elastic.In':		22,
+	'Elastic.Out':		23,
+	'Elastic.InOut':	24,
+	'Back.In':		25,
+	'Back.Out':		26,
+	'Back.InOut':		27,
+	'Bounce.In':		28,
+	'Bounce.Out': 		29,
+	'Bounce.InOut':		30
+}
+
+/**
+ * Função que retorna a função correspondente ao valor passado como parâmetro.
+ * Esse valor deve ser um dos presentes na listTiposEasing
+ */
+CG.getEasingFunction = function (easing){
+	if( easing == CG.listaTiposEasing['Linear'] ){
+		return TWEEN.Easing.Linear.None;
+	}
+	if( easing == CG.listaTiposEasing['Quadratic.In'] ){
+		return TWEEN.Easing.Quadratic.In;
+	}
+	if( easing == CG.listaTiposEasing['Quadratic.Out'] ){
+		return TWEEN.Easing.Quadratic.Out;
+	}
+	if( easing == CG.listaTiposEasing['Quadratic.InOut'] ){
+		return TWEEN.Easing.Quadratic.InOut;
+	}
+	if( easing == CG.listaTiposEasing['Cubic.In'] ){
+		return TWEEN.Easing.Cubic.In;
+	}
+	if( easing == CG.listaTiposEasing['Cubic.Out'] ){
+		return TWEEN.Easing.Cubic.Out;
+	}
+	if( easing == CG.listaTiposEasing['Cubic.InOut'] ){
+		return TWEEN.Easing.Cubic.InOut;
+	}
+	if( easing == CG.listaTiposEasing['Quartic.In'] ){
+		return TWEEN.Easing.Quartic.In;
+	}
+	if( easing == CG.listaTiposEasing['Quartic.Out'] ){
+		return TWEEN.Easing.Quartic.Out;
+	}
+	if( easing == CG.listaTiposEasing['Quartic.InOut'] ){
+		return TWEEN.Easing.Quartic.InOut;
+	}
+	if( easing == CG.listaTiposEasing['Quintic.In'] ){
+		return TWEEN.Easing.Quintic.In;
+	}
+	if( easing == CG.listaTiposEasing['Quintic.Out'] ){
+		return TWEEN.Easing.Quintic.Out;
+	}
+	if( easing == CG.listaTiposEasing['Quintic.InOut'] ){
+		return TWEEN.Easing.Quintic.InOut;
+	}
+	if( easing == CG.listaTiposEasing['Sinusoidal.In'] ){
+		return TWEEN.Easing.Sinusoidal.In;
+	}
+	if( easing == CG.listaTiposEasing['Sinusoidal.Out'] ){
+		return TWEEN.Easing.Sinusoidal.Out;
+	}
+	if( easing == CG.listaTiposEasing['Sinusoidal.InOut'] ){
+		return TWEEN.Easing.Sinusoidal.InOut;
+	}
+	if( easing == CG.listaTiposEasing['Exponential.In'] ){
+		return TWEEN.Easing.Exponential.In;
+	}
+	if( easing == CG.listaTiposEasing['Exponential.Out'] ){
+		return TWEEN.Easing.Exponential.Out;
+	}
+	if( easing == CG.listaTiposEasing['Exponential.InOut'] ){
+		return TWEEN.Easing.Exponential.InOut;
+	}
+	if( easing == CG.listaTiposEasing['Elastic.In'] ){
+		return TWEEN.Easing.Elastic.In;
+	}
+	if( easing == CG.listaTiposEasing['Elastic.Out'] ){
+		return TWEEN.Easing.Elastic.Out;
+	}
+	if( easing == CG.listaTiposEasing['Elastic.InOut'] ){
+		return TWEEN.Easing.Elastic.InOut;
+	}
+	if( easing == CG.listaTiposEasing['Circular.In'] ){
+		return TWEEN.Easing.Circular.In;
+	}
+	if( easing == CG.listaTiposEasing['Circular.Out'] ){
+		return TWEEN.Easing.Circular.Out;
+	}
+	if( easing == CG.listaTiposEasing['Circular.InOut'] ){
+		return TWEEN.Easing.Circular.InOut;
+	}
+	if( easing == CG.listaTiposEasing['Back.In'] ){
+		return TWEEN.Easing.Back.In;
+	}
+	if( easing == CG.listaTiposEasing['Back.Out'] ){
+		return TWEEN.Easing.Back.Out;
+	}
+	if( easing == CG.listaTiposEasing['Back.InOut'] ){
+		return TWEEN.Easing.Back.InOut;
+	}
+	if( easing == CG.listaTiposEasing['Bounce.In'] ){
+		return TWEEN.Easing.Bounce.In;
+	}
+	if( easing == CG.listaTiposEasing['Bounce.Out'] ){
+		return TWEEN.Easing.Bounce.Out;
+	}
+	if( easing == CG.listaTiposEasing['Bounce.InOut'] ){
+		return TWEEN.Easing.Bounce.InOut;
+	}
 }
