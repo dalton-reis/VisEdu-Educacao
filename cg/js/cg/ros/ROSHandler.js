@@ -55,10 +55,30 @@ var ROSHandler = function(){
 	};
 
 	/**
+	 * Método para parar o drone
+	 */
+	ROSHandler.prototype.stop = function(){
+		ROSHandler.prototype.move(0.0, 0.0, 0.0, 0.0);
+	}
+
+	/**
 	 * Método para movimentar o drone
 	 * @function move
 	 */
-	ROSHandler.prototype.move = function() {
-		//TODO
+	ROSHandler.prototype.move = function(x,y,z,rotation) {
+		var twist = new ROSLIB.Message({
+			linear: {
+				x : x,
+				y : y,
+				z : z,
+
+			},
+			angular: {
+				x : 0.0,
+				y : 0.0,
+				z : rotation,
+			}
+		});
+		cmdvel_topic.publish(twist);
 	};
 }

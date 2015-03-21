@@ -1,12 +1,12 @@
 #!/bin/bash
 
-function show_help {
-	echo "init-ros <option>"
-	echo "Option:"
-	echo "--roscore: Initializes roscore"
-	echo "--rosbridge: Initializes rosbridge_server and rosbridge_websocket"
-	echo "--rosrun: Initializes ardrone_autonomy and ardrone-driver"
-}
+#function show_help {
+	#echo "init-ros <option>"
+	#echo "Option:"
+	#echo "--roscore: Initializes roscore"
+	#echo "--rosbridge: Initializes rosbridge_server and rosbridge_websocket"
+	#echo "--rosrun: Initializes ardrone_autonomy and ardrone-driver"
+#}
 
 
 if [ "$1" == "--roscore" ]; then
