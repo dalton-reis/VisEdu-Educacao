@@ -781,15 +781,27 @@ VisualizadorGrafico = function ( editor, signals ) {
 		if ( item.visible ) {
 			var drone = undefined;
 			if (item.pai.objetoScene == undefined){
-				drone = CG.loadObjModel("resources/Drone_1.obj");
-				item.pai.objetoScene = drone;
+				CG.OBJLoader.load("resources/Drone_1.obj",
+					function ( model ) {
+						item.pai.objetoScene = model;
+						drone = item.pai.objetoScene;
+					},
+					function( progress ){
+						//TODO
+					},
+					function( error ){
+						//TODO
+					});
+
 			} else {
 				drone = item.pai.objetoScene;
 			}
-			drone.item = item;
-			objetoAux.add(drone);
-			scope.listaObjetosSelecionaveis.push(drone);
-			drone.add(addBBox(item, drone));
+			if( drone != undefined ){
+				drone.item = item;
+				objetoAux.add(drone);
+				scope.listaObjetosSelecionaveis.push(drone);
+				drone.add(addBBox(item, drone));
+			}
 		}
 	}
 

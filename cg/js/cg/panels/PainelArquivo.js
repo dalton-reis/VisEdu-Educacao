@@ -92,20 +92,23 @@ function PainelArquivo( editor ) {
 	 * e vai iniciar as animações
 	 */
 	function startAnimations(item){
-		var animationChain = []
-		var easing = undefined;
-		var obj = undefined;
 		if (item.filhos.length > 0){
 			//percorre os filhos procurando um objeto grafico que tenha animação
 			for (var i = 0; i < item.filhos.length; i++) {
 				var filho = item.filhos[i];
 				if( filho.id == EIdsItens.OBJETOGRAFICO && filho.isAnimated ){
+					//encontrou um filho animado \o/
+					var animationChain = []
+					var easing = undefined;
+					var obj = undefined;
+					//pega a função de interpolação da animação para esse filho
 					for( var q = 0; q < filho.filhos.length; q++ ){
 						if( filho.filhos[q].id == EIdsItens.ANIMACAO ){
 							easing = filho.filhos[q].easing;
 							break;
 						}
 					}
+					//pega todas as animações para esse filho
 					for( var q = 0; q < filho.filhos.length; q++ ){
 						var animation = null;
 						if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.DIAMANTE ){
@@ -126,14 +129,16 @@ function PainelArquivo( editor ) {
 							animationChain.push(animation);
 						}
 					}
-				}
-			}
-		}
-		for( var i = animationChain.length-1; i > 0; i-- ){
-			animationChain[i-1].chain(animationChain[i]);
-		}
-		if( animationChain[0] != undefined ){
-			animationChain[0].start();
+					//monta o chain com todas as animações para esse obj gráfico
+					for( var ai = animationChain.length-1; ai > 0; ai-- ){
+						animationChain[ai-1].chain(animationChain[ai]);
+					}
+					//iniciar!
+					if( animationChain[0] != undefined ){
+						animationChain[0].start();
+					}
+				}//if
+			}//for
 		}
 	}
 }
