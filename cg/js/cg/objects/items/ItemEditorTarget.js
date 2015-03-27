@@ -27,6 +27,9 @@ function ItemEditorTarget() {
 	scope.textura = null;
 	scope.usarTextura = false;
 	scope.listaPontos = undefined;
+	var geometria = new THREE.PlaneGeometry( 10, 10);
+	var material  = new THREE.MeshPhongMaterial({ color: scope.propriedadeCor.getHex(), ambient: scope.propriedadeCor.getHex(), overdraw: true });
+	scope.object3D = new THREE.Mesh( geometria, material);
 }
 
 ItemEditorTarget.prototype = Object.create( AItemEditorEncaixeQuadrado.prototype );

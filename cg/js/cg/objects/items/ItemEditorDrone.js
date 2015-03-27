@@ -28,6 +28,16 @@ function ItemEditorDrone() {
 	scope.textura = null;
 	scope.usarTextura = false;
 	scope.listaPontos = undefined;
+	CG.OBJLoader.load("resources/Drone_1.obj",
+		function ( model ) {
+			scope.object3D = model;
+		},
+		function( progress ){
+			//TODO
+		},
+		function( error ){
+			//TODO
+		});
 }
 
 ItemEditorDrone.prototype = Object.create( AItemEditorEncaixeQuadrado.prototype );

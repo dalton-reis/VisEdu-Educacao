@@ -779,29 +779,11 @@ VisualizadorGrafico = function ( editor, signals ) {
 	 */
 	function desenhaDrone(item, objetoAux){
 		if ( item.visible ) {
-			var drone = undefined;
-			if (item.pai.objetoScene == undefined){
-				CG.OBJLoader.load("resources/Drone_1.obj",
-					function ( model ) {
-						item.pai.objetoScene = model;
-						drone = item.pai.objetoScene;
-					},
-					function( progress ){
-						//TODO
-					},
-					function( error ){
-						//TODO
-					});
-
-			} else {
-				drone = item.pai.objetoScene;
-			}
-			if( drone != undefined ){
-				drone.item = item;
-				objetoAux.add(drone);
-				scope.listaObjetosSelecionaveis.push(drone);
-				drone.add(addBBox(item, drone));
-			}
+			var drone = item.object3D;
+			drone.item = item;
+			objetoAux.add(drone);
+			scope.listaObjetosSelecionaveis.push(drone);
+			drone.add(addBBox(item, drone));
 		}
 	}
 
@@ -810,10 +792,8 @@ VisualizadorGrafico = function ( editor, signals ) {
 	 */
 	function desenhaTarget(item, objetoAux){
 		if ( item.visible ) {
+			var plano = item.object3D;
 			var cor = item.propriedadeCor.getHex();
-			var geometria = new THREE.PlaneGeometry( 10, 10);
-			var material  = new THREE.MeshPhongMaterial({ color: cor, ambient: cor, overdraw: true });
-			var plano = new THREE.Mesh( geometria, material);
 			plano.material.color.setHex( cor );
 			plano.material.map = item.usarTextura ? item.textura : null;
 			plano.material.needsUpdate = true;
@@ -836,23 +816,18 @@ VisualizadorGrafico = function ( editor, signals ) {
 	 */
 	function desenhaCubo(item, objetoAux) {
 		if ( item.visible ) {
-
+			var cubo = item.object3D;
+			scope.listaObjetosSelecionaveis.push(cubo);
+			cubo.item = item;
 			var corCubo = item.propriedadeCor.getHex();
-
-			var geometria = new THREE.BoxGeometry( item.valorXYZ.x, item.valorXYZ.y, item.valorXYZ.z );
-			var material  = new THREE.MeshPhongMaterial({ color: corCubo, ambient: corCubo, overdraw: true });
-			var cubo = new THREE.Mesh( geometria, material);
 			cubo.material.color.setHex( corCubo );
 			cubo.material.map = item.usarTextura ? item.textura : null;
 			cubo.material.needsUpdate = true;
 			cubo.geometry.buffersNeedUpdate = true;
 			cubo.geometry.uvsNeedUpdate = true;
 			//cubo.visible = item.visible;
-			cubo.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
-			cubo.item = item;
+			//cubo.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
 			objetoAux.add(cubo);
-			scope.listaObjetosSelecionaveis.push(cubo);
-
 			cubo.add(addBBox(item, cubo));
 		}
 
