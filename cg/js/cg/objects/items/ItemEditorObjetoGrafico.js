@@ -28,8 +28,6 @@ ItemEditorObjetoGrafico = function() {
 	scope.meshSetaInferior = null;
 	/** Flag que indica se o objeto deve ser animado*/
 	scope.isAnimated = false;
-	/** Referência para o objeto que deve ser renderizado pelo visualizador */
-	scope.objetoScene = null
 
 	var points, squareShape, geometria, material;
 

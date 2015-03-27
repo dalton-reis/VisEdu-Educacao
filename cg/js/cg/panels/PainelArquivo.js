@@ -100,12 +100,15 @@ function PainelArquivo( editor ) {
 					//encontrou um filho animado \o/
 					var animationChain = []
 					var easing = undefined;
-					var obj = undefined;
+					var object3D = undefined;
 					//pega a função de interpolação da animação para esse filho
 					for( var q = 0; q < filho.filhos.length; q++ ){
 						if( filho.filhos[q].id == EIdsItens.ANIMACAO ){
 							easing = filho.filhos[q].easing;
 							break;
+						}
+						if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.QUADRADO ){
+							object3D = filho.filhos[q].object3D;
 						}
 					}
 					//pega todas as animações para esse filho
@@ -114,13 +117,13 @@ function PainelArquivo( editor ) {
 						if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.DIAMANTE ){
 							var animationItem = filho.filhos[q];
 							if( animationItem.id == EIdsItens.TRANSLADAR ){
-								animation = new TWEEN.Tween(filho.objetoScene.position)
+								animation = new TWEEN.Tween(object3D.position)
 									.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.x),
 									     y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.y),
 									     z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.z)}, 2000)
 									.easing(CG.getEasingFunction(easing));
 							} else if( animationItem.id == EIdsItens.ROTACIONAR ){
-								animation = new TWEEN.Tween(filho.objetoScene.rotation)
+								animation = new TWEEN.Tween(object3D.rotation)
 									.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.x)),
 									     y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.y)),
 									     z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.z))}, 2000)
