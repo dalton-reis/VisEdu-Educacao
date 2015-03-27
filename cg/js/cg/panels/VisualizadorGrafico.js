@@ -400,50 +400,14 @@ VisualizadorGrafico = function ( editor, signals ) {
 			var cor = item.propriedadeCor.getHex();
 
 			if (item.tipoSpline == CG.listaTipoSpline.Bezier) {
-				if (item.poliedro == true) { //DESENHAR POLIEDRO
-					var corPoliedro = item.corPoliedro.getHex();
-					var geometria   = new THREE.Geometry();
-
-					geometria.vertices = points;
-					geometria.computeLineDistances();
-
-					var material = new THREE.LineBasicMaterial( { linewidth: 1, color: corPoliedro, transparent: false } );
-					var poliedro = new THREE.Line(geometria, material, THREE.LineStrip);
-					objetoAux.add(poliedro);
+				if (item.poliedroEnabled == true) { //DESENHAR POLIEDRO
+					objetoAux.add(item.poliedro);
 				}
 
-				var pontosSpline = [];
+				objetoAux.add(item.object3D);
+				scope.listaObjetosSelecionaveis.push(item.object3D);
 
-				var t;
-				var p0, p1, p2, p3;
-				var x, y, z;
-
-				for (var i = 0; i <= item.qtdPontos; i++) {
-					t  =  (i / item.qtdPontos);
-					p0 = Math.pow((1 - t), 3);
-					p1 = (3 * t * Math.pow((1 - t), 2));
-					p2 = (3 * Math.pow(t, 2) * (1 - t));
-					p3 = Math.pow(t, 3);
-
-					x = (p0 * points[0].x + p1 * points[1].x + p2 * points[2].x + p3 * points[3].x);
-					y = (p0 * points[0].y + p1 * points[1].y + p2 * points[2].y + p3 * points[3].y);
-					z = (p0 * points[0].z + p1 * points[1].z + p2 * points[2].z + p3 * points[3].z);
-
-					pontosSpline.push(new THREE.Vector3(x, y, z));
-				}
-
-				var geometria = new THREE.Geometry();
-				geometria.vertices = pontosSpline;
-				geometria.computeLineDistances();
-
-				var material  = new THREE.LineBasicMaterial({ linewidth: 2, color: cor, transparent: false });
-				var spline    = new THREE.Line(geometria, material, THREE.LineStrip);
-
-				objetoAux.add(spline);
-				spline.item = item;
-				scope.listaObjetosSelecionaveis.push(spline);
-
-				spline.add(addBBox(item, spline));
+				item.object3D.add(addBBox(item, item.object3D));
 			}
 		}
 	};

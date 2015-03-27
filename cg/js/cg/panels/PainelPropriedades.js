@@ -308,11 +308,11 @@ function PainelPropriedades( item, tipoGrafico ) {
 		scope.add(objectListaPrimitivaRow);
 	}
 
-	if	(scope.item.poliedro !== undefined) {
+	if	(scope.item.poliedroEnabled !== undefined) {
 		var objectPoliedroRow = new UI.Panel().setHeight('50px');
 		var objectPoliedro = new UI.Checkbox(false).onChange(update);
 
-		objectPoliedro.setValue(scope.item.poliedro);
+		objectPoliedro.setValue(scope.item.poliedroEnabled);
 
 		objectPoliedroRow.add(new UI.Text('Poliedro').setWidth('90px').setColor('#666'));
 		objectPoliedroRow.add(objectPoliedro);
@@ -331,7 +331,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 			objectColorPoliedro.setHexValue(scope.item.corPoliedro.getHex());
 
 			objectPoliedroRow.add(objectColorPoliedro);
-			objectColorPoliedro.dom.disabled = (item.poliedro == false);
+			objectColorPoliedro.dom.disabled = (item.poliedroEnabled == false);
 		}
 
 		scope.add(objectPoliedroRow);
@@ -940,10 +940,10 @@ function PainelPropriedades( item, tipoGrafico ) {
 			}
 		}
 
-		if (scope.item.poliedro !== undefined) {
-			item.poliedro = objectPoliedro.getValue();
+		if (scope.item.poliedroEnabled !== undefined) {
+			item.poliedroEnabled = objectPoliedro.getValue();
 
-			if (item.poliedro == true) {
+			if (item.poliedroEnabled == true) {
 				objectColorPoliedro.dom.disabled = false;
 				if (item.corPoliedro !== undefined) {
 					item.corPoliedro.setHex(objectColorPoliedro.getHexValue());
