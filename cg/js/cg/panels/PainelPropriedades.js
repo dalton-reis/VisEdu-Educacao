@@ -30,7 +30,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 	//NOME
 	var objectName = null;
 
-	if	( ( scope.item.nome !== undefined ) && ( scope.item.nomeReadOnly == undefined || !scope.item.nomeReadOnly ) ) {
+	if ( ( scope.item.nome !== undefined ) && ( scope.item.nomeReadOnly == undefined || !scope.item.nomeReadOnly ) ) {
 
 		var objectNameRow = new UI.Panel();
 		objectName = new UI.Input().setWidth( '150px' ).setColor( '#444' ).setFontSize( '12px' ).onChange( update );
@@ -46,7 +46,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 	var objectQtdPontosRow;
 	var objectQtdPontos;
 
-	if	(scope.item.qtdPontos !== undefined && (item.id == EIdsItens.POLIGONO)) {
+	if (scope.item.qtdPontos !== undefined && (item.id == EIdsItens.POLIGONO)) {
 		objectQtdPontosRow = new UI.Panel();
 		objectQtdPontos = new UI.Input().setWidth('60px').setColor('#444').setFontSize('12px').onChange(update);
 
@@ -63,7 +63,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 	var objectPontoY;
 	var objectPontoZ;
 
-	if	(scope.item.pontos !== undefined) {
+	if (scope.item.pontos !== undefined) {
 		objectPontosRow = new UI.Panel();
 		objectPontoX = new UI.Number().setWidth('50px').onChange(update);
 		objectPontoY = new UI.Number().setWidth('50px').onChange(update);
@@ -87,8 +87,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 		if (tipoGrafico == 2) {
 			objectPontosRow.add( new UI.Text( 'z: ' + scope.item.pontos.z + '.00' ).setColor( '#666' ) );
-		}
-		else{
+		} else {
 			objectPontosRow.add(new UI.Text('z: ').setColor('#666'));
 			objectPontosRow.add(objectPontoZ);
 		}
@@ -201,8 +200,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 		if (tipoGrafico == 2) {
 			objectPontosRow.add( new UI.Text( 'z: ' + scope.item.listaPontos[1].z + '.00' ).setColor( '#666' ) );
-		}
-		else{
+		} else {
 			objectPontosRow.add(new UI.Text('z: ').setColor('#666'));
 			objectPontosRow.add(objectPonto2Z);
 		}
@@ -235,8 +233,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 		if (tipoGrafico == 2) {
 			objectPontosRow.add( new UI.Text( 'z: ' + scope.item.listaPontos[2].z + '.00' ).setColor( '#666' ) );
-		}
-		else{
+		} else {
 			objectPontosRow.add(new UI.Text('z: ').setColor('#666'));
 			objectPontosRow.add(objectPonto3Z);
 		}
@@ -868,8 +865,6 @@ function PainelPropriedades( item, tipoGrafico ) {
 				objectPontoX.setValue(scope.item.pontos.x);
 				objectPontoY.setValue(scope.item.pontos.y);
 				objectPontoZ.setValue(scope.item.pontos.z);
-
-				objectListaPontos.setOptionsArray(item.getListaPontos());
 				objectListaPontos.setValue(1);
 			}
 		}

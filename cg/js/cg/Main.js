@@ -98,6 +98,17 @@ var Main =  {
 			labels.labelListaItems.setTextContent( 'Lista de Peças' );
 			document.body.appendChild( labels.labelListaItems.dom );
 
+			labels.labelPainelAnimacao = new UI.Panel();
+			labels.labelPainelAnimacao.setClass( 'titulo' );
+			labels.labelPainelAnimacao.setPosition( 'absolute' );
+			labels.labelPainelAnimacao.setDisplay( 'broke' );
+			labels.labelPainelAnimacao.setTop( '0px' );
+			labels.labelPainelAnimacao.setLeft( '70%' );
+			labels.labelPainelAnimacao.setWidth( '30%' );
+			labels.labelPainelAnimacao.setHeight( alturaTitulos );
+			labels.labelPainelAnimacao.setTextContent( 'Animação' );
+			document.body.appendChild( labels.labelPainelAnimacao.dom );
+
 			labels.labelVisualizadorGrafico = new UI.Panel();
 			labels.labelVisualizadorGrafico.setClass( 'titulo' );
 			labels.labelVisualizadorGrafico.setPosition( 'absolute' );
@@ -188,7 +199,16 @@ var Main =  {
 			paineis.listaItens.setLeft( '70%' );
 			paineis.listaItens.setRight( '0px' );
 			paineis.listaItens.setBottom( '50%' );
-			document.body.appendChild( paineis.listaItens.dom );
+//			document.body.appendChild( paineis.listaItens.dom );
+
+			//painel de animação
+
+			paineis.painelAnimacao = new PainelAnimacao( paineis.editor);
+			paineis.painelAnimacao.setTop( alturaTitulos );
+			paineis.painelAnimacao.setLeft( '70%' );
+			paineis.painelAnimacao.setRight( '0px' );
+			paineis.painelAnimacao.setBottom( '50%' );
+			document.body.appendChild( paineis.painelAnimacao.dom );
 
 			//visualizador
 
