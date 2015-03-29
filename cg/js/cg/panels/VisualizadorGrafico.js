@@ -763,10 +763,6 @@ VisualizadorGrafico = function ( editor, signals ) {
 			plano.material.needsUpdate = true;
 			plano.geometry.buffersNeedUpdate = true;
 			plano.geometry.uvsNeedUpdate = true;
-			//cubo.visible = item.visible;
-
-			plano.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
-			plano.rotateX(Util.math.converteGrausParaRadianos(-90));
 			plano.item = item;
 			objetoAux.add(plano);
 			scope.listaObjetosSelecionaveis.push(plano);
