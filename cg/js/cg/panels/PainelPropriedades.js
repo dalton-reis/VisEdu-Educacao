@@ -415,7 +415,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 	var objectPosicaoY = null;
 	var objectPosicaoZ = null;
 
-	if	( scope.item.posicao !== undefined ) {
+	if ( scope.item.object3D !== undefined ) {
 
 		var objectPosicaoRow = new UI.Panel();
 		objectPosicaoX = new UI.Number().setWidth( '50px' ).onChange( update );
@@ -423,12 +423,12 @@ function PainelPropriedades( item, tipoGrafico ) {
 		objectPosicaoZ = new UI.Number().setWidth( '50px' ).onChange( update );
 
 		if (tipoGrafico == 2) {
-			scope.item.posicao.z = 0;
+			scope.item.object3D.position.z = 0;
 		}
 
-		objectPosicaoX.setValue(scope.item.posicao.x);
-		objectPosicaoY.setValue(scope.item.posicao.y);
-		objectPosicaoZ.setValue(scope.item.posicao.z);
+		objectPosicaoX.setValue(scope.item.object3D.position.x);
+		objectPosicaoY.setValue(scope.item.object3D.position.y);
+		objectPosicaoZ.setValue(scope.item.object3D.position.z);
 
 		objectPosicaoRow.add( new UI.Text( "Posição").setWidth( '90px' ).setColor( '#666' ) );
 		objectPosicaoRow.add( new UI.Text( 'x: ' ).setColor( '#666' ) );
@@ -437,9 +437,8 @@ function PainelPropriedades( item, tipoGrafico ) {
 		objectPosicaoRow.add( objectPosicaoY );
 
 		if (tipoGrafico == 2) {
-			objectPosicaoRow.add( new UI.Text( 'z: ' + scope.item.posicao.z + '.00' ).setColor( '#666' ) );
-		}
-		else{
+			objectPosicaoRow.add( new UI.Text( 'z: ' + scope.item.object3D.position.z + '.00' ).setColor( '#666' ) );
+		} else {
 			objectPosicaoRow.add( new UI.Text( 'z: ' ).setColor( '#666' ) );
 			objectPosicaoRow.add( objectPosicaoZ );
 		}
@@ -1002,10 +1001,10 @@ function PainelPropriedades( item, tipoGrafico ) {
 			item.valorXYZ.z = objectValueZ.getValue();
 		}
 
-		if (item.posicao !== undefined ) {
-			item.posicao.x = objectPosicaoX.getValue();
-			item.posicao.y = objectPosicaoY.getValue();
-			item.posicao.z = objectPosicaoZ.getValue();
+		if (item.object3D !== undefined ) {
+			item.object3D.position.x = objectPosicaoX.getValue();
+			item.object3D.position.y = objectPosicaoY.getValue();
+			item.object3D.position.z = objectPosicaoZ.getValue();
 		}
 
 		if (item.lookAt !== undefined ) {

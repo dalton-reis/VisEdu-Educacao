@@ -28,7 +28,7 @@ function AItemEditorEncaixeQuadrado() {
 	//eventos abstratos
 
 	//@Override
-	scope.onChange = function () { throw new Error ("função onChange não implemenada!");  }; //evento será executado quando um filho for adicionado ou removido ou alguma propriedade for alterada
+	scope.onChange = function () { throw new Error ("função onChange não implemenada!"); }; //evento será executado quando um filho for adicionado ou removido ou alguma propriedade for alterada
 	//@Override
 	scope.onAddFilho = function ( item ) { throw new Error ("função onAddFilho não implemenada!");  }; //evento será executado quando um filho for adicionado
 	//@Override
@@ -39,7 +39,8 @@ function AItemEditorEncaixeQuadrado() {
 	scope.afterChangeNome = function ( nomeAntigo ) { throw new Error ("função afterChangeNome não implemenada!");  }; //evento será executado quando o nome do item for alterado
 
 	//implementacao
-
+	/** Funcão que cria/recria o object3D utilizada para renderizar a cena quando necessário*/
+	function createObject3D() { throw new Error ("função createObject3D não implemenada!"); }
 	//@Override
 	scope.gerarShapeEncaixeItem = function ( ) {
 		return CG.objects.generateShapeEncaixeQuadrado();

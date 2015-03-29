@@ -29,7 +29,6 @@ AObjetoGrafico = function  () {
 	scope.onAddFilho = function ( objeto ) { throw new Error ("função onAddFilho não implemenada!");  }; //evento será executado quando um filho for adicionado
 	scope.onRemoveFilho = function ( objeto ) { throw new Error ("função onRemoveFilho não implemenada!");  }; //evento será executado quando um filho for removido
 	scope.onChangeFilhos = function ( filho ) { throw new Error ("função onChangeFilhos não implemenada!");  }; //evento será executado quando for removido ou inserido algum filho em um dos filhos do objeto, ou filho dos filhos e assim por diante
-
 	scope.onChangeFilhosSuper = function () { //funcao para chamar onChangeFilhos classe pai
 
 		if (scope.pai) {
