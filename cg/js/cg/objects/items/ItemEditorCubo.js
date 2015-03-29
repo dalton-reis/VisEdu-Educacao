@@ -10,6 +10,7 @@ function ItemEditorCubo() {
 	//@Override
 	scope.onChange = function () {
 		scope.object3D = createObject3D();
+		scope.object3D.item = scope;
 	}; //evento será executado quando um filho for adicionado ou removido ou alguma propriedade for alterada
 	//@Override
 	scope.onAddFilho = function ( item ) {};; //evento será executado quando um filho for adicionado
