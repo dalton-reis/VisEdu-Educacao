@@ -21,8 +21,8 @@ CG.colors = {
 	corEmissiveEncaixe : 0xFF1493,
 	corEmissiveLixeira : 0xFF1493,
 	corObjetoEmEdicao  : 0xFF1493,
-	corScroll          : 0x000000
-
+	corScroll          : 0x000000,
+	corCurrentAnimation: 0xDBFFDF
 };
 
 CG.listaDeTexturas = {

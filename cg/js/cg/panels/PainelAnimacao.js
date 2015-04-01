@@ -69,6 +69,10 @@ function PainelAnimacao( editor ) {
 			  startAnimations(editor.painelMontagem);
 	});
 	scope.add(playButton);
+	/**Animações correntes que estão/vão sendo executadas*/
+	var currentAnimatios = [];
+	/**Index de currentAnimatios que está atualmente em execução*/
+	var currentAnimation = 0;
 
 	/**
 	 * Método que vai percorrer todos os itens de objetos gráficos existentes
@@ -84,6 +88,8 @@ function PainelAnimacao( editor ) {
 					var animationChain = []
 					var easing = undefined;
 					var object3D = undefined;
+					currentAnimation = 0;
+					currentAnimatios = [];
 					//pega a função de interpolação da animação para esse filho
 					for( var q = 0; q < filho.filhos.length; q++ ){
 						if( filho.filhos[q].id == EIdsItens.ANIMACAO ){
@@ -99,12 +105,16 @@ function PainelAnimacao( editor ) {
 						var animation = null;
 						if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.DIAMANTE ){
 							var animationItem = filho.filhos[q];
+							currentAnimatios.push(animationItem);
 							if( animationItem.id == EIdsItens.TRANSLADAR ){
 								animation = new TWEEN.Tween(object3D.position)
 									.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.x),
 									     y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.y),
 									     z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.z)}, scope.time.getValue())
 									.easing(CG.getEasingFunction(easing))
+									.onStart(onStartAnimation)
+									.onStop(onFinishAnimation)
+									.onComplete(onFinishAnimation)
 									.onUpdate( function() {
 										updateValues(object3D);
 									});
@@ -114,6 +124,9 @@ function PainelAnimacao( editor ) {
 									     y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.y)),
 									     z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.z))}, scope.time.getValue())
 									.easing(CG.getEasingFunction(easing))
+									.onStart(onStartAnimation)
+									.onStop(onFinishAnimation)
+									.onComplete(onFinishAnimation)
 									.onUpdate( function(){
 										updateValues(object3D);
 									});
@@ -144,6 +157,21 @@ function PainelAnimacao( editor ) {
 		scope.rotationX.setValue(Util.math.converteRadianosParaGraus(object3D.rotation.x));
 		scope.rotationY.setValue(Util.math.converteRadianosParaGraus(object3D.rotation.y));
 		scope.rotationZ.setValue(Util.math.converteRadianosParaGraus(object3D.rotation.z));
+	}
+
+	/**
+	 * Função volta para a cor default do item no editor
+	 */
+	function onFinishAnimation() {
+		currentAnimatios[currentAnimation].setMeshsColor( CG.colors.corPecasDiamante );
+		currentAnimation++;
+	}
+
+	/**
+	 * Função muda a cor do item de animação no editor para indicar a execução do mesmo
+	 */
+	function onStartAnimation() {
+		currentAnimatios[currentAnimation].setMeshsColor( CG.colors.corCurrentAnimation );
 	}
 }
 
