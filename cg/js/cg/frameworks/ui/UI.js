@@ -887,17 +887,19 @@ UI.Button = function () {
 	UI.Element.call( this );
 
 	var scope = this;
-
 	var dom = document.createElement( 'button' );
 	dom.className = 'Button';
+	/**Flag que indica se o botão esta habilitado*/
+	this.enable = true;
 
 	this.dom = dom;
 
 	this.onClickCallback = null;
 
 	this.dom.addEventListener( 'click', function ( event ) {
-
-		scope.onClickCallback();
+		if( scope.enable ){
+			scope.onClickCallback();
+		}
 
 	}, false );
 
@@ -908,17 +910,22 @@ UI.Button = function () {
 UI.Button.prototype = Object.create( UI.Element.prototype );
 
 UI.Button.prototype.setLabel = function ( value ) {
-
 	this.dom.textContent = value;
-
 	return this;
 
 };
 
 UI.Button.prototype.onClick = function ( callback ) {
-
 	this.onClickCallback = callback;
-
 	return this;
 
 };
+
+/**
+ * Método que habilita/desabilita o botão.
+ * Se o botão estiver desabilitado, não será chamada a função de callback do clique
+ */
+UI.Button.prototype.setEnable = function ( enable ) {
+	this.enable = enable;
+	return this;
+}

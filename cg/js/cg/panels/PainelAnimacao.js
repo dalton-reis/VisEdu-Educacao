@@ -66,7 +66,7 @@ function PainelAnimacao( editor ) {
 	var playButton = new UI.Button();
 	playButton.setLabel('Play!');
 	playButton.onClick( function () {
-			  startAnimations(editor.painelMontagem);
+		startAnimations(editor.painelMontagem);
 	});
 	scope.add(playButton);
 	/**Animações correntes que estão/vão sendo executadas*/
@@ -140,6 +140,9 @@ function PainelAnimacao( editor ) {
 					}
 					//iniciar!
 					if( animationChain[0] != undefined ){
+						animationChain[0].onStart(onStartAnimationChain);
+						animationChain[animationChain.length-1].onStop(onFinishAnimationChain);
+						animationChain[animationChain.length-1].onComplete(onFinishAnimationChain);
 						animationChain[0].start();
 					}
 				}//if
@@ -172,6 +175,22 @@ function PainelAnimacao( editor ) {
 	 */
 	function onStartAnimation() {
 		currentAnimatios[currentAnimation].setMeshsColor( CG.colors.corCurrentAnimation );
+	}
+
+	/**
+	 * Função executada no inicio do animation chain
+	 */
+	function onStartAnimationChain() {
+		playButton.setEnable(false);
+		onStartAnimation();
+	}
+
+	/**
+	 * Função executada no final do animation chain
+	 */
+	function onFinishAnimationChain() {
+		playButton.setEnable(true);
+		onFinishAnimation();
 	}
 }
 
