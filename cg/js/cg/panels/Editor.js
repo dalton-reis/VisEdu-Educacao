@@ -23,7 +23,7 @@ Editor = function ( signals ) {
 
 	var tamanhoRenderer = 1000;	/* 	Variavel global para setar o tamanho do rerender.
 									Feito isso pois o rerender muda o tamanho dos objetos (na verdade Ã© a posiÃ§Ã£o da cÃ¢mera)
-									quando a relaÃ§Ã£o entre largura e altura muda. Desta forma
+									quando a relação entre largura e altura muda. Desta forma
 									o rerender sempre deve ser gerado quadrado, mantendo a mesma perspectiva de cÃ¢mera.
 									Assim deve-se mudar o seu tamanho alterando o valor desta variavel */
 	scope.pontoInicial = new THREE.Vector3().set( 0, 0, 0 );
