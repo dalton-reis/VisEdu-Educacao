@@ -5,37 +5,37 @@ var LeitorJSON =  {
 		var scope = this;
 		var texture, item, result;
 		var data = json;
-		
+
 		editor.regerarPainelMontagem();
-		
-		var painelMontagem = editor.painelMontagem;		
-		
-		if	( data.viewPos !== undefined ) {			
+
+		var painelMontagem = editor.painelMontagem;
+
+		if	( data.viewPos !== undefined ) {
 			var vector = data.viewPos;
-			editor.visualizadorGrafico.views[0].camera.position.set( vector[0], vector[1], vector[2] );		
+			editor.visualizadorGrafico.views[0].camera.position.set( vector[0], vector[1], vector[2] );
 		}
-		
-		if	( data.viewRot !== undefined  ) {			
+
+		if	( data.viewRot !== undefined  ) {
 			var vector = data.viewRot;
-			editor.visualizadorGrafico.views[0].camera.rotation.set( vector[0], vector[1], vector[2] );		
+			editor.visualizadorGrafico.views[0].camera.rotation.set( vector[0], vector[1], vector[2] );
 		}
-		
+
 		result = {
 			textures: {},
-			itens: {},			
+			itens: {},
 		};
 
 		if (data.corLimpar !== undefined) {
-			painelMontagem.corLimpar = data.corLimpar;		
+			painelMontagem.corLimpar = data.corLimpar;
 		}
 
-		percorrerTexturas();	
-		percorrerItens();		
-		
+		percorrerTexturas();
+		percorrerItens();
+
 		function percorrerTexturas () {
-		
+
 			var textureJSON;
-			
+
 			for ( var textureID in data.textures ) {
 
 				textureJSON = data.textures[ textureID ];
@@ -46,14 +46,14 @@ var LeitorJSON =  {
 
 				}
 
-				
+
 				if	(textureJSON.src !== undefined) {
-				
+
 					var image = document.createElement( 'img' );
 					image.src = textureJSON.src;
-					texture = new THREE.Texture( image );	
+					texture = new THREE.Texture( image );
 					texture.needsUpdate = true;
-				
+
 				} else {
 					var isCompressed = /\.dds$/i.test( textureJSON.url );
 					var fullUrl = textureJSON.url;
@@ -68,7 +68,7 @@ var LeitorJSON =  {
 
 					}
 				}
-				
+
 				texture.name = textureID;
 
 				if ( THREE[ textureJSON.minFilter ] !== undefined )
@@ -108,23 +108,23 @@ var LeitorJSON =  {
 
 				}
 
-				result.textures[ textureID ] = texture;		
+				result.textures[ textureID ] = texture;
 
 			}
-		
+
 		}
-		
+
 
 		function percorrerItens() {
-			
+
 			percorreFilhos( painelMontagem, data.itens );
 
 		}
-		
-		function percorreFilhos( pai, filhos ) { // percorre todos os filhos no arquivo json associando eles a seus respectivos pais	
+
+		function percorreFilhos( pai, filhos ) { // percorre todos os filhos no arquivo json associando eles a seus respectivos pais
 
 			var vector;
-			
+
 			for ( var objID in filhos ) {
 
 				// se item ainda não existe na lista, cria item
@@ -132,218 +132,218 @@ var LeitorJSON =  {
 				if ( result.itens[ objID ] === undefined ) {
 
 					var objJSON = filhos[ objID ];
-					
+
 					if	(objJSON.tipo == EIdsItens.RENDERIZADOR.seq) {
-					
+
 						item = painelMontagem;
-						
+
 					} else {
-					
+
 						item = FabricaDeItens().fabricarNovoItem( EIdsItens.getENumById( objJSON.tipo ), false );
 						item.addMeshsIntersectedObjectsList( editor.intersectableObjectsList );
 						pai.add( item );
-					
+
 					}
-									
+
 					item.name = objID;
 					//item.enableChangeEvents = false;
-					
-					if ( objJSON.nome !== undefined ) {					
-						item.nome = objJSON.nome;						
+
+					if ( objJSON.nome !== undefined ) {
+						item.nome = objJSON.nome;
 					}
-					
-					if ( objJSON.valorXYZ !== undefined ) {					
+
+					if ( objJSON.valorXYZ !== undefined ) {
 						vector = objJSON.valorXYZ;
-						item.valorXYZ.set( vector[0], vector[1], vector[2] );						
+						item.valorXYZ.set( vector[0], vector[1], vector[2] );
 					}
-					
-					if ( objJSON.posicao !== undefined ) {					
+
+					if ( objJSON.posicao !== undefined ) {
 						vector = objJSON.posicao;
-						item.posicao.set( vector[0], vector[1], vector[2] );						
+						item.posicao.set( vector[0], vector[1], vector[2] );
 					}
-					
-					if ( objJSON.lookAt !== undefined ) {					
+
+					if ( objJSON.lookAt !== undefined ) {
 						vector = objJSON.lookAt;
-						item.lookAt.set( vector[0], vector[1], vector[2] );						
+						item.lookAt.set( vector[0], vector[1], vector[2] );
 					}
-					
-					if ( objJSON.near !== undefined ) {					
-						item.near = objJSON.near;						
+
+					if ( objJSON.near !== undefined ) {
+						item.near = objJSON.near;
 					}
-					
-					if ( objJSON.far !== undefined ) {					
-						item.far = objJSON.far;						
+
+					if ( objJSON.far !== undefined ) {
+						item.far = objJSON.far;
 					}
-					
-					if ( objJSON.fov !== undefined ) {					
-						item.fov = objJSON.fov;						
+
+					if ( objJSON.fov !== undefined ) {
+						item.fov = objJSON.fov;
 					}
-					
-					if ( objJSON.propriedadeCor !== undefined ) {					
-						item.propriedadeCor.setHex( objJSON.propriedadeCor );						
+
+					if ( objJSON.propriedadeCor !== undefined ) {
+						item.propriedadeCor.setHex( objJSON.propriedadeCor );
 					}
-					
-					if	(objJSON.corLimpar !== undefined ) {			
-						item.corLimpar.setHex( objJSON.corLimpar );						
+
+					if	(objJSON.corLimpar !== undefined ) {
+						item.corLimpar.setHex( objJSON.corLimpar );
 					}
-					
+
 					if (objJSON.corFundo !== undefined) {
 						item.corFundo.setHex(objJSON.corFundo);
 					}
-					
+
 					if (objJSON.verGrade !== undefined) {
 						item.verGrade = objJSON.verGrade;
 					}
-					
+
 					if (objJSON.verEixos !== undefined) {
 						item.verEixos = objJSON.verEixos;
 					}
-					
+
 					if (objJSON.tipoGrafico !== undefined) {
 						item.setTipoGrafico(objJSON.tipoGrafico);
 					}
-					
-					if ( objJSON.visible !== undefined ) {					
-						item.visible = objJSON.visible;						
+
+					if ( objJSON.visible !== undefined ) {
+						item.visible = objJSON.visible;
 					}
-					
-					if ( objJSON.usarTextura !== undefined ) {					
-						item.usarTextura = objJSON.usarTextura;						
+
+					if ( objJSON.usarTextura !== undefined ) {
+						item.usarTextura = objJSON.usarTextura;
 					}
-					
-					if ( objJSON.textura !== undefined ) {					
-						item.textura = result.textures[ objJSON.textura ];						
+
+					if ( objJSON.textura !== undefined ) {
+						item.textura = result.textures[ objJSON.textura ];
 					}
-					
+
 					if (objJSON.listaPontos !== undefined) {
 						item.listaPontos = [];
 						var strPontos = objJSON.listaPontos.split("|");
-						
+
 						for (var i = 0; i < strPontos.length; i++) {
 							strPontos[i] = strPontos[i].replace("[", "");
-							strPontos[i] = strPontos[i].replace("]", "");							
+							strPontos[i] = strPontos[i].replace("]", "");
 							vector = strPontos[i].split(",");
-							
+
 							item.listaPontos.push(new THREE.Vector3(parseFloat(vector[0]), parseFloat(vector[1]), parseFloat(vector[2])));
 						}
 					}
-					
-					if (objJSON.qtdPontos !== undefined) {					
-						item.qtdPontos = objJSON.qtdPontos;						
+
+					if (objJSON.qtdPontos !== undefined) {
+						item.qtdPontos = objJSON.qtdPontos;
 					}
-					
+
 					//POLIGONO
-					if (objJSON.pontos !== undefined) {					
+					if (objJSON.pontos !== undefined) {
 						vector = objJSON.pontos;
 						item.pontos.set(vector[0], vector[1], vector[2]);
 					}
-					
-					if ( objJSON.primitiva !== undefined ) {					
-						item.primitiva = objJSON.primitiva;						
+
+					if ( objJSON.primitiva !== undefined ) {
+						item.primitiva = objJSON.primitiva;
 					}
-					
-					if ( objJSON.pontoSelecionado !== undefined ) {					
-						item.pontoSelecionado = objJSON.pontoSelecionado;						
-					}									
+
+					if ( objJSON.pontoSelecionado !== undefined ) {
+						item.pontoSelecionado = objJSON.pontoSelecionado;
+					}
 
 					//SPLINE
-					if (objJSON.tipoSpline !== undefined) {					
-						item.tipoSpline = objJSON.tipoSpline;						
-					}					
-										
-					if (objJSON.poliedro !== undefined) {					
-						item.poliedro = objJSON.poliedro;						
+					if (objJSON.tipoSpline !== undefined) {
+						item.tipoSpline = objJSON.tipoSpline;
 					}
-					
-					if (objJSON.corPoliedro !== undefined ) {			
-						item.corPoliedro.setHex(objJSON.corPoliedro);						
-					}					
-					
+
+					if (objJSON.poliedro !== undefined) {
+						item.poliedro = objJSON.poliedro;
+					}
+
+					if (objJSON.corPoliedro !== undefined ) {
+						item.corPoliedro.setHex(objJSON.corPoliedro);
+					}
+
 					if ( objJSON.filhos !== undefined ) {
 						percorreFilhos( item, objJSON.filhos );
 					}
-					
+
 					//ILUMINACAO
-					if (objJSON.tipoLuz !== undefined) {					
-						item.tipoLuz = objJSON.tipoLuz;						
+					if (objJSON.tipoLuz !== undefined) {
+						item.tipoLuz = objJSON.tipoLuz;
 					}
-					
-					if (objJSON.posicao !== undefined) {					
+
+					if (objJSON.posicao !== undefined) {
 						vector = objJSON.posicao;
 						item.posicao.set(vector[0], vector[1], vector[2]);
 					}
-																					
-					if (objJSON.intensidade !== undefined) {					
-						item.intensidade = objJSON.intensidade;						
+
+					if (objJSON.intensidade !== undefined) {
+						item.intensidade = objJSON.intensidade;
 					}
-					
-					if (objJSON.corFundoLuz !== undefined ) {			
-						item.corFundoLuz.setHex(objJSON.corFundoLuz);						
+
+					if (objJSON.corFundoLuz !== undefined ) {
+						item.corFundoLuz.setHex(objJSON.corFundoLuz);
 					}
-					
-					if (objJSON.distancia !== undefined) {					
-						item.distancia = objJSON.distancia;						
+
+					if (objJSON.distancia !== undefined) {
+						item.distancia = objJSON.distancia;
 					}
-					
-					if (objJSON.angulo !== undefined) {					
-						item.angulo = objJSON.angulo;						
+
+					if (objJSON.angulo !== undefined) {
+						item.angulo = objJSON.angulo;
 					}
-					
-					if (objJSON.expoente !== undefined) {					
-						item.expoente = objJSON.expoente;						
+
+					if (objJSON.expoente !== undefined) {
+						item.expoente = objJSON.expoente;
 					}
-										
-					if (objJSON.posicaoTarget !== undefined) {					
+
+					if (objJSON.posicaoTarget !== undefined) {
 						vector = objJSON.posicaoTarget;
 						item.posicaoTarget.set(vector[0], vector[1], vector[2]);
 					}
-					
-					if (objJSON.rotacaoTarget !== undefined) {					
+
+					if (objJSON.rotacaoTarget !== undefined) {
 						vector = objJSON.rotacaoTarget;
 						item.rotacaoTarget.set(vector[0], vector[1], vector[2]);
 					}
-					
-					if (objJSON.escalaTarget !== undefined) {					
+
+					if (objJSON.escalaTarget !== undefined) {
 						vector = objJSON.escalaTarget;
 						item.escalaTarget.set(vector[0], vector[1], vector[2]);
 					}
-					
-					if (objJSON.visivelTarget !== undefined) {					
-						item.visivelTarget = objJSON.visivelTarget;						
+
+					if (objJSON.visivelTarget !== undefined) {
+						item.visivelTarget = objJSON.visivelTarget;
 					}
-					
-					//item.enableChangeEvents = true;					
+
+					//item.enableChangeEvents = true;
 					result.itens[objID] = item;
 				}
 			}
 
 		};
-		
+
 		//Atualiza visualização dos itens
 		for ( var objID in result.itens ) {
 			item = result.itens[ objID ];
-			
+
 			if	( item.id == EIdsItens.CUBO) {
-				if ( item.textura !== null && item.usarTextura ) {			
+				if ( item.textura !== null && item.usarTextura ) {
 					var materialMap = new UI.Texture();
 					materialMap.setValue( item.textura );
-					item.textura = materialMap.getValue();					
-				} 
-				item.update();				
+					item.textura = materialMap.getValue();
+				}
+				item.update();
 			}
-			
+
 			if	( item.id == EIdsItens.PAINELMONTAGEMEDITOR) {
 				item.update();
 			}
-			
+
 			if	( item.id == EIdsItens.POLIGONO) {
 				item.update();
 			}
-			
+
 			if	(item.id == EIdsItens.SPLINE) {
 				item.update();
 			}
-			
+
 			if	(item.id == EIdsItens.ILUMINACAO) {
 				item.update();
 			}

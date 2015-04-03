@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+		<script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+		<script type="text/javascript" src="js/cg/ros/ROSHandler.js"></script>
+		<script type="text/javascript" type="text/javascript">
+
+			var ros = new ROSHandler();
+
+			function on_load() {
+				var takeoffBtn = document.getElementById('takeoffbtn');
+				var landBtn = document.getElementById('landbtn');
+				var upBtn = document.getElementById('up');
+				var downBtn = document.getElementById('down');
+				var forwardBtn = document.getElementById('forward');
+				var backwardBtn = document.getElementById('backward');
+				var leftBtn = document.getElementById('left');
+				var rightBtn = document.getElementById('right');
+				var rotationCCWBtn = document.getElementById('rotation_counterclockwise');
+				var rotationCWBtn = document.getElementById('rotation_clockwise');
+				var stopBtn = document.getElementById('stop');
+				takeoffBtn.addEventListener('click', function(){
+						ros.takeoff();
+				});
+				landBtn.addEventListener('click', function(){
+						ros.land();
+				});
+				upBtn.addEventListener('click', function(){
+						ros.move(0.0, 0.0, 1.0, 0.0);
+				});
+				downBtn.addEventListener('click', function(){
+						ros.move(0.0, 0.0, -1.0, 0.0);
+				});
+				forwardBtn.addEventListener('click', function(){
+						ros.move(1.0, 0.0, 0.0, 0.0);
+				});
+				backwardBtn.addEventListener('click', function(){
+						ros.move(-1.0, 0.0, 0.0, 0.0);
+				});
+				leftBtn.addEventListener('click', function(){
+						ros.move(0.0, 1.0, 0.0, 0.0);
+				});
+				rightBtn.addEventListener('click', function(){
+						ros.move(0.0, -1.0, 0.0, 0.0);
+				});
+				rotationCCWBtn.addEventListener('click', function(){
+						ros.move(0.0, 0.0, 0.0, 1.0);
+				});
+				rotationCWBtn.addEventListener('click', function(){
+						ros.move(0.0, 0.0, 0.0, -1.0);
+				});
+				stopBtn.addEventListener('click', function(){
+						ros.stop();
+				});
+
+			}
+			function key_listener(e) {
+				if (e.key == "Up") {
+						ros.move(0.0, 0.0, 1.0, 0.0);
+				} else if ( e.key == "Down"){
+						ros.move(0.0, 0.0, -1.0, 0.0);
+				} else if ( e.key == "Left"){
+						ros.move(0.0, 0.0, 0.0, 1.0);
+				} else if ( e.key == "Right"){
+						ros.move(0.0, 0.0, 0.0, -1.0);
+				} else if ( e.key == "a"){
+						ros.move(0.0, 1.0, 0.0, 0.0);
+				} else if ( e.key == "w"){
+						ros.move(1.0, 0.0, 0.0, 0.0);
+				} else if ( e.key == "s"){
+						ros.move(-1.0, 0.0, 0.0, 0.0);
+				} else if ( e.key == "d"){
+						ros.move(0.0, -1.0, 0.0, 0.0);
+				} else if ( e.key == "t"){
+						ros.takeoff();
+				} else if ( e.key == "l"){
+						ros.land();
+				} else if ( e.key == " "){
+						ros.stop();
+				}
+			}
+			document.addEventListener('keyup', key_listener, false);
+			window.onload = on_load;
+		</script>
+		</head>
+		<body>
+		<div>
+			<button id='takeoffbtn' type="button">Takeoff</button>
+			<button id='landbtn' type="button">Land</button>
+		</div>
+		<div>
+			<button id='up' type="button">Up!</button>
+			<button id='down' type="button">Down!</button>
+			<button id='left' type="button">Left</button>
+			<button id='right' type="button">Right</button>
+			<button id='forward' type="button">Forward</button>
+			<button id='backward' type="button">Backward</button>
+			<button id='rotation_counterclockwise' type="button">Rotation counterclockwise</button>
+			<button id='rotation_clockwise' type="button">Rotation clockwise</button>
+			<button id='stop' type="button">Stop</button>
+		</div>
+		</body>
+		</html>

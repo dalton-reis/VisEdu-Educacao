@@ -1,6 +1,3 @@
-/*
- * FIXME - Atualmente o drone eh uma copia do cubo. Mas isso vai ser corrigido no futuro.
- */
 function ItemEditorDrone() {
 	AItemEditorEncaixeQuadrado.call( this );
 
