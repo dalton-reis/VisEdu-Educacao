@@ -48,16 +48,11 @@ var properties = [ 'position', 'left', 'top', 'right', 'bottom', 'width', 'heigh
 'backgroundColor', 'fontSize', 'fontWeight', 'display', 'overflow', 'cursor', 'visibility', 'background' ];
 
 properties.forEach( function ( property ) {
-
 	var method = 'set' + property.substr( 0, 1 ).toUpperCase() + property.substr( 1, property.length );
-
 	UI.Element.prototype[ method ] = function () {
-
 		this.setStyle( property, arguments );
 		return this;
-
 	};
-
 } );
 
 // events
@@ -337,7 +332,7 @@ UI.Select.prototype.setOptionsArray = function ( options ) {
 
 		var descricao = options[i][0];
 		var valor = options[i][1];
-		
+
 		var option = document.createElement( 'option' );
 		option.value = valor;
 		option.value.descricao = descricao;
@@ -360,7 +355,7 @@ UI.Select.prototype.setArrayOpcoes = function ( opcoes ) {
 
 		var descricao = opcoes[i][0];
 		var valor = opcoes[i][1];
-		
+
 		var option = document.createElement( 'option' );
 		option.value = valor;
 		option.value.descricao = descricao;
@@ -578,26 +573,26 @@ UI.Checkbox.prototype.onChange = function ( callback ) {
 UI.Color = function () {
 
 	UI.Element.call( this );
-		
+
 	var scope = this;
 
 	var dom = document.createElement( 'input' );
-	
+
 	dom.style.width = '64px';
 	dom.style.height = '25px';
 	dom.style.border = '0px';
 	dom.style.padding = '0px';
 	dom.style.backgroundColor = 'transparent';
-	
+
 	if ( false /*Util.browser.isChrome*/ ) {
-	
+
 		dom.type = 'color'; //crome já possui paleta de cores
-		
+
 	} else {
-	
+
 		dom.className = 'Color';
 		JSColor.setColorElement( dom ); //habilita paleta de cores
-		
+
 	}
 
 	this.dom = dom;
@@ -607,7 +602,7 @@ UI.Color = function () {
 	this.dom.addEventListener( 'change', function ( event ) {
 
 		if ( scope.onChangeCallback ) scope.onChangeCallback();
-		
+
 	}, false );
 
 	return this;
@@ -618,7 +613,7 @@ UI.Color.prototype = Object.create( UI.Element.prototype );
 
 UI.Color.prototype.getValue = function () {
 
-	return this.dom.value;	
+	return this.dom.value;
 
 };
 
@@ -628,7 +623,7 @@ UI.Color.prototype.getHexValue = function () {
 		return parseInt( this.dom.value.substr( 1 ), 16 );
 	} else {
 		return parseInt( this.dom.value, 16 );
-	}	
+	}
 
 };
 
@@ -641,7 +636,7 @@ UI.Color.prototype.setValue = function ( value ) {
 };
 
 UI.Color.prototype.setHexValue = function ( hex ) {
-	
+
 	if ( false /*Util.browser.isChrome*/ ) {
 		this.dom.value = "#" + ( '000000' + hex.toString( 16 ) ).slice( -6 );
 	} else {
@@ -830,7 +825,7 @@ UI.Number.prototype.onChange = function ( callback ) {
 UI.NumberInteger = function ( number ) {
 
 	UI.Number.call( this );
-	
+
 	this.onMouseMove = function ( event ) {
 
 		var movementX = event.movementX || event.webkitMovementX || event.mozMovementX || 0;
@@ -892,17 +887,19 @@ UI.Button = function () {
 	UI.Element.call( this );
 
 	var scope = this;
-
 	var dom = document.createElement( 'button' );
 	dom.className = 'Button';
+	/**Flag que indica se o botão esta habilitado*/
+	this.enable = true;
 
 	this.dom = dom;
 
 	this.onClickCallback = null;
 
 	this.dom.addEventListener( 'click', function ( event ) {
-
-		scope.onClickCallback();
+		if( scope.enable ){
+			scope.onClickCallback();
+		}
 
 	}, false );
 
@@ -913,17 +910,22 @@ UI.Button = function () {
 UI.Button.prototype = Object.create( UI.Element.prototype );
 
 UI.Button.prototype.setLabel = function ( value ) {
-
 	this.dom.textContent = value;
-
 	return this;
 
 };
 
 UI.Button.prototype.onClick = function ( callback ) {
-
 	this.onClickCallback = callback;
-
 	return this;
 
 };
+
+/**
+ * Método que habilita/desabilita o botão.
+ * Se o botão estiver desabilitado, não será chamada a função de callback do clique
+ */
+UI.Button.prototype.setEnable = function ( enable ) {
+	this.enable = enable;
+	return this;
+}

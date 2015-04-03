@@ -1,3 +1,6 @@
+/**
+ * Espaço gráfico
+ */
 VisualizadorGrafico = function ( editor, signals ) {
 
 	UI.Panel.call( this );
@@ -9,7 +12,7 @@ VisualizadorGrafico = function ( editor, signals ) {
 	var mouse3D = {x: 0, y: 0};
 	var listaObjetosSelecionaveis = [];
 
-	if	( !(editor instanceof Editor )) {
+	if ( !(editor instanceof Editor )) {
 		throw new Error ( "argumento deve ser da classe Editor !" );
 	}
 
@@ -94,11 +97,11 @@ VisualizadorGrafico = function ( editor, signals ) {
 	var visualizarItem = function ( item, objetoAux ) {
 		switch ( item.id ) {
 			case EIdsItens.OBJETOGRAFICO:
-				if	( item.visible ) {
+				if ( item.visible ) {
 
 					var novoObjeto = new THREE.Object3D();
 					objetoAux.add( novoObjeto );
-					if	(objetoAux instanceof THREE.Scene) {
+					if (objetoAux instanceof THREE.Scene) {
 						objetosCriados.push(novoObjeto);
 					}
 
@@ -107,19 +110,18 @@ VisualizadorGrafico = function ( editor, signals ) {
 					novoObjeto.matrizTransformacao.multiply( novoObjeto.matrix );
 
 					for ( var i = item.filhos.length-1; i >= 0 ; i-- ) {
-						if	( item.filhos[i].tipoEncaixe == ETiposEncaixe.DIAMANTE ) {
+						if ( item.filhos[i].tipoEncaixe == ETiposEncaixe.DIAMANTE ) {
 							visualizarItem( item.filhos[i], novoObjeto );
 						}
 					}
 
 					//cria formas geometricas
 					for ( var i = 0; i < item.filhos.length; i++ ) {
-						if	( item.filhos[i].tipoEncaixe == ETiposEncaixe.QUADRADO ) {
+						if ( item.filhos[i].tipoEncaixe == ETiposEncaixe.QUADRADO ) {
 							if (scope.editor.getItemSelecionado() != null) {
 								if (((scope.editor.getItemSelecionado().id == EIdsItens.OBJETOGRAFICO) && (scope.editor.getItemSelecionado() == item)) || (item.PaiSelecionado == true)) {
 									item.filhos[i].PaiSelecionado = true;
-								}
-								else {
+								} else {
 									item.filhos[i].PaiSelecionado = false;
 								}
 							}
@@ -133,67 +135,39 @@ VisualizadorGrafico = function ( editor, signals ) {
 
 					//cria filhos
 					for ( var i = 0; i < item.filhos.length; i++ ) {
-						if	( item.filhos[i].tipoEncaixe == ETiposEncaixe.SETA ) {
+						if ( item.filhos[i].tipoEncaixe == ETiposEncaixe.SETA ) {
 							if (scope.editor.getItemSelecionado() != null) {
 								if (((scope.editor.getItemSelecionado().id == EIdsItens.OBJETOGRAFICO) && (scope.editor.getItemSelecionado() == item)) || (item.PaiSelecionado == true)) {
 									item.filhos[i].PaiSelecionado = true;
-								}
-								else {
-										item.filhos[i].PaiSelecionado = false;
+								} else {
+									item.filhos[i].PaiSelecionado = false;
 								}
 							}
-
 							visualizarItem( item.filhos[i], novoObjeto );
 						}
 					}
 				}
-
 				break;
 			case EIdsItens.CUBO:
-				if	( item.visible ) {
-
-					var corCubo = item.propriedadeCor.getHex();
-
-					var geometria = new THREE.BoxGeometry( item.valorXYZ.x, item.valorXYZ.y, item.valorXYZ.z );
-					var material  = new THREE.MeshPhongMaterial({ color: corCubo, ambient: corCubo, overdraw: true });
-					var cubo = new THREE.Mesh( geometria, material);
-					cubo.material.color.setHex( corCubo );
-					cubo.material.map = item.usarTextura ? item.textura : null;
-					cubo.material.needsUpdate = true;
-					cubo.geometry.buffersNeedUpdate = true;
-					cubo.geometry.uvsNeedUpdate = true;
-					//cubo.visible = item.visible;
-
-					cubo.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
-					cubo.item = item;
-					objetoAux.add(cubo);
-					scope.listaObjetosSelecionaveis.push(cubo);
-
-					cubo.add(addBBox(item, cubo));
-				}
-
+				desenhaCubo(item, objetoAux);
 				break;
 			case EIdsItens.SPLINE:
 				desenharSpline(item, objetoAux);
-
 				break;
 			case EIdsItens.POLIGONO:
 				desenharPoligono(item, objetoAux);
-
 				break;
 			case EIdsItens.TRANSLADAR:
-
-				if	( item.visible ) {
-
+				/*Se o item for animado as transformações adicionadas são para animação*/
+				if ( item.visible && !item.pai.isAnimated) {
 					var m1 = new THREE.Matrix4();
 					m1.makeTranslation( item.valorXYZ.x, item.valorXYZ.y, item.valorXYZ.z );
-
 					objetoAux.matrizTransformacao.multiply( m1 );
 				}
-
 				break;
 			case EIdsItens.ROTACIONAR:
-				if	(item.visible) {
+				/*Se o item for animado as transformações adicionadas são para animação*/
+				if (item.visible && !item.pai.isAnimated) {
 					var m1 = new THREE.Matrix4();
 					var m2 = new THREE.Matrix4();
 					var m3 = new THREE.Matrix4();
@@ -201,25 +175,20 @@ VisualizadorGrafico = function ( editor, signals ) {
 					m2.makeRotationY( Util.math.converteGrausParaRadianos( item.valorXYZ.y ) );
 					m3.makeRotationZ( Util.math.converteGrausParaRadianos( item.valorXYZ.z ) );
 
-					//objetoAux.matrizTransformacao.multiplyMatrices( m1, m2 );
 					objetoAux.matrizTransformacao.multiply( m1 );
 					objetoAux.matrizTransformacao.multiply( m2 );
 					objetoAux.matrizTransformacao.multiply( m3 );
 				}
-
 				break;
 			case EIdsItens.REDIMENSIONAR:
-
-				if	(item.visible) {
+				/*Se o item for animado as transformações adicionadas são para animação*/
+				if (item.visible && !item.isAnimated) {
 					var m1 = new THREE.Matrix4();
 					m1.makeScale( item.valorXYZ.x, item.valorXYZ.y, item.valorXYZ.z );
-
 					objetoAux.matrizTransformacao.multiply( m1 );
 				}
-
 				break;
 			case EIdsItens.RENDERIZADOR:
-
 				scope.listaObjetosSelecionaveis = [];
 				for ( var i = 0; i < item.filhos.length; i++ ) {
 					visualizarItem( item.filhos[i], objetoAux );
@@ -241,11 +210,9 @@ VisualizadorGrafico = function ( editor, signals ) {
 
 					habilitarControls(false);
 					item.verGrade = false;
-				}
-				else if (tipoGrafico == 3) {
+				} else if (tipoGrafico == 3) {
 					habilitarControls(true);
 				}
-
 				for (var i = 0; i < sceneHelper.children.length; i++) {
 					if (sceneHelper.children[i].tipoItem == CG.listaItensGraficos.Grade) {
 						sceneHelper.children[i].visible = item.verGrade;
@@ -277,13 +244,13 @@ VisualizadorGrafico = function ( editor, signals ) {
 				viewCamera.camera.far = item.far;
 				viewCamera.camera.fov = item.fov;
 
-				if	(!viewCamera.cameraHelper || cameraHelper == undefined) {
+				if (!viewCamera.cameraHelper || cameraHelper == undefined) {
 					viewCamera.cameraHelper = new CGCameraHelper( viewCamera.camera );	/*THREE.CameraHelper*/
 					sceneHelper.add(viewCamera.cameraHelper);
 					cameraHelper = viewCamera.cameraHelper;
 				}
 
-				if	(atualizarMatrizCamera) {
+				if (atualizarMatrizCamera) {
 					viewCamera.camera.updateProjectionMatrix();
 					viewCamera.cameraHelper.update();
 				}
@@ -293,10 +260,15 @@ VisualizadorGrafico = function ( editor, signals ) {
 				break;
 			case EIdsItens.ILUMINACAO:
 				desenharIluminacao(item, objetoAux);
-
 				break;
 			case EIdsItens.DRONE:
 				desenhaDrone(item, objetoAux);
+				break;
+			case EIdsItens.TARGET:
+				desenhaTarget(item, objetoAux);
+				break;
+			case EIdsItens.ANIMACAO:
+				/* Nada aqui. Eh só para parar os pipocos =]*/
 				break;
 
 			default:
@@ -305,7 +277,7 @@ VisualizadorGrafico = function ( editor, signals ) {
 	};
 
 	function desenharPoligono(item, objetoAux) {
-		if	(item.visible) {
+		if (item.visible) {
 			var points = [];
 
 			for (var i = 0; i < item.listaPontos.length; i++) {
@@ -333,8 +305,7 @@ VisualizadorGrafico = function ( editor, signals ) {
 					point.item = item;
 					scope.listaObjetosSelecionaveis.push(point);
 				}
-			}
-			else if (item.primitiva == CG.listaDePrimitivas.Aberto) {
+			} else if (item.primitiva == CG.listaDePrimitivas.Aberto) {
 				var geometria = new THREE.Geometry();
 				geometria.vertices = points;
 				geometria.computeLineDistances();
@@ -344,8 +315,7 @@ VisualizadorGrafico = function ( editor, signals ) {
 				linha.item = item;
 				objetoAux.add(linha);
 				scope.listaObjetosSelecionaveis.push(linha);
-			}
-			else if (item.primitiva == CG.listaDePrimitivas.Fechado) {
+			} else if (item.primitiva == CG.listaDePrimitivas.Fechado) {
 				var geometria = new THREE.Geometry();
 
 				geometria.vertices = points;
@@ -374,8 +344,7 @@ VisualizadorGrafico = function ( editor, signals ) {
 				poligonoTransparente.item = item;
 				objetoAux.add(poligonoTransparente);
 				scope.listaObjetosSelecionaveis.push(poligonoTransparente);
-			}
-			else if (item.primitiva == CG.listaDePrimitivas.Preenchido) {
+			} else if (item.primitiva == CG.listaDePrimitivas.Preenchido) {
 				// DESENHA A LINHA ANTES DAS FACES
 				var geoLine = new THREE.Geometry();
 
@@ -421,7 +390,7 @@ VisualizadorGrafico = function ( editor, signals ) {
 	};
 
 	function desenharSpline(item, objetoAux) {
-		if	(item.visible) {
+		if (item.visible) {
 			var points = [];
 
 			for (var i = 0; i < item.listaPontos.length; i++) {
@@ -431,56 +400,20 @@ VisualizadorGrafico = function ( editor, signals ) {
 			var cor = item.propriedadeCor.getHex();
 
 			if (item.tipoSpline == CG.listaTipoSpline.Bezier) {
-				if (item.poliedro == true) { //DESENHAR POLIEDRO
-					var corPoliedro = item.corPoliedro.getHex();
-					var geometria   = new THREE.Geometry();
-
-					geometria.vertices = points;
-					geometria.computeLineDistances();
-
-					var material = new THREE.LineBasicMaterial( { linewidth: 1, color: corPoliedro, transparent: false } );
-					var poliedro = new THREE.Line(geometria, material, THREE.LineStrip);
-					objetoAux.add(poliedro);
+				if (item.poliedroEnabled == true) { //DESENHAR POLIEDRO
+					objetoAux.add(item.poliedro);
 				}
 
-				var pontosSpline = [];
+				objetoAux.add(item.object3D);
+				scope.listaObjetosSelecionaveis.push(item.object3D);
 
-				var t;
-				var p0, p1, p2, p3;
-				var x, y, z;
-
-				for (var i = 0; i <= item.qtdPontos; i++) {
-					t  =  (i / item.qtdPontos);
-					p0 = Math.pow((1 - t), 3);
-					p1 = (3 * t * Math.pow((1 - t), 2));
-					p2 = (3 * Math.pow(t, 2) * (1 - t));
-					p3 = Math.pow(t, 3);
-
-					x = (p0 * points[0].x + p1 * points[1].x + p2 * points[2].x + p3 * points[3].x);
-					y = (p0 * points[0].y + p1 * points[1].y + p2 * points[2].y + p3 * points[3].y);
-					z = (p0 * points[0].z + p1 * points[1].z + p2 * points[2].z + p3 * points[3].z);
-
-					pontosSpline.push(new THREE.Vector3(x, y, z));
-				}
-
-				var geometria = new THREE.Geometry();
-				geometria.vertices = pontosSpline;
-				geometria.computeLineDistances();
-
-				var material  = new THREE.LineBasicMaterial({ linewidth: 2, color: cor, transparent: false });
-				var spline    = new THREE.Line(geometria, material, THREE.LineStrip);
-
-				objetoAux.add(spline);
-				spline.item = item;
-				scope.listaObjetosSelecionaveis.push(spline);
-
-				spline.add(addBBox(item, spline));
+				item.object3D.add(addBBox(item, item.object3D));
 			}
 		}
 	};
 
 	function desenharIluminacao(item, objetoAux) {
-		if	(item.visible) {
+		if (item.visible) {
 			var light  = undefined;
 			var helper = undefined;
 			var cor = item.propriedadeCor.getHex();
@@ -488,14 +421,12 @@ VisualizadorGrafico = function ( editor, signals ) {
 			if (item.tipoLuz == CG.listaTipoLuz.Ambient) {
 				light = new THREE.AmbientLight(cor);
 				light.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
-			}
-			else if (item.tipoLuz == CG.listaTipoLuz.Hemisphere) {
+			} else if (item.tipoLuz == CG.listaTipoLuz.Hemisphere) {
 				light = new THREE.HemisphereLight(cor, item.corFundoLuz, item.intensidade);
 				light.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
 
 				helper = new THREE.HemisphereLightHelper(light, 10);
-			}
-			else if (item.tipoLuz == CG.listaTipoLuz.Directional) {
+			} else if (item.tipoLuz == CG.listaTipoLuz.Directional) {
 				light = new THREE.DirectionalLight(cor, item.intensidade);
 				light.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
 
@@ -506,16 +437,12 @@ VisualizadorGrafico = function ( editor, signals ) {
 				light.target.matrixWorld.elements[ 13 ] = item.posicaoTarget.y;
 				light.target.matrixWorld.elements[ 14 ] = item.posicaoTarget.z;
 
-	//			light.target.rotation.set(item.rotacaoTarget.x, item.rotacaoTarget.y, item.rotacaoTarget.z);
-	//			light.target.scale.set(item.escalaTarget.x, item.escalaTarget.y, item.escalaTarget.z);
-			}
-			else if (item.tipoLuz == CG.listaTipoLuz.PointLight) {
+			} else if (item.tipoLuz == CG.listaTipoLuz.PointLight) {
 				light = new THREE.PointLight(cor, item.intensidade, item.distancia);
 				light.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
 
 				helper = new THREE.PointLightHelper( light, 20 );
-			}
-			else if (item.tipoLuz == CG.listaTipoLuz.SpotLight) {
+			} else if (item.tipoLuz == CG.listaTipoLuz.SpotLight) {
 				light = new THREE.SpotLight(cor, item.intensidade, item.distancia, item.angulo, item.expoente);
 				light.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
 
@@ -523,8 +450,6 @@ VisualizadorGrafico = function ( editor, signals ) {
 				light.target.matrixWorld.elements[ 12 ] = item.posicaoTarget.x;
 				light.target.matrixWorld.elements[ 13 ] = item.posicaoTarget.y;
 				light.target.matrixWorld.elements[ 14 ] = item.posicaoTarget.z;
-	//			light.target.rotation.set(item.rotacaoTarget.x, item.rotacaoTarget.y, item.rotacaoTarget.z);
-	//			light.target.scale.set(item.escalaTarget.x, item.escalaTarget.y, item.escalaTarget.z);
 
 				helper = new THREE.SpotLightHelper(light, 10);
 			}
@@ -703,6 +628,8 @@ VisualizadorGrafico = function ( editor, signals ) {
 		renderer.domElement.ondblclick = selecionarObjeto;
 
 		scope.dom.appendChild( renderer.domElement );
+
+		CG.loadObjModel("resources/Drone_1.obj")
 	}
 
 	function desenharGrade(sceneHelper) {
@@ -742,8 +669,6 @@ VisualizadorGrafico = function ( editor, signals ) {
 
 	function habilitarControls(habilitar) {
 		controls.noRotate     = !habilitar;
-		//controls.noZoom       = !habilitar;
-		//controls.noPan        = !habilitar;
 		controls.staticMoving = !habilitar;
 	};
 
@@ -770,7 +695,7 @@ VisualizadorGrafico = function ( editor, signals ) {
 			renderer.setScissor(left, bottom, width, height);
 			renderer.enableScissorTest(true);
 
-			if	(view.clearColorCamera !== undefined) {
+			if (view.clearColorCamera !== undefined) {
 				renderer.setClearColor( view.clearColorCamera, view.background.a  );
 			} else {
 				renderer.setClearColor( view.background, view.background.a );
@@ -779,16 +704,14 @@ VisualizadorGrafico = function ( editor, signals ) {
 			camera.aspect = width / height;
 			camera.updateProjectionMatrix();
 
-			if	(view.cameraHelper) {
+			if (view.cameraHelper) {
 				scene.remove(sceneHelper);
 				renderer.render(scene, camera);
 				scene.add(sceneHelper);
-			}
-			else {
+			} else {
 				renderer.render( scene, camera );
 			}
 		}
-
 		controls.update();
 	};
 
@@ -807,8 +730,7 @@ VisualizadorGrafico = function ( editor, signals ) {
 
 		if (intersects.length > 0) {
 			editor.selecionarItem(intersects[0].object.item);
-		}
-		else {
+		} else {
 			editor.selecionarItem(null);
 
 			scope.listaObjetosSelecionaveis = [];
@@ -816,31 +738,60 @@ VisualizadorGrafico = function ( editor, signals ) {
 		}
 	};
 
-	/*
+	/**
 	 * Carrega um arquivo .obj com o 3D model do drone e adiciona ele para ser renderizado
 	 */
 	function desenhaDrone(item, objetoAux){
 		if ( item.visible ) {
-			var loader = new THREE.OBJLoader();
-			loader.load("resources/Drone_1.obj",
-					function ( drone ) {
-						console.log("obj loaded")
-						drone.item = item;
-						objetoAux.add(drone);
-						scope.listaObjetosSelecionaveis.push(drone);
-						drone.add(addBBox(item, drone));
-					},
-					function( progress ){
-						//TODO
-						console.log("loading obj...")
-					},
-					function( error ){
-						//TODO
-						console.log("obj loading error...")
-					})
+			var drone = item.object3D;
+			objetoAux.add(drone);
+			scope.listaObjetosSelecionaveis.push(drone);
+			/** O object3D root do drone não tem geometria devido que eh lido de um obj. Por isso, passamos o primeiro filho */
+			drone.add(addBBox(item, drone.children[0]));
 		}
 	}
 
+	/**
+	 * Renderiza o plano que representa o target da cena
+	 */
+	function desenhaTarget(item, objetoAux){
+		if ( item.visible ) {
+			var plano = item.object3D;
+			var cor = item.propriedadeCor.getHex();
+			plano.material.color.setHex( cor );
+			plano.material.map = item.usarTextura ? item.textura : null;
+			plano.material.needsUpdate = true;
+			plano.geometry.buffersNeedUpdate = true;
+			plano.geometry.uvsNeedUpdate = true;
+			plano.item = item;
+			objetoAux.add(plano);
+			scope.listaObjetosSelecionaveis.push(plano);
+
+			plano.add(addBBox(item, plano));
+		}
+	}
+
+	/**
+	 * Renderiza um cubo ^.^
+	 */
+	function desenhaCubo(item, objetoAux) {
+		if ( item.visible ) {
+			var cubo = item.object3D;
+			scope.listaObjetosSelecionaveis.push(cubo);
+			cubo.item = item;
+			var corCubo = item.propriedadeCor.getHex();
+			cubo.material.color.setHex( corCubo );
+			cubo.material.map = item.usarTextura ? item.textura : null;
+			cubo.material.needsUpdate = true;
+			cubo.geometry.buffersNeedUpdate = true;
+			cubo.geometry.uvsNeedUpdate = true;
+			//cubo.visible = item.visible;
+			//cubo.position.set( item.posicao.x, item.posicao.y, item.posicao.z );
+			objetoAux.add(cubo);
+			cubo.add(addBBox(item, cubo));
+		}
+
+	}
 };
 
 VisualizadorGrafico.prototype = Object.create( UI.Panel.prototype );

@@ -1,5 +1,5 @@
 
-function ItemEditorCubo() {
+function ItemEditorTarget() {
 
 	AItemEditorEncaixeQuadrado.call( this );
 
@@ -23,8 +23,9 @@ function ItemEditorCubo() {
 
 	//propriedades
 
-	scope.id =  EIdsItens.CUBO;
+	scope.id =  EIdsItens.TARGET
 	scope.valorXYZ.set( 100, 100, 100 );
+	//scope.posicao.set( 0, 0, 0 );
 	scope.propriedadeCor.setHex( 0xFFFFFF );
 	scope.textura = null;
 	scope.usarTextura = false;
@@ -32,15 +33,16 @@ function ItemEditorCubo() {
 	scope.object3D = createObject3D();
 
 	function createObject3D() {
-		var geometria = new THREE.BoxGeometry( scope.valorXYZ.x, scope.valorXYZ.y, scope.valorXYZ.z );
+		var geometria = new THREE.PlaneGeometry( 10, 10);
 		var material  = new THREE.MeshPhongMaterial({ color: scope.propriedadeCor.getHex(), ambient: scope.propriedadeCor.getHex(), overdraw: true });
-		var cubo = new THREE.Mesh( geometria, material);
+		var target = new THREE.Mesh( geometria, material);
 		if( scope.object3D != undefined ){
-			cubo.position = scope.object3D.position;
+			target.position = scope.object3D.position;
 		}
-		return cubo
+		target.rotateX(Util.math.converteGrausParaRadianos(-90));
+		return target;
 	}
 }
 
-ItemEditorCubo.prototype = Object.create( AItemEditorEncaixeQuadrado.prototype );
+ItemEditorTarget.prototype = Object.create( AItemEditorEncaixeQuadrado.prototype );
 

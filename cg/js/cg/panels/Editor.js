@@ -76,8 +76,6 @@ Editor = function ( signals ) {
 
 	function initEditor() {
 
-		//var container = document.getElementById("editor");
-
 		// SCENES
 
 		scene = new THREE.Scene();
@@ -433,7 +431,7 @@ Editor = function ( signals ) {
 
 			SELECTED = getIntersectedItem(intersects);
 
-			if	(SELECTED) {
+			if (SELECTED) {
 
 				if ( ( SELECTED !== scrollVertical ) && ( SELECTED !== scrollHorizontal ) ) {
 
@@ -450,7 +448,7 @@ Editor = function ( signals ) {
 						MESHENCAIXE = scope.painelFabrica.meshPainelFundoFabrica; //associa MESHENCAIXE para o caso de clicar e soltar (entao remove o elemento)
 					}
 
-					if	(SELECTED.item.canMove) {
+					if (SELECTED.item.canMove) {
 
 						var intersects = raycaster.intersectObject( plane );
 						offset.copy( intersects[ 0 ].point );//.sub( plane.position );
@@ -632,10 +630,3 @@ Editor = function ( signals ) {
 };
 
 Editor.prototype = Object.create( UI.Panel.prototype );
-
-
-
-
-
-
-

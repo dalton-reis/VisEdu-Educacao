@@ -9,7 +9,9 @@ function ItemEditorDrone() {
 	//eventos
 
 	//@Override
-	scope.onChange = function () {}; //evento será executado quando um filho for adicionado ou removido ou alguma propriedade for alterada
+	scope.onChange = function () {
+		createObject3D();
+	}; //evento será executado quando um filho for adicionado ou removido ou alguma propriedade for alterada
 	//@Override
 	scope.onAddFilho = function ( item ) {};; //evento será executado quando um filho for adicionado
 	//@Override
@@ -21,13 +23,30 @@ function ItemEditorDrone() {
 
 	//propriedades
 
+	scope.valorXYZ = undefined;
 	scope.id =  EIdsItens.DRONE;
-	scope.valorXYZ.set( 100, 100, 100 );
-	//scope.posicao.set( 0, 0, 0 );
-	scope.propriedadeCor.setHex( 0xFFFFFF );
+	scope.propriedadeCor = undefined;
 	scope.textura = null;
 	scope.usarTextura = false;
 	scope.listaPontos = undefined;
+	scope.object3D = undefined;
+	createObject3D(); //load the obj file;
+
+	function createObject3D() {
+		if( scope.object3D == undefined ){
+			CG.OBJLoader.load("resources/Drone_1.obj",
+				function ( model ) {
+					scope.object3D = model;
+					scope.object3D.item = scope;
+				},
+				function( progress ){
+					//TODO
+				},
+				function( error ){
+					//TODO
+				});
+		}
+	}
 }
 
 ItemEditorDrone.prototype = Object.create( AItemEditorEncaixeQuadrado.prototype );
