@@ -25,6 +25,7 @@ function PainelAnimacao( editor ) {
 	var rotationY = new UI.Text('-').setColor('#666');
 	var rotationZ = new UI.Text('-').setColor('#666');
 	var time = new UI.Number().setWidth('50px');
+	var distanceAverage = new UI.Number().setWidth('50px').setValue(1);
 	time.setValue(2000);
 	//adiciona os campos para exibiram os valores do posicionamento do objeto
 	var linhaValues = new UI.Panel();
@@ -70,9 +71,14 @@ function PainelAnimacao( editor ) {
 	playButton.onClick( startAnimations );
 	linhaValues.add(playButton);
 	this.add(linhaValues);
+	this.add(new UI.Break());
+	linhaValues = new UI.Panel();
+	linhaValues.add(new UI.Text('Configurações ROS').setColor('#666'));
+	this.add(linhaValues);
+	this.add(new UI.Break());
 	linhaValues = new UI.Panel();
 	linhaValues.add(new UI.Text('ROS Server: ').setColor('#666'));
-	var ros_server = new UI.Input().setWidth( '150px' ).setColor( '#444' ).setFontSize( '12px' ).setValue('localhost:9000');
+	var ros_server = new UI.Input().setWidth( '150px' ).setColor( '#444' ).setFontSize( '12px' ).setValue('localhost:9090');
 	linhaValues.add(ros_server);
 	var connectButton = new UI.Button();
 	connectButton.setLabel('Connect');
@@ -80,6 +86,10 @@ function PainelAnimacao( editor ) {
 		ros.connect(ros_server.getValue());
 	});
 	linhaValues.add(connectButton);
+	this.add(linhaValues);
+	linhaValues = new UI.Panel();
+	linhaValues.add(new UI.Text('Média distância (m/s): ').setColor('#666'));
+	linhaValues.add(distanceAverage);
 	this.add(linhaValues);
 	/**Animações correntes que estão/vão sendo executadas*/
 	var currentAnimatios = [];
