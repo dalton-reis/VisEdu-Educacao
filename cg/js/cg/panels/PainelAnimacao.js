@@ -95,6 +95,7 @@ function PainelAnimacao( editor ) {
 	var currentAnimatios = [];
 	/**Index de currentAnimatios que está atualmente em execução*/
 	var currentAnimation = 0;
+	var object3D = undefined;
 
 	/**
 	 * Método que vai percorrer todos os itens de objetos gráficos existentes
@@ -110,9 +111,12 @@ function PainelAnimacao( editor ) {
 					//encontrou um filho animado \o/
 					var animationChain = []
 					var easing = undefined;
-					var object3D = undefined;
-					currentAnimation = 0;
-					currentAnimatios = [];
+					var obj3DIndex = undefined;
+					if( filho === editor.getItemSelecionado() ){
+						currentAnimation = 0;
+						currentAnimatios = [];
+						object3D = undefined;
+					}
 					//pega a função de interpolação da animação para esse filho
 					for( var q = 0; q < filho.filhos.length; q++ ){
 						if( filho.filhos[q].id == EIdsItens.ANIMACAO ){
@@ -120,7 +124,10 @@ function PainelAnimacao( editor ) {
 							break;
 						}
 						if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.QUADRADO ){
-							object3D = filho.filhos[q].object3D;
+							if( filho === editor.getItemSelecionado() ){
+								object3D = filho.filhos[q].object3D;
+							}
+							obj3DIndex = q;
 						}
 					}
 					//pega todas as animações para esse filho
@@ -128,31 +135,33 @@ function PainelAnimacao( editor ) {
 						var animation = null;
 						if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.DIAMANTE ){
 							var animationItem = filho.filhos[q];
-							currentAnimatios.push(animationItem);
+							if (filho === editor.getItemSelecionado()){
+								currentAnimatios.push(animationItem);
+							}
 							if( animationItem.id == EIdsItens.TRANSLADAR ){
-								animation = new TWEEN.Tween(object3D.position)
+								animation = new TWEEN.Tween(filho.filhos[obj3DIndex].object3D.position)
 								.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.x),
 								    y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.y),
 								    z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.z)}, time.getValue())
 								.easing(CG.getEasingFunction(easing))
-								.onStart(onStartAnimation)
-								.onStop(onFinishAnimation)
-								.onComplete(onFinishAnimation)
-								.onUpdate( function() {
-									updateValues(object3D);
-								});
+								if( filho === editor.getItemSelecionado() ){
+									animation.onStart(onStartAnimation)
+										.onStop(onFinishAnimation)
+										.onComplete(onFinishAnimation)
+										.onUpdate(updateValues);
+								}
 							} else if( animationItem.id == EIdsItens.ROTACIONAR ){
-								animation = new TWEEN.Tween(object3D.rotation)
+								animation = new TWEEN.Tween(filho.filhos[obj3DIndex].object3D.rotation)
 								.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.x)),
 								    y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.y)),
 								    z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.z))}, time.getValue())
-								.easing(CG.getEasingFunction(easing))
-								.onStart(onStartAnimation)
-								.onStop(onFinishAnimation)
-								.onComplete(onFinishAnimation)
-								.onUpdate( function(){
-									updateValues(object3D);
-								});
+								.easing(CG.getEasingFunction(easing));
+								if( filho === editor.getItemSelecionado() ){
+									animation.onStart(onStartAnimation)
+										.onStop(onFinishAnimation)
+										.onComplete(onFinishAnimation)
+										.onUpdate(updateValues);
+								}
 							}
 							animationChain.push(animation);
 						}
@@ -163,9 +172,24 @@ function PainelAnimacao( editor ) {
 					}
 					//iniciar!
 					if( animationChain[0] != undefined ){
-						animationChain[0].onStart(onStartAnimationChain);
-						animationChain[animationChain.length-1].onStop(onFinishAnimationChain);
-						animationChain[animationChain.length-1].onComplete(onFinishAnimationChain);
+						if( filho === editor.getItemSelecionado() ){
+							animationChain[0].onStart( function() {
+								onStartAnimation();
+								onStartAnimationChain();
+							});
+							animationChain[animationChain.length-1].onStop( function() {
+								onFinishAnimation();
+								onFinishAnimationChain();
+
+							});
+							animationChain[animationChain.length-1].onComplete( function() {
+								onFinishAnimation();
+								onFinishAnimationChain();
+							});
+						} else {
+							animationChain[animationChain.length-1].onStop(onFinishAnimationChain);
+							animationChain[animationChain.length-1].onComplete(onFinishAnimationChain);
+						}
 						animationChain[0].start();
 					}
 				}//if
@@ -176,7 +200,8 @@ function PainelAnimacao( editor ) {
 	/**
 	 * Função para atualizar os valores do object3D durante a animação
 	 */
-	function updateValues( object3D ) {
+	function updateValues() {
+		//var object3D = editor.getItemSelecionado().object3D;
 		positionX.setValue(object3D.position.x);
 		positionY.setValue(object3D.position.y);
 		positionZ.setValue(object3D.position.z);
@@ -205,7 +230,6 @@ function PainelAnimacao( editor ) {
 	 */
 	function onStartAnimationChain(){
 		playButton.setEnable(false);
-		onStartAnimation();
 	}
 
 	/**
@@ -213,7 +237,6 @@ function PainelAnimacao( editor ) {
 	 */
 	function onFinishAnimationChain(){
 		playButton.setEnable(true);
-		onFinishAnimation();
 	}
 
 }
