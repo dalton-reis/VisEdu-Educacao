@@ -10,12 +10,12 @@ var LeitorJSON =  {
 
 		var painelMontagem = editor.painelMontagem;
 
-		if	( data.viewPos !== undefined ) {
+		if ( data.viewPos !== undefined ) {
 			var vector = data.viewPos;
 			editor.visualizadorGrafico.views[0].camera.position.set( vector[0], vector[1], vector[2] );
 		}
 
-		if	( data.viewRot !== undefined  ) {
+		if ( data.viewRot !== undefined  ) {
 			var vector = data.viewRot;
 			editor.visualizadorGrafico.views[0].camera.rotation.set( vector[0], vector[1], vector[2] );
 		}
