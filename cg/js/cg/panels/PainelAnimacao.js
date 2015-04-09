@@ -86,6 +86,10 @@ function PainelAnimacao( editor ) {
 		ros.connect(ros_server.getValue());
 	});
 	linhaValues.add(connectButton);
+	var executeButton = new UI.Button();
+	executeButton.setLabel('Executar');
+	executeButton.onClick( executeDrone );
+	linhaValues.add(executeButton);
 	this.add(linhaValues);
 	linhaValues = new UI.Panel();
 	linhaValues.add(new UI.Text('Média distância (m/s): ').setColor('#666'));
@@ -95,105 +99,83 @@ function PainelAnimacao( editor ) {
 	var currentAnimatios = [];
 	/**Index de currentAnimatios que está atualmente em execução*/
 	var currentAnimation = 0;
-	var object3D = undefined;
+	var selectedAnimation = undefined;
+	/**Objeto3D que sera animado*/
+	var object3D = [];
+	/**Função de easing que sera utilizada na interpolação da animação*/
+	var easing = [];
 
 	/**
 	 * Método que vai percorrer todos os itens de objetos gráficos existentes
 	 * e vai iniciar as animações
 	 */
 	function startAnimations() {
-		var item = editor.painelMontagem;
-		if (item.filhos.length > 0){
-			//percorre os filhos procurando um objeto grafico que tenha animação
-			for (var i = 0; i < item.filhos.length; i++) {
-				var filho = item.filhos[i];
-				if( filho.id == EIdsItens.OBJETOGRAFICO && filho.isAnimated ){
-					//encontrou um filho animado \o/
-					var animationChain = []
-					var easing = undefined;
-					var obj3DIndex = undefined;
-					if( filho === editor.getItemSelecionado() ){
-						currentAnimation = 0;
-						currentAnimatios = [];
-						object3D = undefined;
-					}
-					//pega a função de interpolação da animação para esse filho
-					for( var q = 0; q < filho.filhos.length; q++ ){
-						if( filho.filhos[q].id == EIdsItens.ANIMACAO ){
-							easing = filho.filhos[q].easing;
-							break;
-						}
-						if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.QUADRADO ){
-							if( filho === editor.getItemSelecionado() ){
-								object3D = filho.filhos[q].object3D;
-							}
-							obj3DIndex = q;
-						}
-					}
-					//pega todas as animações para esse filho
-					for( var q = 0; q < filho.filhos.length; q++ ){
-						var animation = null;
-						if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.DIAMANTE ){
-							var animationItem = filho.filhos[q];
-							if (filho === editor.getItemSelecionado()){
-								currentAnimatios.push(animationItem);
-							}
-							if( animationItem.id == EIdsItens.TRANSLADAR ){
-								animation = new TWEEN.Tween(filho.filhos[obj3DIndex].object3D.position)
-								.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.x),
-								    y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.y),
-								    z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.z)}, time.getValue())
-								.easing(CG.getEasingFunction(easing))
-								if( filho === editor.getItemSelecionado() ){
-									animation.onStart(onStartAnimation)
-										.onStop(onFinishAnimation)
-										.onComplete(onFinishAnimation)
-										.onUpdate(updateValues);
-								}
-							} else if( animationItem.id == EIdsItens.ROTACIONAR ){
-								animation = new TWEEN.Tween(filho.filhos[obj3DIndex].object3D.rotation)
-								.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.x)),
-								    y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.y)),
-								    z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.z))}, time.getValue())
-								.easing(CG.getEasingFunction(easing));
-								if( filho === editor.getItemSelecionado() ){
-									animation.onStart(onStartAnimation)
-										.onStop(onFinishAnimation)
-										.onComplete(onFinishAnimation)
-										.onUpdate(updateValues);
-								}
-							}
-							animationChain.push(animation);
-						}
-					}
-					//monta o chain com todas as animações para esse obj gráfico
-					for( var ai = animationChain.length-1; ai > 0; ai-- ){
-						animationChain[ai-1].chain(animationChain[ai]);
-					}
-					//iniciar!
-					if( animationChain[0] != undefined ){
-						if( filho === editor.getItemSelecionado() ){
-							animationChain[0].onStart( function() {
-								onStartAnimation();
-								onStartAnimationChain();
-							});
-							animationChain[animationChain.length-1].onStop( function() {
-								onFinishAnimation();
-								onFinishAnimationChain();
-
-							});
-							animationChain[animationChain.length-1].onComplete( function() {
-								onFinishAnimation();
-								onFinishAnimationChain();
-							});
+		loadAnimation();
+		//se não tem animação, cai fora
+		if( currentAnimatios.length == 0 ){
+			return;
+		}
+		//pega todas as animações para esse filho
+		for( var q = 0; q < currentAnimatios.length; q++ ){
+			var animation = undefined;
+			var animationChain = [];
+			for( var s = 0; s < currentAnimatios[q].length; s++ ){
+				var animationItem = currentAnimatios[q][s];
+				if( animationItem.id == EIdsItens.TRANSLADAR ){
+					animation = new TWEEN.Tween(object3D[q].position)
+					.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.x),
+					    y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.y),
+					    z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.z)}, time.getValue())
+					.easing(CG.getEasingFunction(easing[q]))
+					if( selectedAnimation != undefined && q == selectedAnimation ){
+						animation.onUpdate(updateValues);
+						//FIXME - encontrar uma maneira melhor de bloquear o botão de play durante da execução das animações
+						if( s == currentAnimatios[q].length-1 ){
+							animation.onComplete(onFinishAnimationChain)
+								.onStop(onFinishAnimationChain);
 						} else {
-							animationChain[animationChain.length-1].onStop(onFinishAnimationChain);
-							animationChain[animationChain.length-1].onComplete(onFinishAnimationChain);
+							animation.onComplete(onFinishAnimation)
+								.onStop(onFinishAnimation);
 						}
-						animationChain[0].start();
+						if( animationChain.length == 0 ){
+							animation.onStart(onStartAnimationChain);
+						} else {
+							animation.onStart(onStartAnimation);
+						}
 					}
-				}//if
-			}//for
+				} else if( animationItem.id == EIdsItens.ROTACIONAR ){
+					animation = new TWEEN.Tween(object3D[q].rotation)
+					.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.x)),
+					    y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.y)),
+					    z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.z))}, time.getValue())
+					.easing(CG.getEasingFunction(easing[q]));
+					if( selectedAnimation != undefined && q == selectedAnimation ){
+						animation.onUpdate(updateValues);
+						//FIXME - encontrar uma maneira melhor de bloquear o botão de play durante da execução das animações
+						if( s == currentAnimatios[q].length-1 ){
+							animation.onComplete(onFinishAnimationChain)
+								.onStop(onFinishAnimationChain);
+						} else {
+							animation.onComplete(onFinishAnimation)
+								.onStop(onFinishAnimation);
+						}
+						if( animationChain.length == 0 ){
+							animation.onStart(onStartAnimationChain);
+						} else {
+							animation.onStart(onStartAnimation);
+						}
+					}
+				}
+				animationChain.push(animation);
+			}
+			//monta o chain com todas as animações para esse obj gráfico
+			for( var ai = animationChain.length-1; ai > 0; ai-- ){
+				animationChain[ai-1].chain(animationChain[ai]);
+			}
+			//iniciar!
+			if( animationChain[0] != undefined ){
+				animationChain[0].start();
+			}
 		}
 	}
 
@@ -202,19 +184,19 @@ function PainelAnimacao( editor ) {
 	 */
 	function updateValues() {
 		//var object3D = editor.getItemSelecionado().object3D;
-		positionX.setValue(object3D.position.x);
-		positionY.setValue(object3D.position.y);
-		positionZ.setValue(object3D.position.z);
-		rotationX.setValue(Util.math.converteRadianosParaGraus(object3D.rotation.x));
-		rotationY.setValue(Util.math.converteRadianosParaGraus(object3D.rotation.y));
-		rotationZ.setValue(Util.math.converteRadianosParaGraus(object3D.rotation.z));
+		positionX.setValue(object3D[selectedAnimation].position.x);
+		positionY.setValue(object3D[selectedAnimation].position.y);
+		positionZ.setValue(object3D[selectedAnimation].position.z);
+		rotationX.setValue(Util.math.converteRadianosParaGraus(object3D[selectedAnimation].rotation.x));
+		rotationY.setValue(Util.math.converteRadianosParaGraus(object3D[selectedAnimation].rotation.y));
+		rotationZ.setValue(Util.math.converteRadianosParaGraus(object3D[selectedAnimation].rotation.z));
 	}
 
 	/**
 	 * Função volta para a cor default do item no editor
 	 */
 	function onFinishAnimation(){
-		currentAnimatios[currentAnimation].setMeshsColor( CG.colors.corPecasDiamante );
+		currentAnimatios[selectedAnimation][currentAnimation].setMeshsColor( CG.colors.corPecasDiamante );
 		currentAnimation++;
 	}
 
@@ -222,7 +204,7 @@ function PainelAnimacao( editor ) {
 	 * Função muda a cor do item de animação no editor para indicar a execução do mesmo
 	 */
 	function onStartAnimation(){
-		currentAnimatios[currentAnimation].setMeshsColor( CG.colors.corCurrentAnimation );
+		currentAnimatios[selectedAnimation][currentAnimation].setMeshsColor( CG.colors.corCurrentAnimation );
 	}
 
 	/**
@@ -230,6 +212,7 @@ function PainelAnimacao( editor ) {
 	 */
 	function onStartAnimationChain(){
 		playButton.setEnable(false);
+		onStartAnimation();
 	}
 
 	/**
@@ -237,8 +220,56 @@ function PainelAnimacao( editor ) {
 	 */
 	function onFinishAnimationChain(){
 		playButton.setEnable(true);
+		onFinishAnimation();
 	}
 
+	/**
+	 * Função que executa as animações expecificadas no editor no drone real
+	 */
+	function executeDrone(){
+		console.log('execute drone');
+		loadAnimation();
+	}
+
+	/**
+	 * Função que percore o objeto gráfico selecionado no editor e carrega suas animações
+	 * para o campo animationChain
+	 */
+	function loadAnimation(){
+		currentAnimation = 0;
+		selectedAnimation = undefined;
+		currentAnimatios = [];
+		easing = [];
+		object3D = [];
+		var item = editor.painelMontagem;
+		if (item.filhos.length > 0){
+			//percorre os filhos procurando um objeto grafico que tenha animação
+			var totalAnimations = 0;
+			for (var i = 0; i < item.filhos.length; i++) {
+				var filho = item.filhos[i];
+				//verifica se eh um filho animado \o/
+				if (filho.id == EIdsItens.OBJETOGRAFICO && filho.isAnimated ){
+					currentAnimatios[totalAnimations] = [];
+					//verifica se o item esta selecionado no editor
+					if ( filho === editor.getItemSelecionado() ){
+						selectedAnimation = totalAnimations;
+					}
+					//pega todas as animações para esse filho
+					for( var q = 0; q < filho.filhos.length; q++ ){
+						var animation = null;
+						if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.DIAMANTE ){
+							currentAnimatios[totalAnimations].push(filho.filhos[q]);
+						} else if( filho.filhos[q].id == EIdsItens.ANIMACAO ){
+							easing[totalAnimations] = filho.filhos[q].easing;
+						} else if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.QUADRADO ){
+							object3D[totalAnimations] = filho.filhos[q].object3D;
+						}
+					}
+					totalAnimations++;
+				}
+			}
+		}
+	}
 }
 
 PainelAnimacao.prototype = Object.create( UI.Panel.prototype );
