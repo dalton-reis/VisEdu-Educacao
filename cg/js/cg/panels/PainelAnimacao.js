@@ -99,11 +99,13 @@ function PainelAnimacao( editor ) {
 	var currentAnimatios = [];
 	/**Index de currentAnimatios que está atualmente em execução*/
 	var currentAnimation = 0;
+	var currentDroneStep = -1;
 	var selectedAnimation = undefined;
 	/**Objeto3D que sera animado*/
 	var object3D = [];
 	/**Função de easing que sera utilizada na interpolação da animação*/
 	var easing = [];
+	var droneIntervalExec = undefined;
 
 	/**
 	 * Método que vai percorrer todos os itens de objetos gráficos existentes
@@ -211,7 +213,7 @@ function PainelAnimacao( editor ) {
 	 * Função executada no inicio do animation chain
 	 */
 	function onStartAnimationChain(){
-		playButton.setEnable(false);
+		onExecutionBegan();
 		onStartAnimation();
 	}
 
@@ -219,7 +221,7 @@ function PainelAnimacao( editor ) {
 	 * Função executada no final do animation chain
 	 */
 	function onFinishAnimationChain(){
-		playButton.setEnable(true);
+		onExecutionEnd();
 		onFinishAnimation();
 	}
 
@@ -227,8 +229,35 @@ function PainelAnimacao( editor ) {
 	 * Função que executa as animações expecificadas no editor no drone real
 	 */
 	function executeDrone(){
-		console.log('execute drone');
 		loadAnimation();
+		currentDroneStep = -1;
+		//se não tem animação, cai fora
+		if( currentAnimatios.length == 0 || selectedAnimation == undefined ){
+			return;
+		}
+		onExecutionBegan()
+		droneIntervalExec = setInterval(droneStep, 1000);
+		//função chamada para cada passo na execução da movimentação do drone
+		function droneStep(){
+			if (currentDroneStep == -1){
+				console.log('decolou');
+			}
+			var step = currentAnimatios[selectedAnimation][currentDroneStep];
+			if( step != undefined ){
+				//pega todas as animações para esse filho
+				if( step.id == EIdsItens.TRANSLADAR ){
+					console.log('drone translada');
+				} else if( step.id == EIdsItens.ROTACIONAR ){
+					console.log('drone rotaciona');
+				}
+			}
+			if (currentDroneStep == currentAnimatios[selectedAnimation].length ){
+				console.log('pousou');
+				onExecutionEnd();
+				clearInterval(droneIntervalExec);
+			}
+			currentDroneStep += 1;
+		}
 	}
 
 	/**
@@ -269,6 +298,26 @@ function PainelAnimacao( editor ) {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Esse método deve ser chamado quando alguma execução ( animação/drone ) for iniciada.
+	 * Evitando problemas na execução que podem ser causados por duas execuções acontecendo ao mesmo tempo
+	 * Esse método desabilita todos os botões que dão trigger nas execuções
+	 */
+	function onExecutionBegan(){
+		executeButton.setEnable(false);
+		playButton.setEnable(false);
+	}
+
+	/**
+	 * Esse método deve ser chamado quando alguma execução ( animação/drone ) terminar.
+	 * Esse método habilita todos os botões que dão trigger nas execuções que foram desabilitados por
+	 * onExecutionBegan
+	 */
+	function onExecutionEnd(){
+		executeButton.setEnable(true);
+		playButton.setEnable(true);
 	}
 }
 
