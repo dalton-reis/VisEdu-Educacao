@@ -1,9 +1,9 @@
-var UtilCG = { 
+var UtilCG = {
 
 	generateMaterialItems: function ( colorItem ) {
 
-		return new THREE.MeshLambertMaterial( { color: colorItem, overdraw: true } );	
-		
+		return new THREE.MeshLambertMaterial( { color: colorItem, overdraw: true } );
+
 	},
 
 	generateContorno: function ( shape ) {
@@ -12,27 +12,27 @@ var UtilCG = {
 		var material = new THREE.LineBasicMaterial( { linewidth: 1, color: CG.colors.corContorno, transparent: true } );
 
 		return new THREE.Line( geometry, material );
-		
+
 	},
-		
+
 	generateMeshFromShape: function ( shape, color ) {
 
 		var geometry = new THREE.ShapeGeometry( shape );
 		var material = CG.objects.generateMaterialItems( color );
 		var mesh = new THREE.Mesh( geometry, material );
 		return mesh;
-		
+
 	},
-		
+
 	addRetangulo: function ( grupo, shape, color, x, y, z, rx, ry, rz, s, usarContorno, colorContorno) {
-		
+
 		var mesh = UtilCG.generateMeshFromShape( shape, color );
 		mesh.position.set( x, y, z );
 		mesh.rotation.set( rx, ry, rz );
 		mesh.scale.set( s, s, s );
-		
+
 		grupo.add( mesh );
-		
+
 		if	(usarContorno !== undefined && usarContorno) {
 			// line
 			var line = UtilCG.generateContorno( shape );
@@ -42,10 +42,10 @@ var UtilCG = {
 			line.scale.set( s, s, s );
 			grupo.add( line );
 		}
-		
+
 		return mesh;
 	},
-						
+
 	generateLabelMaterialTexture: function ( text ) {
 
 		var x = document.createElement( "canvas" );
@@ -65,29 +65,29 @@ var UtilCG = {
 
 		var material = new THREE.MeshBasicMaterial( { map: map, transparent: true } );
 		return material;
-		
+
 	},
 
 	generateTextMesh: function ( texto, color, pai ) {
-		var material = new THREE.MeshFaceMaterial( [ 
+		var material = new THREE.MeshFaceMaterial( [
 			new THREE.MeshPhongMaterial( { color: color, shading: THREE.FlatShading } ), // front
 			new THREE.MeshPhongMaterial( { color: color, shading: THREE.SmoothShading, transparent: false } ) // side
-		] );	
+		] );
 		var geometry = CG.objects.generateLabelGeometry( texto );
-		var mesh = new THREE.Mesh( geometry, material );	
-		
+		var mesh = new THREE.Mesh( geometry, material );
+
 		if	( pai !== undefined ) {
-		
+
 			 pai.textGeometry = geometry;
-			
+
 		}
-		
+
 		return mesh;
 	},
 
 	generateLabelGeometry: function (texto) {
 
-		//propriedades texto	
+		//propriedades texto
 		var	height = 0,
 			size = 30,
 
@@ -100,7 +100,7 @@ var UtilCG = {
 			font = "gentilis", // helvetiker, optimer, gentilis, droid sans, droid serif
 			weight = "bold", // normal bold
 			style = "normal"; // normal italichis
-		
+
 		var textoGeo = new THREE.TextGeometry( texto, {
 						size: size,
 						height: height,
@@ -122,7 +122,7 @@ var UtilCG = {
 		textoGeo.computeVertexNormals();
 
 		return textoGeo;
-		
+
 	},
 
 	generateShapeSeta: function () {
@@ -135,17 +135,17 @@ var UtilCG = {
 		points.push( new THREE.Vector2 ( 100, 40 ) );
 		points.push( new THREE.Vector2 (  30,  1 ) );
 		points.push( new THREE.Vector2 (  30, 30 ) );
-		points.push( new THREE.Vector2 ( -25, 30 ) );	
+		points.push( new THREE.Vector2 ( -25, 30 ) );
 
-		return new THREE.Shape( points );	
-		
+		return new THREE.Shape( points );
+
 	},
 
 	generateShapeEncaixeSeta: function () {
 
 		var points = [];
 
-		
+
 		points.push( new THREE.Vector2 (   0, 85 ) );
 		points.push( new THREE.Vector2 ( 110, 85 ) );
 		points.push( new THREE.Vector2 ( 110, -5 ) );
@@ -156,10 +156,10 @@ var UtilCG = {
 		points.push( new THREE.Vector2 ( 100, 40 ) );
 		points.push( new THREE.Vector2 (  30, 80 ) );
 		points.push( new THREE.Vector2 (  30, 50 ) );
-		points.push( new THREE.Vector2 (   0, 50 ) );		
+		points.push( new THREE.Vector2 (   0, 50 ) );
 
-		return new THREE.Shape( points );	
-		
+		return new THREE.Shape( points );
+
 	},
 
 	generateShapeQuadrado: function () {
@@ -173,16 +173,16 @@ var UtilCG = {
 		points.push( new THREE.Vector2 (  95, 10 ) );
 		points.push( new THREE.Vector2 (  30, 10 ) );
 		points.push( new THREE.Vector2 (  30, 30 ) );
-		points.push( new THREE.Vector2 ( -20, 30 ) );	
+		points.push( new THREE.Vector2 ( -20, 30 ) );
 
-		return new THREE.Shape( points );	
-		
+		return new THREE.Shape( points );
+
 	},
 
 	generateShapeEncaixeQuadrado: function () {
 
-		var points = [];	
-		
+		var points = [];
+
 		points.push( new THREE.Vector2 (   0, 85 ) );
 		points.push( new THREE.Vector2 ( 110, 85 ) );
 		points.push( new THREE.Vector2 ( 110, -5 ) );
@@ -196,8 +196,8 @@ var UtilCG = {
 		points.push( new THREE.Vector2 (  30, 50 ) );
 		points.push( new THREE.Vector2 (   0, 50 ) );
 
-		return new THREE.Shape( points );	
-		
+		return new THREE.Shape( points );
+
 	},
 
 	generateShapeDiamante: function () {
@@ -212,14 +212,14 @@ var UtilCG = {
 		points.push( new THREE.Vector2 (  30, 30 ) );
 		points.push( new THREE.Vector2 ( -25, 30 ) );
 
-		return new THREE.Shape( points );	
-		
-	}, 
+		return new THREE.Shape( points );
+
+	},
 
 	generateShapeEncaixeDiamante: function () {
 
 		var points = [];
-		
+
 		points.push( new THREE.Vector2 (   0, 85 ) );
 		points.push( new THREE.Vector2 ( 110, 85 ) );
 		points.push( new THREE.Vector2 ( 110, -5 ) );
@@ -232,8 +232,8 @@ var UtilCG = {
 		points.push( new THREE.Vector2 (  30, 50 ) );
 		points.push( new THREE.Vector2 (   0, 50 ) );
 
-		return new THREE.Shape( points );	
-		
+		return new THREE.Shape( points );
+
 	},
 
 	generateShapeCruz: function () {
@@ -250,17 +250,17 @@ var UtilCG = {
 		points.push( new THREE.Vector2 (  69, 30 ) );
 		points.push( new THREE.Vector2 (  69,  2 ) );
 		points.push( new THREE.Vector2 (  49,  2 ) );
-		points.push( new THREE.Vector2 (  49, 30 ) );	
+		points.push( new THREE.Vector2 (  49, 30 ) );
 		points.push( new THREE.Vector2 ( -25, 30 ) );
 
-		return new THREE.Shape( points );	
-		
-	}, 
+		return new THREE.Shape( points );
+
+	},
 
 	generateShapeEncaixeCruz: function () {
 
 		var points = [];
-		
+
 		points.push( new THREE.Vector2 (   0, 85 ) );
 		points.push( new THREE.Vector2 ( 110, 85 ) );
 		points.push( new THREE.Vector2 ( 110, -5 ) );
@@ -275,11 +275,11 @@ var UtilCG = {
 		points.push( new THREE.Vector2 (  69, 50 ) );
 		points.push( new THREE.Vector2 (  69, 78 ) );
 		points.push( new THREE.Vector2 (  49, 78 ) );
-		points.push( new THREE.Vector2 (  49, 50 ) );	
+		points.push( new THREE.Vector2 (  49, 50 ) );
 		points.push( new THREE.Vector2 (   0, 50 ) );
 
-		return new THREE.Shape( points );	
-		
+		return new THREE.Shape( points );
+
 	},
 
 	generateShapeLixeira: function () {
@@ -296,14 +296,14 @@ var UtilCG = {
 		points.push( new THREE.Vector2 (  77,  15 ) );
 		points.push( new THREE.Vector2 (  90, 100 ) );
 		points.push( new THREE.Vector2 ( 105, 100 ) );
-		points.push( new THREE.Vector2 ( 105, 105 ) );	
+		points.push( new THREE.Vector2 ( 105, 105 ) );
 		points.push( new THREE.Vector2 (  90,   0 ) );
 		points.push( new THREE.Vector2 (  15,   0 ) );
 
-		return new THREE.Shape( points );	
-		
+		return new THREE.Shape( points );
+
 	},
-		
+
 	generateShapeTampaLixeira: function () {
 
 		var points = [];
@@ -318,8 +318,7 @@ var UtilCG = {
 		points.push( new THREE.Vector2 ( 105, 15 ) );
 		points.push( new THREE.Vector2 ( 105,  0 ) );
 
-		return new THREE.Shape( points );	
-		
-	} 	
+		return new THREE.Shape( points );
 
+	},
 };
