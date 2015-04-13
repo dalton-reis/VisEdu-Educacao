@@ -90,9 +90,15 @@ function PainelAnimacao( editor ) {
 	executeButton.setLabel('Executar');
 	executeButton.onClick( executeDrone );
 	linhaValues.add(executeButton);
+	var panicButton = new UI.Button();
+	panicButton.setLabel('Panic!');
+	panicButton.onClick( function () {
+		ros.land();
+	});
+	linhaValues.add(panicButton);
 	this.add(linhaValues);
 	linhaValues = new UI.Panel();
-	linhaValues.add(new UI.Text('Média distância (m/s): ').setColor('#666'));
+	linhaValues.add(new UI.Text('Distância média (m/s): ').setColor('#666'));
 	linhaValues.add(distanceAverage);
 	this.add(linhaValues);
 	/**Animações correntes que estão/vão sendo executadas*/

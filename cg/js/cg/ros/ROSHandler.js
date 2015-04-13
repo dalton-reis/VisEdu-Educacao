@@ -4,46 +4,44 @@
 var ROSHandler = function() {
 
 	this.ros = new ROSLIB.Ros();
-	this.ros.on('connection', function(){
-		console.log('Connected to websocket server.');
-		this.takeoff_topic = new ROSLIB.Topic({
-			ros : this.ros,
-			name : '/ardrone/takeoff',
-			messageType : 'std_msgs/Empty'
-		});
-		/** ros topic utilizado para pousar o drone
-		*/
-		this.land_topic = new ROSLIB.Topic({
-			ros : this.ros,
-			name : '/ardrone/land',
-			messageType : 'std_msgs/Empty'
-		});
-		/** ros topic utilizado para movimentar o drone
-		*/
-		this.cmdvel_topic = new ROSLIB.Topic({
-			ros : this.ros,
-			name : '/cmd_vel',
-			messageType : 'geometry_msgs/Twist'
-		});
-	});
-	this.ros.on('error', function( error ) {
-		console.log('Error connecting to websocket server: ', error);
-	});
-	this.ros.on('close', function(){
-		console.log('Connection to websocket server closed');
-	});
+	this.ros.on('connection', ROSHandler.prototype.onConnected);
+	this.ros.on('error', ROSHandler.prototype.onError);
+	this.ros.on('close', ROSHandler.prototype.onClose);
 	/**ros topic utilizado para decolar o AR.Drone
 	 * @type ROSLIB.Topic
 	 */
-	this.takeoff_topic = undefined;
+	this.takeoff_topic = new ROSLIB.Topic({
+			ros : this.ros,
+			name : '/ardrone/takeoff',
+			messageType : 'std_msgs/Empty'
+	});
 	/** ros topic utilizado para pousar o drone
 	*/
-	this.land_topic = undefined;
+	this.land_topic = new ROSLIB.Topic({
+			ros : this.ros,
+			name : '/ardrone/land',
+			messageType : 'std_msgs/Empty'
+	});
 	/** ros topic utilizado para movimentar o drone
 	*/
-	this.cmdvel_topic = undefined;
+	this.cmdvel_topic = new ROSLIB.Topic({
+			ros : this.ros,
+			name : '/cmd_vel',
+			messageType : 'geometry_msgs/Twist'
+	});
 }
 
+ROSHandler.prototype.onConnected = function (){
+	console.log('Connected to websocket server.');
+}
+
+ROSHandler.prototype.onError = function(){
+	console.log('Error connecting to websocket server: ', error);
+}
+
+ROSHandler.prototype.onClose = function(){
+	console.log('Connection to websocket server closed');
+}
 /**
  * Método para connectar com o ROS
  */
@@ -62,7 +60,7 @@ ROSHandler.prototype.connect = function ( url ) {
  */
 ROSHandler.prototype.takeoff = function(){
 	var takeoff = new ROSLIB.Message();
-	takeoff_topic.publish(takeoff);
+	this.takeoff_topic.publish(takeoff);
 };
 
 /**
@@ -71,14 +69,14 @@ ROSHandler.prototype.takeoff = function(){
  */
 ROSHandler.prototype.land = function() {
 	var land = new ROSLIB.Message();
-	land_topic.publish(land);
+	this.land_topic.publish(land);
 };
 
 /**
  * Método para parar o drone
  */
 ROSHandler.prototype.stop = function(){
-	ROSHandler.prototype.move(0.0, 0.0, 0.0, 0.0);
+	this.move(0.0, 0.0, 0.0, 0.0);
 }
 
 /**
@@ -99,5 +97,5 @@ ROSHandler.prototype.move = function(x,y,z,rotation) {
 			z : rotation,
 		}
 	});
-	cmdvel_topic.publish(twist);
+	this.cmdvel_topic.publish(twist);
 };
