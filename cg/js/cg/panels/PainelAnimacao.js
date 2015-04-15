@@ -26,6 +26,7 @@ function PainelAnimacao( editor ) {
 	var rotationZ = new UI.Text('-').setColor('#666');
 	var time = new UI.Number().setWidth('50px');
 	var distanceAverage = new UI.Number().setWidth('50px').setValue(1);
+	var rotationAverage = new UI.Number().setWidth('50px').setValue(1);
 	time.setValue(2000);
 	//adiciona os campos para exibiram os valores do posicionamento do objeto
 	var linhaValues = new UI.Panel();
@@ -101,11 +102,14 @@ function PainelAnimacao( editor ) {
 	linhaValues.add(new UI.Text('Distância média (m/s): ').setColor('#666'));
 	linhaValues.add(distanceAverage);
 	this.add(linhaValues);
+	linhaValues = new UI.Panel();
+	linhaValues.add(new UI.Text('Rotação média (graus/s): ').setColor('#666'));
+	linhaValues.add(rotationAverage);
+	this.add(linhaValues);
 	/**Animações correntes que estão/vão sendo executadas*/
 	var currentAnimatios = [];
 	/**Index de currentAnimatios que está atualmente em execução*/
 	var currentAnimation = 0;
-	var currentDroneStep = -1;
 	var selectedAnimation = undefined;
 	/**Objeto3D que sera animado*/
 	var object3D = [];
@@ -242,28 +246,56 @@ function PainelAnimacao( editor ) {
 			return;
 		}
 		onExecutionBegan()
-		droneIntervalExec = setInterval(droneStep, 1000);
-		//função chamada para cada passo na execução da movimentação do drone
-		function droneStep(){
-			if (currentDroneStep == -1){
-				console.log('decolou');
-			}
-			var step = currentAnimatios[selectedAnimation][currentDroneStep];
-			if( step != undefined ){
-				//pega todas as animações para esse filho
-				if( step.id == EIdsItens.TRANSLADAR ){
-					console.log('drone translada');
-				} else if( step.id == EIdsItens.ROTACIONAR ){
-					console.log('drone rotaciona');
+		var currentDroneStep = -1;
+		var droneParado = true;
+		var interval = setInterval(executeStepDrone, 10);
+		function executeStepDrone() {
+			if( droneParado && currentDroneStep == -1){
+				ros.takeoff();
+				droneParado = false;
+				setTimeout(function(){
+					ros.stop();
+					console.log('decolou');
+					droneParado = true;
+					currentDroneStep += 1;
+				}, 8000);
+			} else if( droneParado && currentDroneStep < currentAnimatios[selectedAnimation].length){
+				var valorX = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x > 0 ? 1: 0;
+				var valorY = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y > 0 ? 1: 0;
+				var valorZ = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z > 0 ? 1: 0;
+				var wait = 0;
+				if( currentAnimatios[selectedAnimation][currentDroneStep].id == EIdsItens.TRANSLADAR ){
+					wait = calculateTime(valorX, valorY, valorZ, 0.0);
+					console.log('transladou')
+					ros.move(valorX,valorY,valorZ, 0.0);
+				} else if( currentAnimatios[selectedAnimation][currentDroneStep].id == EIdsItens.ROTACIONAR ){
+					wait = calculateTime(0,0,0, valorY);
+					console.log('rotacionou')
+					ros.move(0,0,0, valorY);
 				}
+				droneParado = false;
+				setTimeout(function(){
+					ros.stop();
+					setTimeout(function(){
+						console.log('parou');
+						currentDroneStep += 1;
+						droneParado = true;
+					}, 2000);
+				}, wait);
+			} else if( droneParado && currentDroneStep == currentAnimatios[selectedAnimation].length){
+				droneParado = false;
+				setTimeout(function(){
+					ros.land();
+					console.log('posou');
+					clearInterval(interval);
+					onExecutionEnd();
+				}, 1000);
 			}
-			if (currentDroneStep == currentAnimatios[selectedAnimation].length ){
-				console.log('pousou');
-				onExecutionEnd();
-				clearInterval(droneIntervalExec);
-			}
-			currentDroneStep += 1;
 		}
+	}
+
+	function calculateTime(x, y, z, rotation){
+		return 2000;
 	}
 
 	/**

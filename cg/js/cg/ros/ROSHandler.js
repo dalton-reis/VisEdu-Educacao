@@ -59,6 +59,7 @@ ROSHandler.prototype.connect = function ( url ) {
  * @function takeoff
  */
 ROSHandler.prototype.takeoff = function(){
+	console.log('takeoff');
 	var takeoff = new ROSLIB.Message();
 	this.takeoff_topic.publish(takeoff);
 };
@@ -68,6 +69,7 @@ ROSHandler.prototype.takeoff = function(){
  * @function land
  */
 ROSHandler.prototype.land = function() {
+	console.log('land');
 	var land = new ROSLIB.Message();
 	this.land_topic.publish(land);
 };
@@ -84,6 +86,7 @@ ROSHandler.prototype.stop = function(){
  * @function move
  */
 ROSHandler.prototype.move = function(x,y,z,rotation) {
+	console.log('move -> x = ' + x + ',y = ' + y + ',z = ' + z + ',rotation = ' + rotation);
 	var twist = new ROSLIB.Message({
 		linear: {
 			x : x,
