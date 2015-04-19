@@ -86,7 +86,6 @@ ROSHandler.prototype.stop = function(){
  * @function move
  */
 ROSHandler.prototype.move = function(x,y,z,rotation) {
-	console.log('move -> x = ' + x + ',y = ' + y + ',z = ' + z + ',rotation = ' + rotation);
 	var twist = new ROSLIB.Message({
 		linear: {
 			x : x,

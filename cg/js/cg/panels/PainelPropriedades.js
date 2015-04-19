@@ -353,7 +353,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 	var objectValueY = null;
 	var objectValueZ = null;
 
-	if	( scope.item.valorXYZ !== undefined ) {
+	if( scope.item.valorXYZ !== undefined ) {
 
 		var objectValueRow = new UI.Panel();
 		objectValueX = new UI.Number().setWidth( '50px' ).onChange( update );
@@ -394,8 +394,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 				objectValueRow.add( new UI.Text( 'z: ' + scope.item.valorXYZ.z + '.00' ).setColor( '#666' ) );
 			}
-		}
-		else{
+		}else{
 			objectValueRow.add( new UI.Text( 'x: ' ).setColor( '#666' ) );
 			objectValueRow.add( objectValueX);
 			objectValueRow.add( new UI.Text( 'y: ' ).setColor( '#666' ) );

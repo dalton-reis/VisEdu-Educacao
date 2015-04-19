@@ -99,11 +99,11 @@ function PainelAnimacao( editor ) {
 	linhaValues.add(panicButton);
 	this.add(linhaValues);
 	linhaValues = new UI.Panel();
-	linhaValues.add(new UI.Text('Distância média (m/s): ').setColor('#666'));
+	linhaValues.add(new UI.Text('Velocidade média (unidade/s): ').setColor('#666'));
 	linhaValues.add(distanceAverage);
 	this.add(linhaValues);
 	linhaValues = new UI.Panel();
-	linhaValues.add(new UI.Text('Rotação média (graus/s): ').setColor('#666'));
+	linhaValues.add(new UI.Text('Tempo para girar 360 graus(segundos): ').setColor('#666'));
 	linhaValues.add(rotationAverage);
 	this.add(linhaValues);
 	/**Animações correntes que estão/vão sendo executadas*/
@@ -255,7 +255,8 @@ function PainelAnimacao( editor ) {
 				droneParado = false;
 				setTimeout(function(){
 					ros.stop();
-					console.log('decolou');
+					console.log('decolou -' + new Date());
+;
 					droneParado = true;
 					currentDroneStep += 1;
 				}, 8000);
@@ -265,19 +266,21 @@ function PainelAnimacao( editor ) {
 				var valorZ = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z > 0 ? 1: 0;
 				var wait = 0;
 				if( currentAnimatios[selectedAnimation][currentDroneStep].id == EIdsItens.TRANSLADAR ){
-					wait = calculateTime(valorX, valorY, valorZ, 0.0);
-					console.log('transladou')
+					wait = calculateTime(currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x,
+							     	currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y,
+								currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z, 0.0);
+					console.log('transladou - ' + new Date());
 					ros.move(valorX,valorY,valorZ, 0.0);
 				} else if( currentAnimatios[selectedAnimation][currentDroneStep].id == EIdsItens.ROTACIONAR ){
-					wait = calculateTime(0,0,0, valorY);
-					console.log('rotacionou')
+					wait = calculateTime(0,0,0, currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y);
+					console.log('rotacionou - ' + new Date());
 					ros.move(0,0,0, valorY);
 				}
 				droneParado = false;
 				setTimeout(function(){
 					ros.stop();
+					console.log('parou - ' + new Date());
 					setTimeout(function(){
-						console.log('parou');
 						currentDroneStep += 1;
 						droneParado = true;
 					}, 2000);
@@ -286,7 +289,7 @@ function PainelAnimacao( editor ) {
 				droneParado = false;
 				setTimeout(function(){
 					ros.land();
-					console.log('posou');
+					console.log('posou - ' + new Date());
 					clearInterval(interval);
 					onExecutionEnd();
 				}, 1000);
@@ -294,8 +297,27 @@ function PainelAnimacao( editor ) {
 		}
 	}
 
+	/** Função que calcula o tempo em milisegundos necessário para executar a movimentação
+	 * informada pelo usuário
+	 */
 	function calculateTime(x, y, z, rotation){
-		return 2000;
+		var seconds = 0
+		if( x != undefined && x > 0 ){
+			seconds = distanceAverage.getValue() * x;
+		}
+		if( seconds == 0 && y != undefined && y > 0 ){
+			seconds = distanceAverage.getValue() * y;
+		}
+		if( seconds == 0 && z != undefined && z > 0 ){
+			seconds = distanceAverage.getValue() * z;
+		}
+		if( seconds > 0 ){
+			return seconds * 1000;
+		}
+		if( rotation != undefined && rotation > 0 ){
+			return  ((rotation * rotationAverage.getValue()) / 360) * 1000;
+		}
+		return 0;
 	}
 
 	/**
