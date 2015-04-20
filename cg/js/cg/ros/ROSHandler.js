@@ -29,10 +29,13 @@ var ROSHandler = function() {
 			name : '/cmd_vel',
 			messageType : 'geometry_msgs/Twist'
 	});
+	/**
+	 * Serviço utilizada para calibrar os sensores do drone
+	 */
 	this.flattrim_service = new ROSLIB.Service({
 			ros : this.ros,
 			name : '/ardrone/flattrim',
-			serviceType : 'std_msgs/Empty'
+			serviceType : 'std_srvs/Empty'
 	});
 }
 
@@ -111,6 +114,7 @@ ROSHandler.prototype.move = function(x,y,z,rotation) {
  * Método criado para calibrar as estimaticas de rotação do drone
  */
 ROSHandler.prototype.calibrate = function(){
+	//TODO - precisar ser testado. Como não tenho o drone no momento não conseguir testar
 	var request = new ROSLIB.ServiceRequest({});
 	this.flattrim_service.callService(request, function(response){
 		console.log(response);
