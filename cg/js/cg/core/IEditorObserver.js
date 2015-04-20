@@ -3,6 +3,6 @@
  */
 
 function IEditorObserver () {
-	this.onChangeItems = function ( ) { throw new Error ("funÁ„o onChangeItems n„o implemenada!"); };
-	this.onChangeObjetoEmEdicao = function ( item ) { throw new Error ("funÁ„o onChangeObjetoEmEdicao n„o implemenada!"); };
+	this.onChangeItems = function ( ) { throw new Error ("fun√ß√£o onChangeItems n√£o implemenada!"); };
+	this.onChangeObjetoEmEdicao = function ( item ) { throw new Error ("fun√ß√£o onChangeObjetoEmEdicao n√£o implemenada!"); };
 }
