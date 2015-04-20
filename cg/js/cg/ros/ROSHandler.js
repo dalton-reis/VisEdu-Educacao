@@ -29,6 +29,11 @@ var ROSHandler = function() {
 			name : '/cmd_vel',
 			messageType : 'geometry_msgs/Twist'
 	});
+	this.flattrim_service = new ROSLIB.Service({
+			ros : this.ros,
+			name : '/ardrone/flattrim',
+			serviceType : 'std_msgs/Empty'
+	});
 }
 
 ROSHandler.prototype.onConnected = function (){
@@ -101,3 +106,13 @@ ROSHandler.prototype.move = function(x,y,z,rotation) {
 	});
 	this.cmdvel_topic.publish(twist);
 };
+
+/**
+ * Método criado para calibrar as estimaticas de rotação do drone
+ */
+ROSHandler.prototype.calibrate = function(){
+	var request = new ROSLIB.ServiceRequest({});
+	this.flattrim_service.callService(request, function(response){
+		console.log(response);
+	});
+}

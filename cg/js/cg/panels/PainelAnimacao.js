@@ -91,6 +91,12 @@ function PainelAnimacao( editor ) {
 	executeButton.setLabel('Executar');
 	executeButton.onClick( executeDrone );
 	linhaValues.add(executeButton);
+	var calibrateButton = new UI.Button();
+	calibrateButton.setLabel('Calibrate');
+	calibrateButton.onClick( function () {
+		ros.calibrate();
+	});
+	linhaValues.add(calibrateButton);
 	var panicButton = new UI.Button();
 	panicButton.setLabel('Panic!');
 	panicButton.onClick( function () {
