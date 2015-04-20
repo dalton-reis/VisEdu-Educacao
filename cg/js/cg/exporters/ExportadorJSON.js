@@ -5,11 +5,11 @@ ExportadorJSON.prototype = {
 
 	constructor: ExportadorJSON,
 
-	parse: function ( editor ) {		
-	
+	parse: function ( editor ) {
+
 		var nobjects = 0;
 		var ntextures = 0;
-		
+
 		var texturesArray = [];
 		var texturesMap = {};
 
@@ -34,26 +34,26 @@ ExportadorJSON.prototype = {
 		function createObjectsList( object, pad, useVirg ) {
 
 			var usarVirgula = useVirg !== undefined && useVirg;
-			
+
 			linesArray.push( ItemString( object, pad ) );
 			nobjects += 1;
-			
+
 			checkTexture( object.textura );
-				
+
 			if	(object.filhos.length > 0)
 				linesArray.push( PaddingString( pad + 1 ) + '\t\t"filhos" : {' );
-			
+
 			for ( var i = 0; i < object.filhos.length; i ++ ) {
 
-				var node = object.filhos[ i ];					
+				var node = object.filhos[ i ];
 
-				createObjectsList( node, pad + 2, ( i < object.filhos.length - 1 ) );						
-				
+				createObjectsList( node, pad + 2, ( i < object.filhos.length - 1 ) );
+
 			}
-			
+
 			if	(object.filhos.length > 0)
-				linesArray.push( PaddingString( pad + 1 ) + "\t\t}"  );	
-			
+				linesArray.push( PaddingString( pad + 1 ) + "\t\t}"  );
+
 			linesArray.push( PaddingString( pad ) + "\t\t}" + ( usarVirgula ? "," : "" ) );
 
 		}
@@ -61,10 +61,10 @@ ExportadorJSON.prototype = {
 		createObjectsList( editor.painelMontagem, 0 );
 
 		var objects = linesArray.join( "\n" );
-		
-		var textures = generateMultiLineString( texturesArray, ",\n\n\t" );		
-		
-	
+
+		var textures = generateMultiLineString( texturesArray, ",\n\n\t" );
+
+
 		// templates
 
 		function Vector2String( v ) {
@@ -77,7 +77,7 @@ ExportadorJSON.prototype = {
 
 			return "[" + v.x + "," + v.y + "," + v.z + "]";
 
-		}		
+		}
 
 		function LabelString( s ) {
 
@@ -111,19 +111,16 @@ ExportadorJSON.prototype = {
 		}
 
 
-		
+
 
 		function ItemString( i, n ) {
-
 			var temTextura = i.textura !== undefined && i.textura;
-			
 			var output = [];
-
-			output.push('\t\t' + LabelString( getItemName( i ) ) + ' : {');				
+			output.push('\t\t' + LabelString( getItemName( i ) ) + ' : {');
 			output.push(i.nome           !== undefined ? '	"nome" : '           + LabelString( i.nome ) + ',' : '');
-			output.push(i.visible        !== undefined ? '	"visible" : '        + i.visible + ',' : '');			
+			output.push(i.visible        !== undefined ? '	"visible" : '        + i.visible + ',' : '');
 			output.push(i.valorXYZ       !== undefined ? '	"valorXYZ" : '       + Vector3String( i.valorXYZ ) + ',' : '');
-			output.push(i.posicao        !== undefined ? '	"posicao" : '        + Vector3String( i.posicao ) + ',' : '');
+			output.push(i.object3D       !== undefined ? '	"posicao" : '        + Vector3String( i.object3D.position ) + ',' : '');
 			output.push(i.propriedadeCor !== undefined ? '	"propriedadeCor" : ' + i.propriedadeCor.getHex() + ',' : '');
 			output.push(temTextura  ? 					 '	"textura" : '        + LabelString( getTextureName( i.textura ) ) + ',' : '');
 			output.push(i.usarTextura    !== undefined ? '	"usarTextura" : '    + i.usarTextura + ',' : '');
@@ -132,72 +129,71 @@ ExportadorJSON.prototype = {
 			output.push(i.far            !== undefined ? '	"far" : '            + i.far + ',' : '');
 			output.push(i.fov            !== undefined ? '	"fov" : '            + i.fov + ',' : '');
 			output.push(i.corLimpar      !== undefined ? '	"corLimpar" : '      + i.corLimpar.getHex() + ',' : '');
-			output.push(i.qtdPontos      !== undefined ? '	"qtdPontos" : '      + i.qtdPontos + ',' : '');			
+			output.push(i.qtdPontos      !== undefined ? '	"qtdPontos" : '      + i.qtdPontos + ',' : '');
 			output.push(i.corFundo       !== undefined ? '	"corFundo" : '       + i.corFundo.getHex() + ',' : '');
 			output.push(i.verGrade       !== undefined ? '	"verGrade" : '       + i.verGrade + ',' : '');
 			output.push(i.verEixos       !== undefined ? '	"verEixos" : '       + i.verEixos + ',' : '');
 			output.push(i.tipoGrafico    !== undefined ? '	"tipoGrafico" : '    + i.tipoGrafico + ',' : '');
-									
 			var strPontos = "";
-			if (i.listaPontos !== undefined) {				
+			if (i.listaPontos !== undefined) {
 				for (var index = 0; index < i.listaPontos.length; index++)
 					if (index < (i.listaPontos.length - 1))
 						strPontos += Vector3String(i.listaPontos[index]) + "|";
 					else
 						strPontos += Vector3String(i.listaPontos[index]);
-				
 				output.push('	"listaPontos": "' + strPontos + '",');
-			}			
-			
+			}
 			//POLIGONO
 			output.push(i.pontos           !== undefined ? '	"pontos" : '           + Vector3String( i.pontos ) + ',' : '');
 			output.push(i.primitiva        !== undefined ? '	"primitiva" : '        + LabelString(i.primitiva) + ',' : '');
 			output.push(i.pontoSelecionado !== undefined ? '	"pontoSelecionado" : ' + i.pontoSelecionado + ',' : '');
-					
 			//SPLINE
 			output.push(i.tipoSpline  !== undefined ? '	"tipoSpline" : '  + i.tipoSpline + ',' : '');
 			output.push(i.poliedro    !== undefined ? '	"poliedro" : '    + i.poliedro + ',' : '');
 			output.push(i.corPoliedro !== undefined ? '	"corPoliedro" : ' + i.corPoliedro.getHex() + ',' : '');
-			
 			//ILUMINACAO
 			output.push(i.tipoLuz       !== undefined ? '	"tipoLuz" : '       + i.tipoLuz + ',' : '');
-			output.push(i.posicao       !== undefined ? '	"posicao" : '       + Vector3String( i.posicao ) + ',' : '');
+			if( i.tipoEncaixe == ETiposEncaixe.SETA ){
+				output.push(i.posicao       !== undefined ? '	"posicao" : '       + Vector3String( i.posicao ) + ',' : '');
+			}
 			output.push(i.intensidade   !== undefined ? '	"intensidade" : '   + i.intensidade + ',' : '');
 			output.push(i.corFundoLuz   !== undefined ? '	"corFundoLuz" : '   + i.corFundoLuz.getHex() + ',' : '');
 			output.push(i.distancia     !== undefined ? '	"distancia" : '     + i.distancia + ',' : '');
 			output.push(i.angulo        !== undefined ? '	"angulo" : '        + i.angulo + ',' : '');
-			output.push(i.expoente      !== undefined ? '	"expoente" : '      + i.expoente + ',' : '');			
+			output.push(i.expoente      !== undefined ? '	"expoente" : '      + i.expoente + ',' : '');
 			output.push(i.posicaoTarget !== undefined ? '	"posicaoTarget" : ' + Vector3String( i.posicaoTarget ) + ',' : '');
 			output.push(i.rotacaoTarget !== undefined ? '	"rotacaoTarget" : ' + Vector3String( i.rotacaoTarget ) + ',' : '');
-			output.push(i.escalaTarget  !== undefined ? '	"escalaTarget" : '  + Vector3String( i.escalaTarget ) + ',' : '');			
+			output.push(i.escalaTarget  !== undefined ? '	"escalaTarget" : '  + Vector3String( i.escalaTarget ) + ',' : '');
 			output.push(i.visivelTarget !== undefined ? '	"visivelTarget" : ' + i.visible + ',' : '');
-					
+			//ANIMACAO
+			output.push(i.easing !== undefined ? '	"easing" : ' + i.easing + ',' : '');
+
 			output.push('	"tipo" : ' + i.id.seq + (i.filhos.length > 0 ? ',' : ''));
 
 			return generateMultiLineString( output, '\n\t\t', n );
 		}
 
-		
-		
+
+
 		function TextureString( t ) {
 
 			// here would be also an option to use data URI
 			// with embedded image from "t.image.src"
 			// (that's a side effect of using FileReader to load images)
-			
+
 			var imagem;
-			
+
 			if	(t.sourceFile == undefined) {
-			
+
 				imagem =  '	"src"    : ' + LabelString( t.image.src ) + ',';
-			
+
 			} else {
-			
+
 				imagem = '	"url"    : ' + LabelString( t.sourceFile ) + ',';
-			
+
 			}
-			
-			
+
+
 			var output = [
 
 			'\t' + LabelString( getTextureName( t ) ) + ': {',
@@ -215,7 +211,7 @@ ExportadorJSON.prototype = {
 
 		}
 
-		
+
 
 		function generateMultiLineString( lines, separator, padding ) {
 
@@ -243,17 +239,17 @@ ExportadorJSON.prototype = {
 			return i.name !== undefined ? i.name : "Item_" + i.codigo;
 
 		}
-		
+
 		function getTextureName( t ) {
-			
+
 			//return t.name !== undefined ? t.name : "Texture_" + t.id;
 			return 'Texture_' + t.id;
 
 		}
 
-		
 
-		
+
+
 
 		var output = [
 			'{',
@@ -281,12 +277,12 @@ ExportadorJSON.prototype = {
 			'\t' + 	textures,
 			'	}',
 			'',
-			
+
 			'}'
 		].join( '\n' );
-		
+
 		//alert(output);
-	
+
 		return JSON.parse( output );
 
 	}

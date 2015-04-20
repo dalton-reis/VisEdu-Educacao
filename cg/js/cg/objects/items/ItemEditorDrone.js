@@ -45,6 +45,4 @@ function ItemEditorDrone() {
 		}
 	}
 }
-
 ItemEditorDrone.prototype = Object.create( AItemEditorEncaixeQuadrado.prototype );
-
