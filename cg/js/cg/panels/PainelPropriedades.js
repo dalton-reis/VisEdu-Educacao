@@ -427,7 +427,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 		objectPosicaoY.setValue(scope.item.object3D.position.y);
 		objectPosicaoZ.setValue(scope.item.object3D.position.z);
 
-		objectPosicaoRow.add( new UI.Text( "PosiÁ„o").setWidth( '90px' ).setColor( '#666' ) );
+		objectPosicaoRow.add( new UI.Text( "Posi√ß√£o").setWidth( '90px' ).setColor( '#666' ) );
 		objectPosicaoRow.add( new UI.Text( 'x: ' ).setColor( '#666' ) );
 		objectPosicaoRow.add( objectPosicaoX);
 		objectPosicaoRow.add( new UI.Text( 'y: ' ).setColor( '#666' ) );
@@ -635,7 +635,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 		objectTipoGrafico.setValue(item.tipoGrafico);
 
-		objectTipoGraficoRow.add(new UI.Text('Gr·ficos').setWidth('110px').setColor('#666'));
+		objectTipoGraficoRow.add(new UI.Text('Gr√°ficos').setWidth('110px').setColor('#666'));
 		objectTipoGraficoRow.add(objectTipoGrafico);
 
 		scope.add(objectTipoGraficoRow);
@@ -787,7 +787,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 		scope.add( materialMatrixRow4 );
 	}
 
-	//Tipo de easing usado pela animaÁ„o
+	//Tipo de easing usado pela anima√ß√£o
 	var objectTipoEasingRow;
 	var objectTipoEasing;
 
@@ -1064,7 +1064,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 		if (item.tipoGrafico !== undefined) {
 			if (parseInt(item.tipoGrafico) !== parseInt(objectTipoGrafico.getValue())) {
-				if (confirm("Deseja realmente alterar o tipo de gr·fico para " + objectTipoGrafico.getValue() + "D? \n A cena atual ser· perdida." )) {
+				if (confirm("Deseja realmente alterar o tipo de gr√°fico para " + objectTipoGrafico.getValue() + "D? \n A cena atual ser√° perdida." )) {
 					item.setTipoGrafico(objectTipoGrafico.getValue());
 					item.excluirCenaAtual = true;
 				} else {
@@ -1128,7 +1128,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 		objectDistancia = new UI.Number().setWidth( '50px' ).onChange( update );
 		objectDistancia.setValue(scope.item.distancia);
 
-		objectDistanciaRow.add(new UI.Text('Dist‚ncia').setWidth('90px').setColor('#666'));
+		objectDistanciaRow.add(new UI.Text('Dist√¢ncia').setWidth('90px').setColor('#666'));
 		objectDistanciaRow.add(objectDistancia);
 
 		if (scope.item.tipoLuz == CG.listaTipoLuz.PointLight || scope.item.tipoLuz == CG.listaTipoLuz.SpotLight) {
@@ -1142,7 +1142,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 		//objectAngulo = new UI.Input().setWidth('60px').setColor('#444').setFontSize('12px').onChange(update);
 		objectAngulo.setValue(scope.item.angulo);
 
-		objectSpotRow.add(new UI.Text('¬ngulo').setWidth('90px').setColor('#666'));
+		objectSpotRow.add(new UI.Text('√Çngulo').setWidth('90px').setColor('#666'));
 		objectSpotRow.add(objectAngulo);
 
 		objectSpotRow.add(new UI.Break());
@@ -1189,7 +1189,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 			objectPosicaoTargetZ.setValue(scope.item.posicaoTarget.z);
 
 			objectTargetRow.add( new UI.Text( "").setWidth( '20px' ).setColor( '#666' ) );
-			objectTargetRow.add( new UI.Text( "PosiÁ„o").setWidth( '90px' ).setColor( '#666' ) );
+			objectTargetRow.add( new UI.Text( "Posi√ß√£o").setWidth( '90px' ).setColor( '#666' ) );
 			objectTargetRow.add( new UI.Text( 'x: ' ).setColor( '#666' ) );
 			objectTargetRow.add( objectPosicaoTargetX);
 			objectTargetRow.add( new UI.Text( 'y: ' ).setColor( '#666' ) );

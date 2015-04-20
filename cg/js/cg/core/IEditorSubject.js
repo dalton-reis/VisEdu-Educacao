@@ -3,6 +3,6 @@ function IEditorSubject () {
 	CLASSE INTERFACE 
 	*/	
 	
-	this.notificarOnChageItemEmEdicao = function ( item ) { throw new Error ("funÁ„o notificarOnChageObjetoEmEdicao n„o implemenada!"); };	
-	this.notificarOnChageItems = function ( ) { throw new Error ("funÁ„o notificarOnChageItems n„o implemenada!"); };
+	this.notificarOnChageItemEmEdicao = function ( item ) { throw new Error ("fun√ß√£o notificarOnChageObjetoEmEdicao n√£o implemenada!"); };	
+	this.notificarOnChageItems = function ( ) { throw new Error ("fun√ß√£o notificarOnChageItems n√£o implemenada!"); };
 }

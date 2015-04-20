@@ -3,9 +3,9 @@
  */
 
 EIdsItens = {
-	//ENUMERAÇÂO
+	//ENUMERAÃ‡Ã‚O
 	CAMERA: {
-		descricao: "Câmera"
+		descricao: "CÃ¢mera"
 	},
 	TRANSLADAR: {
 		descricao: "Transladar"
@@ -20,16 +20,16 @@ EIdsItens = {
 		descricao: "Cubo"
 	},
 	POLIGONO: {
-		descricao: "Polígono"
+		descricao: "PolÃ­gono"
 	},
 	SPLINE: {
 		descricao: "Spline"
 	},
 	ILUMINACAO: {
-		descricao: "Iluminação"
+		descricao: "IluminaÃ§Ã£o"
 	},
 	OBJETOGRAFICO: {
-		descricao: "Objeto Gráfico"
+		descricao: "Objeto GrÃ¡fico"
 	},
 	RENDERIZADOR: {
 		descricao: "Renderizador"
@@ -44,7 +44,7 @@ EIdsItens = {
 		descricao: "Target"
 	},
 	ANIMACAO: {
-		descricao: "Animação"
+		descricao: "AnimaÃ§Ã£o"
 	},
 
 	inicializar: function () {
