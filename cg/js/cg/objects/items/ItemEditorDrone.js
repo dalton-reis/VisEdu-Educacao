@@ -6,9 +6,7 @@ function ItemEditorDrone() {
 	//eventos
 
 	//@Override
-	scope.onChange = function () {
-		createObject3D();
-	}; //evento será executado quando um filho for adicionado ou removido ou alguma propriedade for alterada
+	scope.onChange = function () {}; //evento será executado quando um filho for adicionado ou removido ou alguma propriedade for alterada
 	//@Override
 	scope.onAddFilho = function ( item ) {};; //evento será executado quando um filho for adicionado
 	//@Override
