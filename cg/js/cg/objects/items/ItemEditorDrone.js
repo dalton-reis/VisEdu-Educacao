@@ -23,9 +23,6 @@ function ItemEditorDrone() {
 	scope.valorXYZ = undefined;
 	scope.id =  EIdsItens.DRONE;
 	scope.propriedadeCor = undefined;
-	scope.textura = null;
-	scope.usarTextura = false;
-	scope.listaPontos = undefined;
 	scope.object3D = undefined;
 	createObject3D(); //load the obj file;
 
@@ -33,14 +30,15 @@ function ItemEditorDrone() {
 		if( scope.object3D == undefined ){
 			CG.OBJLoader.load("resources/Drone_1.obj",
 				function ( model ) {
+					console.log("Modelo 3D carregado com sucesso");
 					scope.object3D = model;
 					scope.object3D.item = scope;
 				},
 				function( progress ){
-					//TODO
+					console.log("Carregando modelo 3D...");
 				},
 				function( error ){
-					//TODO
+					console.error("Erro ao carregar modelo 3D");
 				});
 		}
 	}
