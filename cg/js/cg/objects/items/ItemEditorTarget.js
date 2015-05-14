@@ -1,12 +1,7 @@
-
 function ItemEditorTarget() {
-
 	AItemEditorEncaixeQuadrado.call( this );
-
 	var scope = this;
-
 	//eventos
-
 	//@Override
 	scope.onChange = function () {
 		scope.object3D = createObject3D();
@@ -20,9 +15,7 @@ function ItemEditorTarget() {
 	scope.onChangeFilhos = function ( filho ) {};; //evento será executado quando for removido ou inserido algum filho em um dos filhos do objeto, ou filho dos filhos e assim por diante
 	//@Override
 	scope.afterChangeNome = function ( nomeAntigo ) {}; //evento será executado quando o nome do item for alterado
-
 	//propriedades
-
 	scope.id =  EIdsItens.TARGET
 	scope.valorXYZ.set( 100, 100, 100 );
 	//scope.posicao.set( 0, 0, 0 );
@@ -43,6 +36,4 @@ function ItemEditorTarget() {
 		return target;
 	}
 }
-
 ItemEditorTarget.prototype = Object.create( AItemEditorEncaixeQuadrado.prototype );
-
