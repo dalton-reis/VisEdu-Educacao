@@ -629,7 +629,6 @@ VisualizadorGrafico = function ( editor, signals ) {
 
 		scope.dom.appendChild( renderer.domElement );
 
-		CG.loadObjModel("resources/Drone_1.obj")
 	}
 
 	function desenharGrade(sceneHelper) {
