@@ -1,3 +1,6 @@
+/**
+ * Classe do item drone da fábrica de peças
+ */
 function ItemEditorDrone() {
 	AItemEditorEncaixeQuadrado.call( this );
 	var scope = this;
