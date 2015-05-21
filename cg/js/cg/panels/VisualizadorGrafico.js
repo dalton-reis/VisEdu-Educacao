@@ -629,7 +629,6 @@ VisualizadorGrafico = function ( editor, signals ) {
 
 		scope.dom.appendChild( renderer.domElement );
 
-		CG.loadObjModel("resources/Drone_1.obj")
 	}
 
 	function desenharGrade(sceneHelper) {
@@ -744,10 +743,12 @@ VisualizadorGrafico = function ( editor, signals ) {
 	function desenhaDrone(item, objetoAux){
 		if ( item.visible ) {
 			var drone = item.object3D;
-			objetoAux.add(drone);
-			scope.listaObjetosSelecionaveis.push(drone);
-			/** O object3D root do drone não tem geometria devido que eh lido de um obj. Por isso, passamos o primeiro filho */
-			drone.add(addBBox(item, drone.children[0]));
+			if( drone != undefined ){
+				objetoAux.add(drone);
+				scope.listaObjetosSelecionaveis.push(drone);
+				/** O object3D root do drone não tem geometria devido que eh lido de um obj. Por isso, passamos o primeiro filho */
+				drone.add(addBBox(item, drone.children[0]));
+			}
 		}
 	}
 

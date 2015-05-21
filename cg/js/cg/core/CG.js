@@ -96,37 +96,10 @@ CG.msgs = {
 CG.objects = UtilCG;
 
 /**
- * Objeto de cache para as referência aos arquivos obj carregados
- * pela aplicação*/
-CG.ObjModels = {}
-
-/**
  * Objeto utilizado para carregar os arquivos .obj
  **/
 CG.OBJLoader = new THREE.OBJLoader();
 
-/**
- * Função utilitária que carrega, se necessário, o arquivo obj passado
- * como parâmetro. Após carrega uma vez, o arquivo eh mantido em cache para
- * as próxima vezes que for solicitado
- */
-CG.loadObjModel = function(modelName) {
-	if( !(modelName in CG.ObjModels) ){
-		CG.OBJLoader.load(modelName,
-			function ( model ) {
-				model.userData.nome = "drone";
-				CG.ObjModels[modelName] = model;
-
-			},
-			function( progress ){
-				//TODO
-			},
-			function( error ){
-				//TODO
-			});
-	}
-	return CG.ObjModels[modelName];
-}
 
 /**
  * Lista com todas as possíveis funções de interpolação possíveis de

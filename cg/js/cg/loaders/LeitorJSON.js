@@ -1,21 +1,20 @@
-
+/**
+ * Classe responsavel em fazer o parse do arquivo JSON para itens no editor
+ */
 var LeitorJSON =  {
-
 	parse: function ( json, editor ) {
 		var scope = this;
 		var texture, item, result;
 		var data = json;
-
 		editor.regerarPainelMontagem();
-
 		var painelMontagem = editor.painelMontagem;
 
-		if	( data.viewPos !== undefined ) {
+		if ( data.viewPos !== undefined ) {
 			var vector = data.viewPos;
 			editor.visualizadorGrafico.views[0].camera.position.set( vector[0], vector[1], vector[2] );
 		}
 
-		if	( data.viewRot !== undefined  ) {
+		if ( data.viewRot !== undefined  ) {
 			var vector = data.viewRot;
 			editor.visualizadorGrafico.views[0].camera.rotation.set( vector[0], vector[1], vector[2] );
 		}
@@ -47,7 +46,7 @@ var LeitorJSON =  {
 				}
 
 
-				if	(textureJSON.src !== undefined) {
+				if(textureJSON.src !== undefined) {
 
 					var image = document.createElement( 'img' );
 					image.src = textureJSON.src;
@@ -116,33 +115,30 @@ var LeitorJSON =  {
 
 
 		function percorrerItens() {
-
 			percorreFilhos( painelMontagem, data.itens );
-
 		}
 
-		function percorreFilhos( pai, filhos ) { // percorre todos os filhos no arquivo json associando eles a seus respectivos pais
-
+		/**
+		 * percorre todos os filhos no arquivo json associando eles a seus respectivos pais
+		 */
+		function percorreFilhos( pai, filhos ) {
 			var vector;
-
 			for ( var objID in filhos ) {
 
-				// se item ainda n„o existe na lista, cria item
+				// se item ainda n√£o existe na lista, cria item
 
 				if ( result.itens[ objID ] === undefined ) {
 
 					var objJSON = filhos[ objID ];
 
-					if	(objJSON.tipo == EIdsItens.RENDERIZADOR.seq) {
+					if (objJSON.tipo == EIdsItens.RENDERIZADOR.seq) {
 
 						item = painelMontagem;
 
 					} else {
-
 						item = FabricaDeItens().fabricarNovoItem( EIdsItens.getENumById( objJSON.tipo ), false );
 						item.addMeshsIntersectedObjectsList( editor.intersectableObjectsList );
 						pai.add( item );
-
 					}
 
 					item.name = objID;
@@ -159,7 +155,12 @@ var LeitorJSON =  {
 
 					if ( objJSON.posicao !== undefined ) {
 						vector = objJSON.posicao;
-						item.posicao.set( vector[0], vector[1], vector[2] );
+						if( item.tipoEncaixe == ETiposEncaixe.SETA ){
+							item.posicao.set( vector[0], vector[1], vector[2] );
+						}else if( item.object3D !== undefined ){
+							//FIXME - sync o load do obj
+							item.object3D.position.set( vector[0], vector[1], vector[2] );
+						}
 					}
 
 					if ( objJSON.lookAt !== undefined ) {
@@ -311,6 +312,10 @@ var LeitorJSON =  {
 					if (objJSON.visivelTarget !== undefined) {
 						item.visivelTarget = objJSON.visivelTarget;
 					}
+					//ANIMACAO
+					if (objJSON.easing !== undefined) {
+						item.easing = objJSON.easing;
+					}
 
 					//item.enableChangeEvents = true;
 					result.itens[objID] = item;
@@ -319,7 +324,7 @@ var LeitorJSON =  {
 
 		};
 
-		//Atualiza visualizaÁ„o dos itens
+		//Atualiza visualiza√ß√£o dos itens
 		for ( var objID in result.itens ) {
 			item = result.itens[ objID ];
 
@@ -332,19 +337,19 @@ var LeitorJSON =  {
 				item.update();
 			}
 
-			if	( item.id == EIdsItens.PAINELMONTAGEMEDITOR) {
+			if( item.id == EIdsItens.PAINELMONTAGEMEDITOR) {
 				item.update();
 			}
 
-			if	( item.id == EIdsItens.POLIGONO) {
+			if( item.id == EIdsItens.POLIGONO) {
 				item.update();
 			}
 
-			if	(item.id == EIdsItens.SPLINE) {
+			if(item.id == EIdsItens.SPLINE) {
 				item.update();
 			}
 
-			if	(item.id == EIdsItens.ILUMINACAO) {
+			if(item.id == EIdsItens.ILUMINACAO) {
 				item.update();
 			}
 		}

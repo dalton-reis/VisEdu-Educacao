@@ -1,84 +1,122 @@
 /**
  * Objeto responsavel em interagir com a librosjs
  */
-var ROSHandler = function(){
+var ROSHandler = function() {
 
-	var ros = new ROSLIB.Ros({ url : 'ws://localhost:9090'}); //connect to rosbridge
-	ros.on('connection', function(){
-		console.log('Connected to websocket server.');
-	});
-	ros.on('error', function( error ) {
-		console.log('Error connecting to websocket server: ', error);
-	});
-	ros.on('close', function(){
-		console.log('Connection to websocket server closed');
-	});
+	this.ros = new ROSLIB.Ros();
+	this.ros.on('connection', ROSHandler.prototype.onConnected);
+	this.ros.on('error', ROSHandler.prototype.onError);
+	this.ros.on('close', ROSHandler.prototype.onClose);
 	/**ros topic utilizado para decolar o AR.Drone
 	 * @type ROSLIB.Topic
 	 */
-	var takeoff_topic = new ROSLIB.Topic({
-		ros : ros,
-		name : '/ardrone/takeoff',
-		messageType : 'std_msgs/Empty'
+	this.takeoff_topic = new ROSLIB.Topic({
+			ros : this.ros,
+			name : '/ardrone/takeoff',
+			messageType : 'std_msgs/Empty'
 	});
 	/** ros topic utilizado para pousar o drone
-	 */
-	var land_topic = new ROSLIB.Topic({
-		ros : ros,
-		name : '/ardrone/land',
-		messageType : 'std_msgs/Empty'
+	*/
+	this.land_topic = new ROSLIB.Topic({
+			ros : this.ros,
+			name : '/ardrone/land',
+			messageType : 'std_msgs/Empty'
 	});
 	/** ros topic utilizado para movimentar o drone
-	 */
-	var cmdvel_topic = new ROSLIB.Topic({
-		ros : ros,
-		name : '/cmd_vel',
-		messageType : 'geometry_msgs/Twist'
+	*/
+	this.cmdvel_topic = new ROSLIB.Topic({
+			ros : this.ros,
+			name : '/cmd_vel',
+			messageType : 'geometry_msgs/Twist'
 	});
-
 	/**
-	 * Método para decolar o drone
-	 * @function takeoff
+	 * Serviço utilizada para calibrar os sensores do drone
 	 */
-	ROSHandler.prototype.takeoff = function(){
-		var takeoff = new ROSLIB.Message();
-		takeoff_topic.publish(takeoff);
-	};
+	this.flattrim_service = new ROSLIB.Service({
+			ros : this.ros,
+			name : '/ardrone/flattrim',
+			serviceType : 'std_srvs/Empty'
+	});
+}
 
-	/**
-	 * Método para pousar o drone
-	 * @function land
-	 */
-	ROSHandler.prototype.land = function() {
-		var land = new ROSLIB.Message();
-		land_topic.publish(land);
-	};
+ROSHandler.prototype.onConnected = function (){
+	console.log('Connected to websocket server.');
+}
 
-	/**
-	 * Método para parar o drone
-	 */
-	ROSHandler.prototype.stop = function(){
-		ROSHandler.prototype.move(0.0, 0.0, 0.0, 0.0);
+ROSHandler.prototype.onError = function(){
+	console.log('Error connecting to websocket server: ', error);
+}
+
+ROSHandler.prototype.onClose = function(){
+	console.log('Connection to websocket server closed');
+}
+/**
+ * Método para connectar com o ROS
+ */
+ROSHandler.prototype.connect = function ( url ) {
+	if( url != undefined && url.length > 0){
+		if( this.ros.isConnected ){
+			this.ros.close();
+		}
+		this.ros.connect("ws://" + url);
 	}
+}
 
-	/**
-	 * Método para movimentar o drone
-	 * @function move
-	 */
-	ROSHandler.prototype.move = function(x,y,z,rotation) {
-		var twist = new ROSLIB.Message({
-			linear: {
-				x : x,
-				y : y,
-				z : z,
+/**
+ * Método para decolar o drone
+ * @function takeoff
+ */
+ROSHandler.prototype.takeoff = function(){
+	console.log('takeoff');
+	var takeoff = new ROSLIB.Message();
+	this.takeoff_topic.publish(takeoff);
+};
 
-			},
-			angular: {
-				x : 0.0,
-				y : 0.0,
-				z : rotation,
-			}
-		});
-		cmdvel_topic.publish(twist);
-	};
+/**
+ * Método para pousar o drone
+ * @function land
+ */
+ROSHandler.prototype.land = function() {
+	console.log('land');
+	var land = new ROSLIB.Message();
+	this.land_topic.publish(land);
+};
+
+/**
+ * Método para parar o drone
+ */
+ROSHandler.prototype.stop = function(){
+	this.move(0.0, 0.0, 0.0, 0.0);
+}
+
+/**
+ * Método para movimentar o drone
+ * @function move
+ */
+ROSHandler.prototype.move = function(x,y,z,rotation) {
+	var twist = new ROSLIB.Message({
+		linear: {
+			x : x,
+			y : y,
+			z : z,
+
+		},
+		angular: {
+			x : 0.0,
+			y : 0.0,
+			z : rotation,
+		}
+	});
+	this.cmdvel_topic.publish(twist);
+};
+
+/**
+ * Método criado para calibrar as estimaticas de rotação do drone
+ */
+ROSHandler.prototype.calibrate = function(){
+	//TODO - precisar ser testado. Como não tenho o drone no momento não conseguir testar
+	var request = new ROSLIB.ServiceRequest({});
+	this.flattrim_service.callService(request, function(response){
+		console.log(response);
+	});
 }

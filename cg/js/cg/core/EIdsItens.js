@@ -50,10 +50,8 @@ EIdsItens = {
 	inicializar: function () {
 		var idObj;
 		var idCount = 0;
-
 		for (var id in EIdsItens) {
 			idObj = EIdsItens[ id ];
-
 			idObj.seq   = idCount++;
 			idObj.count = 0;
 		}
@@ -67,10 +65,8 @@ EIdsItens = {
 
 	getENumById: function ( seq ) {
 		var idObj;
-
 		for (var id in EIdsItens) {
 			idObj = EIdsItens[id];
-
 			if	(idObj.seq == seq)
 				return idObj;
 		}

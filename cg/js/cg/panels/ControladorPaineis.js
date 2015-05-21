@@ -9,7 +9,7 @@ function ControladorPaineis ( labels, paineis ) {
 	scope.labels = labels;
 	scope.paineis = paineis;
 
-	//implementação
+	//implementaÃ§Ã£o
 
 
 	var painelPropriedades = null;
@@ -150,31 +150,21 @@ function ControladorPaineis ( labels, paineis ) {
 	};
 
 	scope.abrirJSON = function () {
-
 		try {
-
 			textoExportado = scope.paineis.painelAbrir.textoExportado.getValue();
-
-			if	(textoExportado.trim() == "") {
-
+			if(textoExportado.trim() == "") {
 				alert("O texto exportado esta vazio!");
 				return;
 
 			}
-
 			data = JSON.parse( textoExportado );
-
 			LeitorJSON.parse( data, scope.paineis.editor );
-
 			scope.esconderPainelAbrir();
 			scope.mostrarFabrica();
-
 		} catch ( error ) {
-
+			console.log(error.stack);
 			alert( error );
-
 		}
-
 	};
 
 	scope.mostrarPainelAjuda = function () {
@@ -203,11 +193,8 @@ function ControladorPaineis ( labels, paineis ) {
 	};
 
 	scope.mostrarPainelAjudaVisualisadorGrafico = function () {
-
 //		scope.paineis.painelAjuda.mostrarPainel( "VISUALIZADORGRAFICO" );
-//
 //		scope.mostrarPainelAjuda();
-
 	};
 
 	scope.mostrarPainelAjudaCodigoFonte = function () {
@@ -297,8 +284,5 @@ function ControladorPaineis ( labels, paineis ) {
 	scope.paineis.painelMenuAjuda.dom.addEventListener( 'dblclick', scope.mostrarPainelAjudaAjuda, false);
 	scope.paineis.codigoFonte.dom.addEventListener( 'dblclick', scope.mostrarPainelAjudaCodigoFonte, false);
 	//scope.paineis.listaItens.dom.addEventListener( 'dblclick', scope.mostrarPainelAjudaListaPecas, false);
-
-
 	scope.mostrarFabrica();
-
 }

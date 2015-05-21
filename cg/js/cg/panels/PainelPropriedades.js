@@ -31,15 +31,11 @@ function PainelPropriedades( item, tipoGrafico ) {
 	var objectName = null;
 
 	if ( ( scope.item.nome !== undefined ) && ( scope.item.nomeReadOnly == undefined || !scope.item.nomeReadOnly ) ) {
-
 		var objectNameRow = new UI.Panel();
 		objectName = new UI.Input().setWidth( '150px' ).setColor( '#444' ).setFontSize( '12px' ).onChange( update );
-
 		objectName.setValue(scope.item.nome);
-
 		objectNameRow.add( new UI.Text( 'Nome' ).setWidth( '90px' ).setColor( '#666' ) );
 		objectNameRow.add( objectName );
-
 		scope.add( objectNameRow );
 	}
 
@@ -353,7 +349,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 	var objectValueY = null;
 	var objectValueZ = null;
 
-	if	( scope.item.valorXYZ !== undefined ) {
+	if( scope.item.valorXYZ !== undefined ) {
 
 		var objectValueRow = new UI.Panel();
 		objectValueX = new UI.Number().setWidth( '50px' ).onChange( update );
@@ -394,8 +390,7 @@ function PainelPropriedades( item, tipoGrafico ) {
 
 				objectValueRow.add( new UI.Text( 'z: ' + scope.item.valorXYZ.z + '.00' ).setColor( '#666' ) );
 			}
-		}
-		else{
+		}else{
 			objectValueRow.add( new UI.Text( 'x: ' ).setColor( '#666' ) );
 			objectValueRow.add( objectValueX);
 			objectValueRow.add( new UI.Text( 'y: ' ).setColor( '#666' ) );
@@ -413,33 +408,27 @@ function PainelPropriedades( item, tipoGrafico ) {
 	var objectPosicaoZ = null;
 
 	if ( scope.item.object3D !== undefined ) {
-
 		var objectPosicaoRow = new UI.Panel();
 		objectPosicaoX = new UI.Number().setWidth( '50px' ).onChange( update );
 		objectPosicaoY = new UI.Number().setWidth( '50px' ).onChange( update );
 		objectPosicaoZ = new UI.Number().setWidth( '50px' ).onChange( update );
-
 		if (tipoGrafico == 2) {
 			scope.item.object3D.position.z = 0;
 		}
-
 		objectPosicaoX.setValue(scope.item.object3D.position.x);
 		objectPosicaoY.setValue(scope.item.object3D.position.y);
 		objectPosicaoZ.setValue(scope.item.object3D.position.z);
-
 		objectPosicaoRow.add( new UI.Text( "Posição").setWidth( '90px' ).setColor( '#666' ) );
 		objectPosicaoRow.add( new UI.Text( 'x: ' ).setColor( '#666' ) );
 		objectPosicaoRow.add( objectPosicaoX);
 		objectPosicaoRow.add( new UI.Text( 'y: ' ).setColor( '#666' ) );
 		objectPosicaoRow.add( objectPosicaoY );
-
 		if (tipoGrafico == 2) {
 			objectPosicaoRow.add( new UI.Text( 'z: ' + scope.item.object3D.position.z + '.00' ).setColor( '#666' ) );
 		} else {
 			objectPosicaoRow.add( new UI.Text( 'z: ' ).setColor( '#666' ) );
 			objectPosicaoRow.add( objectPosicaoZ );
 		}
-
 		scope.add( objectPosicaoRow );
 	}
 
