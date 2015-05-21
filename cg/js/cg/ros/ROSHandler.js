@@ -40,10 +40,12 @@ var ROSHandler = function() {
 }
 
 ROSHandler.prototype.onConnected = function (){
+	alert("Conexão efetuada com sucesso");
 	console.log('Connected to websocket server.');
 }
 
 ROSHandler.prototype.onError = function(){
+	alert("Erro de conexão com o ROS");
 	console.log('Error connecting to websocket server: ', error);
 }
 
