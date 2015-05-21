@@ -28,8 +28,13 @@ function PainelAnimacao( editor ) {
 	var distanceAverage = new UI.Number().setWidth('50px').setValue(1);
 	var rotationAverage = new UI.Number().setWidth('50px').setValue(1);
 	time.setValue(2000);
-	//adiciona os campos para exibiram os valores do posicionamento do objeto
+
 	var linhaValues = new UI.Panel();
+	linhaValues.add(new UI.Text('Animação').setColor('#666'));
+	this.add(linhaValues);
+	this.add(new UI.Break());
+	linhaValues = new UI.Panel();
+	//adiciona os campos para exibiram os valores do posicionamento do objeto
 	linhaValues.add(new UI.Text('Posição').setColor('#666'));
 	this.add(linhaValues);
 	linhaValues = new UI.Panel();
@@ -61,7 +66,7 @@ function PainelAnimacao( editor ) {
 	linhaValues.add(rotationZ);
 	this.add(linhaValues);
 	linhaValues = new UI.Panel();
-	linhaValues.add(new UI.Text('Time: ').setColor('#666'));
+	linhaValues.add(new UI.Text('Tempo: ').setColor('#666'));
 	linhaValues.add(time);
 	this.add(linhaValues);
 	linhaValues = new UI.Panel();
@@ -87,6 +92,8 @@ function PainelAnimacao( editor ) {
 		ros.connect(ros_server.getValue());
 	});
 	linhaValues.add(connectButton);
+	this.add(linhaValues);
+	linhaValues = new UI.Panel();
 	var executeButton = new UI.Button();
 	executeButton.setLabel('Executar');
 	executeButton.onClick( executeDrone );
