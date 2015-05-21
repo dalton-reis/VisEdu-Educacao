@@ -13,19 +13,15 @@ function ItemEditorTarget() {
 	//evento será executado quando um filho for adicionado
 	scope.onAddFilho = function ( item ) {}; 
 	//evento será executado quando um filho for removido
-	scope.onRemoveFilho = function ( item ) {}; 
+	scope.onRemoveFilho = function ( item ) {};
 	//evento será executado quando for removido ou inserido algum filho em um dos filhos do objeto, ou filho dos filhos e assim por diante
-	scope.onChangeFilhos = function ( filho ) {}; 
+	scope.onChangeFilhos = function ( filho ) {};
 	//evento será executado quando o nome do item for alterado
-	scope.afterChangeNome = function ( nomeAntigo ) {}; 
+	scope.afterChangeNome = function ( nomeAntigo ) {};
 	//propriedades
 	scope.id =  EIdsItens.TARGET
 	scope.valorXYZ.set( 100, 100, 100 );
-	//scope.posicao.set( 0, 0, 0 );
 	scope.propriedadeCor.setHex( 0xFFFFFF );
-	scope.textura = null;
-	scope.usarTextura = false;
-	scope.listaPontos = undefined;
 	scope.object3D = createObject3D();
 
 	function createObject3D() {

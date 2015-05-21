@@ -3,19 +3,14 @@
  * durante as animações.
  */
 function PainelAnimacao( editor ) {
-
 	UI.Panel.call( this );
 	/**Objeto responsavel por controlar o drone utilizando o ROS*/
 	var ros = new ROSHandler();
-
 	this.setClass( 'painel' );
 	this.dom.id = 'painelAnimacao';
 	this.setPosition( 'absolute' );
 	this.setDisplay( 'broke' );
-
-	if ( !(editor instanceof Editor) ) {
-		throw new Error ( 'argumento deve ser da classe Editor !' );
-	}
+	if ( !(editor instanceof Editor) ) { throw new Error ( 'argumento deve ser da classe Editor !' ); }
 	var editor = editor;
 	//campos utilizados no painel
 	var positionX = new UI.Text('-').setColor('#666');
@@ -28,13 +23,10 @@ function PainelAnimacao( editor ) {
 	var distanceAverage = new UI.Number().setWidth('50px').setValue(1);
 	var rotationAverage = new UI.Number().setWidth('50px').setValue(1);
 	time.setValue(2000);
-
 	var linhaValues = new UI.Panel();
 	linhaValues.add(new UI.Text('Animação').setColor('#666'));
 	this.add(linhaValues);
 	this.add(new UI.Break());
-	linhaValues = new UI.Panel();
-	//adiciona os campos para exibiram os valores do posicionamento do objeto
 	linhaValues.add(new UI.Text('Posição').setColor('#666'));
 	this.add(linhaValues);
 	linhaValues = new UI.Panel();
@@ -79,7 +71,7 @@ function PainelAnimacao( editor ) {
 	this.add(linhaValues);
 	this.add(new UI.Break());
 	linhaValues = new UI.Panel();
-	linhaValues.add(new UI.Text('Configurações ROS').setColor('#666'));
+	linhaValues.add(new UI.Text('ROS').setColor('#666'));
 	this.add(linhaValues);
 	this.add(new UI.Break());
 	linhaValues = new UI.Panel();
@@ -88,9 +80,7 @@ function PainelAnimacao( editor ) {
 	linhaValues.add(ros_server);
 	var connectButton = new UI.Button();
 	connectButton.setLabel('Connect');
-	connectButton.onClick( function () {
-		ros.connect(ros_server.getValue());
-	});
+	connectButton.onClick( function () { ros.connect(ros_server.getValue());});
 	linhaValues.add(connectButton);
 	this.add(linhaValues);
 	linhaValues = new UI.Panel();
@@ -100,15 +90,11 @@ function PainelAnimacao( editor ) {
 	linhaValues.add(executeButton);
 	var calibrateButton = new UI.Button();
 	calibrateButton.setLabel('Calibrate');
-	calibrateButton.onClick( function () {
-		ros.calibrate();
-	});
+	calibrateButton.onClick( function () { ros.calibrate(); });
 	linhaValues.add(calibrateButton);
 	var panicButton = new UI.Button();
 	panicButton.setLabel('Panic!');
-	panicButton.onClick( function () {
-		ros.land();
-	});
+	panicButton.onClick( function () { ros.land(); });
 	linhaValues.add(panicButton);
 	this.add(linhaValues);
 	linhaValues = new UI.Panel();
@@ -123,13 +109,12 @@ function PainelAnimacao( editor ) {
 	var currentAnimatios = [];
 	/**Index de currentAnimatios que está atualmente em execução*/
 	var currentAnimation = 0;
+	/**Index da peça animada selecionada no editor*/
 	var selectedAnimation = undefined;
 	/**Objeto3D que sera animado*/
 	var object3D = [];
 	/**Função de easing que sera utilizada na interpolação da animação*/
 	var easing = [];
-	var droneIntervalExec = undefined;
-
 	/**
 	 * Método que vai percorrer todos os itens de objetos gráficos existentes
 	 * e vai iniciar as animações
@@ -137,9 +122,7 @@ function PainelAnimacao( editor ) {
 	function startAnimations() {
 		loadAnimation();
 		//se não tem animação, cai fora
-		if( currentAnimatios.length == 0 ){
-			return;
-		}
+		if( currentAnimatios.length == 0 ){ return; }
 		//pega todas as animações para esse filho
 		for( var q = 0; q < currentAnimatios.length; q++ ){
 			var animation = undefined;
@@ -153,20 +136,7 @@ function PainelAnimacao( editor ) {
 					    z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.z)}, time.getValue())
 					.easing(CG.getEasingFunction(easing[q]))
 					if( selectedAnimation != undefined && q == selectedAnimation ){
-						animation.onUpdate(updateValues);
-						//FIXME - encontrar uma maneira melhor de bloquear o botão de play durante da execução das animações
-						if( s == currentAnimatios[q].length-1 ){
-							animation.onComplete(onFinishAnimationChain)
-								.onStop(onFinishAnimationChain);
-						} else {
-							animation.onComplete(onFinishAnimation)
-								.onStop(onFinishAnimation);
-						}
-						if( animationChain.length == 0 ){
-							animation.onStart(onStartAnimationChain);
-						} else {
-							animation.onStart(onStartAnimation);
-						}
+						setAnimationCallbacks(animation, q, s);
 					}
 				} else if( animationItem.id == EIdsItens.ROTACIONAR ){
 					animation = new TWEEN.Tween(object3D[q].rotation)
@@ -175,20 +145,7 @@ function PainelAnimacao( editor ) {
 					    z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.z))}, time.getValue())
 					.easing(CG.getEasingFunction(easing[q]));
 					if( selectedAnimation != undefined && q == selectedAnimation ){
-						animation.onUpdate(updateValues);
-						//FIXME - encontrar uma maneira melhor de bloquear o botão de play durante da execução das animações
-						if( s == currentAnimatios[q].length-1 ){
-							animation.onComplete(onFinishAnimationChain)
-								.onStop(onFinishAnimationChain);
-						} else {
-							animation.onComplete(onFinishAnimation)
-								.onStop(onFinishAnimation);
-						}
-						if( animationChain.length == 0 ){
-							animation.onStart(onStartAnimationChain);
-						} else {
-							animation.onStart(onStartAnimation);
-						}
+						setAnimationCallbacks(animation, q, s);
 					}
 				}
 				animationChain.push(animation);
@@ -201,6 +158,21 @@ function PainelAnimacao( editor ) {
 			if( animationChain[0] != undefined ){
 				animationChain[0].start();
 			}
+		}
+	}
+
+	function setAnimationCallbacks(animation, animationChain, animationStep) {
+		animation.onUpdate(updateValues);
+		//FIXME - encontrar uma maneira melhor de bloquear o botão de play durante da execução das animações
+		if( animationStep == currentAnimatios[animationChain].length-1 ){
+			animation.onComplete(onFinishAnimationChain).onStop(onFinishAnimationChain);
+		} else {
+			animation.onComplete(onFinishAnimation).onStop(onFinishAnimation);
+		}
+		if( animationStep == 0 ){
+			animation.onStart(onStartAnimationChain);
+		} else {
+			animation.onStart(onStartAnimation);
 		}
 	}
 
@@ -253,11 +225,8 @@ function PainelAnimacao( editor ) {
 	 */
 	function executeDrone(){
 		loadAnimation();
-		currentDroneStep = -1;
 		//se não tem animação, cai fora
-		if( currentAnimatios.length == 0 || selectedAnimation == undefined ){
-			return;
-		}
+		if( currentAnimatios.length == 0 || selectedAnimation == undefined ){ return; }
 		onExecutionBegan()
 		var currentDroneStep = -1;
 		var droneParado = true;
@@ -269,7 +238,6 @@ function PainelAnimacao( editor ) {
 				setTimeout(function(){
 					ros.stop();
 					console.log('decolou -' + new Date());
-;
 					droneParado = true;
 					currentDroneStep += 1;
 				}, 8000);
@@ -393,5 +361,4 @@ function PainelAnimacao( editor ) {
 		playButton.setEnable(true);
 	}
 }
-
 PainelAnimacao.prototype = Object.create( UI.Panel.prototype );

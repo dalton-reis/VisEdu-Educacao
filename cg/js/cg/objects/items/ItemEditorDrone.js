@@ -10,17 +10,17 @@ function ItemEditorDrone() {
 		createObject3D();
 	}; //evento será executado quando um filho for adicionado ou removido ou alguma propriedade for alterada
 	//@Override
-	scope.onAddFilho = function ( item ) {}; //evento será executado quando um filho for adicionado
+	scope.onAddFilho = function ( item ) {};//evento será executado quando um filho for adicionado
 	//@Override
-	scope.onRemoveFilho = function ( item ) {}; //evento será executado quando um filho for removido
+	scope.onRemoveFilho = function ( item ) {};//evento será executado quando um filho for removido
 	//@Override
-	scope.onChangeFilhos = function ( filho ) {}; //evento será executado quando for removido ou inserido algum filho em um dos filhos do objeto, ou filho dos filhos e assim por diante
+	scope.onChangeFilhos = function ( filho ) {};//evento será executado quando for removido ou inserido algum filho em um dos filhos do objeto, ou filho dos filhos e assim por diante
 	//@Override
-	scope.afterChangeNome = function ( nomeAntigo ) {}; //evento será executado quando o nome do item for alterado
+	scope.afterChangeNome = function ( nomeAntigo ) {};//evento será executado quando o nome do item for alterado
 	//propriedades
 	scope.valorXYZ = undefined;
 	scope.id =  EIdsItens.DRONE;
-	scope.propriedadeCor = undefined;
+	scope.propriedadeCor.setHex( 0xFFFFFF );
 	scope.object3D = undefined;
 	createObject3D(); //load the obj file;
 
@@ -32,11 +32,12 @@ function ItemEditorDrone() {
 					scope.object3D = model;
 					scope.object3D.item = scope;
 				},
-				function( progress ){
-					console.log("Carregando modelo 3D...");
+				function( progress ){ //função executada durante o carregamento do .obj
+					console.log(progress);
 				},
-				function( error ){
-					console.error("Erro ao carregar modelo 3D");
+				function( error ){ //função executada em caso de erro ao carregar o .obj
+					alert("Erro ao carregar modelo 3D");
+					console.log("Erro ao carregar modelo 3D");
 				});
 		}
 	}
