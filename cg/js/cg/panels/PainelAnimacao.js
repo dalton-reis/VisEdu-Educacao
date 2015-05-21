@@ -27,6 +27,7 @@ function PainelAnimacao( editor ) {
 	linhaValues.add(new UI.Text('Animação').setColor('#666'));
 	this.add(linhaValues);
 	this.add(new UI.Break());
+	linhaValues = new UI.Panel();
 	linhaValues.add(new UI.Text('Posição').setColor('#666'));
 	this.add(linhaValues);
 	linhaValues = new UI.Panel();
