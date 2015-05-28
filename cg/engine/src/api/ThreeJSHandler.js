@@ -103,14 +103,14 @@ ThreeJSHandler.prototype.getObjectFactory = function() {
 ThreeJSHandler.prototype.getBasicMaterial = function(fillStyle, texture) {
 	var color = ColorUtils.checkColor(fillStyle);
 	if (texture) {
-		var material = new THREE.MeshLambertMaterial({
+		var material = new THREE.MeshPhongMaterial({
 			color : color,
 			side : THREE.DoubleSide,
 			map : THREE.ImageUtils.loadTexture(texture),
 			transparent : true
 		});
 	} else {
-		var material = new THREE.MeshLambertMaterial({
+		var material = new THREE.MeshPhongMaterial({
 			color : color,
 			ambient: color,
 			overdraw: true,

@@ -3,6 +3,7 @@ function PolygonPiece() {}
 PolygonPiece.prototype = new Piece();
 PolygonPiece.prototype.constructor = PolygonPiece;
 PolygonPiece.prototype.$_setupProperties = PolygonPiece.prototype._setupProperties;
+PolygonPiece.prototype.$_load = PolygonPiece.prototype.load;
 PolygonPiece.prototype.type = Types.typePolygon;
 
 PolygonPiece.prototype.genGameObject = function() {
@@ -20,4 +21,15 @@ PolygonPiece.prototype._setupProperties = function() {
 	};
 	this.properties['primitive'] = 'filled';
 	this.properties['color'] = 0x007DBE;
+}
+
+PolygonPiece.prototype.load = function(properties) {
+	this.$_load(properties);
+	var newPoints = {};
+	$.each(this.properties['points'], function(index, item) {
+		newPoints[index] = new Point3D().initialize(item.x, item.y, item.z);
+	});
+	
+	this.properties['points'] = newPoints;
+	return this;
 }
