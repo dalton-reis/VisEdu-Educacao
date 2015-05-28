@@ -1,4 +1,0 @@
-VisEdu-CG - comentários:
-
-1) a pasta "frameworks" contem classes usadas de outros frameworks, mas que precisaram ser modificadas para atender algumas necessidades específicas do sistema;
-2) nas demais pastas estão contidos todas as classes criadas especificamente para o sistema.

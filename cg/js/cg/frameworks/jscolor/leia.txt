@@ -1,4 +1,0 @@
-VisEdu-CG - comentários:
-
-1) framework baixado no link: "http://jscolor.com/";
-2) foi necessário ajustar o framework para permitir exibir a paleta de cores em objetos criados dinamicamente.
