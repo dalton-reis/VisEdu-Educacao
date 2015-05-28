@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>VisEdu</title>
+<link rel="stylesheet" type="text/css" href="./styles/visedu.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src='https://code.jquery.com/jquery-2.1.3.js'></script>
+<script src='https://code.jquery.com/ui/1.11.4/jquery-ui.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js'></script>
+
+
+<script src="../engine/lib/prototype-1.6.0.2.js"></script>
+<script src="../engine/src/physic/box2d/common/b2Settings.js"></script>
+<script src="../engine/src/physic/box2d/common/math/b2Vec2.js"></script>
+<script src="../engine/src/physic/box2d/common/math/b2Mat22.js"></script>
+<script src="../engine/src/physic/box2d/common/math/b2Math.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2AABB.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2Bound.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2BoundValues.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2Pair.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2PairCallback.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2BufferedPair.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2PairManager.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2BroadPhase.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2Collision.js"></script>
+<script src="../engine/src/physic/box2d/collision/Features.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2ContactID.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2ContactPoint.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2Distance.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2Manifold.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2OBB.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2Proxy.js"></script>
+<script src="../engine/src/physic/box2d/collision/ClipVertex.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2Shape.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2ShapeDef.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2BoxDef.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2CircleDef.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2CircleShape.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2MassData.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2PolyDef.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2PolyShape.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2Body.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2BodyDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2CollisionFilter.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2Island.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2TimeStep.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2ContactNode.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2Contact.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2ContactConstraint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2ContactConstraintPoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2ContactRegister.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2ContactSolver.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2CircleContact.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2Conservative.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2NullContact.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2PolyAndCircleContact.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2PolyContact.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2ContactManager.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2World.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2WorldListener.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2JointNode.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2Joint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2JointDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2DistanceJoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2DistanceJointDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2Jacobian.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2GearJoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2GearJointDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2MouseJoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2MouseJointDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2PrismaticJoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2PrismaticJointDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2PulleyJoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2PulleyJointDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2RevoluteJoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2RevoluteJointDef.js"></script>
+
+<script src="../engine/src/utils/ArrayUtils.js"></script>
+<script src="../engine/src/utils/JSUtils.js"></script>
+<script src="../engine/src/utils/ComponentUtils.js"></script>
+<script src="../engine/src/utils/MathUtils.js"></script>
+<script src="../engine/src/utils/ColorUtils.js"></script>
+
+<script src="../engine/src/game/AssetStore.js"></script>
+<script src="../engine/src/game/Asset.js"></script>
+<script src="../engine/src/game/Game.js"></script>
+<script src="../engine/src/game/Layer.js"></script>
+<script src="../engine/src/game/Scene.js"></script>
+<script src="../engine/src/game/Camera.js"></script>
+
+<script src="../engine/src/geometric/Point2D.js"></script>
+<script src="../engine/src/geometric/Point3D.js"></script>
+
+<script src="../engine/src/gameobject/GameObject.js"></script>
+<script src="../engine/src/gameobject/PolygonObject.js"></script>
+<script src="../engine/src/gameobject/BoxObject.js"></script>
+<script src="../engine/src/gameobject/CircleObject.js"></script>
+<script src="../engine/src/gameobject/TemplateObject.js"></script>
+
+<script src="../engine/src/builder/ThreeJSBuilder.js"></script>
+
+<script src="../engine/src/gameobject/ObjectFactory.js"></script>
+<script src="../engine/src/gameobject/canvas/CanvasObjectFactory.js"></script>
+<script src="../engine/src/gameobject/threeJS/ThreeJSObjectFactory.js"></script>
+
+<script src="../engine/src/component/Component.js"></script>
+<script src="../engine/src/component/RenderableComponent.js"></script>
+<script src="../engine/src/component/BoxRenderComponent.js"></script>
+<script src="../engine/src/component/CubeRenderComponent.js"></script>
+<script src="../engine/src/component/PolygonRenderComponent.js"></script>
+<script src="../engine/src/component/ScaleComponent.js"></script>
+<script src="../engine/src/component/threeJS/ThreeJSScaleComponent.js"></script>
+<script src="../engine/src/component/TranslateComponent.js"></script>
+<script src="../engine/src/component/threeJS/ThreeJSTranslateComponent.js"></script>
+<script src="../engine/src/component/RotateComponent.js"></script>
+<script src="../engine/src/component/threeJS/ThreeJSRotateComponent.js"></script>
+<script src="../engine/src/component/ComponentFactory.js"></script>
+<script src="../engine/src/component/threeJS/ThreeJSComponentFactory.js"></script>
+<script src="../engine/src/component/ImageRenderComponent.js"></script>
+<script src="../engine/src/component/CircleRenderComponent.js"></script>
+<script src="../engine/src/component/AmbientLightComponent.js"></script>
+<script src="../engine/src/component/AnimationRenderComponent.js"></script>
+<script src="../engine/src/component/GridRenderComponent.js"></script>
+<script src="../engine/src/component/AxisRenderComponent.js"></script>
+<script src="../engine/src/component/CameraComponent.js"></script>
+<script src="../engine/src/component/GroupComponent.js"></script>
+
+<script src="../engine/src/system/RenderSystem.js"></script>
+<script src="../engine/src/system/LogicSystem.js"></script>
+
+<script src="../engine/src/api/APIHandler.js"></script>
+<script src="../engine/src/api/ThreeJSHandler.js"></script>
+
+<script src='./factory/Factory.js'></script>
+<script src='./factory/Factory2D.js'></script>
+<script src='./factory/Factory3D.js'></script>
+
+<script src='./properties/PropertiesController.js'></script>
+
+<script src='./dragndrop/DragAndDropController.js'></script>
+<script src='./dragndrop/SpecificDNDBehaviour.js'></script>
+<script src='./dragndrop/SpecificPluralDNDBehaviour.js'></script>
+<script src='./dragndrop/ObjectDNDBehaviour.js'></script>
+<script src='./dragndrop/DNDBehaviour.js'></script>
+<script src='./dragndrop/TemplateDNDBehaviour.js'></script>
+<script src='./dragndrop/ElementDNDBehaviour.js'></script>
+
+<script src='./graphicalBehaviour/GraphicalBehaviour.js'></script>
+<script src='./graphicalBehaviour/ElementGraphicalBehaviour.js'></script>
+
+<script src='./pieces/Type.js'></script>
+<script src='./pieces/Types.js'></script>
+<script src='./pieces/Piece.js'></script>
+<script src='./pieces/ConnectorPiece.js'></script>
+
+<script src='./pieces/CameraPiece.js'></script>
+<script src='./pieces/CubePiece.js'></script>
+<script src='./pieces/GraphicObjectPiece.js'></script>
+<script src='./pieces/PolygonPiece.js'></script>
+<script src='./pieces/SplinePiece.js'></script>
+<script src='./pieces/TranslatePiece.js'></script>
+<script src='./pieces/RotatePiece.js'></script>
+<script src='./pieces/ScalePiece.js'></script>
+<script src='./pieces/LightPiece.js'></script>
+<script src='./pieces/RendererPiece.js'></script>
+<script src='./pieces/ConnectorCrossPiece.js'></script>
+<script src='./pieces/ConnectorArrowPiece.js'></script>
+<script src='./pieces/ConnectorSquarePiece.js'></script>
+<script src='./pieces/ConnectorDiamondPiece.js'></script>
+
+<script src='./pieces/PiecesController.js'></script>
+<script src='./engine-custom/ThreeJSCustomHandler.js'></script>
+<script src='./VisEdu.js'></script>
+
+<script>
+
+	function init() {
+		var handler = new ThreeJSCustomHandler();
+		Game.loadAPI(handler);
+		VisEdu.create($('.world'), handler);
+		var tab = $( ".menu-tabs" );
+		tab.tabs(
+			{
+				activate: function( event, ui ) {
+					onTabChange(ui);
+				}
+			});
+		tab.tabs("option", "active", 1);
+		PiecesController.tab = tab;
+		PiecesController.createPallet($('#pallet-tab'));
+		PiecesController.createTree($('.pieces-tree'));
+		PiecesController.setupDraggables();
+	}
+
+	function onTabChange(ui) {
+		var id = ui.newPanel.attr('id');
+		switch(id) {
+			case 'propriedades-tab':
+				PropertiesController.setupProperties();
+				break;
+		}
+	}
+	
+</script>
+</head>
+<body onload="init()">
+	<div class='wrapper'>
+		<div class='menu'>
+			<div class='menu-tabs'>
+			<ul>
+			    <li><a href="#arquivo-tab">Arquivos</a></li>
+			    <li><a href="#pallet-tab">Fábrica de Peças</a></li>
+			    <li><a href="#propriedades-tab">Propriedades da Peça</a></li>
+			    <li><a href="#ajuda-tab">Ajuda</a></li>
+		    </ul>
+				<div id='arquivo-tab' class='tab'></div>
+				<div id='pallet-tab' class='tab'></div>
+				<div id='propriedades-tab' class='tab'>
+					<div class='property none'>
+						<label class='msg'>Selecione um item</label>
+					</div>
+					<div class='property name'>
+						<div class='label'>Nome</div>
+						<input class='input' type="text" />
+					</div>
+					
+				</div>
+				<div id='ajuda-tab' class='tab'></div>
+			</div>
+			<div class='pieces-canvas'>
+				<div class='pieces-tree'>
+				</div>
+			</div>
+		</div>
+		<div class='world'>
+		</div>
+	</div>
+</body>
+</html>
