@@ -17,4 +17,16 @@ var ThreeUtils = new function() {
 			}
 		}
 	}
+	
+	this.isChildrenOf = function (obj, parent) {
+		var ret;
+		if (obj) {
+			ret = obj === parent ||
+			this.isChildrenOf(obj.object, parent) ||
+			this.isChildrenOf(obj.parent, parent)			
+		} else {
+			ret = false;
+		}
+		return ret;
+	}
 }

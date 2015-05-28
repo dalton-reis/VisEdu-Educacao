@@ -20,6 +20,8 @@ ThreeJSCustomHandler.prototype.setupCamera = function (angle, near, far) {
 ThreeJSCustomHandler.prototype.setupTrackball = function(camera) {
 	this.controls = new THREE.OrbitControls( camera, Game.canvas );
 	this.controls.damping = 0.2;
+	this.touchControls = new TouchControls();
+	this.touchControls.setup();
 }
 
 ThreeJSCustomHandler.prototype.onUpdate = function() {
