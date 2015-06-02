@@ -1,0 +1,47 @@
+{
+	"metadata": {
+		"formatVersion": 1,
+		"type": "VisEduCG",
+		"generatedBy": "ExportadorJSON",
+		"objects": 4,
+		"textures": 0
+	},
+	"urlBaseType": "relativeToVisEduCG",
+	"viewPos": [0,600,1800],
+	"viewRot": [-0.3217505484695941,0,0],
+	"itens": {
+		"Item_13": {
+			"nome": "Renderizador",
+			"visible": true,
+			"corLimpar": 0,
+			"corFundo": 15461355,
+			"verGrade": true,
+			"verEixos": true,
+			"tipoGrafico": 3,
+			"tipo": 9,
+			"filhos": {
+				"Item_14": {
+					"nome": "Objeto Gráfico 1",
+					"visible": true,
+					"tipo": 8,
+					"filhos": {
+						"Item_15": {
+							"nome": "Drone 1",
+							"visible": true,
+							"posicao": [0,0,0],
+							"propriedadeCor": 16777215,
+							"tipo": 11
+						},
+						"Item_16": {
+							"nome": "Animação 1",
+							"visible": true,
+							"easing": 0,
+							"tipo": 13
+						}
+					}
+				}
+			}
+		}
+	},
+	"textures": {}
+}

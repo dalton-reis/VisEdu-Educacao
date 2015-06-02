@@ -119,6 +119,6 @@ ROSHandler.prototype.calibrate = function(){
 	//TODO - precisar ser testado. Como não tenho o drone no momento não conseguir testar
 	var request = new ROSLIB.ServiceRequest({});
 	this.flattrim_service.callService(request, function(response){
-		console.log(response);
+		console.log("Service response = " + response);
 	});
 }

@@ -1,0 +1,104 @@
+{
+	"metadata": {
+		"formatVersion": 1,
+		"type": "VisEduCG",
+		"generatedBy": "ExportadorJSON",
+		"objects": 11,
+		"textures": 0
+	},
+	"urlBaseType": "relativeToVisEduCG",
+	"viewPos": [-90.5420338584753,1806.0817284780403,574.3439127930152],
+	"viewRot": [-1.262903636402934,-0.04773798636105348,-0.5715137674447013],
+	"itens": {
+		"Item_13": {
+			"nome": "Renderizador",
+			"visible": true,
+			"corLimpar": 2883356,
+			"corFundo": 16777215,
+			"verGrade": true,
+			"verEixos": true,
+			"tipoGrafico": 3,
+			"tipo": 9,
+			"filhos": {
+				"Item_23": {
+					"nome": "Câmera 2",
+					"visible": true,
+					"valorXYZ": [0,100,0],
+					"lookAt": [0,0,0],
+					"near": 10,
+					"far": 1000,
+					"fov": 45,
+					"tipo": 0
+				},
+				"Item_14": {
+					"nome": "Objeto Gráfico 1",
+					"visible": true,
+					"tipo": 8,
+					"filhos": {
+						"Item_21": {
+							"nome": "Transladar 2",
+							"visible": true,
+							"valorXYZ": [1,0,0],
+							"tipo": 1
+						},
+						"Item_19": {
+							"nome": "Rotacionar 1",
+							"visible": true,
+							"valorXYZ": [0,90,0],
+							"tipo": 2
+						},
+						"Item_20": {
+							"nome": "Transladar 1",
+							"visible": true,
+							"valorXYZ": [0,1,0],
+							"tipo": 1
+						},
+						"Item_16": {
+							"nome": "Drone 1",
+							"visible": true,
+							"posicao": [9,9,0],
+							"propriedadeCor": 1836031,
+							"tipo": 11
+						},
+						"Item_18": {
+							"nome": "Animação 1",
+							"visible": true,
+							"easing": 0,
+							"tipo": 13
+						}
+					}
+				},
+				"Item_15": {
+					"nome": "Objeto Gráfico 2",
+					"visible": true,
+					"tipo": 8,
+					"filhos": {
+						"Item_17": {
+							"nome": "Target 1",
+							"visible": true,
+							"valorXYZ": [300,300,300],
+							"posicao": [10,0,10],
+							"propriedadeCor": 0,
+							"tipo": 12
+						}
+					}
+				},
+				"Item_24": {
+					"nome": "Iluminação 1",
+					"visible": true,
+					"propriedadeCor": 16777215,
+					"tipoLuz": 0,
+					"posicao": [100,400,0],
+					"intensidade": 1.5,
+					"corFundoLuz": 16755200,
+					"distancia": 0,
+					"angulo": 0.3141592653589793,
+					"expoente": 10,
+					"posicaoTarget": [0,0,0],
+					"tipo": 7
+				}
+			}
+		}
+	},
+	"textures": {}
+}

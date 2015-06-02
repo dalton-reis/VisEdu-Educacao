@@ -13,6 +13,7 @@ RUN apt-get install -y python-rosinstall
 RUN apt-get install -y ros-indigo-rosbridge-suite
 RUN apt-get install -y ros-indigo-ardrone-autonomy
 RUN apt-get install -y supervisor
+RUN apt-get install -y ros-indigo-gazebo-ros-pkgs ros-indigo-gazebo-ros-control
 RUN echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
 RUN rosdep init
 RUN rosdep update

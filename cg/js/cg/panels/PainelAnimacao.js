@@ -243,9 +243,9 @@ function PainelAnimacao( editor ) {
 					currentDroneStep += 1;
 				}, 8000);
 			} else if( droneParado && currentDroneStep < currentAnimatios[selectedAnimation].length){
-				var valorX = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x > 0 ? 1: 0;
-				var valorY = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y > 0 ? 1: 0;
-				var valorZ = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z > 0 ? 1: 0;
+				var valorX = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x > 0 ? 0.5: 0;
+				var valorY = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y > 0 ? 0.5: 0;
+				var valorZ = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z > 0 ? 0.5: 0;
 				var wait = 0;
 				if( currentAnimatios[selectedAnimation][currentDroneStep].id == EIdsItens.TRANSLADAR ){
 					wait = calculateTime(currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x,
@@ -256,7 +256,7 @@ function PainelAnimacao( editor ) {
 				} else if( currentAnimatios[selectedAnimation][currentDroneStep].id == EIdsItens.ROTACIONAR ){
 					wait = calculateTime(0,0,0, currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y);
 					console.log('rotacionou - ' + new Date());
-					ros.move(0,0,0, valorY);
+					ros.move(0,0,0, 0.75);
 				}
 				droneParado = false;
 				setTimeout(function(){
@@ -293,11 +293,12 @@ function PainelAnimacao( editor ) {
 		if( seconds == 0 && z != undefined && z > 0 ){
 			seconds = distanceAverage.getValue() * z;
 		}
-		if( seconds > 0 ){
+		if( seconds != 0 ){
 			return seconds * 1000;
 		}
-		if( rotation != undefined && rotation > 0 ){
-			return  ((rotation * rotationAverage.getValue()) / 360) * 1000;
+		if( rotation != undefined && rotation != 0 ){
+			var time = ((rotation * rotationAverage.getValue()) / 360) * 1000;
+			return time;
 		}
 		return 0;
 	}
