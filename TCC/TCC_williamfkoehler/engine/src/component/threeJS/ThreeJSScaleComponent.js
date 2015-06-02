@@ -40,3 +40,10 @@ ThreeJSScaleComponent.prototype.doScale = function() {
 ThreeJSScaleComponent.prototype.addGameComponent= function(component, element) {
 	this.doScale();
 }
+
+ThreeJSScaleComponent.prototype.apply = function(vector) {
+	var object = this.owner.threeObject;
+	var ms = new THREE.Matrix4();
+	ms.makeScale(vector.x||0, vector.y||0, vector.z||0);
+	object.matrix.multiply(ms);
+}

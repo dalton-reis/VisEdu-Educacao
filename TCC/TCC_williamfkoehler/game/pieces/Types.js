@@ -1,27 +1,32 @@
 var Types = new function() {
-	var specificDNDBehaviour = new SpecificDNDBehaviour();
-	var specificPluralDNDBehaviour = new SpecificPluralDNDBehaviour();
-	var objectDNDBehaviour =  new ObjectDNDBehaviour();
+	var treeDNDBehaviour = new TreeDNDBehaviour();
+	var treePluralDNDBehaviour = new TreePluralDNDBehaviour();
+	var treeObjectDNDBehaviour =  new TreeObjectDNDBehaviour();
+	var renderDNDBehaviour =  new RenderDNDBehaviour();
 
 	var elementGraphicalBehaviour = new ElementGraphicalBehaviour(); 
+	var groupGraphicalBehaviour = new GroupGraphicalBehaviour(); 
+	var transformationGraphicalBehaviour = new TransformationGraphicalBehaviour(); 
+	var cameraGraphicalBehaviour = new CameraGraphicalBehaviour(); 
+	var lightGraphicalBehaviour = new LightGraphicalBehaviour(); 
 	
-	this.typeCamera = new Type().init('cross', 'camera', 'Câmera', specificDNDBehaviour);
-	this.typeGraficObject = new Type().init('arrow', 'object', 'Objeto Gráfico', objectDNDBehaviour, elementGraphicalBehaviour);
+	this.typeCamera = new Type().init('cross', 'camera', 'camera', 'Câmera', treeDNDBehaviour, cameraGraphicalBehaviour);
+	this.typeGraficObject = new Type().init('arrow', 'object', 'object', 'Objeto Gráfico', treeObjectDNDBehaviour, groupGraphicalBehaviour);
 	var connectorComponent = 'square';
 	var classComponent = 'component';
-	this.typeCube = new Type().init(connectorComponent, classComponent, 'Cubo', specificDNDBehaviour, elementGraphicalBehaviour);
-	this.typePolygon = new Type().init(connectorComponent, classComponent, 'Polígono', specificDNDBehaviour, elementGraphicalBehaviour);
-	this.typeSpline = new Type().init(connectorComponent, classComponent, 'Spline', specificDNDBehaviour, elementGraphicalBehaviour);
+	this.typeCube = new Type().init(connectorComponent, classComponent, 'cube', 'Cubo', treeDNDBehaviour, elementGraphicalBehaviour);
+	this.typePolygon = new Type().init(connectorComponent, classComponent, 'polygon', 'Polígono', treeDNDBehaviour, elementGraphicalBehaviour);
+	this.typeSpline = new Type().init(connectorComponent, classComponent, 'spline', 'Spline', treeDNDBehaviour, elementGraphicalBehaviour);
 	
 	var connectorTransform = 'diamond';
 	var classTransform= 'transform';
-	this.typeTranslate = new Type().init(connectorTransform, classTransform, 'Transladar', specificPluralDNDBehaviour);
-	this.typeRotate = new Type().init(connectorTransform, classTransform, 'Rotacionar', specificPluralDNDBehaviour);
-	this.typeScale = new Type().init(connectorTransform, classTransform, 'Escalar', specificPluralDNDBehaviour);
+	this.typeTranslate = new Type().init(connectorTransform, classTransform, 'translate', 'Transladar', treePluralDNDBehaviour, transformationGraphicalBehaviour);
+	this.typeRotate = new Type().init(connectorTransform, classTransform, 'rotate', 'Rotacionar', treePluralDNDBehaviour, transformationGraphicalBehaviour);
+	this.typeScale = new Type().init(connectorTransform, classTransform, 'scale', 'Escalar', treePluralDNDBehaviour, transformationGraphicalBehaviour);
 
-	this.typeLight = new Type().init('arrow', 'light', 'Iluminação', specificPluralDNDBehaviour);
+	this.typeLight = new Type().init('arrow', 'light', 'light', 'Iluminação', treePluralDNDBehaviour, lightGraphicalBehaviour);
 
-	this.typeRenderer = new Type().init('', 'renderer', 'Renderer');
+	this.typeRenderer = new Type().init('', 'renderer', 'renderer', 'Renderer', renderDNDBehaviour);
 
 	this.typeConnectorCross = new Type().init('cross', 'connector');
 	this.typeConnectorArrow = new Type().init('arrow', 'connector');

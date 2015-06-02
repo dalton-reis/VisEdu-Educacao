@@ -7,9 +7,13 @@ html, body, .wrapper {
 	margin: 0;
 }
 
-htm, body, div {
+html, body, div{
 	box-sizing: border-box;
 }
+
+.menu-tabs {
+	border: 0 !important;	
+} 
 
 .wrapper, .menu, .world {
 	display: inline-block;
@@ -28,17 +32,18 @@ htm, body, div {
 }
 
 .menu-tabs {
-	height: 300px;	
+	height: 350px;	
 }
 
 .tab {
 	width: 100%;
 	padding: 20px;
+	height: auto;	
 }
 
 .pieces-canvas {
 	width: 100%;
-	height: calc(100% - 300px);
+	height: calc(100% - 350px);
 	background: #F0F0F0;
 	padding: 10px 0 0 5px;
 	overflow: auto;
@@ -46,7 +51,8 @@ htm, body, div {
 
 .pieces-tree {
 	width: 100%;
-	height: 100%;
+	height: 400px;
+	resize: horizontal;
 }
 
 .piece {
@@ -61,17 +67,64 @@ htm, body, div {
 	height: 32px;
 }
 
-.menu-tabs a, .property > * {
+
+.cell-matrix{
+	display: inline-block;
+	text-align: center;
+	width: 60px;
+}
+
+.prop-wrapper {
+	display: inline-block;
+}
+
+.property.points.polygon select {
+	margin-top: 5px;
+	width: 130px;	
+}
+	
+.property.texture .label {
+	vertical-align: super;
+}
+
+.property.texture select {
+	margin-top: 5px
+}
+
+.menu-tabs a, .menu-tabs input, .menu-tabs span, .property > *, .dialog * {
 	font: bold 12px "Arial";	
 }
 
-.property .input[type="text"] {
-	font-size: 12px;
+#source {
+	font: normal normal normal 13.3333330154419px/normal Arial;
 }
 
-	.property .label {
-	display: inline-block;
+.property {
+	padding: 2px 0 2px 0;	
+	position: relative;
+}
+
+.property > .label + * {
+	margin-left: 100px;
+}
+
+.property input[type="text"], .property input[type="number"] {
+	font-size: 12px;
+}	
+
+.property input[type="color"] {
 	width: 100px;
+}	
+
+.property .label {
+	display: inline-block;
+	position: absolute;
+	top: 5px;	
+}
+
+.prop-field.number {
+	width: 50px;
+	color: #00A0E6;
 }
 
 .piece > .txt {
@@ -85,9 +138,10 @@ htm, body, div {
 	cursor: default;
 }
 
-.template {
-	margin-bottom: 10px;
-	margin-right: 10px;
+.gap {
+	width: 10px;
+	height: 30px;
+	display: inline-block;
 }
 
 .piece.selected > .txt {
@@ -175,6 +229,7 @@ htm, body, div {
 .dragged + .object-node {
 	display:none;
 	background: red;
+	z-index: 10;
 }
 
 .object.resting + .object-node {
@@ -291,4 +346,39 @@ htm, body, div {
 
 .renderer.resting:hover + .object-node {
 	border-left-color: #DDDDDD;
+}
+
+.trashCan {
+	position: absolute;
+	right: 20px;
+	bottom: 20px;
+	width: 40px;
+	height: 40px;
+	background-image: url(../imgs/trash.png);
+	background-size: contain;
+}
+
+.menu {
+	position: relative;
+}
+
+.source {
+	width: 99%;
+	height: 90%;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+   float: none !important;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+     text-align: center !important; /* left/center/right */
+}
+
+.ajuda-tabs {
+	height: 100%;
+}
+.tab-ajuda {
+	overflow: auto;
+	height: 80%
 }

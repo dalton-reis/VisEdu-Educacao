@@ -21,6 +21,8 @@ APIHandler.prototype.beforeRender = function (context) {}
 
 APIHandler.prototype.addGameObject = function (object, parent) {}
 
+APIHandler.prototype.removeGameObject = function (object, parent) {}
+
 APIHandler.prototype.newGameElement = function (element) {}
 
 APIHandler.prototype.getComponentFactory = function () {}
@@ -28,6 +30,8 @@ APIHandler.prototype.getComponentFactory = function () {}
 APIHandler.prototype.getObjectFactory = function () {}
 
 APIHandler.prototype.getBasicMaterial = function () {}
+
+APIHandler.prototype.getLineMaterial = function () {}
 
 APIHandler.prototype.getWireframeMaterial= function () {}
 

@@ -19,10 +19,11 @@ CubeRenderComponent.prototype = new RenderableComponent();
 * @return {BoxRenderComponent} object
 */
 JSUtils.addMethod(CubeRenderComponent.prototype, "initialize", 
-	function(fillStyle, strokeStyle){
+	function(fillStyle, strokeStyle, texture){
 		this.initialize();
 		this.fillStyle = fillStyle;
 		this.strokeStyle = strokeStyle;
+		this.texture = texture;
 		return this;
 	}
 );
@@ -52,17 +53,16 @@ CubeRenderComponent.prototype.getTag = function(){
 	return "CUBE_RENDER_COMPONENT";
 }
 
-CubeRenderComponent.prototype.genThreeObject = function(){
-	var material = Game.apiHandler.getBasicMaterial(this.fillStyle);
+CubeRenderComponent.prototype.genThreeObject = function(){	
+	var material = Game.apiHandler.getBasicMaterial(this.fillStyle, this.texture);
+	var materials = [material];
 	if (this.strokeStyle) {
 		var wireFrameMaterial = Game.apiHandler.getWireframeMaterial(this.strokeStyle);
-	} else {
-		/* adiciona borda para que consiga adicionar/remover em tempo de execução */
-		var wireFrameMaterial = Game.apiHandler.getWireframeMaterial(this.fillStyle);
+		materials.push(wireFrameMaterial);
 	}
 	
 	var cube = new THREE.SceneUtils.createMultiMaterialObject(
 		new THREE.BoxGeometry(this.owner.getWidth(), this.owner.getHeight(), this.owner.getDepth()), 
-		[material, wireFrameMaterial]);
+		materials);
 	return cube;
 }

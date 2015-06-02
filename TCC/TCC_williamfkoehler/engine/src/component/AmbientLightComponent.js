@@ -7,7 +7,7 @@
 */
 function AmbientLightComponent(){}
 
-AmbientLightComponent.prototype = new Component();
+AmbientLightComponent.prototype = new LightComponent();
 
 /**
 * Método construtor da classe CubeRenderComponent.
@@ -51,5 +51,5 @@ AmbientLightComponent.prototype.getTag = function(){
 }
 
 AmbientLightComponent.prototype.genThreeObject = function(){
-	return new THREE.AmbientLight(0xFFFFFF);
+	return new THREE.AmbientLight(this.color);
 }

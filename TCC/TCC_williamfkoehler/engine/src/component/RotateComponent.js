@@ -7,7 +7,7 @@
 */
 function RotateComponent(){}
 
-RotateComponent.prototype = new Component();
+RotateComponent.prototype = new TransformationComponent();
 
 
 /**

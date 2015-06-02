@@ -17,9 +17,9 @@ function Camera(){}
 * @return {Camera} object
 */
 JSUtils.addMethod(Camera.prototype, "initialize", 
-	function(x, y, z, aspect, angle, near, far){
+	function(x, y, z, aspect, angle, near, far, looktat){
 		this.centerPoint = new Point3D().initialize(x, y, z);
-		ComponentUtils.addComponent(this, new CameraComponent().initialize(aspect, angle, near, far));
+		ComponentUtils.addComponent(this, new CameraComponent().initialize(aspect, angle, near, far, looktat));
 
 		this.translate = Game.componentFactory.getTranslateComponent();
 		this.scale = Game.componentFactory.getScaleComponent();
@@ -106,7 +106,7 @@ Camera.prototype.getAngle = function(){
 /**
  * Função que define a posição a se olhar
  *
- * @author Wi
+ * @author William FK
  * @method getAngle
  * @return {Float} angle
  */

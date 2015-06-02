@@ -47,6 +47,10 @@ Scene.prototype.addLight = function(light){
 	Game.apiHandler.addGameObject(light, this);
 }
 
+Scene.prototype.removeLight = function(light){
+	Game.apiHandler.removeGameObject(light, this);
+}
+
 /**
 * Remove uma camada da cena.
 *
@@ -56,6 +60,7 @@ Scene.prototype.addLight = function(light){
 */
 Scene.prototype.removeLayer = function(layer){
 	this.listLayers = ArrayUtils.removeElement(this.listLayers, layer);
+	Game.apiHandler.removeGameObject(layer, this);
 }
 
 /**

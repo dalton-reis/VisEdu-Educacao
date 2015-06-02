@@ -19,10 +19,11 @@ BoxRenderComponent.prototype = new RenderableComponent();
 * @return {BoxRenderComponent} object
 */
 JSUtils.addMethod(BoxRenderComponent.prototype, "initialize", 
-	function(fillStyle, strokeStyle){
+	function(fillStyle, strokeStyle, texture){
 		this.initialize();
 		this.fillStyle = fillStyle;
 		this.strokeStyle = strokeStyle;
+		this.texture = texture;
 		return this;
 	}
 );
@@ -77,17 +78,19 @@ BoxRenderComponent.prototype.getTag = function(){
 }
 
 BoxRenderComponent.prototype.genThreeObject = function() {
-	var material = Game.apiHandler.getBasicMaterial(this.fillStyle);
+	var materials = [];
+	if (this.fillStyle || this.texture) {
+		var material = Game.apiHandler.getBasicMaterial(this.fillStyle, this.texture);
+		materials.push(material);
+	}
 	if (this.strokeStyle) {
 		var wireFrameMaterial = Game.apiHandler.getWireframeMaterial(this.strokeStyle);
-	} else {
-		/* adiciona borda para que consiga adicionar/remover em tempo de execução */
-		var wireFrameMaterial = Game.apiHandler.getWireframeMaterial(this.fillStyle);
+		materials.push(wireFrameMaterial);
 	}
 	
 	var square = new THREE.SceneUtils.createMultiMaterialObject(new THREE.PlaneGeometry(
 			this.owner.getWidth(), this.owner.getHeight()), 
-			[material,  wireFrameMaterial]);
+			materials);
 	
 	return square;
 }

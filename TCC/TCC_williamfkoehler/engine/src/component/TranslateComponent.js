@@ -7,7 +7,7 @@
 */
 function TranslateComponent(){}
 
-TranslateComponent.prototype = new Component();
+TranslateComponent.prototype = new TransformationComponent();
 
 
 /**

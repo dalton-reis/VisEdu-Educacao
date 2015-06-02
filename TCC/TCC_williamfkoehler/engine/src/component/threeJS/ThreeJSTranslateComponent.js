@@ -54,3 +54,10 @@ ThreeJSTranslateComponent.prototype.doTranslate = function() {
 ThreeJSTranslateComponent.prototype.addGameComponent = function(component, element) {
 	this.doTranslate();
 }
+
+ThreeJSTranslateComponent.prototype.apply = function(vector) {
+	var object = this.owner.threeObject;
+	var mt = new THREE.Matrix4();
+	mt.makeTranslation(vector.x||0, vector.y||0, vector.z||0);
+	object.matrix.multiply(mt);
+}

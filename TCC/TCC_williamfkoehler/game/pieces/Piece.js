@@ -3,22 +3,49 @@ function Piece() {}
 Piece.prototype.htmlObject = null;
 Piece.prototype.gameObject = null;
 
-Piece.prototype.id = null;
-Piece.prototype.properties = {};
+Piece.prototype.properties = null;
+Piece.prototype.loading;
 
-Piece.prototype.setupProperties = function() {
-	
+Piece.prototype._setupProperties = function() {	
+	if (this.type.name) {
+		this.properties['name'] = this.type.name + ' ' + this.type.count;		
+	}
 }
+
 Piece.prototype.init = function() {
+	this.properties = {'active':true};
+	this._setupProperties();
+	this.type.count++;
+	this.loading = false;
+	return this;
+}
+
+Piece.prototype.load = function(properties) {
+	this.properties = properties;
+	this.loading = true;
+	this.type.count++;
 	return this;
 }
 
 Piece.prototype.genElement = function(isTemplate) {
 	var str = "<div class='piece resting ";
+	var txt;
+	var name = this.properties['name'];
+	
+	if (name) {		
+		txt = "<div class='txt'>";
+	}
+	
 	if (isTemplate) {
 		str += "template ";
+		if (txt) {
+			txt += this.type.name;
+		}
 	} else {
 		str += "element ";
+		if (txt) {
+			txt += name;
+		}
 	}
 	
 	str += this.type.clazz + " " + this.type.connector + 
@@ -28,15 +55,8 @@ Piece.prototype.genElement = function(isTemplate) {
 		str +="<img/>";
 	}
 	
-	if (this.type.name) {
-		str += "<div class='txt'>" + this.type.name;
-		if (this.type.count) {
-			if (!this.id) {
-				this.id = this.type.count; 
-			}
-			str += " " + this.id;
-		}
-		str += "</div>";
+	if (txt) {
+		str += txt + "</div>";
 	}
 
 	str += "</div>";	

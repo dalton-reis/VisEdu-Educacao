@@ -57,11 +57,12 @@ CameraComponent.prototype.getTag = function(){
 
 CameraComponent.prototype.genThreeObject = function(){
 	
-	var canvas = Game.canvas;
-	var height = canvas.height;
-	var width = canvas.width;
 	var camera =
 		//new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, near, far);
-		new THREE.PerspectiveCamera(this.angle||45, this.aspect, this.near||0.1, this.far||10000);
+		new THREE.PerspectiveCamera(this.angle||45, this.aspect, this.near||0.1, this.far||10000);	
 	return camera;
+}
+
+CameraComponent.prototype.genHelper = function(){		
+	return this.helper = new THREE.CameraHelper(this.owner.threeObject);
 }

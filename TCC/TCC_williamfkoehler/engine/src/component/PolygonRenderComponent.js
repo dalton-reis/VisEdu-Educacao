@@ -90,15 +90,20 @@ PolygonRenderComponent.prototype.getTag = function(){
 }
 
 PolygonRenderComponent.prototype.genThreeObject = function(){
-	var material = Game.apiHandler.getBasicMaterial(this.fillStyle)
+	var material;
+	var textures = [];	
+	
+	if (this.fillStyle) {
+		material = new THREE.MeshBasicMaterial({color:this.fillStyle, overdraw: true, side: THREE.FrontSide});
+		//material.emissive = new THREE.Color( 0xFFFFFF );
+		//material.morphNormals = true;
+		textures.push(material);
+	} 
 	
 	if (this.strokeStyle) {
 		var wireFrameMaterial = Game.apiHandler.getWireframeMaterial(this.strokeStyle);
-	} else {
-		/* adiciona borda para que consiga adicionar/remover em tempo de execução */
-		var wireFrameMaterial = Game.apiHandler.getWireframeMaterial(this.fillStyle);
-	}
-	
+		textures.push(wireFrameMaterial);
+	} 
 	
 	var geometry = new THREE.Geometry();
 	var points = this.owner.getPoints();
@@ -112,8 +117,13 @@ PolygonRenderComponent.prototype.genThreeObject = function(){
 		$.each(faces, function(index, item) {
 			geometry.faces.push(new THREE.Face3(item.x, item.y, item.z)); 			
 		});
+	} else {
+		for (i = 0; i < points.length-2; i++) {
+			geometry.faces.push(new THREE.Face3(0, i+1, i+2));
+		}
 	}
-	polygon = new THREE.SceneUtils.createMultiMaterialObject( geometry, [material, wireFrameMaterial]);
+	
+	polygon = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial(textures));
 	return polygon;
 	
 }

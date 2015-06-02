@@ -110,6 +110,7 @@ Layer.prototype.addGameObject = function(gameObject){
 */
 Layer.prototype.removeGameObject = function(gameObject){
 	this.listGameObjects = ArrayUtils.removeElement(this.listGameObjects, gameObject);
+	Game.apiHandler.removeGameObject(gameObject, this);
 }
 
 /**

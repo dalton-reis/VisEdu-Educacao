@@ -7,7 +7,7 @@
 */
 function ScaleComponent(){}
 
-ScaleComponent.prototype = new Component();
+ScaleComponent.prototype = new TransformationComponent();
 
 /**
 * Retorna os sistemas que deverão gerenciar este component.

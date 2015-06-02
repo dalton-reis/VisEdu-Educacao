@@ -1,6 +1,6 @@
 var MathUtils = new function () {
 	
-	this.radToAngle = function(rads) {
+	this.radsToAngle = function(rads) {
 		return rads * 180 / Math.PI;
 	}
 	

@@ -84,3 +84,29 @@ ThreeJSRotateComponent.prototype.getAngleXYZ = function(){
 ThreeJSRotateComponent.prototype.onLoad = function(component, object) {
 	this.doRotate();
 }
+
+ThreeJSRotateComponent.prototype.apply = function(vector) {
+	var object = this.owner.threeObject;
+	var clone = object.matrix.clone();
+	var x = vector.x;
+	var y = vector.y;
+	var z = vector.z;
+
+	if (x) {
+		rx = new THREE.Matrix4();
+		rx.makeRotationX(MathUtils.angleToRads(x));
+		object.matrix.multiply(rx);
+	}
+	
+	if (y) {
+		ry = new THREE.Matrix4();
+		ry.makeRotationY(MathUtils.angleToRads(y));
+		object.matrix.multiply(ry);
+	}
+	
+	if (z) {
+		rz = new THREE.Matrix4();
+		rz.makeRotationZ(MathUtils.angleToRads(z));
+		object.matrix.multiply(rz);
+	}
+}

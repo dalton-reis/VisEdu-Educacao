@@ -32,10 +32,10 @@ JSUtils.addMethod(TemplateObject.prototype, "initialize",
 		} else {
 			this.tag = "TEMPLATE_OBJECT";
 		}
-		ComponentUtils.addComponent(this, component);
-		ComponentUtils.addComponent(this, Game.componentFactory.getTranslateComponent());
-		ComponentUtils.addComponent(this, Game.componentFactory.getScaleComponent());
-		ComponentUtils.addComponent(this, Game.componentFactory.getRotateComponent());
+		ComponentUtils.addComponent(this, this.component = component);
+		ComponentUtils.addComponent(this, this.translateComponent = Game.componentFactory.getTranslateComponent());
+		ComponentUtils.addComponent(this, this.scaleComponent = Game.componentFactory.getScaleComponent());
+		ComponentUtils.addComponent(this, this.rotateComponent = Game.componentFactory.getRotateComponent());
 		return this;
 	}
 );

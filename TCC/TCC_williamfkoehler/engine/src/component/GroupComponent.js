@@ -35,7 +35,7 @@ GroupComponent.prototype.getTag = function(){
 }
 
 GroupComponent.prototype.genThreeObject = function(){
-	return new THREE.Group();
+	return q = new THREE.Group();
 }
 
 GroupComponent.prototype.addChild = function(child){
