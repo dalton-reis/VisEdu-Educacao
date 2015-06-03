@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Interface Editor com Sever</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/interface.css" rel="stylesheet"> 
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="js/libs/jqueryui/jquery-ui.theme.css" type="text/css"/>
+
+    </head>
+    <body>
+        <script src="js/libs/three.min.js"></script>
+        <script src="js/libs/stats.min.js"></script>
+        <script src="js/libs/TrackballControls.js"></script>
+        <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+        <script src="js/libs/ajax.googleapis.com_ajax_libs_jquery_1.11.1_jquery.min.js"></script>
+
+        <script src="js/libs/bootstrap.min.js"></script>
+        <script src="js/libs/bootstrap-filestyle.js"></script>
+        <script src="js/libs/bootstrap-dialog.min.js"></script>
+        <script src="js/libs/jquery/jquery.js"></script>
+        <script src="js/libs/jqueryui/jquery-ui.js"></script>
+        <!--
+        Antigo:
+                <script src="js/hefesto/hefesto.js" ></script>
+                <script src="js/hefesto/simulation.js" ></script>
+                <script src="js/hefesto/simulationws.js"></script>
+                <script src="js/hefesto/rigidbody.js"></script>
+                <script src="js/hefesto/collision.js"></script>
+                <script src="js/hefesto/timming.js"></script>
+        -->
+        <script src="js/hefestoNew/hefesto.js" ></script>
+        <script src="js/hefestoNew/force.js"></script>
+        <script src="js/hefestoNew/simulation.js" ></script>
+        <script src="js/hefestoNew/simulationws.js"></script>
+        <script src="js/hefestoNew/rigidbody.js"></script>
+        <script src="js/hefestoNew/collision.js"></script>
+        <script src="js/hefestoNew/timming.js"></script>
+
+        <script src="js/libs/gamuEditado.js"></script>
+        <script src="js/libs/JSON.prune.js"></script>
+        <script src="js/libs/simple_demo.js"></script>
+
+        <script src="js/libs/libs/CenarioEditorThreejs.js"></script>
+        <script src="js/libs/libs/CenarioSimulacao.js"></script>
+        <script src="js/libs/libs/CriaObjetoThreejs.js"></script>
+        <script src="js/libs/libs/Util.js"></script>		
+        <script src="js/libs/libs/CriaCorpoRigido.js"></script>
+        <script src="js/libs/Comuns/Export/ExportFuncionando.js"></script>
+        <script src="js/libs/Comuns/Importe/Import.js"></script>
+
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <div class="col-md-12" >
+                        <!--<button type="button" data-toggle="modal" data-target="#modalAlvo" class="btn btn-inverse navbar-btn">Criar Alvo</button>
+                        <button  type="button" id="btnEsfera" data-toggle="modal" data-target="#modalEsfera" class="btn btn-inverse navbar-btn">Criar Bola</button>
+                        <button type="button"  data-toggle="modal" data-target="#modalCubo" class="btn btn-inverse navbar-btn">Criar Caixa</button>
+                        <button type="button"  onclick="createCannon()" class="btn btn-inverse navbar-btn">Criar Canh&atilde;o</button>  -->
+                        <!--<button type="button"  onclick="salvarCenario()" class="btn btn-inverse navbar-btn">Salvar</button>
+                        <!--<input type="file" id="Arquivo" class="filestyle" data-buttonText="Find file" data-input="false">-->
+                        <a class="navbar-brand" href="http://www.inf.furb.br/gcg/visedu" target="blank">VisEdu</a>
+                    </div>
+                    <div id="criaObjetos" >
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" id="CriaObjetos" data-toggle="dropdown" title="Criar Objetos">Criar Objetos <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu" id="MenuCriar">
+                                    <li><a href="#" data-toggle="modal" data-target="#modalAlvo" title="Adiciona Alvo">
+                                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Alvo
+                                        </a></li>    
+                                    <li class="divider"></li>
+                                    <li class="disabled"><a href="#" onclick="createCannon()" title="Adiciona Canh&atilde;o">
+                                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Canh&atilde;o
+                                        </a></li>                                  
+                                    <li class="divider"></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#modalCubo" title="Adiciona Cubo">
+                                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Cubo
+                                        </a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#modalEsfera" title="Adiciona Esfera">
+                                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Esfera
+                                        </a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="Arquivo" >
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Menu Arquivo">Arquivo<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#" data-toggle="modal" data-target="#modalAbrir" title="Abrir Arquivo">
+                                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>  Abrir
+                                        </a></li>    
+                                    <li class="divider"></li> 
+                                    <li><a href="#" onclick="salvarCenario()" title="Salvar Arquivo">
+                                            <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Salvar
+                                        </a></li>
+                                    <li class="divider"></li>                                        
+                                    <li><a href="#" data-toggle="modal" data-target="#modalExemplos" title="Carregar Exemplos">
+                                            <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> Exemplos
+                                        </a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="botoes">
+                        <button type="button"  data-toggle="modal" data-target="#modalForcas" title="Adiciona For&ccedil;a" class="btn btn-primary navbar-btn">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> For&ccedil;a
+                        </button> 
+                        <button type="button"  data-toggle="modal" data-target="#ConfCanhao" title="Configura&ccedil;&otilde;es do Canh&atilde;o" class="btn btn-primary navbar-btn ">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Canh&atilde;o
+                        </button>
+                        <button type="button"  data-toggle="modal" data-target="#NrBalls"  title="Adiciona Bolas no Canh&atilde;o" class="btn btn-primary navbar-btn">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Bolas do Canh&atilde;o
+                        </button> 
+                        <button type="button" id="btnPause" onclick="playPausa(false)" title="Pause" class="btn btn-primary navbar-btn">
+                            <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                        </button> 
+                        <button type="button"  id="btnPlay" onclick="playPausa(true)" title="Play" class="btn btn-primary navbar-btn">
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </button>
+
+                        <button type="button"  onclick="teste()" class="btn btn-primary navbar-btn">Teste</button> 
+                    </div>
+                    <div class="estiloDivAjuda" >
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Primeiros Passos">Primeiros Passos <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#" data-toggle="modal" data-target="#modalAjuda" title="Ajuda">Ajuda</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#modalSobre" title="Sobre">Sobre</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div> 
+                </div>
+            </div>
+        </nav>
+
+        <!-- Início Div do centro aonde será montado o cenario. --> 
+        <div id="Principal" class="estiloPrincipal">
+            <div id="listaObjetos" class="estiloDivObjetos">
+                <h2>Objetos</h2>
+            </div>
+            <div id="container" class="estiloDivRender">
+            </div>
+            <div class="estiloDivPropriedades">
+                <div id="Propriedades" class="divPropriedadesObjeto">
+                    <label>Propriedades:</label>
+                    <label id="listaProriedades"></label>
+                </div>
+                <div class="divPropriedadesCena">
+                    <label>Propriedades Cena:</label>
+                    <div>
+                        <label>For&ccedil;as</label>
+                        <ul id="listForces">
+                        </ul>
+                    </div>
+                    <div>
+                        <label>Canh&atilde;o</label>
+                        <ul>
+                            <li>Velociade Inicial: 100m/s</li>
+                            <li>Posi&ccedil;&otilde;es: x:10 y:20 z:40</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div> 
+        <!-- Fim Div do centro aonde será montado o cenario. --> 
+
+        <div id="posicaoCamera" class="div_posciaCamera">
+            <div>
+                <div class="col-md-3 column" style="position: relative; bottom: -10px" >
+                    <h4 id="posCamX">Camera X:</h4>
+                    <input id="cameraX" type="text"> 
+                </div>
+                <div class="col-md-3 column" style="position: relative; bottom: -10px">
+                    <h4 id="posCamY">Camera Y:</h4>
+                    <input id="cameraY" type="text"> 
+                </div>
+                <div class="col-md-3 column" style="position: relative; bottom: -10px" >
+                    <h4 id="posCamZ">Camera Z:</h4>
+                    <input id="cameraZ" type="text">
+                </div>
+                <div class="col-md-3 column" style="position: relative; bottom: -43px">
+                    <button type="button" class="btn btn-primary" onclick="mudaCamera()" title="Muda Posi&ccedil;&atilde;o C&acirc;mera">Muda C&acirc;mera</button>
+                </div>
+            </div>
+        </div> 
+
+        <div id="Posicoes" class="div_Posicao">
+            <div id ="posicaoX" class="col-md-3 column" style="position: relative; bottom: -10px">
+                <h4 id="posX">Posi&ccedil;&atilde;o X:</h4>  
+                <input id="pX" name="posicaoX" type="text" >
+            </div>
+            <div id ="posicaoY" class="col-md-3 column" style="position: relative; bottom: -10px">
+                <h4 id="posY">Posi&ccedil;&atilde;o Y:</h4>
+                <input id="pY" type="text" >
+            </div> 
+            <div id ="posicaoZ" class="col-md-3 column" style="position: relative; bottom: -10px">
+                <h4 id ="posZ">Posi&ccedil;&atilde;o Z:</h4>
+                <input id="pZ" type="text" >
+            </div>
+            <div id="mudaPosicao" class="col-md-3 column" style="position: relative; bottom: -43px">
+                <button type="button" class="btn btn-primary" onclick="mudaPos()" title="Muda Posi&ccedil;&atilde;o Objeto">Muda Posi&ccedil;&atilde;o</button>
+            </div>
+        </div>
+        <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+        <!-- Modal -->
+        <div class="modal fade" id="modalEsfera" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalLabel" ><strong>Criar Esfera</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Nome Do Objeto:</h5>
+                        <input id="NomeEsfera" placeholder="Esfera">
+                        <h5>Tamanho:</h5>
+                        <input type="number" id="TamanhoEsfera" >
+                        <h5>Massa:</h5>
+                        <input type="number" id="MassaEsfera">
+                        <div id="posicao1">
+                            <h5>Posi&ccedil;&atilde;o</h5>
+                            <input type="text" class="pos" id="posEsferaX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="posEsferaY" placeholder="y" value="0">
+                            <input type="text" class="pos" id="posEsferaZ" placeholder="z" value="0">                            
+                        </div>
+                        <div id="aceleracao1" >
+                            <h5>Acelera&ccedil;&atilde;o</h5>
+                            <input type="text" class="pos" id="acEsferaX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="acEsferaY" placeholder="y" value="-10">
+                            <input type="text" class="pos" id="acEsferaZ" placeholder="z" value="0">                            
+                        </div>
+                        <div id="rotacao1">
+                            <h5>Rota&ccedil;&atilde;o</h5>
+                            <input type="text" class="pos" id="rotEsferaX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="rotEsferaY" placeholder="y" value="0">
+                            <input type="text" class="pos" id="rotEsferaZ" placeholder="z" value="0">                            
+                        </div>
+                        <div id="velocidade1">
+                            <h5>Velocidade</h5>
+                            <input type="text" class="pos" id="vEsferaX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="vEsferaY" placeholder="y" value="0">
+                            <input type="text" class="pos" id="vEsferaZ" placeholder="z" value="0">                            
+                        </div>
+                        <div id="orientacao1">
+                            <h5>Orienta&ccedil;&atilde;o</h5>
+                            <input type="text" class="pos" id="oEsferaR" placeholder="x" value="1">
+                            <input type="text" class="pos" id="oEsferaI" placeholder="y" value="0">
+                            <input type="text" class="pos" id="oEsferaJ" placeholder="z" value="0">                            
+                        </div>
+                        <h5>Amortec. linear</h5>
+                        <input type="text" id="amortce_Linear_Esfera" class="pos" value="0.95">
+                        <h5>Amortec. angular</h5>
+                        <input type="text" id="amortce_Angular_Esfera" class="pos" value="0.8">
+                        <h5>Material:</h5>
+                        <select id="MaterialEsfera">
+                            <option>Madeira</option>
+                            <option>Metal</option>
+                            <option>Pl&aacute;stico</option>
+                            <option>Borracha</option>
+                        </select>
+                    <div>
+                    	<input type="checkbox" id="usaForcas_Esfera" checked> Usa For&ccedil;a
+                    </div>
+                    </div>
+                    <div class="modal-body" style="position: absolute; left: 350px; top: 65px">
+                        <h5>Lista De Objetos: </h5>
+                        <div id="listaDeObjetos_Esfera" class="listaDeObjetos">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="criarObjetoFis('Esfera')" data-dismiss="modal" title="Cria Esfera">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Criar Objeto
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" title="Cancelar">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalCubo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalCuboLabel"><strong>Criar Cubo</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Nome Do Cubo</h5>
+                        <input id="NomeCubo" placeholder="Cubo">
+                        <h5>Tamanho:</h5>
+                        <input type="number" id="TamanhoCubo" >
+                        <h5>Massa:</h5>
+                        <input type="number" id="MassaCubo">
+                        <div id="posicao2">
+                            <h5>Posi&ccedil;&atilde;o</h5>
+                            <input type="text" class="pos" id="posCuboX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="posCuboY" placeholder="y" value="0">
+                            <input type="text" class="pos" id="posCuboZ" placeholder="z" value="0">                            
+                        </div>
+                        <div id="aceleracao2">
+                            <h5>Acelera&ccedil;&atilde;o</h5>
+                            <input type="text" class="pos" id="acCuboX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="acCuboY" placeholder="y" value="-10">
+                            <input type="text" class="pos" id="acCuboZ" placeholder="z" value="0">                            
+                        </div>
+                        <div id="rotacao2">
+                            <h5>Rota&ccedil;&atilde;o</h5>
+                            <input type="text" class="pos" id="rotCuboX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="rotCuboY" placeholder="y" value="0">
+                            <input type="text" class="pos" id="rotCuboZ" placeholder="z" value="0">                            
+                        </div>
+                        <div id="velocidade2">
+                            <h5>Velocidade</h5>
+                            <input type="text" class="pos" id="vCuboX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="vCuboY" placeholder="y" value="0">
+                            <input type="text" class="pos" id="vCuboZ" placeholder="z" value="0">                            
+                        </div>
+                        <div id="orientacao2">
+                            <h5>Orienta&ccedil;&atilde;o</h5>
+                            <input type="text" class="pos" id="oCuboR" placeholder="x" value="1">
+                            <input type="text" class="pos" id="oCuboI" placeholder="y" value="0">
+                            <input type="text" class="pos" id="oCuboJ" placeholder="z" value="0">                            
+                        </div>
+                        <h5>Amortec. linear</h5>
+                        <input type="text" id="amortce_Linear_Cubo" class="pos" value="0.95">
+                        <h5>Amortec. angular</h5>
+                        <input type="text" id="amortce_Angular_Cubo" class="pos" value="0.8">
+                        <h5>Material:</h5>
+                        <select id="MaterialCubo">
+                            <option>Madeira</option>
+                            <option>Metal</option>
+                            <option>Pl&aacute;stico</option>
+                            <option>Borracha</option>
+                        </select>
+                    <div>
+                    	<input type="checkbox" id="usaForcas_Cubo" checked> Usa For&ccedil;a
+                    </div>    
+                    </div>
+                    <div class="modal-body" style="position: absolute; left: 350px; top: 65px">
+                        <h5>Lista De Objetos: </h5>
+                        <div id="listaDeObjetos_Cubo" class="listaDeObjetos">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="criarObjetoFis('Cubo')" data-dismiss="modal" title="Cria Cubo">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Criar Objeto
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" title="Cancelar">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalAlvo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalAlvoLabel"><strong>Criar Alvo</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Nome Do Alvo:</h5>
+                        <input id="NomeAlvo" placeholder="Alvo">
+                        <h5>Tamanho:</h5>
+                        <input type="number" id="TamanhoAlvo" >
+                        <h5>Massa:</h5>
+                        <input type="number" id="MassaAlvo">
+                        <div id="posicao3">
+                            <h5>Posi&ccedil;&atilde;o</h5>
+                            <input type="text" class="pos" id="posAlvoX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="posAlvoY" placeholder="y" value="0">
+                            <input type="text" class="pos" id="posAlvoZ" placeholder="z" value="0">                            
+                        </div>
+                        <div id="aceleracao3">
+                            <h5>Acelera&ccedil;&atilde;o</h5>
+                            <input type="text" class="pos" id="acAlvoX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="acAlvoY" placeholder="y" value="-10">
+                            <input type="text" class="pos" id="acAlvoZ" placeholder="z" value="0">                            
+                        </div>
+                        <div id="rotacao3">
+                            <h5>Rota&ccedil;&atilde;o</h5>
+                            <input type="text" class="pos" id="rotAlvoX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="rotAlvoY" placeholder="y" value="0">
+                            <input type="text" class="pos" id="rotAlvoZ" placeholder="z" value="0">                            
+                        </div>
+                        <div id="velocidade3">
+                            <h5>Velocidade</h5>
+                            <input type="text" class="pos" id="vAlvoX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="vAlvoY" placeholder="y" value="0">
+                            <input type="text" class="pos" id="vAlvoZ" placeholder="z" value="0">                            
+                        </div>
+                        <div id="orientacao3">
+                            <h5>Orienta&ccedil;&atilde;o</h5>
+                            <input type="text" class="pos" id="oAlvoR" placeholder="x" value="1">
+                            <input type="text" class="pos" id="oAlvoI" placeholder="y" value="0">
+                            <input type="text" class="pos" id="oAlvoJ" placeholder="z" value="0">                            
+                        </div>
+                        <h5>Amortec. linear</h5>
+                        <input type="text" id="amortce_Linear_Alvo" class="pos" value="0.95">
+                        <h5>Amortec. angular</h5>
+                        <input type="text" id="amortce_Angular_Alvo" class="pos" value="0.8">
+                        <h5>Textura:</h5>
+                        <select id="MaterialAlvo">
+                            <option value="Alvo1">Alvo Vermelho</option>
+                            <option value="Alvo2">Alvo Azul</option>
+                        </select>
+                    </div>
+                    <div class="modal-body" style="position: absolute; left: 350px; top: 65px">
+                        <h5>Lista De Objetos: </h5>
+                        <div id="listaDeObjetos_Alvo" class="listaDeObjetos">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="criarObjetoFis('Alvo')" data-dismiss="modal" title="Cria Alvo">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Criar Objeto
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" title="Cancelar"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalAjuda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalAjudaLabel" ><strong>Ajuda</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Aqui vai o texto para ajudar a usar o criador de cen&aacute;rios.</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span> OK
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalSobre" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalSobreLabel" ><strong>Sobre</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>VisEdu-Fis</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span> OK
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" title="Cancelar"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalAbrir" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalAbrirLabel" ><strong>Abrir</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="file" id="arquivo" class="filestyle" data-buttonText=" Escolher Arquivo">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="Abrir()" data-dismiss="modal" title="Abrir Aquivo">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span> OK
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" title="Cancelar"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <div class="modal fade" id="modalForcas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalForcasLabel" ><strong>Cadastra Força</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="Principal">
+                        <h5>Nome:</h5>
+                        <input type="text" id="nomeForca">
+                            <h5>Valores:</h5>
+                            <input type="text" class="pos" id="ForcasX" placeholder="x" value="0">
+                            <input type="text" class="pos" id="ForcasY" placeholder="y" value="-10">
+                            <input type="text" class="pos" id="ForcasZ" placeholder="z" value="0">                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="criaForca()" data-dismiss="modal" title="Adiciona For&ccedil;a">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Adicionar
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" title="Cancelar"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <div class="modal fade" id="ConfCanhao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalConfCanhaoLabel" ><strong>Configura&ccedil;&otilde;es Canh&atilde;o</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="Angulo">
+                            <h5>&Acirc;ngulo</h5>
+                            <input type="text" class="pos" id="AnguloX" placeholder="x" value="1">
+                            <input type="text" class="pos" id="AnguloY" placeholder="y" value="0">
+                            <input type="text" class="pos" id="AnguloZ" placeholder="z" value="0">                            
+                        </div>
+                        <div>
+                            <h5>Velocidade Inicial:</h5>
+                            <input type="text" id="velocidadeInicial" value="0"> 
+                        </div>
+                        <div id="PosicoesCanhao">
+                            <h5>Posi&ccedil;&otilde;es:</h5>
+                            <input type="text" class="pos" id="PoscX" placeholder="x" value="1">
+                            <input type="text" class="pos" id="PoscY" placeholder="y" value="0">
+                            <input type="text" class="pos" id="PoscZ" placeholder="z" value="0">                            
+                        </div>
+                        <div>
+                            <h5>Numero M&aacute;ximo de Bolas</h5>
+                            <input type="text" id="nrMaxBalls" value="0"> 
+                        </div> 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="alert('Ainda precisa ser feito.')" data-dismiss="modal" title="Adiciona Canh&atilde;o">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span> OK
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" title="Cancelar"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <div class="modal fade" id="NrBalls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalNrBallsoLabel" ><strong>Quantidades de Bolas</strong></h4>
+                    </div>
+                    <div class="modal-body">                        
+                        <div>
+                            <h5>Numero M&aacute;ximo de Bolas de Madeira:</h5>
+                            <input type="text" id="qtBolasMadeiras" value="0"> 
+                        </div>                        
+                        <div>
+                            <h5>Numero M&aacute;ximo de Bolas de Metal:</h5>
+                            <input type="text" id="qtBolasMetal" value="0"> 
+                        </div> 
+                        <div>
+                            <h5>Numero M&aacute;ximo de Bolas de Pl&aacute;stico:</h5>
+                            <input type="text" id="qtBolasPlastico" value="0"> 
+                        </div> 
+                        <div>
+                            <h5>Numero M&aacute;ximo de Bolas de Borracha:</h5>
+                            <input type="text" id="qtBolasBorracha" value="0"> 
+                        </div> 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="alert('Ainda precisa ser feito.')" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true" title="Adiciona Bolas no Canh&atilde;o"></span>OK
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" title="Cancelar"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalExemplos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalExemplos" ><strong>Exemplos</strong></h4>
+                    </div>
+                    <div class="modal-body">  
+                        <div style="width: 200px; height: 340px; top: 10px">
+                            <h5><strong>Lista De Exemplos:</strong></h5>
+                            <select onchange="selecionaExemplo(this.value)" id="Exemplos" >
+                                <option></option>
+                                <option value="Cena">Colis&otilde;es Esferas</option>
+                                <option value="Cena(2)">Colis&atilde;o Esferas Cubo</option>
+								<option value="Cena(1)">V&aacute;rios Objetos</option>
+                            </select>
+                            <div style="margin-left: 30px">
+                                <label class="radio">
+                                    <input onclick="selecionaExemplo(this.value)" type="radio" id="1" name="line1" value="1"> Colis&otilde;es Esferas
+                                </label>
+                                <label class="radio">
+                                    <input onclick="selecionaExemplo(this.value)" type="radio" id="2" name="line1" value="2"> Colis&atilde;o Esferas Cubo
+                                </label>
+                            </div>
+                            <div  style="position: absolute; left: 250px; top: 10px " >
+                                <h5><strong>Descri&ccedil;&atilde;o:</strong> </h5>
+                                <div id="DescricaoExemplo" class="DescricaoExemplos" >
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" title="Carregar Exemplo" onclick="carregaExemplos()" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Carregar Exemplo
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" title="Cancelar"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="modalSelecionaServ" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="mySelecionaServ" ><strong>Seleciona Servidor</strong></h4>
+                    </div>
+                    <div class="modal-body">  
+                        <div style="width: 200px; height: 340px; top: 10px">
+                            <div style="margin-left: 30px">
+                                <label class="radio">
+                                    <input onclick="selecionaExemplo(this.value)" type="radio" id="1" name="line1" value="1"> Colis&otilde;es Esferas
+                                </label>
+                                <label class="radio">
+                                    <input onclick="selecionaExemplo(this.value)" type="radio" id="2" name="line1" value="2"> Colis&atilde;o Esferas Cubo
+                                </label>
+                            </div>
+                            <div  style="position: absolute; left: 250px; top: 10px " >
+                                <h5><strong>Descri&ccedil;&atilde;o:</strong> </h5>
+                                <div id="DescricaoExemplo" class="DescricaoExemplos" >
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" title="Carregar Exemplo" onclick="carregaExemplos()" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Carregar Exemplo
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" title="Cancelar"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

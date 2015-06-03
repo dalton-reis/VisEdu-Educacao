@@ -1,0 +1,269 @@
+{
+	"metadata": {
+		"Version": 1.1
+	},
+	"Camera": {
+		"posicao": [
+			5.545066517089832,
+			42.982471524229595,
+			72.50952984879054
+		]
+	},
+	"Objetos": {
+		"Objeto0": {
+			"nome": "Esfera0",
+			"tamanho": 3,
+			"tipo": "Esfera",
+			"material": "Metal",
+			"posicao": [
+				-10.57933635179435,
+				33.491123475146594,
+				0
+			],
+			"velocidade": [
+				0,
+				0,
+				0
+			],
+			"rotacao": [
+				0,
+				0,
+				0
+			],
+			"aceleracao": [
+				0,
+				-10,
+				0
+			],
+			"massa": 3,
+			"amortecedorAngular": 0.8,
+			"amortecedorLinear": 0.95,
+			"orientacao": [
+				1,
+				0,
+				0
+			],
+			"colideCom": [],
+			"interagem": true,
+			"usaForcas": true
+		},
+		"Objeto1": {
+			"nome": "Cubo1",
+			"tamanho": [
+				4,
+				4,
+				4
+			],
+			"tipo": "Cubo",
+			"material": "Metal",
+			"posicao": [
+				10.633019448090762,
+				33.64475203366273,
+				0
+			],
+			"velocidade": [
+				0,
+				0,
+				0
+			],
+			"rotacao": [
+				0,
+				0,
+				0
+			],
+			"aceleracao": [
+				0,
+				-10,
+				0
+			],
+			"massa": 5,
+			"amortecedorAngular": 0.8,
+			"amortecedorLinear": 0.95,
+			"orientacao": [
+				1,
+				0,
+				0
+			],
+			"colideCom": [
+				0
+			],
+			"interagem": true,
+			"usaForcas": true
+		},
+		"Objeto2": {
+			"nome": "Esfera2",
+			"tamanho": 3,
+			"tipo": "Esfera",
+			"material": "Plástico",
+			"posicao": [
+				-1.7801532564593143,
+				30.8794302266379,
+				0
+			],
+			"velocidade": [
+				0,
+				0,
+				0
+			],
+			"rotacao": [
+				0,
+				0,
+				0
+			],
+			"aceleracao": [
+				0,
+				-10,
+				0
+			],
+			"massa": 1,
+			"amortecedorAngular": 0.8,
+			"amortecedorLinear": 0.95,
+			"orientacao": [
+				1,
+				0,
+				0
+			],
+			"colideCom": [
+				0,
+				1
+			],
+			"interagem": true,
+			"usaForcas": true
+		},
+		"Objeto3": {
+			"nome": "Cubo3",
+			"tamanho": [
+				4,
+				4,
+				4
+			],
+			"tipo": "Cubo",
+			"material": "Borracha",
+			"posicao": [
+				3.0788741302420672,
+				37.17821928618359,
+				0
+			],
+			"velocidade": [
+				0,
+				0,
+				0
+			],
+			"rotacao": [
+				0,
+				0,
+				0
+			],
+			"aceleracao": [
+				0,
+				-10,
+				0
+			],
+			"massa": 2,
+			"amortecedorAngular": 0.8,
+			"amortecedorLinear": 0.95,
+			"orientacao": [
+				1,
+				0,
+				0
+			],
+			"colideCom": [
+				0,
+				1,
+				2
+			],
+			"interagem": true,
+			"usaForcas": true
+		},
+		"Objeto4": {
+			"nome": "Esfera4",
+			"tamanho": 3,
+			"tipo": "Esfera",
+			"material": "Madeira",
+			"posicao": [
+				-4.474528984901923,
+				39.63646675497474,
+				0
+			],
+			"velocidade": [
+				0,
+				0,
+				0
+			],
+			"rotacao": [
+				0,
+				0,
+				0
+			],
+			"aceleracao": [
+				0,
+				-10,
+				0
+			],
+			"massa": 3,
+			"amortecedorAngular": 0.8,
+			"amortecedorLinear": 0.95,
+			"orientacao": [
+				1,
+				0,
+				0
+			],
+			"colideCom": [
+				0,
+				1,
+				2,
+				3
+			],
+			"interagem": true,
+			"usaForcas": true
+		},
+		"Objeto5": {
+			"nome": "Cubo5",
+			"tamanho": [
+				6,
+				6,
+				6
+			],
+			"tipo": "Cubo",
+			"material": "Madeira",
+			"posicao": [
+				6.28215656949132,
+				45.7476626742623,
+				0
+			],
+			"velocidade": [
+				0,
+				0,
+				0
+			],
+			"rotacao": [
+				0,
+				0,
+				0
+			],
+			"aceleracao": [
+				0,
+				-10,
+				0
+			],
+			"massa": 6,
+			"amortecedorAngular": 0.8,
+			"amortecedorLinear": 0.95,
+			"orientacao": [
+				1,
+				0,
+				0
+			],
+			"colideCom": [
+				0,
+				1,
+				2,
+				3,
+				4
+			],
+			"interagem": true,
+			"usaForcas": true
+		}
+	},
+	"Forces": {}
+}

@@ -1,0 +1,104 @@
+{
+	"metadata": {
+		"Version": 1
+	},
+	"Camera": {
+		"posicao": [
+			36.26788335773967,
+			41.708065861400634,
+			36.26788335773967
+		]
+	},
+	"Objetos": {
+		"Objeto0": {
+			"nome": "Cubo0",
+			"tamanho": [
+				3,
+				3,
+				3
+			],
+			"tipo": "Cubo",
+			"material": "Madeira",
+			"posicao": [
+				13.523440165778908,
+				13.875852606163756,
+				0
+			],
+			"velocidade": [
+				0,
+				0,
+				0
+			],
+			"rotacao": [
+				0,
+				2,
+				0
+			],
+			"aceleracao": [
+				2,
+				0,
+				0
+			],
+			"massa": 3,
+			"amortecedorAngular": 0.8,
+			"amortecedorLinear": 0.95,
+			"orientacao": [
+				1,
+				0,
+				0
+			],
+			"colideCom": [],
+			"interagem": true,
+			"usaForcas": true
+		},
+		"Objeto1": {
+			"nome": "Esfera1",
+			"tamanho": 4,
+			"tipo": "Esfera",
+			"material": "Madeira",
+			"posicao": [
+				3.41896554707275,
+				16.01059936958122,
+				0
+			],
+			"velocidade": [
+				0,
+				0,
+				0
+			],
+			"rotacao": [
+				5,
+				0,
+				0
+			],
+			"aceleracao": [
+				0,
+				0,
+				0
+			],
+			"massa": 4,
+			"amortecedorAngular": 0.8,
+			"amortecedorLinear": 0.95,
+			"orientacao": [
+				1,
+				0,
+				0
+			],
+			"colideCom": [
+				0
+			],
+			"interagem": true,
+			"usaForcas": true
+		}
+	},
+	"Forces": {
+		"Force0": {
+			"name": "Gravidade",
+			"values": [
+				0,
+				-10,
+				0
+			]
+		}
+	}
+}

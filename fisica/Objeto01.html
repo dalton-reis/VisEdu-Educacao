@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset ="utf-8">
+        <title>Exemplo01</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link  href="css/interface.css" rel="stylesheet"> 
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <script src="js/libs/three.min.js"></script>
+        <script src="js/libs/stats.min.js"></script>
+        <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+        <script src="js/libs/ajax.googleapis.com_ajax_libs_jquery_1.11.1_jquery.min.js"></script>
+        <script src="js/libs/bootstrap.min.js"></script>
+        <script src="js/libs/jquery/jquery.js"></script>
+        <script src="js/libs/jqueryui/jquery-ui.js"></script>
+        <script src="js/libs/TrackballControls.js"></script>
+
+        <!--
+        Antigo:
+                <script src="js/hefesto/hefesto.js" ></script>
+                <script src="js/hefesto/simulation.js" ></script>
+                <script src="js/hefesto/simulationws.js"></script>
+                <script src="js/hefesto/rigidbody.js"></script>
+                <script src="js/hefesto/collision.js"></script>
+                <script src="js/hefesto/timming.js"></script>
+        -->
+        <script src="js/hefestoNew/hefesto.js" ></script>
+        <script src="js/hefestoNew/force.js"></script>
+        <script src="js/hefestoNew/simulation.js" ></script>
+        <script src="js/hefestoNew/simulationws.js"></script>
+        <script src="js/hefestoNew/rigidbody.js"></script>
+        <script src="js/hefestoNew/collision.js"></script>
+        <script src="js/hefestoNew/timming.js"></script>
+
+        <script src="js/libs/JSON.prune.js"></script>
+        <script src="js/libs/simple_demo.js"></script>
+        <script src="jss/gamu.js"></script> 
+
+        <script src="OA/Exemplo02_Corrigido.js"></script> 
+		<script src="js/libs/libs/Util.js"></script>
+        <!--<script src="js/libs/Comuns/CenarioJogo.js"></script>-->
+        <script src="js/libs/Comuns/Export2.js"></script>
+
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+					<button type="button" class="btn btn-primary" title="Iniciar" data-toggle="modal" data-target="#modalTutorial">Iniciar</button>  
+                    <a class="navbar-brand" href="http://www.inf.furb.br/gcg/visedu" target="blank">VisEdu</a>					
+                </div>
+					
+               <!-- <div class="estiloDivAjuda" >
+                    
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" title="Primeiros Passos" data-toggle="dropdown">Primeiros Passos <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a title="Iniciar Tutorial" href="#" data-toggle="modal" data-target="#modalTutorial">Iniciar Tutorial</a></li>
+                                <li class="divider"></li>
+                                <li><a title="Ajuda" href="#" data-toggle="modal" data-target="#modalAjuda">Ajuda</a></li>
+                                <li class="divider"></li>
+                                <li><a title="Exemplos Prontos" href="#">Exemplos Prontos</a></li>
+                                <li class="divider"></li>
+                                <li><a title="Sobre" href="#" data-toggle="modal" data-target="#modalSobre">Sobre</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div> -->
+            </div>
+        </nav>
+        <div id="container" class="estiloDivRenderUsuario" ></div>  
+        <div id="explicacao" class="estiloDivExplicacao">
+            <div id="texto_explicacao">
+                <h2 style="margin-top: -2px">Explica&ccedil;&atilde;o</h2>
+
+
+            </div> 
+        </div>
+        <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->        
+        <div id="modalAjuda" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalAjudaLabel" >Ajuda</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="modalTutorial" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalTutorialLabel" >Tutorial</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Ol&aacute; tudo bom!</h3>
+                        <h5>Voc&ecirc; acaba de acessar o VisEdu-F&iacute;sica nele iremos apresentar a voc&ecirc; alguns conceitos b&aacute;sicos de F&iacute;sica sobre colis&otilde;es.</h5>
+                        <h4>Para come&ccedil;ar permita-me fazer  uma pergunta voc&ecirc; j&aacute; reparou como dois objetos agem quando colidem? Pense um pouco nisso.</h4>
+                        <h4>Para ajudar nesse pensamento que tal fazermos uma simula&ccedil;&atilde;o? Para isso vamos usar um cen&aacute;rio com um canh&atilde;o (para atirar) e um alvo.</h4>
+                        <h4>Ent&atilde;o vamos come&ccedil;ar? </h4>
+                        <h4>Todos os passos e explica&ccedil;&otilde;es ser&atilde;o apresentados &agrave; direita do cen&aacute;rio</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"  onclick="iniciaTutorial()" data-dismiss="modal">INICIAR</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalPasso1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalPasso1Label" >Primeiro Passo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Texto</h4>
+                        <h4>Poderia ser a Explicação do atrito, força e tudo </h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="Passo1"  class="btn btn-primary"  data-toggle="modal" data-target="#modalPasso2" data-dismiss="modal" >Pr&oacute;ximo</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <nav>
+                            <ul class="pagination">
+                                <li><a href="#modalTutorial" data-toggle="modal" data-dismiss="modal" >&laquo;</a></li>
+                                <li><a href="#modalTutorial" data-toggle="modal" data-dismiss="modal">In&iacute;cio</a></li>
+                                <li class="active"><a href="#modalPasso1" data-toggle="modal" data-dismiss="modal">1</a></li>
+                                <li><a href="#modalPasso2" data-toggle="modal" data-dismiss="modal">2</a></li>
+                                <li><a href="#modalPasso2" data-toggle="modal" data-dismiss="modal">&raquo;</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalPasso2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span></button>
+                        <h4 class="modal-title" id="myModalPasso2Label" >Segundo Passo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Texto</h4>
+                        <h4>Explicação da Colisão</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <nav>
+                            <ul class="pagination">
+                                <li><a href="#modalPasso1" data-toggle="modal" data-dismiss="modal">&laquo;</a></li>
+                                <li><a href="#modalTutorial" data-toggle="modal" data-dismiss="modal">In&iacute;cio</a></li>
+                                <li><a href="#modalPasso1" data-toggle="modal" data-dismiss="modal">1</a></li>
+                                <li class="active"><a href="#modalPasso2" data-toggle="modal" data-dismiss="modal">2</a></li>
+                                <li class="disabled"><a href="#">&raquo;</a></li>
+                            </ul>
+                        </nav>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <div id="Controle" class="estiloPlayPause">
+            <button type="button" class="btn btn-primary btn-lg" onclick="playPausa(true)" >
+				<span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+			</button>
+            <button type="button" class="btn btn-danger btn-lg" onclick="playPausa(false)">
+				<span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+			</button>
+        </div>
+
+        <script>
+            $("#modalAjuda").draggable({
+                handle: ".modal-header"
+            });
+
+            $("#modalTutorial").draggable({
+                handle: ".modal-header"
+            });
+
+            $("#modalPasso1").draggable({
+                handle: ".modal-header"
+            });
+
+            $("#modalPasso2").draggable({
+                handle: ".modal-header"
+            });
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,57 @@
+{
+	"metadata": {
+		"Version": 1
+	},
+	"Camera": {
+		"posicao": [
+			20,
+			23,
+			20
+		]
+	},
+	"Objetos": {
+		"Objeto1": {
+			"nome": "Cubo1",
+			"tamanho": [
+				4,
+				4,
+				4
+			],
+			"tipo": "Cubo",
+			"material": "Madeira",
+			"posicao": [
+				0.8645343637228532,
+				16.864492840751907,
+				0
+			],
+			"velocidade": [
+				0,
+				0,
+				0
+			],
+			"rotacao": [
+				0,
+				0,
+				0
+			],
+			"aceleracao": [
+				0,
+				-10,
+				0
+			],
+			"massa": 4,
+			"amortecedorAngular": 0.8,
+			"amortecedorLinear": 0.95,
+			"orientacao": [
+				1,
+				0,
+				0
+			],
+			"colideCom": [
+				0
+			],
+			"interagem": true,
+			"usaForcas": true
+		}
+	}
+}
