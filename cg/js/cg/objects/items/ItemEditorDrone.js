@@ -20,7 +20,7 @@ function ItemEditorDrone() {
 	//propriedades
 	scope.valorXYZ = undefined;
 	scope.id =  EIdsItens.DRONE;
-	scope.propriedadeCor.setHex( 0xFFFFFF );
+	scope.propriedadeCor = undefined;
 	scope.object3D = undefined;
 	createObject3D(); //load the obj file;
 
