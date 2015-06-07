@@ -238,11 +238,13 @@ function PainelAnimacao( editor ) {
 				if( currentAnimatios[selectedAnimation][i].id == EIdsItens.TRANSLADAR ){
 					ros.move(valorX,valorY,valorZ, 0.0);
 				} else if( currentAnimatios[selectedAnimation][i].id == EIdsItens.ROTACIONAR ){
-					ros.move(0,0,0, valorZ);
+					ros.move(0,0,0, valorY);
 				}
 			}
 			ros.land();
+			onExecutionEnd();
 		}, 8000);
+
 	}
 
 	/** Função que calcula o tempo em milisegundos necessário para executar a movimentação
