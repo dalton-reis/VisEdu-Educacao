@@ -24,7 +24,7 @@ var ROSHandler = function() {
 	});
 	/** ros topic utilizado para movimentar o drone
 	*/
-	this.movedrone = new ROSLIB.Topic({
+	this.move_drone = new ROSLIB.Topic({
 			ros : this.ros,
 			name : '/visedu/move_drone',
 			messageType : 'geometry_msgs/Twist'
@@ -41,7 +41,6 @@ var ROSHandler = function() {
 	function onConnected(){
 		alert("Conexão efetuada com sucesso");
 		console.log('Connected to websocket server.');
-		move_drone.advertise(); //avise o rosmaster que ira publicar msg
 	}
 
 	function onError(){
