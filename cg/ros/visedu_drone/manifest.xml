@@ -1,0 +1,17 @@
+<package>
+  <description brief="visedu_drone">
+
+     visedu_drone
+
+  </description>
+  <author>Jose Guilherme Vanz</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/visedu_drone</url>
+  <depend package="roscpp"/>
+  <depend package="geometry_msgs"/>
+  <depend package="nav_msgs"/>
+
+</package>
+
+

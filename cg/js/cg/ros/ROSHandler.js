@@ -4,9 +4,9 @@
 var ROSHandler = function() {
 
 	this.ros = new ROSLIB.Ros();
-	this.ros.on('connection', ROSHandler.prototype.onConnected);
-	this.ros.on('error', ROSHandler.prototype.onError);
-	this.ros.on('close', ROSHandler.prototype.onClose);
+	this.ros.on('connection', onConnected);
+	this.ros.on('error', onError);
+	this.ros.on('close', onClose);
 	/**ros topic utilizado para decolar o AR.Drone
 	 * @type ROSLIB.Topic
 	 */
@@ -24,9 +24,9 @@ var ROSHandler = function() {
 	});
 	/** ros topic utilizado para movimentar o drone
 	*/
-	this.cmdvel_topic = new ROSLIB.Topic({
+	this.movedrone = new ROSLIB.Topic({
 			ros : this.ros,
-			name : '/cmd_vel',
+			name : '/visedu/move_drone',
 			messageType : 'geometry_msgs/Twist'
 	});
 	/**
@@ -37,21 +37,39 @@ var ROSHandler = function() {
 			name : '/ardrone/flattrim',
 			serviceType : 'std_srvs/Empty'
 	});
-}
 
-ROSHandler.prototype.onConnected = function (){
-	alert("Conexão efetuada com sucesso");
-	console.log('Connected to websocket server.');
-}
+	function onConnected(){
+		alert("Conexão efetuada com sucesso");
+		console.log('Connected to websocket server.');
+		move_drone.advertise(); //avise o rosmaster que ira publicar msg
+	}
 
-ROSHandler.prototype.onError = function(){
-	alert("Erro de conexão com o ROS");
-	console.log('Error connecting to websocket server: ', error);
-}
+	function onError(){
+		alert("Erro de conexão com o ROS");
+		console.log('Error connecting to websocket server: ', error);
+	}
 
-ROSHandler.prototype.onClose = function(){
-	console.log('Connection to websocket server closed');
-}
+	function onClose(){
+		console.log('Connection to websocket server closed');
+	}
+
+	function getCurrentOdometry(){
+		return this.current_odom;
+	}
+};
+
+ROSHandler.prototype.move = function(x,y,z, rotation) {
+		var twist = new ROSLIB.Message({
+			linear: {
+				x : x,
+				y : y,
+				z : z,
+			},
+			angular: {x : 0.0,y : 0.0,z : rotation}
+		});
+		this.move_drone.publish(twist);
+};
+
 /**
  * Método para connectar com o ROS
  */
@@ -62,7 +80,7 @@ ROSHandler.prototype.connect = function ( url ) {
 		}
 		this.ros.connect("ws://" + url);
 	}
-}
+};
 
 /**
  * Método para decolar o drone
@@ -88,37 +106,16 @@ ROSHandler.prototype.land = function() {
  * Método para parar o drone
  */
 ROSHandler.prototype.stop = function(){
-	this.move(0.0, 0.0, 0.0, 0.0);
-}
-
-/**
- * Método para movimentar o drone
- * @function move
- */
-ROSHandler.prototype.move = function(x,y,z,rotation) {
-	var twist = new ROSLIB.Message({
-		linear: {
-			x : x,
-			y : y,
-			z : z,
-
-		},
-		angular: {
-			x : 0.0,
-			y : 0.0,
-			z : rotation,
-		}
-	});
-	this.cmdvel_topic.publish(twist);
+	this.move_drone.publish(new ROSLIB.Message({linear: {x : 0,y : 0,z : 0},angular: {x : 0.0,y : 0.0,z : 0.0}}));
 };
 
 /**
  * Método criado para calibrar as estimaticas de rotação do drone
  */
 ROSHandler.prototype.calibrate = function(){
-	//TODO - precisar ser testado. Como não tenho o drone no momento não conseguir testar
 	var request = new ROSLIB.ServiceRequest({});
 	this.flattrim_service.callService(request, function(response){
 		console.log("Service response = " + response);
 	});
 }
+

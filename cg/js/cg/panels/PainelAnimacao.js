@@ -229,54 +229,20 @@ function PainelAnimacao( editor ) {
 		//se não tem animação, cai fora
 		if( currentAnimatios.length == 0 || selectedAnimation == undefined ){ return; }
 		onExecutionBegan()
-		var currentDroneStep = -1;
-		var droneParado = true;
-		var interval = setInterval(executeStepDrone, 10);
-		function executeStepDrone() {
-			if( droneParado && currentDroneStep == -1){
-				ros.takeoff();
-				droneParado = false;
-				setTimeout(function(){
-					ros.stop();
-					console.log('decolou -' + new Date());
-					droneParado = true;
-					currentDroneStep += 1;
-				}, 8000);
-			} else if( droneParado && currentDroneStep < currentAnimatios[selectedAnimation].length){
-				var valorX = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x > 0 ? 0.5: 0;
-				var valorY = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y > 0 ? 0.5: 0;
-				var valorZ = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z > 0 ? 0.5: 0;
-				var wait = 0;
-				if( currentAnimatios[selectedAnimation][currentDroneStep].id == EIdsItens.TRANSLADAR ){
-					wait = calculateTime(currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x,
-							     	currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y,
-								currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z, 0.0);
-					console.log('transladou - ' + new Date());
+		ros.takeoff();
+		setTimeout(function(){ //espera o drone decolar para começar
+			for(var i = 0; i < currentAnimatios[selectedAnimation].length; i++){
+				var valorX = currentAnimatios[selectedAnimation][i].valorXYZ.x
+				var valorY = currentAnimatios[selectedAnimation][i].valorXYZ.y
+				var valorZ = currentAnimatios[selectedAnimation][i].valorXYZ.z
+				if( currentAnimatios[selectedAnimation][i].id == EIdsItens.TRANSLADAR ){
 					ros.move(valorX,valorY,valorZ, 0.0);
-				} else if( currentAnimatios[selectedAnimation][currentDroneStep].id == EIdsItens.ROTACIONAR ){
-					wait = calculateTime(0,0,0, currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y);
-					console.log('rotacionou - ' + new Date());
-					ros.move(0,0,0, 0.75);
+				} else if( currentAnimatios[selectedAnimation][i].id == EIdsItens.ROTACIONAR ){
+					ros.move(0,0,0, valorZ);
 				}
-				droneParado = false;
-				setTimeout(function(){
-					ros.stop();
-					console.log('parou - ' + new Date());
-					setTimeout(function(){
-						currentDroneStep += 1;
-						droneParado = true;
-					}, 2000);
-				}, wait);
-			} else if( droneParado && currentDroneStep == currentAnimatios[selectedAnimation].length){
-				droneParado = false;
-				setTimeout(function(){
-					ros.land();
-					console.log('posou - ' + new Date());
-					clearInterval(interval);
-					onExecutionEnd();
-				}, 1000);
 			}
-		}
+			ros.land();
+		}, 8000);
 	}
 
 	/** Função que calcula o tempo em milisegundos necessário para executar a movimentação
