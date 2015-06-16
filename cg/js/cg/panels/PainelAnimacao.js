@@ -80,7 +80,7 @@ function PainelAnimacao( editor ) {
 	var ros_server = new UI.Input().setWidth( '150px' ).setColor( '#444' ).setFontSize( '12px' ).setValue('localhost:9090');
 	linhaValues.add(ros_server);
 	var connectButton = new UI.Button();
-	connectButton.setLabel('Connect');
+	connectButton.setLabel('Conectar');
 	connectButton.onClick( function () { ros.connect(ros_server.getValue());});
 	linhaValues.add(connectButton);
 	this.add(linhaValues);
@@ -90,11 +90,11 @@ function PainelAnimacao( editor ) {
 	executeButton.onClick( executeDrone );
 	linhaValues.add(executeButton);
 	var calibrateButton = new UI.Button();
-	calibrateButton.setLabel('Calibrate');
+	calibrateButton.setLabel('Calibrar');
 	calibrateButton.onClick( function () { ros.calibrate(); });
 	linhaValues.add(calibrateButton);
 	var panicButton = new UI.Button();
-	panicButton.setLabel('Panic!');
+	panicButton.setLabel('Pânico!');
 	panicButton.onClick( function () { ros.land(); });
 	linhaValues.add(panicButton);
 	this.add(linhaValues);
