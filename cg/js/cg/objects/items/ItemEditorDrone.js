@@ -22,12 +22,22 @@ function ItemEditorDrone() {
 	scope.id =  EIdsItens.DRONE;
 	scope.propriedadeCor = undefined;
 	scope.object3D = undefined;
+	scope.texture = new THREE.Texture();
 	createObject3D(); //load the obj file;
 
 	function createObject3D() {
 		if( scope.object3D == undefined ){
+			CG.ImageLoader.load( 'resources/drone.jpg', function ( image ) {
+					scope.texture.image = image;
+					scope.texture.needsUpdate = true;
+			} );
 			CG.OBJLoader.load("resources/Drone_1.obj",
 				function ( model ) {
+					model.traverse( function ( child ) {
+						if ( child instanceof THREE.Mesh ) {
+							child.material.map = scope.texture;
+						}
+					} );
 					console.log("Modelo 3D carregado com sucesso");
 					scope.object3D = model;
 					scope.object3D.item = scope;

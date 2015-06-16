@@ -99,6 +99,10 @@ CG.objects = UtilCG;
  * Objeto utilizado para carregar os arquivos .obj
  **/
 CG.OBJLoader = new THREE.OBJLoader();
+/**
+ * Objeto utilizado para carregar images de textura
+ **/
+CG.ImageLoader = new THREE.ImageLoader();
 
 
 /**
