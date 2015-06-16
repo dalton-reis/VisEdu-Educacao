@@ -41,7 +41,7 @@ EIdsItens = {
 		descricao: "Drone"
 	},
 	TARGET: {
-		descricao: "Target"
+		descricao: "Destino"
 	},
 	ANIMACAO: {
 		descricao: "Animação"
