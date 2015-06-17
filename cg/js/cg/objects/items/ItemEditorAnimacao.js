@@ -19,6 +19,7 @@ ItemEditorAnimacao = function() {
 	scope.id =  EIdsItens.ANIMACAO
 	scope.corHex = CG.colors.corPecaIluminacao;
 	scope.gerarMeshsPecaSuperior();
+	scope.changeVisibility = undefined;
 	/** Função utilizada nas animações*/
 	scope.easing = CG.listaTiposEasing['Linear'];
 };
