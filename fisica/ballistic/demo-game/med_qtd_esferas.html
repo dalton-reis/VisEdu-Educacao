@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Physics Game | Demo 6</title>
+	</head>
+
+	<style type="text/css">
+		body {
+			background-color : #000;
+			margin : 0px;
+			padding : 0px;
+			color : #fff;
+			overflow: hidden;
+		}
+	</style>
+
+	<body>	
+		<!-- External libraries -->
+		<script src="../lib/three.js"></script>
+		<script src="../lib/JSON.prune.js"></script>
+		<script src="../lib/jquery.min.js"></script>
+		<script src="../lib/stats.min.js"></script>
+
+		<!-- HEFESTO libs -->
+
+		<script src="../hefesto/hefesto.js"></script>
+		<script src="../hefesto/force.js"></script>
+		<script src="../hefesto/simulation.js"></script>
+		<script src="../hefesto/simulationws.js"></script>
+		<script src="../hefesto/rigidbody.js"></script>
+		<script src="../hefesto/collision.js"></script>
+		<script src="../hefesto/timming.js"></script>
+
+		<div id="canvas-3d" class="viewer"></div>
+
+		<script>
+			var canvas, renderer, camera, scene;
+			var stats;
+			var ms_Width = $(window).width(), ms_Height = $(window).height() ;
+
+			var simulation = new HEFESTO.Simulation();
+			var timming = new HEFESTO.Timming();
+
+			$(function() {
+				initializeTHREEJS();
+
+				simulation.init();
+				continueInitilization();
+			});
+
+			function initializeTHREEJS() {
+				canvas = document.getElementById('canvas-3d');
+				
+				//inicializa renderer, camera e scene
+				renderer = new THREE.WebGLRenderer();
+				renderer.setSize(ms_Width, ms_Height);
+				renderer.setClearColor(0xffffff, 1);
+				canvas.appendChild(renderer.domElement);
+
+				scene = new THREE.Scene();
+
+				camera = new THREE.PerspectiveCamera(55.0, ms_Width / ms_Height, 0.5, 3000000);
+				camera.position.set(10, 50, 150);
+				camera.lookAt(new THREE.Vector3(0, 0, 0));
+				
+				// adiciona luz
+				var directionalLight = new THREE.DirectionalLight(0xffff55, 1);
+				directionalLight.position.set(10, 10, 100);
+				scene.add(directionalLight);
+
+				stats = new Stats();
+				stats.domElement.style.position = 'absolute';
+				stats.domElement.style.top = '0px';
+				canvas.appendChild( stats.domElement );
+			}
+
+			function continueInitilization() {
+				if (!simulation.isBusy()) {
+					initializeSimulation();
+					
+					createBodies();
+				} else {
+					requestAnimationFrame(continueInitilization);
+				}
+			}
+
+
+			var qtd = 0;
+			function createBodies() {
+				if (!simulation.isBusy()) {
+					
+					if (qtd < 12) {
+						createFila(qtd++);
+						requestAnimationFrame(createBodies);
+		    		} else {
+						timming.start();
+						timming.update();
+					    mainLoop();
+			    	}
+				} else {
+					requestAnimationFrame(createBodies);
+				}
+				
+			}
+		
+			var cdGround = null;
+			function initializeSimulation() {
+				//base base no threejs (somente desenho)
+				var geometry = new THREE.BoxGeometry(100, 1, 100);
+				var material = new THREE.MeshBasicMaterial( {color: 0x09400a,  transparent: true, opacity: 0.2} );
+				var baseMesh = new THREE.Mesh( geometry, material );
+				scene.add(baseMesh);
+
+				//cria dados de colisao entre esfera e solo
+				cdGround = new HEFESTO.CollisionData(0.9, 0.9, 0.01);
+				cdGround.maxCollision = 256 * 256;
+				simulation.bindCollisionData(cdGround);
+
+				// adiciona força da gravidade
+				var gravity = new HEFESTO.GravityForce(new THREE.Vector3(0, -10, 0));
+				simulation.bindForce(gravity);
+			};
+
+			function createBall(x, y, z) {
+				// cria esfera no threejs
+				var  material = new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff, shading: THREE.SmoothShading } );
+				var geometryBall = new THREE.SphereGeometry(5, 32, 16);			
+				var ballMesh = new THREE.Mesh(geometryBall, material);
+				ballMesh.position.x = x;
+				ballMesh.position.y = y;
+				ballMesh.position.z = z;
+				ballMesh.matrixAutoUpdate = false;
+				scene.add(ballMesh);
+
+				// cria corpo rigido da esfera
+				var rb = new HEFESTO.RigidBody(ballMesh);
+				rb.radius = 5;
+				rb.mass = 200;
+				rb.inertiaTensor.set(5360957.0, -0.0, -0.0, -0.0, 5360957.0, -0.0, -0.0, -0.0, 5360957.0);
+				rb.linearDamping = 0.95;
+				rb.angularDamping = 0.8;
+				rb.useWorldForces = true;
+				simulation.bindRigidBody(rb);				
+
+				// cria colisao entre o solo e a esfera
+				var collisionGround = new HEFESTO.Collision(HEFESTO.CollisionType.SPHERE_AND_TRUEPLANE, cdGround, rb, null);
+				simulation.bindCollision(collisionGround);
+
+			}
+
+			function createFila(j) {
+				var initial = -100;
+				for (var i = 0; i < 20; i++) {
+					createBall(initial + (j * 10), 30, initial + (i * 10));
+				}
+			}
+
+			function mainLoop() {
+			    requestAnimationFrame(mainLoop);
+			    if (!simulation.isBusy()) {
+			    	simulation.integrate(timming.getLastFrameDuration() * 0.001);
+
+			    	renderer.render(scene, camera);
+			    	stats.update();
+		    		timming.update();
+			    }
+			};
+
+		</script>
+	</body>
+</html>

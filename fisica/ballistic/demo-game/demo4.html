@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Physics Game | Demo 4</title>
+		<link href="css/style.css" rel="stylesheet">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	</head>
+
+	<body>	
+		<div id="canvas-3d" class="viewer"></div>
+		
+		<!-- External libraries -->
+		<script src="../lib/three.js"></script>
+		<script src="../lib/JSON.prune.js"></script>
+		<script src="../lib/stats.min.js"></script>
+
+		<script src="../lib/RequestAnimationFrame.js"></script>
+		<script src="../lib/jquery.min.js"></script>
+		<script src="../lib/OrbitControls.js"></script>
+		
+		<!-- Water shader -->
+		<script src="../lib/water-material.js"></script>
+		
+		<!-- Demo files -->
+		<script src="../lib/window.js"></script>
+		<script src="jss/simple_demo.js"></script>
+		<script src="jss/gamu.js"></script>
+		<script src="jss/textureutil.js"></script>
+		<script src="jss/threex.keyboardstate.js"></script>
+
+		<!-- HEFESTO libs -->
+
+		<script src="../hefesto/hefesto.js"></script>
+		<script src="../hefesto/simulation.js"></script>
+		<script src="../hefesto/simulationws.js"></script>
+		<script src="../hefesto/rigidbody.js"></script>
+		<script src="../hefesto/collision.js"></script>
+		<script src="../hefesto/timming.js"></script>
+
+		<audio id="audio" src="audio/quica_2.mp3" preload="auto">Seu navegador não possui suporte ao elemento audio</audio>
+
+		<script>
+
+			HEFESTO._host = 'localhost:8080'
+			var simulation = new HEFESTO.Simulation();
+			var timming = new HEFESTO.Timming();
+			var cannon = undefined;
+
+			var balls = [];
+
+			var groundCD = new HEFESTO.CollisionData(0.9, 0.9, 0.01);
+			groundCD.id = 'padrao';
+			groundCD.maxCollision = 256 * 256;
+
+			var bodysCD = new HEFESTO.CollisionData(0.16, 0.6, 0.01);
+			bodysCD.id = 'balls';
+			bodysCD.maxCollision = 256 * 512;
+
+			var rb_target = undefined;
+			var box_rb = undefined;
+			var cube = undefined;
+
+			var keyboard = undefined;
+
+			var simulation = new HEFESTO.Simulation();
+			var next = 0xff0000;
+			simulation.contactListener = function (data) {
+				var au = document.getElementById('audio');
+				au.play();
+			};
+
+			$(function() {
+				WINDOW.initialize();
+
+				keyboard = new THREEx.KeyboardState();
+				
+				DEMO.initialize('canvas-3d');
+
+				simulation.init();
+
+				continueInitilization();
+			});
+
+			function continueInitilization() {
+				if (!simulation.isBusy()) {
+					simulation.bindCollisionData(groundCD);
+					simulation.bindCollisionData(bodysCD);
+					initializeScene();
+
+					DEMO._camera.position.set(25, 300, 800);
+					
+					WINDOW.resizeCallback = function(inWidth, inHeight) { DEMO.resize(inWidth, inHeight); };
+					DEMO.resize(WINDOW.ms_Width, WINDOW.ms_Height);
+
+					timming.start();
+				    mainLoop();
+				} else {
+					requestAnimationFrame(continueInitilization);
+				}
+			}
+		
+			var co = 0;
+			function mainLoop() {
+			    requestAnimationFrame(mainLoop);
+
+			    keyboardController();
+
+			    if (!simulation.isBusy()) {
+			    	simulation.integrate(timming.getLastFrameDuration() * 0.001);
+			    	DEMO.update();
+			    	DEMO._stats.update();
+					timming.update();
+					if (co == 50) {
+						if (cannon.angle == 90) {
+							cannon.angle = 0;
+						}
+						//cannon.angle += 1;
+						createCannonBall(cannon);	
+						co = 0;
+					}
+					co++;
+
+					var i = 0;
+					for (i = 0; i < balls.length; i++) {
+						var b = balls[i];
+						//verifica se passou do solo e remove do servidor
+						if (b == undefined) {
+							continue;
+						}
+						if (b.position.y < 0) {
+							simulation.removeRigidBody(b);
+							DEMO._scene.remove(balls[i]._mesh);
+							balls[i] = undefined;
+						} 					
+						if (b.position.x > 750) {
+					   		if (b.__baseCollision.enable) {
+						   		simulation.changeCollisionState(b.__baseCollision, false);	
+						   		b.__baseCollision.enable = false;
+a						   	}
+						}
+						
+					}
+			    }
+			};
+
+			function keyboardController() {
+			    if (keyboard.pressed("a")) {
+			    DEMO._camera.position.x += 10;	
+		    	}
+			    if (keyboard.pressed("d")) {
+			    	DEMO._camera.position.x -= 10;
+			    }
+			    if (keyboard.pressed("s")) {
+			    	DEMO._camera.position.y -= 10;
+			    }
+			    if (keyboard.pressed("w")) {
+			    	DEMO._camera.position.y += 10;	
+			    }
+
+			    if (keyboard.pressed("up")) {
+			    	cannon.angle += 2;
+			    }
+			    if (keyboard.pressed("down")) {
+			    	cannon.angle -= 2;
+			    }
+			}
+
+			function initializeScene() {
+				var base = new GAMU.Base( 1500, 1, 1500 );
+				base.material = new THREE.MeshBasicMaterial( {color: 0xf0400a,  transparent: true, opacity: 0.2} );
+				var baseMesh = base.build();
+				DEMO._scene.add(baseMesh);
+
+				var target = new GAMU.Target(DEMO._scene, 60);
+				target.position = new THREE.Vector3(600, 200, 0);
+				target.build();
+
+				posAux = new THREE.Vector3(target.position.x, target.position.y, target.position.z);
+
+				posAux.x += 30;
+
+				var geometry = new THREE.BoxGeometry( 60, 120, 120 );
+				var material = new THREE.MeshBasicMaterial( {color: 0x00ff00,  transparent: true, opacity: 0.2} );
+				cube = new THREE.Mesh( geometry, material );
+				cube.matrixAutoUpdate = false;
+				GAMU.positionMesh(cube, posAux, new THREE.Vector3());
+				DEMO._scene.add( cube );
+
+				rb_target = new HEFESTO.RigidBody(cube);
+				rb_target.ignoreIntegration = true;
+				//rb_target.radius = target.radius;
+				rb_target.mass = 4000;
+				rb_target.inertiaTensor.set(60000.0381469727, -0.0, -0.0, -0.0, 60000.0381469727, -0.0, -0.0, -0.0, 60000.0381469727);
+				rb_target.halfSize = new THREE.Vector3(30, 60, 60);
+				//rb_target.orientation = new THREE.Quaternion(1, 0, 0);
+				//rb_target.position = posAux;
+				simulation.bindRigidBody(rb_target);
+				//rb_target._mesh = cube;
+
+				cannon = new GAMU.Cannon(DEMO._scene);
+				cannon.angle = 0;
+				cannon.initialVelocity = 500;
+				cannon.position = new THREE.Vector3(-600, 0, 0);
+				//cannon.position = new THREE.Vector3(-100, 100, 0);
+				cannon.build();
+
+				//createBoxStack();
+				createCannonBall(cannon);
+			};
+
+			var createBoxStack =  function() {
+				var geometry = new THREE.BoxGeometry( 200, 200, 200 );
+				var cub = new THREE.Mesh( geometry, getDefaultBoxTexture() );
+				cub.matrixAutoUpdate = false;
+				cub.position.set(0, 100, 0);
+				DEMO._scene.add( cub );
+
+				box_rb = new HEFESTO.RigidBody(cub);
+				box_rb.halfSize = new THREE.Vector3(100, 100, 100);
+
+				box_rb.aceleration.y = -10.0;
+				box_rb.rotation.x = 10;
+
+				box_rb.mass = 64000;
+				box_rb.inertiaTensor.set(1.5360000610351562E9, -0.0, -0.0, -0.0, 1.5360000610351562E9, -0.0, -0.0, -0.0, 1.5360000610351562E9);
+				box_rb.linearDamping = 0.99;
+				box_rb.angularDamping = 0.8;
+
+				simulation.bindRigidBody(box_rb);				
+			};
+
+			var createCannonBall = function(cannon) {
+				var cannonBall = new GAMU.CannonBall(cannon);
+				cannonBall.ballMaterial = new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff, shading: THREE.SmoothShading } );
+
+				var cannonBallMesh = cannonBall.build();
+				DEMO._scene.add(cannonBallMesh);				
+
+				var velocity = cannon.determineVelocityVector();
+
+				bindCannonBall(cannonBall, velocity);
+			};
+
+			var bindCannonBall = function (cannonBall, velocity) {
+				var rb = new HEFESTO.RigidBody(cannonBall.mesh);
+				rb.bindContactData = true;
+				rb.radius = cannonBall.radius;
+
+				rb.mass = 200;
+				//rb.velocity.y = 10.0;
+				//rb.velocity.x = Math.random() * 800;
+
+				rb.velocity.x = velocity.x;
+				rb.velocity.y = velocity.y;
+				rb.velocity.z = velocity.z;
+
+				rb.aceleration.y = -100.0;
+
+				var m = parseInt(Math.random() * 100) % 2;
+				m = ((m % 2) == 0 ? 1 : -1);
+				rb.rotation.x = Math.random() * m ;
+
+
+				rb.inertiaTensor.set(68.84040832519531, -0.0, -0.0, -0.0, 68.84040832519531, -0.0, -0.0, -0.0, 68.84040832519531);
+				rb.linearDamping = 0.99;
+				rb.angularDamping = 0.8;
+
+				simulation.bindRigidBody(rb);				
+
+				balls[balls.length] = rb;
+
+				bindGroundCollision(rb);
+				bindCollisionWithAll(rb);
+			};
+
+			var bindGroundCollision = function (rb) {
+				var collision = new HEFESTO.Collision(HEFESTO.CollisionType.SPHERE_AND_TRUEPLANE, groundCD, rb, null);
+
+				simulation.bindCollision(collision);
+
+				rb.__baseCollision = collision;
+			};
+
+			var bindCollisionWithAll = function (rb) {
+				var collision = new HEFESTO.Collision(HEFESTO.CollisionType.ALL, bodysCD, rb, null);
+
+				simulation.bindCollision(collision);
+			};
+
+		</script>
+	</body>
+</html>

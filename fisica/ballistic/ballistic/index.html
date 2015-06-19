@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link rel="icon" href="img/logo.ico">
+		<title>DEMO | Ballistic</title>
+		<link href="css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/jumbotron-narrow.css" rel="stylesheet">
+		<link href="css/ballistic-demo.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+        <link href="css/estiloAula.css" rel="stylesheet">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    </head>
+
+	<body>
+		<div id="main" class="container">
+			<div class="header clearfix">
+				<nav>
+					<ul class="nav nav-pills pull-right">
+						<li role="presentation" class="active" onclick="changeForce()"><a href="#">Home</a></li>
+						<li role="presentation"><a href="#">About</a></li>
+                        <button class="btn btn-aula" onclick="createCanonBall()"><span class="glyphicon glyphicon-screenshot " ></span> Disparar</button>
+                        <button id="altGravidade" class="btn btn-aula" data-toggle="modal"
+                                data-target="#modalListaGravidade">Altera Gravidade</button>
+                            <img id="gravidade" src="img/icon/Earth.png" style="width: 60px" title="Terra: 10m/s&sup2;"
+                                 data-toggle="tooltip"
+                                 data-placement="bottom" >
+                        <button id="btnTutorial" type="button" class="btn btn-aula" data-toggle="modal"
+                                data-target="#modalListaTutorial">Tutorial</button>
+					</ul>
+                </nav>
+				<h3 class="text-muted-h3">
+					<img alt="Brand" width="64" height="64" src="img/logo.png">
+					Ballistic Demo
+				</h3>
+			</div>
+
+			<div class="row option-menu" >
+				<!-- Equação de Hooke -->
+				<div class="col-lg-4 border-separator" >
+					<div class="col-lg-8" >
+						<img alt="F el"src="img/hooke_equation.png" width="200px" >
+					</div>
+					<div class="col-lg-4">
+						<div class="col-lg-6 form-group">
+						    <label >K: </label>
+							<input id="fieldK" class="form-control fieldK" placeholder="K" value="1" />
+						</div>
+						<div class="col-lg-6 form-group">
+						    <label >x: </label>
+							<input id="fieldX" class="form-control fieldX" placeholder="x" value="1" />
+						</div>
+					</div>
+				</div>
+
+				<!-- Material do projétil -->
+				<div class="col-lg-4 border-separator" >
+					<div class="col-lg-9" style="padding-left: 0px !important; padding-right: 0px !important;" >
+						<label>Material do projétil:</label>
+						<div class="col-lg-12" style="padding-left: 0px !important; padding-right: 0px !important;" >
+							<img id="silicone" src="img/silicone.png" title="Silicone" class="img-rounded"
+							 onclick="atualizarMaterial(this, BD.MaterialProjetil.SILICONE);" >
+							<img id="aluminio" src="img/aluminio.png" title="Alumínio" class="img-rounded"
+							 onclick="atualizarMaterial(this, BD.MaterialProjetil.ALUMINIO);" >
+							<img id="ferro" src="img/ferro.png" title="Ferro" class="img-rounded"
+							 onclick="atualizarMaterial(this, BD.MaterialProjetil.FERRO);" >
+							<img id="ouro" src="img/ouro.png" title="Ouro" class="img-rounded"
+							 onclick="atualizarMaterial(this, BD.MaterialProjetil.OURO);" >
+							<img id="vidro" src="img/vidro.png" title="Vidro" class="img-rounded"
+							 onclick="atualizarMaterial(this, BD.MaterialProjetil.VIDRO);" >
+							<img id="madeira-ipe" src="img/madeira_ipe.png" title="Ipê (Madeira seca)" class="img-rounded"
+							 onclick="atualizarMaterial(this, BD.MaterialProjetil.IPE);" >
+							<img id="madeira-cedro" src="img/madeira_cedro.png" title="Cedro (Madeira seca)" class="img-rounded"
+							 onclick="atualizarMaterial(this, BD.MaterialProjetil.CEDRO);" >
+						</div>
+					</div>
+					<div class="col-lg-3" >
+						<label>Atual</label>
+						<img id="materialAtualImg" src="img/silicone.png" title="Silicone">
+					</div>
+				</div>
+				<div class="col-lg-3 border-separator" >
+					<label>Ângulo do canhão:</label>
+					<input id="fieldAngulo" class="form-control fieldAngulo" placeholder="xº" style="width: 55px" value="0" />
+				</div>
+				<div class="col-lg-1 border-separator" >
+                    <!-- <img src="img/start.png" title="Silicone" onclick="iniciarSimulacao();" >-->
+                      <button type="button" class="btn btn-aula btnPlay" onclick="iniciarSimulacao();">
+                                <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                            </button>
+                    </div>
+                </div>
+
+                <div id="canvas-div" class="row canvas-div" >
+                    <div id="canvas-3d" ></div>
+                </div>
+
+                <div class="row" >
+                    <br/>
+                </div>
+
+                <footer class="footer text-center">
+                    <p>© HEFESTO Engine | 2015</p>
+                </footer>
+
+            </div>
+
+
+        <div class="modal fade" id="modalListaGravidade" tabindex="-1"
+             role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header header-modal-aula">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalListaGravidade">
+                            <strong>Alterar Gravidade</strong>
+                        </h4>
+                    </div>
+                    <div class="modal-body body-modal-aula">
+
+                       <!-- <div class="media">
+                            <div class="media-left media-bottom">
+                                <p>Gravidades:</p>
+                                <select id="listGravidades" class="form-control menu-lista">
+                                    <option value="TERRA">Terra</option>
+                                    <option value="LUA">Lua</option>
+                                    <option value="MARTE">Marte</option>
+                                </select>
+                            </div>
+                            <div class="media-right media-middle">
+                                <img class="media-object" src="img/icon/Earth.png" alt="..." style="width: 60px">
+                            </div>
+                            <div class="media-left media-middle">
+                                <p>Valor:</p>
+                            </div>
+                        </div> -->
+
+                        <div class="media">
+                            <div class="media-body">
+                                <h5 class="media-heading">Gravidades:</h5>
+                                <select id="listGravidades" class="form-control menu-lista" onchange="atualizaImgaemGravidade(this.value)">
+                                    <option value="TERRA">Terra</option>
+                                    <option value="LUA">Lua</option>
+                                    <option value="MARTE">Marte</option>
+                                </select>
+                            </div>
+                            <div class="media-left media-middle">
+                                <img id="iconGravidade" class="media-object" src="img/icon/Earth.png" alt="..." style="width: 60px; margin-left: 10px">
+                            </div>
+                            <div id="valorGravidade" class="media-left media-middle">
+                                <h5>Valor: 10m/s&sup2;</h5>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer footer-modal-aula">
+                        <button type="button" class="btn btn-aula" data-dismiss="modal"
+                                onclick="changeForce()">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                            OK
+                        </button>
+                        <button type="button" class="btn btn-cancela" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"
+                                  title="Cancelar"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="modal fade" id="modalListaTutorial" tabindex="-1"
+                 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header header-modal-aula">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalListaTutorialLabel">
+                                <strong>Lista Tutoriais</strong>
+                            </h4>
+                        </div>
+                        <div class="modal-body body-modal-aula">
+                            <p>Ol&aacute; voc&ecirc; acaba de acessar o Vis-Edu
+                                F&iacute;sica!</p>
+
+                            <select id="listTutorial" class="form-control menu-lista">
+                                <option></option>
+                                <option value=1>Mudar &acirc;ngulo</option>
+                                <option value=2>Modificar mola</option>
+                                <option value=3>Mudar material</option>
+                                <option value=4>Alterar gravidade</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer footer-modal-aula">
+                            <button type="button" class="btn btn-aula" data-dismiss="modal"
+                                    onclick="selectTutorial()">
+                                <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                                OK
+                            </button>
+                            <button type="button" class="btn btn-cancela" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"
+                                  title="Cancelar"></span> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- External libraries -->
+		<!--<script src="../lib/jquery.min.js"></script>-->
+        <script src="../lib/jquery.min.js"></script>
+        <script src="Aula/jquery-ui.js"></script>
+        <script src="../lib/bootstrap.min.js"></script>
+		<script src="../lib/bootstrap-dialog.min.js"></script>
+
+
+		<script src="../lib/FileSaver.min.js"></script>
+		<script src="../lib/three.js"></script>
+		<script src="../lib/JSON.prune.js"></script>
+		<script src="../lib/stats.min.js"></script>
+		<script src="../lib/RequestAnimationFrame.js"></script>
+		<script src="../lib/OrbitControls.js"></script>
+		<script src="../lib/window.js"></script>
+
+		<!-- HEFESTO libs -->
+		<script src="../hefesto/hefesto.js"></script>
+		<script src="../hefesto/force.js"></script>
+		<script src="../hefesto/simulation.js"></script>
+		<script src="../hefesto/simulationws.js"></script>
+		<script src="../hefesto/rigidbody.js"></script>
+		<script src="../hefesto/collision.js"></script>
+		<script src="../hefesto/timming.js"></script>
+		<script src="../hefesto/util/scenebuilder.js"></script>
+		<script src="../game-maker/js/simulationmanager.js"></script>
+
+
+		<script src="js/ballistic-demo.js"></script>
+		<script src="../demo-game/jss/gamu.js"></script>
+
+        <script src="Aula/guide.js"></script>
+        <script src="js/Basic.js"></script>
+
+	<!--	<script type="text/javascript">
+			HEFESTO._host = 'localhost:8080'
+			var sm = new HEFESTO.SimulationManager('canvas-3d');
+			var cannon = undefined;
+            var cdGround = new HEFESTO.CollisionData(0.9, 0.9, 0.01);
+            sm.addCollisionData(cdGround);
+
+            var target;
+            var tutorialLigado = false;
+            var rb_target;
+            var colisions = -1;
+            var auxF = 1;
+            var auxMaterial;
+
+            sm.simulation.contactListener = function (data) {
+                console.log("Colidiu!!!");
+                colisions++;
+                if(tutorialLigado && colisions === 0){
+                    setTimeout(function(){
+                        console.log("Delay...");
+                        changeAngleS2();
+                    },1500);
+                    //changeAngleS2();
+                }
+
+            }
+
+            var obstaculoRB;
+
+            function criaObstaculo(){
+                var obstaculo;
+                var material = new THREE.MeshLambertMaterial( {color: 0xFFFF00,  transparent: true} );
+                var geomatria = new THREE.BoxGeometry(15,30,30);
+                obstaculo = new THREE.Mesh(geomatria,material);
+                obstaculo.position.x= 0;
+                obstaculo.position.y=15;
+                obstaculo.position.z=-50;
+
+                obstaculo.matrixAutoUpdate = false;
+                obstaculo.updateMatrix();
+                obstaculo.matrix.setPosition(new THREE.Vector3(0,15,-50));
+
+                obstaculoRB = new HEFESTO.RigidBody(obstaculo);
+                //console.log(targetMesh.position);
+                //rb_target.position = targetMesh.position;
+                obstaculoRB.ignoreIntegration = true;
+                obstaculoRB.mass = 4000;
+                obstaculoRB.inertiaTensor.set(960000.0381469727, -0.0, -0.0, -0.0, 960000.0381469727, -0.0, -0.0, -0.0, 960000.0381469727); //Preciso Arrumar esse Atributo.
+                //obstaculoRB.bindContactData = true;
+                obstaculoRB.halfSize = new THREE.Vector3((15/2), 15, 15);
+
+                sm.sb.scene.add(obstaculo);
+                sm.sb.update();
+            }
+
+			var materialType = BD.MaterialProjetil.SILICONE;
+            auxMaterial = materialType;
+			var atualizarMaterial = function(el, material) {
+				materialType = material;
+				var matImg = document.getElementById('materialAtualImg');
+				matImg.src = el.src;
+				matImg.title = el.title;
+			}
+
+            var gravidade;
+
+			sm.onInitSimulation = function() {
+
+				var angle = document.getElementById('fieldAngulo').value;
+				if (angle) {
+					cannon.angle = angle;
+				}
+
+				gravidade = new HEFESTO.GravityForce(new THREE.Vector3(0, -10, 0));
+				sm.addForce(gravidade);
+				//createBody();
+
+				sm.bindAll();
+				console.log("Executou o bindAll");
+			};
+
+            function changeForce(){
+                var y = parseFloat(document.getElementById("listGravidades").value);
+
+                sm.simulation.removeForce(gravidade);
+                gravidade = new HEFESTO.GravityForce(new THREE.Vector3(0, y*-1, 0));
+                sm.simulation.bindForce(gravidade);
+
+                console.log(y*-1.0);
+                console.log("Mundou a Gravidade");
+            }
+
+            function createCanonBall() {
+
+                var angle = document.getElementById('fieldAngulo').value;
+                if (angle) {
+                    cannon.angle = angle;
+                }
+                console.log(cannon.angle);
+                var geometry = new THREE.SphereGeometry(5, 32, 16);
+                var material = materialType.cgMaterial;
+                var mesh = new THREE.Mesh(geometry, material);
+                mesh.matrixAutoUpdate = false;
+
+                var position = cannon.determineProjetilPosition();
+
+                sm.sb.scene.add(mesh);
+                mesh.updateMatrix();
+                mesh.matrix.setPosition(position);
+                sm.sb.update();
+
+                bindBall(mesh);
+            }
+            var passada =1;
+            function bindBall(mesh){
+                var rb = new HEFESTO.RigidBody(undefined);
+                rb.radius = 5;
+                rb.canSleep = false;
+                var pos = cannon.determineProjetilPosition();
+                rb.position = new THREE.Vector3(pos.x, pos.y, pos.z);
+                //rb.velocity = new THREE.Vector3();
+                rb.linearDamping = 0.8;
+                rb.angularDamping = 0.95;
+
+                /** volume / massa */
+                var r = rb.radius * 0.1;
+                var volume = (4 * Math.PI * (r * r * r)) / 3;
+                rb.mass = volume * materialType.densidade;
+                rb.useWorldForces = true;
+
+                /** aceleracao dada pela lei de hooke F = K . x  e pelo angulo */
+                rb.velocity = new THREE.Vector3(cannon.determineAngleVelocityVector().x, cannon.determineAngleVelocityVector().y, 0);
+                console.log(rb.velocity);
+                var K = document.getElementById('fieldK').value;
+                var x = document.getElementById('fieldX').value;
+                //lei de hooke F = K . x;
+                var f = K * x;
+                // aceleracao = f / m
+                var ac = f  / rb.mass;
+
+                //aplica sobre a aceleracao baseada no angulo
+                rb.acceleration.x += ac;
+                rb.acceleration.y += ac;
+
+                /** velocidade dada pelo angulo */
+                //rb.velocity = new THREE.Vector3(cannon.determineAngleVelocityVector().x, cannon.determineAngleVelocityVector().y, 0);
+
+                var tensor = getInertiaTensorCoeffs(rb.mass);
+                rb.inertiaTensor.set(tensor.elements[0], tensor.elements[1], tensor.elements[2], tensor.elements[3], tensor.elements[4], tensor.elements[5], tensor.elements[6], tensor.elements[7], tensor.elements[8]);
+
+                sm.simulation.bindRigidBody(rb);
+                //alert('Corpo Rígido criado com sucesso!')
+
+                rb.mesh = mesh;
+
+                sm.simulation.bindCollision(new HEFESTO.Collision(HEFESTO.CollisionType.SPHERE_AND_TRUEPLANE, cdGround, rb, null));
+                var collision = new HEFESTO.Collision(HEFESTO.CollisionType.ALL, cdGround, rb, null);
+				sm.simulation.bindCollision(collision);
+
+                if(tutorialLigado && option==="2"){
+                    setTimeout(function(){
+                        $("#fieldK").prop('disabled', false);
+                        $("#fieldX").prop('disabled', false);
+                        auxF =f;
+                    },1500)
+                }
+
+                if(tutorialLigado && auxF !=f && option==="2"){
+                    setTimeout(function(){
+                        console.log("Delay...");
+                        nextStep();
+                    },1500);
+                }
+
+                if(tutorialLigado && option ==="3" && passada > 0){
+                    setTimeout(function(){
+                        ativaImagens();
+                    },1500);
+                    auxMaterial = materialType;
+                    passada--;
+                }
+
+                if(tutorialLigado && option ==="3" && materialType !== auxMaterial){
+                    setTimeout(function(){
+                        ativaImagens();
+                        nextStep();
+                    },1500);
+                }
+            }
+
+			var createBody = function() {
+				var rb = new HEFESTO.RigidBody(undefined);
+				rb.radius = 5;
+				rb.canSleep = false;
+				var pos = cannon.determineProjetilPosition();
+				rb.position = new THREE.Vector3(pos.x, pos.y, pos.z);
+				//rb.velocity = new THREE.Vector3();
+				rb.linearDamping = 0.8;
+				rb.angularDamping = 0.95;
+
+				/** volume / massa */
+				var r = rb.radius * 0.1;
+				var volume = (4 * Math.PI * (r * r * r)) / 3;
+				rb.mass = volume * materialType.densidade;
+				rb.useWorldForces = true;
+
+				/** aceleracao dada pela lei de hooke F = K . x  e pelo angulo */
+				rb.velocity = new THREE.Vector3(cannon.determineAngleVelocityVector().x, cannon.determineAngleVelocityVector().y, 0);
+				var K = document.getElementById('fieldK').value;
+				var x = document.getElementById('fieldX').value
+				//lei de hooke F = K . x;
+				var f = K * x;
+				// aceleracao = f / m
+				var ac = f  / rb.mass;
+
+				//aplica sobre a aceleracao baseada no angulo
+				rb.acceleration.x += ac;
+				rb.acceleration.y += ac;
+
+				/** velocidade dada pelo angulo */
+				//rb.velocity = new THREE.Vector3(cannon.determineAngleVelocityVector().x, cannon.determineAngleVelocityVector().y, 0);
+
+				var tensor = getInertiaTensorCoeffs(rb.mass);
+				rb.inertiaTensor.set(tensor.elements[0], tensor.elements[1], tensor.elements[2], tensor.elements[3], tensor.elements[4], tensor.elements[5], tensor.elements[6], tensor.elements[7], tensor.elements[8]);
+
+				sm.addBody(rb);
+				//alert('Corpo Rígido criado com sucesso!')
+
+				var mesh = createMeshAndAddToScene(rb);
+				rb.mesh = mesh;
+                sm.addCollisionGround(rb);
+                sm.addCollisionWithAll(rb);
+			};
+
+			var createMeshAndAddToScene = function(rb) {
+				var geometry = new THREE.SphereGeometry(rb.radius, 32, 16);
+				var material = materialType.cgMaterial;
+				var mesh = new THREE.Mesh(geometry, material);
+				mesh.matrixAutoUpdate = false;
+
+				mesh.position.x = rb.position.x;
+				mesh.position.y = rb.position.y;
+				mesh.position.z = rb.position.z;
+
+				sm.sb.scene.add(mesh);
+			    mesh.updateMatrix();
+			    mesh.matrix.setPosition(rb.position);
+				sm.sb.update();
+				return mesh;
+			}
+
+
+			var getInertiaTensorCoeffs = function(mass) {
+				var random = Math.random() + 0.5;
+				var coeff = 0.4 * mass * random * random;
+				var m = new THREE.Matrix3();
+
+				m.elements[0] = coeff;
+			    m.elements[4] = coeff;
+			    m.elements[8] = coeff;
+			    return m;
+			}
+
+
+			sm.justDraw = function() {
+				if (cannon) {
+					cannon.rotateAround(new THREE.Vector3(0, 1, 0), Math.PI * 50);
+					sm.sb.scene.add(cannon.tubeMesh);
+				}
+			}
+
+			$(function() {
+				sm.initDrawableScene();
+				var width = document.getElementById('canvas-div').clientWidth;
+
+				var height = window.innerHeight - document.getElementById('canvas-div').getBoundingClientRect().top ;
+				height -= 20; //ajuste de margem e footer
+				sm.sb.renderer.setSize(width, height);
+				sm.sb.scene.add(new THREE.GridHelper(300, 15));
+				sm.sb.camera.position.set(2, 30, 170);
+
+				cannon = new BD.Cannon(sm.sb.scene, new THREE.Vector3(-150, 0, -50));
+				//cannon.angle = 45;
+				// desenha o canhao
+				cannon.draw();
+
+                //criaObstaculo();
+
+                $('#stats').remove();
+				sm.sb.update();
+			});
+
+            function bindTarget(targetMesh, tamanho){
+                /**
+                 * rb_target = new HEFESTO.RigidBody(cube);
+                 rb_target.ignoreIntegration = true;
+                 //rb_target.radius = target.radius;
+                 rb_target.mass = 4000;
+                 rb_target.inertiaTensor.set(60000.0381469727, -0.0, -0.0, -0.0, 60000.0381469727, -0.0, -0.0, -0.0, 60000.0381469727);
+                 rb_target.halfSize = new THREE.Vector3(30, 60, 60);
+                 //rb_target.orientation = new THREE.Quaternion(1, 0, 0);
+                 //rb_target.position = posAux;
+                 simulation.bindRigidBody(rb_target);
+                 //rb_target._mesh = cube;
+                 */
+                targetMesh.matrixAutoUpdate = false;
+                targetMesh.updateMatrix();
+                targetMesh.matrix.setPosition(targetMesh.position);
+
+                rb_target = new HEFESTO.RigidBody(targetMesh);
+                //console.log(targetMesh.position);
+                //rb_target.position = targetMesh.position;
+                rb_target.ignoreIntegration = true;
+                rb_target.mass = 4000;
+                rb_target.inertiaTensor.set(960000.0381469727, -0.0, -0.0, -0.0, 960000.0381469727, -0.0, -0.0, -0.0, 960000.0381469727); //Preciso Arrumar esse Atributo.
+                rb_target.bindContactData = true;
+                rb_target.halfSize = new THREE.Vector3((tamanho/2), tamanho, tamanho);
+                sm.addBody(rb_target);
+            }
+
+			var iniciarSimulacao = function() {
+				sm.initSimulation();
+                target = new BD.Target(sm.sb.scene, new THREE.Vector3(50, 30, -50),30);
+                bindTarget(target.alvo,target.tamanho);
+                //sm.addBody(obstaculoRB);
+                sm.sb.update();
+			};
+
+		</script>-->
+
+	</body>
+</html>

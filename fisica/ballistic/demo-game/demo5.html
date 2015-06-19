@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Physics Game | Demo 4</title>
+		<link href="css/style.css" rel="stylesheet">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	</head>
+
+	<body>	
+		<div id="canvas-3d" class="viewer"></div>
+		
+		<!-- External libraries -->
+		<script src="../lib/three.js"></script>
+		<script src="../lib/JSON.prune.js"></script>
+		<script src="../lib/stats.min.js"></script>
+
+		<script src="../lib/RequestAnimationFrame.js"></script>
+		<script src="../lib/jquery.min.js"></script>
+		<script src="../lib/OrbitControls.js"></script>
+		
+		<!-- Water shader -->
+		<script src="../lib/water-material.js"></script>
+		
+		<!-- Demo files -->
+		<script src="../lib/window.js"></script>
+		<script src="jss/simple_demo.js"></script>
+		<script src="jss/gamu.js"></script>
+		<script src="jss/textureutil.js"></script>
+
+		<!-- HEFESTO libs -->
+
+		<script src="../hefesto/hefesto.js"></script>
+		<script src="../hefesto/simulation.js"></script>
+		<script src="../hefesto/simulationws.js"></script>
+		<script src="../hefesto/rigidbody.js"></script>
+		<script src="../hefesto/collision.js"></script>
+		<script src="../hefesto/timming.js"></script>
+
+		<script>
+
+			$(function() {
+				WINDOW.initialize();
+				
+				DEMO.initialize('canvas-3d');
+
+				initializeScene();
+
+				DEMO._camera.position.set(25, 300, 800);
+				
+				WINDOW.resizeCallback = function(inWidth, inHeight) { DEMO.resize(inWidth, inHeight); };
+				DEMO.resize(WINDOW.ms_Width, WINDOW.ms_Height);
+
+				mainLoop();
+			});
+		
+			function mainLoop() {
+			    requestAnimationFrame(mainLoop);
+		    	DEMO.update();
+		    	DEMO._stats.update();
+			};
+
+			var cannon = undefined;
+
+			function initializeScene() {
+				var base = new GAMU.Base( 1500, 1, 1500 );
+				base.material = new THREE.MeshBasicMaterial( {color: 0xf0400a,  transparent: true, opacity: 0.2} );
+				var baseMesh = base.build();
+				DEMO._scene.add(baseMesh);
+
+
+				cannon = new GAMU.Cannon(DEMO._scene);
+				cannon.angle = 45;
+				cannon.initialVelocity = 500;
+				cannon.position = new THREE.Vector3(-600, 0, 0);
+				cannon.build();
+			};
+
+		</script>
+	</body>
+</html>

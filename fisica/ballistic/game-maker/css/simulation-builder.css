@@ -1,0 +1,113 @@
+body {
+    height: 100%;
+    color: black !important;
+}
+
+label {
+	font-weight: bold;
+}
+
+.dataDiv {
+	float: left;
+	width: 25%; 
+	
+	height: 100%;
+	border-top: 0px;
+	border-right: 0px;
+	border-bottom: 0px;
+}
+
+.p {
+	width: 50px !important;
+	float: left;
+	height: 30px !important;
+	margin-right: 5px;
+}
+
+.pi {
+	width: 150px !important;
+}
+
+.bol {
+	height: 20px !important;
+	width: 20px !important;
+}
+
+.pn {
+	width: 80px;
+	float: left;
+	height: 30px;
+}
+
+.l {
+	float: left;
+	width: 100px;
+}
+
+.form-group {
+	
+	margin-bottom: 3px;
+}
+
+/** */
+
+.gm-content {
+	background-color: blue;
+	width: 100%;
+	height: 87%;
+}
+
+.gm-lateral-div {
+	background-color: white;
+	width: 15%;
+	height: 100%;
+	position: absolute;
+}
+
+.gm-tree-content {
+	height: 65%;
+	background-color: darkgray;
+	border: 2px black solid;
+}
+
+.gm-tree-title {
+	font-weight: bold;
+}
+
+.gm-tree-details {
+	height: 35%;
+	background-color: lightgray;
+	border-left: 2px black solid;
+	border-right: 2px black solid;
+}
+
+.gm-viewer {
+	background-color: gray;
+	width: 85%;
+	height: 100%;
+	float: right;
+}
+
+.gm-adjust-canvas {
+	clear: both;
+}
+
+.gm-footer {
+	background-color: black;
+	width: 100%;
+	height: 8%;
+	position: absolute;
+	z-index: 1000;
+}
+
+/** Override bootstrap */
+
+.img-circle {
+	margin-left: 10px;
+	margin-top: 7px;
+	background-color: white;
+}
+
+.tree {
+	height: 100%;
+}

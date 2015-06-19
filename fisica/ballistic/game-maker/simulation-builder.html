@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Simulation Builder</title>
+		<link href="css/style.css" rel="stylesheet">
+		<link href="css/simulation-builder.css" rel="stylesheet">
+		<link href="css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	</head>
+
+	<body>	
+		<div id="main">
+			<div id="content" class="gm-content">
+				<div id="lateral-div" class="gm-lateral-div"> 
+					<div class="gm-tree-content" >
+						<div id="tree-content" class="tree well">
+							<div id="tree-rigid-bodies"><span class="gm-tree-title" >Corpos Rígidos</span></div>
+							<div id="tree-forces"><span class="gm-tree-title">Forças</span></div>
+						</div>
+					</div>
+					<div id="tree-details" class="gm-tree-details">
+						<label>Detalhes:</label>
+					</div>
+				</div>
+				<div id="canvas-3d" class="gm-viewer"></div>
+				<div id="adjust-canvas" class="gm-adjust-canvas"> </div>
+			</div>
+			<div id="footer" class="gm-footer" >
+				<img src="img/start.png" 
+					 alt="Iniciar Simulação" title="Iniciar Simulação" class="img-circle" 
+					 onclick="sm.initSimulation();" >
+
+				<img src="img/add-force.png" 
+					 alt="Nova Força" title="Nova Força" class="img-circle" 
+					 onclick="showNewForceDialog(function() {SB.createForce(sm);});" >
+					 
+				<img src="img/add-rigid-body.png" 
+					 alt="Novo Corpo Rígido" title="Novo Corpo Rígido" class="img-circle" 
+					 onclick="showNewRigidBodyDialog(sm, function() {SB.createBody(sm);});" >
+
+				<!--<img src="img/add-collision-data.png" 
+					 alt="Novo Dados de Colisão" title="Novo Dados de Colisão" class="img-circle" 
+					 onclick="showNewCollisionDataDialog(function() {alert('Registrou DdC');});" >
+
+				<img src="img/add-collision.png" 
+					 alt="Nova Colisão" title="Nova Colisão" class="img-circle" 
+					 onclick="showNewCollisionDialog(function() {alert('Registrou Colisão');});" >-->
+
+				 <img src="img/add-collision.png" 
+					 alt="Salvar Simulação" title="Salvar Simulação" class="img-circle" 
+					 onclick="SB.saveSimulation(sm);" >
+					 <input type="file" id="simulationFile" name="simulationFile[]" />
+			</div>
+		</div>
+		
+		<!-- External libraries -->
+		<script src="../lib/jquery.min.js"></script>
+		<script src="../lib/bootstrap.min.js"></script>
+		<script src="../lib/bootstrap-dialog.min.js"></script>
+		
+
+		<script src="../lib/FileSaver.min.js"></script>
+		<script src="../lib/three.js"></script>
+		<script src="../lib/JSON.prune.js"></script>
+		<script src="../lib/stats.min.js"></script>
+		<script src="../lib/RequestAnimationFrame.js"></script>
+		<script src="../lib/OrbitControls.js"></script>
+		<script src="../lib/window.js"></script>
+		
+		<!-- HEFESTO libs -->
+		<script src="../hefesto/hefesto.js"></script>
+		<script src="../hefesto/force.js"></script>
+		<script src="../hefesto/simulation.js"></script>
+		<script src="../hefesto/simulationws.js"></script>
+		<script src="../hefesto/rigidbody.js"></script>
+		<script src="../hefesto/collision.js"></script>
+		<script src="../hefesto/timming.js"></script>
+		<script src="../hefesto/util/scenebuilder.js"></script>
+
+		<script src="js/simulation-builder.js"></script>
+		<script src="js/simulationmanager.js"></script>
+		<script src="../demo-game/jss/gamu.js"></script>
+
+		<script src="actiondlgs.js"></script>
+
+
+		<script type="text/javascript">
+			HEFESTO._host = 'localhost:8089'
+			var sm = new HEFESTO.SimulationManager('canvas-3d');
+			sm.onInitSimulation = function() {
+				//sm.sb.scene.add(new THREE.AxisHelper(300));
+				for (var m in SB.MaterialCollisionData) {
+					m = SB.MaterialCollisionData[m];
+					sm.addCollisionData(m.obj);
+				}
+				sm.bindAll();
+				
+				//var gravity = new HEFESTO.GravityForce(new THREE.Vector3(0, -10, 0));
+				//sm.addForce(gravity);
+			}
+
+			function loadSimulationFile(evt) {
+				SB.loadSimulation(sm, evt);
+			};
+
+			$(function() {
+				sm.initDrawableScene();
+				var width = document.getElementById('canvas-3d').clientWidth;
+				var height = document.getElementById('canvas-3d').clientHeight - (document.getElementById('footer').clientHeight);
+
+
+
+				/*var  material = new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff, shading: THREE.SmoothShading } );
+
+				var mesh = new THREE.Mesh(new THREE.BoxGeometry(40, 40, 40), material);
+				mesh.position.x = 0;
+				sm.sb.scene.add(mesh);*/
+			
+				sm.sb.renderer.setSize(width, height);
+				sm.sb.scene.add(new THREE.GridHelper(300, 15));
+				sm.sb.update();
+
+				document.getElementById('simulationFile').addEventListener('change', loadSimulationFile, false);
+			});
+
+
+		</script>
+
+	</body>
+</html>

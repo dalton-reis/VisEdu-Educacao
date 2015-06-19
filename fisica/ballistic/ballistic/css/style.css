@@ -1,0 +1,44 @@
+@media (min-width: 768px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+.option-menu {
+	background-color: white;
+	border-top: 2px rgb(209, 87, 74) solid;
+	border-bottom: 2px rgb(209, 87, 74) solid;
+	margin-bottom: 10px;
+}
+
+.canvas-div {
+	background-color: rgb(209, 87, 74);
+	padding: 0px;
+	margin: 0px;
+	padding-top: 5px;
+}
+
+.fieldK {
+	width: 40px;
+} 
+
+.fieldX {
+	width: 40px;
+} 
+
+.border-separator {
+	border-right: 2px black solid;
+	border-left: 2px gray solid;
+}
+
+.nav-pills > li.active > a, 
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+	color: #fff;
+	background-color: rgb(209, 87, 74);
+}
+
+a {
+	color: rgb(209, 87, 74);
+	text-decoration: none
+}

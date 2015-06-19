@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Tutoriais Aula</title>
+<link rel="stylesheet" href="../js/libs/jqueryui/jquery-ui.theme.css"
+	type="text/css" />
+
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/bootstrap-submenu.min.css" rel="stylesheet">
+
+<link href="../css/estiloAula.css" rel="stylesheet">
+</head>
+<body style="background-color: #314357">
+
+	<script type="text/javascript"
+		src="../js/libs/ajax.googleapis.com_ajax_libs_jquery_1.11.1_jquery.min.js"></script>
+	<script type="text/javascript" src="../js/libs/jquery/jquery.js"></script>
+	<script type="text/javascript" src="../js/libs/jqueryui/jquery-ui.js"></script>
+
+	<script type="text/javascript" src="../js/libs/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../js/libs/bootstrap-dialog.min.js"></script>
+	<script type="text/javascript"
+		src="../js/libs/bootstrap-submenu.min.js" defer></script>
+	<script type="text/javascript" src="guide.js"></script>
+	<script type="text/javascript" src="pageUtil.js"></script>
+
+	<div style="margin: 10px">
+		<button type="button" class="btn btn-aula" data-toggle="modal"
+			data-target="#modalListaTutorial">Tutorial</button>
+		<button type="button" class="btn btn-cancela">Cancela</button>
+		<button type="button" class="btn btn-aula btnPlay" data-toggle="modal"
+			data-target="#modalAulaP1">
+			<span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+		</button>
+
+
+<!--
+		<button class="btn btn-danger" onclick="alterarMaterial()">Tutorial</button>
+		<button type="button" class="btn btn-default" data-toggle="modal"
+			data-target="#modalTeste">Cancela</button>
+-->			
+	</div>
+
+	<!-- Modal -->
+
+	<div class="modal fade" id="modalTeste" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header header-modal-aula">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span>
+					</button>
+					<h4 class="modal-title" id="myModalTesteLabel">
+						<strong>Teste</strong>
+					</h4>
+				</div>
+				<div class="modal-body body-modal-aula">
+					<p class="text-modal">Algo que pode interferir no disparro da bola do canh&atilde;o &eacute; a massa dela:</p>
+				</div>
+				<div class="modal-footer footer-modal-aula">
+					<button type="button" class="btn btn-aula" data-dismiss="modal">
+						<span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+						OK
+					</button>
+					<button type="button" class="btn btn-cancela" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"
+							title="Cancelar"></span> Cancelar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalSobre" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header header-modal-aula">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span>
+					</button>
+					<h4 class="modal-title" id="myModalAboutLabel">
+						<strong>Sobre</strong>
+					</h4>
+				</div>
+				<div class="modal-body body-modal-aula">
+					<div id="Dev"></div>
+					<div id="Grupo"></div>
+				</div>
+				<div class="modal-footer footer-modal-aula">
+					<button type="button" class="btn btn-aula" data-dismiss="modal">
+						<span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+						OK
+					</button>
+					<button type="button" class="btn btn-cancela" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"
+							title="Cancelar"></span> Cancelar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalListaTutorial" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header header-modal-aula">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span>
+					</button>
+					<h4 class="modal-title" id="myModalListaTutorialLabel">
+						<strong>Lista Tutoriais</strong>
+					</h4>
+				</div>
+				<div class="modal-body body-modal-aula">
+					<p>Ol&aacute; voc&ecirc; acaba de acessar o Vis-Edu
+						F&iacute;sica!</p>
+
+					<select id="listTutorial" class="form-control menu-lista">
+						<option></option>
+						<option value=1>Mudar &acirc;ngulo</option>
+						<option value=2>Modificar mola</option>
+						<option value=3>Mudar material</option>
+						<option value=4>Alterar gravidade</option>
+					</select>
+				</div>
+				<div class="modal-footer footer-modal-aula">
+					<button type="button" class="btn btn-aula" data-dismiss="modal"
+						onclick="selectTutorial()">
+						<span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+						OK
+					</button>
+					<button type="button" class="btn btn-cancela" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"
+							title="Cancelar"></span> Cancelar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalAulaP1" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header header-modal-aula">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span>
+					</button>
+					<h4 class="modal-title" id="myModalAulaP1Label">
+						<strong>Lei de Hooke</strong>
+					</h4>
+				</div>
+				<div class="modal-body body-modal-aula">
+					<img alt="" src="../img/Formula.png" id="popoverOption"
+						class="imgFormula" tabindex="0" data-container="body"
+						data-toggle="popover" data-trigger="hover" data-placement="left"
+						data-original-title="<strong>For&ccedil;a El&aacute;stica (mola)</strong>"
+						data-content="<p>Onde:</p>
+					 				<p><strong>x</strong> &eacute; a deforma&ccedil;&atilde;o da mola;</p>
+					 				<p><strong>K</strong> &eacute; a constante el&aacute;stica da mola e</p>
+					 				<p><strong>F<sub>el</sub></strong> &eacute; a for&ccedil;a el&aacute;stica. </p>"
+						data-html="true">
+				</div>
+				<div class="modal-footer footer-modal-aula">
+					<button type="button" class="btn btn-aula" data-dismiss="modal"
+						data-toggle="modal" data-target="#modalAulaP2">
+						Pr&oacute;ximo &rarr;</button>
+					<button type="button" class="btn btn-cancela" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"
+							title="Cancelar"></span> Cancelar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalAulaP2" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header header-modal-aula">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span>
+					</button>
+					<h4 class="modal-title" id="myModalAulaP2Label">
+						<strong>Densidade dos proj&eacute;teis</strong>
+					</h4>
+				</div>
+				<div class="modal-body body-modal-aula">
+					<img alt="" src="../img/DensidadeDosProjeteis2.png" class="imgFormula"
+						tabindex="0" data-container="body" data-toggle="popover"
+						data-trigger="hover" data-placement="left"
+						data-original-title="<strong>Densidade dos proj&eacute;teis</strong>"
+						data-content="<p>Onde:</p>
+					 				<p><strong>m</strong> &eacute; a massa do corpo;</p>
+					 				<p><strong>v</strong> &eacute; o volume do corpo e</p>
+					 				<p><strong>&mu;</strong> &eacute; a densidade dos proj&eacute;teis.</p>"
+						data-html="true">
+					<p></p>
+					<p>Logo abaixo temos a densidade de algums materiais.</p>
+					<div class="panel panel-default">
+						<!-- Default panel contents -->
+						<div class="panel-heading  title-Tabel">Materiais</div>
+
+						<!-- Table -->
+						<table class="table">
+							<thead>
+								<tr class="item-Table">
+									<th></th>
+									<th>Material</th>
+									<th>Densidade</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="item-Table">
+									<th scope="row">1.</th>
+									<td>Borracha Silicone</td>
+									<td>&mu; = 0,95 g/cm&sup3;</td>
+								</tr>
+								<tr class="item-Table">
+									<th scope="row">2.</th>
+									<td>Alum&iacute;nio</td>
+									<td>&mu; = 2,70 g/cm&sup3;</td>
+								</tr>
+								<tr class="item-Table">
+									<th scope="row">3.</th>
+									<td>Ferro</td>
+									<td>&mu; = 7,97 g/cm&sup3;</td>
+								</tr>
+								<tr class="item-Table">
+									<th scope="row">4.</th>
+									<td>Ouro</td>
+									<td>&mu; = 19,25 g/cm&sup3;</td>
+								</tr>
+								<tr class="item-Table">
+									<th scope="row">5.</th>
+									<td>Vidro Comum</td>
+									<td>&mu; = 2,60 g/cm&sup3;</td>
+								</tr>
+								<tr class="item-Table">
+									<th scope="row">6.</th>
+									<td>Madeira seca (cedro)</td>
+									<td>&mu; = 0.485 g/cm&sup3;</td>
+								</tr>
+								<tr class="item-Table">
+									<th scope="row">7.</th>
+									<td>Madeira seca (ip&ecirc;)</td>
+									<td>&mu; = 1,10 g/cm&sup3;</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer footer-modal-aula">
+					<button type="button" class="btn btn-aula" data-dismiss="modal"
+						data-toggle="modal" data-target="#modalAulaP3">
+						Pr&oacute;ximo &rarr;</button>
+					<button type="button" class="btn btn-cancela" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"
+							title="Cancelar"></span> Cancelar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalAulaP3" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header header-modal-aula">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span>
+					</button>
+					<h4 class="modal-title" id="myModalAulaP3Label">
+						<strong>2<sup>a</sup> Lei de Newton
+						</strong>
+					</h4>
+				</div>
+				<div class="modal-body body-modal-aula">
+					<img alt="" src="../img/FormulaLeiDeNewton.png" id="popoverOption"
+						class="imgFormula" tabindex="0" data-container="body"
+						data-toggle="popover" data-trigger="hover" data-placement="left"
+						data-original-title="<strong>2<sup>a</sup> Lei de Newton</strong>"
+						data-content="<p>Onde:</p>
+					 				<p><strong>m</strong> &eacute; a massa do proj&eacute;til(esfera);</p>
+					 				<p><strong>a</strong> &eacute; a acelera&ccedil;&atilde;o desenvolvida no impulso pela mola e</p>
+					 				<p><strong>F<sub>r</sub></strong> &eacute; a resultante das for&ccedil;as. </p>"
+						data-html="true">
+				</div>
+				<div class="modal-footer footer-modal-aula">
+					<button type="button" class="btn btn-aula" data-dismiss="modal"
+						data-toggle="modal" data-target="#modalAulaP4">
+						Pr&oacute;ximo &rarr;</button>
+					<button type="button" class="btn btn-cancela" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"
+							title="Cancelar"></span> Cancelar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalAulaP4" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header header-modal-aula">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span>
+					</button>
+					<h4 class="modal-title" id="myModalAulaP4Label">
+						<strong>Velocidade de lan&ccedil;amento</strong>
+					</h4>
+				</div>
+				<div class="modal-body body-modal-aula">
+					<img alt="" src="../img/FormulaVelocidade.png" id="popoverOption"
+						class="imgFormula" tabindex="0" data-container="body"
+						data-toggle="popover" data-trigger="hover" data-placement="left"
+						data-original-title="<strong>Velocidade de lan&ccedil;amento</strong>"
+						data-content="<p>Onde:</p>
+					 				<p><strong>a</strong> &eacute; a acelera&ccedil;&atilde;o no interior do canh&atilde;o;</p>
+					 				<p><strong>x</strong> &eacute; o deslocamento do proj&eacute;til durante o impulso pela mola(deforma&ccedil;&atilde;o el&aacute;stica) e</p>
+					 				<p><strong>V</strong> &eacute; a velocidade de lan&ccedilamento do proj&eacute;til. </p>"
+						data-html="true">
+				</div>
+				<div class="modal-footer footer-modal-aula">
+					<button type="button" class="btn btn-aula" data-dismiss="modal"
+						data-toggle="modal" data-target="#modalAulaP5">
+						Pr&oacute;ximo &rarr;</button>
+					<button type="button" class="btn btn-cancela" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"
+							title="Cancelar"></span> Cancelar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalAulaP5" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header header-modal-aula">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span>
+					</button>
+					<h4 class="modal-title" id="myModalAulaP5Label">
+						<strong>Lan&ccedil;amento obl&iacute;quo - Alcance</strong>
+					</h4>
+				</div>
+				<div class="modal-body body-modal-aula">
+					<img alt="" src="../img/FormulaLancamentoAlcance2.png"
+						id="popoverOption" class="imgFormula" tabindex="0"
+						data-container="body" data-toggle="popover" data-trigger="hover"
+						data-placement="left"
+						data-original-title="<strong>Lan&ccedil;amento obl&iacute;quo - Alcance</strong>"
+						data-content="<p>Onde:</p>
+					 				<p><strong>d</strong> &eacute; a dist&acirc;ncia horizontal;</p>
+					 				<p><strong>V</strong> &eacute; a velocidade de lan&ccedilamento do proj&eacute;til;</p>
+					 				<p><strong>&theta;</strong> &eacute; o &acirc;ngulo de inclina&ccedil;&atilde;o do canh&atilde;o e</p>
+					 				<p><strong>t</strong> &eacute; o instante(tempo). </p>"
+						data-html="true">
+				</div>
+				<div class="modal-footer footer-modal-aula">
+					<button type="button" class="btn btn-aula" data-dismiss="modal"
+						data-toggle="modal" data-target="#modalAulaP6">
+						Pr&oacute;ximo &rarr;</button>
+					<button type="button" class="btn btn-cancela" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"
+							title="Cancelar"></span> Cancelar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalAulaP6" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header header-modal-aula">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Cancelar</span>
+					</button>
+					<h4 class="modal-title" id="myModalAulaP6Label">
+						<strong>Lan&ccedil;amento obl&iacute;quo -
+							Posi&ccedil;&atilde;o vertical (Altura)</strong>
+					</h4>
+				</div>
+				<div class="modal-body body-modal-aula">
+					<img alt="" src="../img/FormulaLancamentoAltura2.png"
+						id="popoverOption" class="imgFormulaH" tabindex="0"
+						data-container="body" data-toggle="popover" data-trigger="hover"
+						data-placement="left"
+						data-original-title="<strong>Lan&ccedil;amento obl&iacute;quo - Posi&ccedil;&atilde;o vertical (Altura)</strong>"
+						data-content="<p>Onde:</p>
+					 				<p><strong>h</strong> &eacute; a altura em qualquer instante;</p>
+					 				<p><strong>h<sub>0</sub></strong> &eacute; a altura inicial;</p>
+					 				<p><strong>V</strong> &eacute; a velocidade de lan&ccedil;amento do proj&eacute;til;</p>
+					 				<p><strong>&theta;</strong> &eacute; o &acirc;ngulo de inclina&ccedil;&atilde;o do canh&atilde;o; </p>
+					 				<p><strong>t</strong> &eacute; o instante(tempo) e </p>
+					 				<p><strong>g</strong> &eacute; a gravidade.</p>"
+						data-html="true">
+				</div>
+				<div class="modal-footer footer-modal-aula">
+					<button type="button" class="btn btn-aula" data-dismiss="modal">
+						Pr&oacute;ximo &rarr;</button>
+					<button type="button" class="btn btn-cancela" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"
+							title="Cancelar"></span> Cancelar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,350 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Physics Game | Demo 8 | Info request</title>
+		<link href="css/style.css" rel="stylesheet">
+		<link href="css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	</head>
+
+	<style type="text/css">
+		body {
+		    height: 100%;
+		    color: black !important;
+		}
+
+		label {
+			font-weight: bold;
+		}
+
+		.dataDiv {
+			float: left;
+			width: 25%; 
+			background-color: white; 
+			height: 100%;
+			border-top: 0px;
+			border-right: 0px;
+			border-bottom: 0px;
+		}
+
+		.p {
+			width: 60px;
+			float: left;
+			height: 30px;
+		}
+
+		.pn {
+			width: 80px;
+			float: left;
+			height: 30px;
+		}
+
+		.l {
+			float: left;
+			width: 140px;
+		}
+
+		.form-group {
+			border-top: 2px solid gray;
+			border-bottom: 2px solid gray;
+			margin-bottom: 3px;
+		}
+	</style>
+
+	<body>	
+		<div>
+			<div class="dataDiv" style="padding-left: 10px;">
+
+				<h2 class="form-signin-heading">Configurar</h2>
+
+				<div class="form-group">
+					<label class="l" >Posição:</label>
+					<div>
+						<input id="pX" class="form-control p" placeholder="x" value="100" >
+						<input id="pY" class="form-control p" placeholder="y" value="100" >
+						<input id="pZ" class="form-control p" placeholder="z" value="100" >
+						<div style="clear: both"></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="l" >Orientação:</label>
+					<div>
+						<input id="oR" class="form-control p" placeholder="x" value="1" >
+						<input id="oI" class="form-control p" placeholder="y" value="0" >
+						<input id="oJ" class="form-control p" placeholder="z" value="0" >
+						<div style="clear: both"></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="l" >Velocidade:</label>
+					<div>
+						<input id="vX" class="form-control p" placeholder="x" value="0" >
+						<input id="vY" class="form-control p" placeholder="y" value="0" >
+						<input id="vZ" class="form-control p" placeholder="z" value="0" >
+						<div style="clear: both"></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="l" >Aceleração:</label>
+					<div>
+						<input id="aX" class="form-control p" placeholder="x" value="0" >
+						<input id="aY" class="form-control p" placeholder="y" value="-10" >
+						<input id="aZ" class="form-control p" placeholder="z" value="0" >
+						<div style="clear: both"></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="l" >Rotação:</label>
+					<div>
+						<input id="rX" class="form-control p" placeholder="x" value="0" >
+						<input id="rY" class="form-control p" placeholder="y" value="0" >
+						<input id="rZ" class="form-control p" placeholder="z" value="0" >
+						<div style="clear: both"></div>
+					</div>
+				</div>
+
+				<div class="form-group">					
+					<label class="l" >Massa:</label>
+					<input id="mass" class="form-control pn" placeholder="Massa" value="200" >
+					<div style="clear: both"></div>
+				</div>
+
+				<div class="form-group">					
+					<label class="l" >Amortec. linear:</label>
+					<input id="linearDamping" class="form-control pn" value="0.95" >
+					<div style="clear: both"></div>
+				</div>
+
+				<div class="form-group">					
+					<label class="l" >Amortec. angular:</label>
+					<input id="angularDamping" class="form-control pn" value="0.8" >
+					<div style="clear: both"></div>
+				</div>
+
+				<div class="form-group">					
+					<label class="l" >Raio:</label>
+					<input id="radius" class="form-control pn" value="20" >
+					<div style="clear: both"></div>
+				</div>
+
+				<div class="form-group">
+					<label class="l" >Tamanho médio:</label>
+					<div>
+						<input id="hX" class="form-control p" placeholder="x">
+						<input id="hY" class="form-control p" placeholder="y">
+						<input id="hZ" class="form-control p" placeholder="z">
+						<div style="clear: both"></div>
+					</div>
+				</div>
+
+				<button type="submit" class="btn btn-success" onclick="initSimulation()" >Iniciar</button>
+				<button type="submit" class="btn btn-info" onclick="createBall()" >Adicionar Corpo Rígido</button>
+				<div id="infos" ></div>
+			</div>
+			<div style="float: left; width: 75%;" id="canvas-3d" class="viewer"></div>
+			<br clear="both"/>
+		</div>
+		
+		<!-- External libraries -->
+		<script src="../lib/three.js"></script>
+		<script src="../lib/JSON.prune.js"></script>
+		<script src="../lib/stats.min.js"></script>
+
+		<script src="../lib/RequestAnimationFrame.js"></script>
+		<script src="../lib/jquery.min.js"></script>
+		<script src="../lib/OrbitControls.js"></script>
+		
+		<!-- Water shader -->
+		<script src="../lib/water-material.js"></script>
+		
+		<!-- Demo files -->
+		<script src="../lib/window.js"></script>
+		<script src="jss/simple_demo.js"></script>
+		<script src="jss/gamu.js"></script>
+		<script src="jss/textureutil.js"></script>
+
+		<!-- HEFESTO libs -->
+
+		<script src="../hefesto/hefesto.js"></script>
+		<script src="../hefesto/simulation.js"></script>
+		<script src="../hefesto/simulationws.js"></script>
+		<script src="../hefesto/rigidbody.js"></script>
+		<script src="../hefesto/collision.js"></script>
+		<script src="../hefesto/timming.js"></script>
+
+		<audio id="audio" src="audio/quica_2.mp3" preload="auto">Seu navegador não possui suporte ao elemento audio</audio>
+
+		<script>
+			var cdGround = new HEFESTO.CollisionData(0.9, 0.9, 0.01);
+			cdGround.id = 'padrao';
+			cdGround.maxCollision = 256 * 256;
+
+			var simulation = undefined;
+			var timming = undefined;
+			var next = 0xff0000;	
+
+			$(function() {
+				WINDOW.initialize();
+				
+				DEMO.initialize('canvas-3d');
+
+				DEMO._camera.position.set(25, 300, 800);
+				
+				WINDOW.resizeCallback = function(inWidth, inHeight) { DEMO.resize(inWidth, inHeight); };
+				DEMO.resize(WINDOW.ms_Width, WINDOW.ms_Height);
+
+				var base = new GAMU.Base( 1500, 1, 1500 );
+				base.material = new THREE.MeshBasicMaterial( {color: 0xf0400a,  transparent: true, opacity: 0.2} );
+				var baseMesh = base.build();
+				DEMO._scene.add(baseMesh);
+			});
+
+
+			function initSimulation() {
+				simulation = new HEFESTO.Simulation();
+				simulation.contactListener = function (data) {
+
+					var au = document.getElementById('audio');
+					//au.play();
+
+					if (mesh.material.color.r == 0) {
+						mesh.material.color.r = 1;
+						mesh.material.color.g = 0;
+						mesh.material.color.b = 0;
+					} else {
+						mesh.material.color.r = 0;
+						mesh.material.color.g = 0;
+						mesh.material.color.b = 1;
+					}
+				};
+
+				simulation.rigidBodyDataListener = function (body) {
+
+					var aux = function (v) {
+						return 'x(' + v.x + ') y(' + v.y + ') z(' + v.z + ')'
+					};
+					var str = 'Id: ' + body.id + '<br/>';
+					str += 'Position: ' + aux(body.position) + '<br/>';
+					str += 'Orientation: ' + aux(body.orientation) + '<br/>';
+					str += 'Velocity: ' + aux(body.velocity) + '<br/>';
+		        	str += 'Aceleration: ' + aux(body.aceleration) + '<br/>';
+		        	str += 'Rotation: ' + aux(body.rotation) + '<br/>';
+		        	str += 'InverseInertiaTensor: ' + body.inverseInertiaTensor + '<br/>';
+		        	
+					var div = document.getElementById('infos');
+					div.innerHTML = str;
+					
+				};
+
+
+				timming = new HEFESTO.Timming();
+
+				if (mesh != undefined) {
+					DEMO._scene.remove(mesh);
+				}
+
+				simulation.init();
+				continueInitilization();
+			}
+
+			function continueInitilization() {
+				if (!simulation.isBusy()) {
+					simulation.bindCollisionData(cdGround);
+					
+					//createBall();
+
+					timming.start();
+					timming.update();
+
+				    mainLoop();
+				} else {
+					requestAnimationFrame(continueInitilization);
+				}
+			}
+		
+			function mainLoop() {
+			    requestAnimationFrame(mainLoop);
+			    if (!simulation.isBusy()) {
+			    	simulation.integrate(timming.getLastFrameDuration() * 0.001);
+			    	simulation.getRigidBodyData('all');
+
+			    	DEMO.update();
+		    		DEMO._stats.update();
+		    		timming.update();
+			    }
+			};
+
+			var mesh = undefined;
+			var geometryBall = new THREE.SphereGeometry(20, 32, 16);			
+
+			function createBall() {
+				if (simulation.isBusy()) {
+					setTimeout(createBall, 100);
+					return;
+				}
+				var  material = new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff, shading: THREE.SmoothShading } );
+
+				mesh = new THREE.Mesh(geometryBall, material);
+
+				var position = getVector3('p');
+
+				GAMU.positionMesh(mesh, position, new THREE.Vector3());
+				DEMO._scene.add(mesh);
+
+				mesh.matrixAutoUpdate = false;
+
+				var rb = new HEFESTO.RigidBody(mesh);
+				rb.bindContactData = true;
+				rb.radius = 20;
+
+				rb.canSleep = false;
+
+				rb.aceleration = getVector3('a');
+				rb.velocity = getVector3('v');
+				rb.rotation = getVector3('r');
+				rb.orientation = getQuaternion('o');
+
+				rb.inertiaTensor.set(5360957.0, -0.0, -0.0, -0.0, 5360957.0, -0.0, -0.0, -0.0, 5360957.0);
+				rb.linearDamping = getValue('linearDamping');
+				rb.angularDamping = getValue('angularDamping');
+				rb.mass = getValue('mass');
+
+				simulation.bindRigidBody(rb);				
+
+
+				var collisionGround = new HEFESTO.Collision(HEFESTO.CollisionType.SPHERE_AND_TRUEPLANE, cdGround, rb, null);
+				simulation.bindCollision(collisionGround);
+				var collision = new HEFESTO.Collision(HEFESTO.CollisionType.ALL, cdGround, rb, null);
+				simulation.bindCollision(collision);
+			};
+
+			function getVector3(field) {
+				var x = document.getElementById(field + 'X').value;
+				var y = document.getElementById(field + 'Y').value;
+				var z = document.getElementById(field + 'Z').value;
+
+				return new THREE.Vector3(x, y, z);
+			};
+
+			function getQuaternion(field) {
+				var r = document.getElementById(field + 'R').value;
+				var i = document.getElementById(field + 'I').value;
+				var j = document.getElementById(field + 'J').value;
+
+				return new THREE.Quaternion(r, i, j);
+			};
+
+			function getValue(field) {
+				return document.getElementById(field).value;
+			}
+
+		</script>
+	</body>
+</html>
