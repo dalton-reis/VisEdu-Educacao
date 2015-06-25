@@ -22,7 +22,7 @@ function PainelAnimacao( editor ) {
 	var time = new UI.Number().setWidth('50px');
 	var distanceAverage = new UI.Number().setWidth('50px').setValue(1);
 	var rotationAverage = new UI.Number().setWidth('50px').setValue(1);
-	time.setValue(2000);
+	time.setValue(2);
 	var linhaValues = new UI.Panel();
 	linhaValues.add(new UI.Text('Animação').setColor('#666'));
 	this.add(linhaValues);
@@ -134,7 +134,7 @@ function PainelAnimacao( editor ) {
 					animation = new TWEEN.Tween(object3D[q].position)
 					.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.x),
 					    y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.y),
-					    z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.z)}, time.getValue())
+					    z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Math.abs(animationItem.valorXYZ.z)}, time.getValue() * 1000 )
 					.easing(CG.getEasingFunction(easing[q]))
 					if( selectedAnimation != undefined && q == selectedAnimation ){
 						setAnimationCallbacks(animation, q, s);
@@ -143,7 +143,7 @@ function PainelAnimacao( editor ) {
 					animation = new TWEEN.Tween(object3D[q].rotation)
 					.to({x: (animationItem.valorXYZ.x >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.x)),
 					    y: (animationItem.valorXYZ.y >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.y)),
-					    z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.z))}, time.getValue())
+					    z: (animationItem.valorXYZ.z >= 0 ? "+" : "-") + Util.math.converteGrausParaRadianos(Math.abs(animationItem.valorXYZ.z))}, time.getValue() * 1000)
 					.easing(CG.getEasingFunction(easing[q]));
 					if( selectedAnimation != undefined && q == selectedAnimation ){
 						setAnimationCallbacks(animation, q, s);
