@@ -94,7 +94,7 @@ HEFESTO.SimulationManager.prototype = {
 
 		this.sb.init();
 
-		WINDOW.resizeCallback = function(inWidth, inHeight) { this.sb.resize(inWidth, inHeight); };
+		//WINDOW.resizeCallback = function(inWidth, inHeight) { this.sb.resize(inWidth, inHeight); };
 		this.sb.resize(WINDOW.ms_Width, WINDOW.ms_Height);
 		this.drawableLoop();
 	},
@@ -142,10 +142,25 @@ HEFESTO.SimulationManager.prototype = {
 		var that = this;
 		requestAnimationFrame(function () {that.mainLoop(); });
 	    if (!this.simulation.isBusy()) {
-
-	    	this.simulation.integrate(this.timming.getLastFrameDuration() * 0.001);
-	    	//this.onIntegrate(); //listener para fazer alguma ação
-
+			if(play) {
+				this.simulation.integrate(this.timming.getLastFrameDuration() * 0.001);
+				//this.onIntegrate(); //listener para fazer alguma ação
+				if (rb !== undefined && isDesenhaTrajetoria) {
+					desenhaTrajetoria(rb);
+				}
+				for (b in this.bodies){
+					var body = this.bodies[b];
+					if(body !== undefined) {
+						if (body.position.x > 600  || body.position.y < 0 || body.position.x < -300) {
+							this.sb.scene.remove(body.mesh);
+							this.simulation.removeRigidBody(body);
+							this.bodies[b] = undefined;
+							//this.bodies.splice(b,1);
+							//console.log( this.bodies.indexOf(body));
+						}
+					}
+				}
+			}
 	    	this.sb.update();
 			this.sb.stats.update();
 			this.timming.update();
@@ -158,10 +173,11 @@ HEFESTO.SimulationManager.prototype = {
 
 	addBody: function (body, bind) {
 		this.bodies[body.id] = body;
+		//console.log($.inArray(body, this.bodies));
 		//this.sb.scene.add(body.mesh);
 		if (bind) {
 			this.simulation.bindRigidBody(body);
-			console.log("Bind Rigid Body");
+			//console.log("Bind Rigid Body");
 		}
 	},
 
@@ -183,7 +199,7 @@ HEFESTO.SimulationManager.prototype = {
 		this.collisions[this.collisions.length] = collision;
 		if (bind) {
 			this.simulation.bindCollision(collision);
-			console.log("Bind Collision");
+			//console.log("Bind Collision");
 		}
 	},
 

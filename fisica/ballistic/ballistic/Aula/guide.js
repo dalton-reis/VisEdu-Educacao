@@ -26,8 +26,11 @@ function selectTutorial() {
 	option = document.getElementById('listTutorial').value;
 	console.log(option);
 	tutorialLigado = true;
+	resetSimulation();
 	switch (option) {
 	case "1":
+        $("#fieldAngulo").val(0);
+        rotacionarCanhao(0);
 		changeAngleS1();
         desativoAngulo();
 		break;
@@ -50,11 +53,12 @@ function selectTutorial() {
 }
 
 function desativaMola(){
-    $("#fieldK").prop('disabled', true);
-    $("#fieldX").prop('disabled', true);
+    $("#fieldK").prop('disabled', true).val(50);
+    $("#fieldX").prop('disabled', true).val(70);
 	$("#altGravidade").prop('disabled', true);
 	$("#btnTutorial").prop('disabled', true);
-    $("#fieldAngulo").prop('disabled', true);
+    $("#fieldAngulo").prop('disabled', true).val(0);
+    rotacionarCanhao(0);
     desativaImagem();
 }
 
@@ -66,8 +70,8 @@ function ativaMola(){
 }
 
 function desativoAngulo(){
-    $("#fieldK").prop('disabled', true);
-    $("#fieldX").prop('disabled', true);
+    $("#fieldK").prop('disabled', true).val(75);
+    $("#fieldX").prop('disabled', true).val(80);
 	$("#altGravidade").prop('disabled', true);
 	$("#btnTutorial").prop('disabled', true);
     desativaImagem();
@@ -176,7 +180,7 @@ function doneStep(msg) {
 				title : '<strong>Tutorial</strong>',
 				size : 'size-small',
 				message : function(dialogRef) {
-					var $message = $('<div>' + msg + '</div>');
+					var $message = $('<div> <p class="text-modal">' + msg + '</p> </div>');
 					return $message;
 				},
 				closable : false,
@@ -450,7 +454,7 @@ function alterarMola() {
 					var $message = $('<div>'
 							+ '<p class="text-modal">Dentro do canh&atilde;o que temos em cena'
 							+ ' existe uma mola.</p>'
-							+ '<img alt="Imagem Do Canh&atilde;o" src="">'
+							+ '<img alt="Imagem Do Canh&atilde;o" src="img/desenhoCanhao.png">'
 							+ '<p class="text-modal">'
 							+ 'Essa mola &eacute; reponsavel por fazer a bola sair do '
 							+ 'canh&atilde;o com mais ou menos for&ccedil;a. <br> Nesse '

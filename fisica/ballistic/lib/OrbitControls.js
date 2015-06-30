@@ -313,6 +313,12 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 		state = STATE.NONE;
 
+		var field = "camera";
+
+		document.getElementById(field+"X").value = sm.sb.camera.position.x.toFixed(2);;
+		document.getElementById(field+"Y").value = sm.sb.camera.position.y.toFixed(2);;
+		document.getElementById(field+"Z").value = sm.sb.camera.position.z.toFixed(2);;
+
 	}
 
 	function onMouseWheel( event ) {
@@ -341,7 +347,11 @@ THREE.OrbitControls = function ( object, domElement ) {
 			scope.zoomIn();
 
 		}
+		var field = "camera";
 
+		document.getElementById(field+"X").value = sm.sb.camera.position.x.toFixed(2);;
+		document.getElementById(field+"Y").value = sm.sb.camera.position.y.toFixed(2);;
+		document.getElementById(field+"Z").value = sm.sb.camera.position.z.toFixed(2);;
 	}
 
 	function onKeyDown( event ) {

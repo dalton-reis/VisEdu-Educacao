@@ -22,6 +22,7 @@ HEFESTO.SimulationWS.prototype = {
 	init: function () {
 		if ('WebSocket' in window) {
 			this._ws = new WebSocket("ws://" + HEFESTO._host + "/" + HEFESTO._service + "/" + HEFESTO._servlet);
+			console.log("Local: "+"ws://" + HEFESTO._host + "/" + HEFESTO._service + "/" + HEFESTO._servlet);
 		} else if ('MozWebSocket' in window) {
 			this._ws = new WebSocket("ws://" + HEFESTO._host + "/" + HEFESTO._service + "/" + HEFESTO._servlet);
 		} 

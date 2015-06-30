@@ -81,7 +81,7 @@ HEFESTO.SceneBuilder.prototype = {
 		
 		this.stats = new Stats();
 		this.stats.domElement.style.position = 'absolute';
-		this.stats.domElement.style.top = '0px';
+		this.stats.domElement.style.bottom = '0px';
 		this.canvas.appendChild( this.stats.domElement );
 	},	
 
@@ -97,7 +97,13 @@ HEFESTO.SceneBuilder.prototype = {
 	resize: function (inWidth, inHeight) {
 		this.camera.aspect =  inWidth / inHeight;
 		this.camera.updateProjectionMatrix();
-		this.renderer.setSize(inWidth, inHeight);
+
+		var width = document.getElementById('canvas-div').clientWidth;
+
+		var height = inHeight - document.getElementById('canvas-div').getBoundingClientRect().top ;
+		height -= 20; //ajuste de margem e footer
+
+		this.renderer.setSize(width, height);
 		this.canvas.appendChild(this.renderer.domElement);
 		this.display();
 	}

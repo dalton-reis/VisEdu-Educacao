@@ -1,10 +1,9 @@
 var HEFESTO = { REVISION: '1'};
 
 /** Host do servidor HEFESTO */
-HEFESTO._host = 'localhost:8089';
+HEFESTO._host = 'localhost:8080';
 
 /** Serviço HEFESTO */
-//HEFESTO._service = 'hefesto-wsNew';
 HEFESTO._service = 'hefesto-ws';
 
 /** Nome do WebSocket HEFESTO */

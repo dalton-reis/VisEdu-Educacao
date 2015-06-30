@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../lib/three.js"></script>
+</head>
+<body>
+    <script>
+        var posAnt = new THREE.Vector3(0,0,0);
+        var posAntDes = new THREE.Vector3(0,0,0);
+        var tamanhoMax = 11;
+        var posPintar = new THREE.Vector2(parseInt(tamanhoMax/2),parseInt(tamanhoMax/2))
+        var posAnterior = new THREE.Vector2();
+        var chegouMeio = false;
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.5, 3000);
+        camera.position.set(0, 0, 80);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+
+        document.body.appendChild(renderer.domElement);
+
+        posAnterior.x = -50;
+        posAnterior.y = 40;
+
+        var geometry = new THREE.SphereGeometry( 5, 32, 32 );
+        var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+        var sphere = new THREE.Mesh( geometry, material );
+        sphere.position.x =1;
+        scene.add( sphere );
+        desenhaTrajetoria(sphere);
+/*
+        for(var i =0; i<tamanhoMax; i++) {
+            for (var j = 0; j < tamanhoMax; j++) {
+            var geometry = new THREE.SphereGeometry(3, 32, 32);
+                if((posPintar.x ===j || posPintar.y ==j)|| i=== parseInt(tamanhoMax/2) && j === parseInt(tamanhoMax/2)){
+                    var material = new THREE.MeshBasicMaterial({color: 0x0FF0000});
+                    console.log("Entrou Aqui!!!");
+                }else {
+                    var material = new THREE.MeshBasicMaterial({color: 0x0FFFFFF});
+                }
+
+            var sphere = new THREE.Mesh(geometry, material);
+            sphere.position.x = posAnterior.x;
+            sphere.position.y = posAnterior.y;
+            //console.log(posAnterior.x);
+            posAnterior.x += 8;
+            scene.add(sphere);
+        }
+            posAnterior.y-=8;
+            posAnterior.x = -50;
+            if(!chegouMeio) {
+                posPintar.x--;
+                posPintar.y++;
+            }else{
+                posPintar.x++;
+                posPintar.y--;
+            }
+            if(posPintar.x ===0){
+                chegouMeio = true;
+            }
+        }
+
+
+        var med = 5 * 2.1;
+        var pts = [
+            new THREE.Vector3(med * 0.5,0, med),//top left
+            new THREE.Vector3(med * 0.5,0,med),//top right
+            new THREE.Vector3(med * 0.5,0,-med * 2),//bottom right
+            new THREE.Vector3(med * 0.5,0,-med * 2),//bottom left
+            new THREE.Vector3(med * 0.5,0,med)//back to top left - close square path
+        ];
+        var  material = new THREE.MeshBasicMaterial( { color: 0x444444, shading: THREE.SmoothShading } );
+        var tubeMesh = new THREE.Mesh( new THREE.LatheGeometry( pts, 64 ), material);
+
+        scene.add(tubeMesh);
+        */
+
+        function desenhaTrajetoria(mesh){
+            if(posAnt.x !== mesh.position.x || posAnt.y !== mesh.position.y || posAnt.z !== mesh.position.z) {
+                /**setTimeout(function () {
+                    desenhaCirculo(mesh)
+                    console.log("Desenha Trajetoria");
+                }, 3000);*/
+                if( Math.abs(posAntDes.x-mesh.position.x)>5 || Math.abs(posAntDes.y-mesh.position.y)>5 || Math.abs(posAntDes.z-mesh.position.z)>5){
+                    desenhaCirculo(mesh)
+                    console.log("Desenha Trajetoria");
+                    posAntDes.x = mesh.position.x;
+                    posAntDes.y = mesh.position.y;
+                    posAntDes.z = mesh.position.z;
+                }
+                posAnt.x = mesh.position.x;
+                posAnt.y = mesh.position.y;
+                posAnt.z = mesh.position.z;
+            }
+
+        }
+
+
+        var desenhaCirculo = function(mesh) {
+            var material = new THREE.MeshBasicMaterial({
+                color: 0x0000ff
+            });
+
+            var radius = 1;
+            var segments = 32;
+
+            var circleGeometry = new THREE.CircleGeometry(radius, segments);
+            var circle = new THREE.Mesh(circleGeometry, material);
+            circle.position.set(mesh.position.x,mesh.position.y,mesh.position.z);
+            scene.add(circle);
+        };
+        function render() {
+            requestAnimationFrame( render );
+            renderer.render( scene, camera );
+            if(sphere.position.x <40) {
+                sphere.position.x += 0.1;
+                sphere.position.y += 0.02;
+            }
+            desenhaTrajetoria(sphere);
+            //tubeMesh.rotation.x +=0.01;
+        }
+        render();
+    </script>
+</body>
+</html>

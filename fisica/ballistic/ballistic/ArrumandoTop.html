@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="img/logo.ico">
+    <title>DEMO | Ballistic</title>
+    <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="css/jumbotron-narrow.css" rel="stylesheet">
+    <link href="css/ballistic-demo.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/estiloAula.css" rel="stylesheet">
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes" />
+     <meta name="mobile-web-app-capable" content="yes" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />-->
+</head>
+
+<body>
+<div id="main" class="container">
+    <div class="header clearfix">
+        <nav class="nav nav-pills pull-right">
+            <ul >
+                <button class="btn btn-aula" onclick="rotacionarCanhao(10)">Home</button>
+                <button id="btnDispara" class="btn btn-aula" onclick="createCanonBall();playPausa(true);"><span class="glyphicon glyphicon-screenshot " ></span> Disparar</button>
+                <button id="altGravidade" class="btn btn-aula" data-toggle="modal"
+                        data-target="#modalListaGravidade">Altera Gravidade</button>
+                <img id="gravidade" src="img/icon/Earth.png" style="width: 60px" title="Terra: 10m/s&sup2;"
+                     data-toggle="tooltip"
+                     data-placement="bottom" >
+                <button id="btnTutorial" type="button" class="btn btn-aula" data-toggle="modal"
+                        data-target="#modalListaTutorial">Tutorial</button>
+                <button id="btnExclui" type="button" class="btn btn-aula" onclick="resetSimulation()"
+                        title="Recarregar Simula&ccedil;&atilde;o"
+                        data-toggle="tooltip"
+                        data-placement="bottom"><span class="glyphicon glyphicon-refresh"></span></button>
+                <button class="btn btn-aula" onclick="addLista()">About</button>
+                <button id="btnConfig" type="button" class="btn btn-aula" data-toggle="modal"
+                        data-target="#modalConfig">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </button>
+            </ul>
+        </nav>
+        <h3 class="text-muted-h3">
+            <img alt="Brand" width="64" height="64" src="img/logo.png">
+            Ballistic Demo
+        </h3>
+    </div>
+
+    <div class="row option-menu" >
+        <!-- Equação de Hooke -->
+        <div class="col-xs-4 border-separator" >
+            <div class="col-xs-8" >
+                <img alt="F el"src="img/hooke_equation.png" width="200px" >
+            </div>
+            <div class="col-xs-4">
+                <div class="col-xs-6 form-group">
+                    <label >K: </label>
+                    <input id="fieldK" class="form-control fieldK" placeholder="K" value="1" />
+                </div>
+                <div class="col-xs-6 form-group">
+                    <label >x: </label>
+                    <input id="fieldX" class="form-control fieldX" placeholder="x" value="1" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Material do projétil -->
+        <div class="col-xs-4 border-separator" >
+            <div class="col-xs-9" style="padding-left: 0px !important; padding-right: 0px !important;" >
+                <label>Material do proj&eacute;til:</label>
+                <div class="col-xs-12" style="padding-left: 0px !important; padding-right: 0px !important;" >
+                    <img id="silicone" src="img/silicone.png" title="Silicone" class="img-rounded"
+                         onclick="atualizarMaterial(this, BD.MaterialProjetil.SILICONE);" >
+                    <img id="aluminio" src="img/aluminio.png" title="Alumínio" class="img-rounded"
+                         onclick="atualizarMaterial(this, BD.MaterialProjetil.ALUMINIO);" >
+                    <img id="ferro" src="img/ferro.png" title="Ferro" class="img-rounded"
+                         onclick="atualizarMaterial(this, BD.MaterialProjetil.FERRO);" >
+                    <img id="ouro" src="img/ouro.png" title="Ouro" class="img-rounded"
+                         onclick="atualizarMaterial(this, BD.MaterialProjetil.OURO);" >
+                    <img id="vidro" src="img/vidro.png" title="Vidro" class="img-rounded"
+                         onclick="atualizarMaterial(this, BD.MaterialProjetil.VIDRO);" >
+                    <img id="madeira-ipe" src="img/madeira_ipe.png" title="Ipê (Madeira seca)" class="img-rounded"
+                         onclick="atualizarMaterial(this, BD.MaterialProjetil.IPE);" >
+                    <img id="madeira-cedro" src="img/madeira_cedro.png" title="Cedro (Madeira seca)" class="img-rounded"
+                         onclick="atualizarMaterial(this, BD.MaterialProjetil.CEDRO);" >
+                </div>
+            </div>
+            <div class="col-xs-3" >
+                <label>Atual</label>
+                <img id="materialAtualImg" src="img/silicone.png" title="Silicone">
+            </div>
+        </div>
+        <div class="col-xs-3 border-separator" >
+            <label>&Acirc;ngulo do canh&atilde;o:</label>
+            <input id="fieldAngulo" class="form-control fieldAngulo" placeholder="xº" style="width: 55px" value="0" />
+            <div style="position: absolute; top: 5px; left: 160px;">
+                <button onclick="incAngle()" class="btn btn-sm btn-aula" style="position: absolute; top: 0px;"
+                        title="Aumentar &acirc;ngulo"
+                        data-toggle="tooltip"
+                        data-placement="top">
+                    <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                </button>
+                <button onclick="decAngle()" class="btn btn-sm btn-aula" style="position: absolute; top: 34px; left: 0px;"
+                        title="Diminuir &acirc;ngulo"
+                        data-toggle="tooltip"
+                        data-placement="bottom">
+                    <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+        <div class="col-xs-1 border-separator" >
+            <!-- <img src="img/start.png" title="Silicone" onclick="iniciarSimulacao();" >-->
+            <button id="btnPlay" type="button" class="btn btn-aula btnPlay" onclick="playPausa(!play);" title="Iniciar simula&ccedil;&atilde;o"
+                    data-toggle="tooltip"
+                    data-placement="top">
+                <span id ="iconPlay" class="glyphicon glyphicon-play" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="position: absolute; top: 0px; right: 0px; margin: 10px">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+    </button>
+    <div class="collapse" id="collapseExample" style="position: absolute; top: 0px; right: 0px;">
+        <div class="well" id="list">
+            <div style="margin-bottom: 25px;">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="position: absolute; top: 0px; right: 0px; margin: 10px">
+                <span class="glyphicon glyphicon-chevron-up"></span>
+            </button>
+                </div>
+        </div>
+    </div>
+
+    <div id="canvas-div" class="row canvas-div" >
+        <div id="canvas-3d" ></div>
+    </div>
+
+    <div class="row" >
+        <br/>
+    </div>
+
+    <footer class="footer text-center">
+        <p>© HEFESTO Engine | 2015</p>
+    </footer>
+</div>
+
+<script src="../lib/jquery.min.js"></script>
+<script src="Aula/jquery-ui.js"></script>
+<script src="../lib/bootstrap.js"></script>
+<script src="../lib/bootstrap-dialog.min.js"></script>
+
+<script>
+
+    function addLista(){
+        var list = document.getElementById("list");
+        var divPricial = document.createElement('div');
+
+        var divMaterial = document.createElement('div');
+        divMaterial.innerHTML="<p>Madeira Cedro</p>";
+        divMaterial.style.width = "156px";
+        divMaterial.style.marginRight = "10px"
+        //divMaterial.className = "col-xs-3";
+        divPricial.appendChild(divMaterial);
+        var color = 0xffffff * (800 * Math.random() - 400 * Math.random());
+        var divCor = document.createElement('div');
+        divCor.style.backgroundColor = "rgb(255,0,0)";
+        console.log(parseInt(color.toString(16),16));
+        divCor.style.width = "25px";
+        divCor.style.height = "5px";
+        divCor.style.position = "relative";
+        divCor.style.top = "-22px";
+        divCor.style.left = "143px";
+        //divCor.className = "col-xs-3";
+
+        divPricial.appendChild(divCor);
+
+        $(list).append(divPricial);
+        console.log("Adicionou!!!");
+    }
+
+</script>
+
+</body>
+</html>

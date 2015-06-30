@@ -1,4 +1,5 @@
 var BD = { REVISION: '1'};
+var matrizOrigem = new THREE.Matrix4();
 
 BD.Material = function(id, densidade, img) {
 	var id = id;
@@ -56,12 +57,19 @@ BD.Gravidade = function(id, _valor, _camiho) {
 			writable: false
 		}
 	});
-}
+};
 
 BD.Gravidades = {
-	TERRA: new BD.Gravidade('Terra', 10, 'img/icon/Earth.png'),
-	LUA: new BD.Gravidade('Lua', 1.622, 'img/icon/Moon.png'),
-	MARTE: new BD.Gravidade('Marte', 3.711, 'img/icon/Mars.png')
+    MERCURIO: {id:'Merc&uacute;rio', valor: new HEFESTO.GravityForce(new THREE.Vector3(0, -3.7, 0)), caminho: 'img/icon/Mercury.png'},
+    VENUS: {id:'V&eacute;nus', valor: new HEFESTO.GravityForce(new THREE.Vector3(0, -8.87, 0)), caminho: 'img/icon/Venus.png'},
+	TERRA: {id:'Terra', valor: new HEFESTO.GravityForce(new THREE.Vector3(0, -10, 0)), caminho: 'img/icon/Earth.png'},
+	LUA: {id:'Lua', valor: new HEFESTO.GravityForce(new THREE.Vector3(0, -1.622, 0)), caminho: 'img/icon/Moon.png'},
+	MARTE: {id:'Marte', valor: new HEFESTO.GravityForce(new THREE.Vector3(0, -3.711, 0)), caminho: 'img/icon/Mars.png'},
+	JUPITER: {id:'J&uacute;piter', valor: new HEFESTO.GravityForce(new THREE.Vector3(0, -24.79, 0)), caminho: 'img/icon/Jupiter.png'},
+    SATURNO : {id:'Saturno', valor: new HEFESTO.GravityForce(new THREE.Vector3(0, -10.44, 0)), caminho: 'img/icon/Saturn.png'},
+    URNANO: {id:'Urano', valor: new HEFESTO.GravityForce(new THREE.Vector3(0, -8.69 , 0)), caminho: 'img/icon/Uranus.png'},
+    NETUNO: {id:'Netuno', valor: new HEFESTO.GravityForce(new THREE.Vector3(0, -11.15, 0)), caminho: 'img/icon/Neptune.png'},
+    PLUTAO: {id:'Plut&atilde;o', valor: new HEFESTO.GravityForce(new THREE.Vector3(0, -0.658, 0)), caminho: 'img/icon/Pluto.png'}
 };
 
 BD.Positionable = function() {
@@ -142,10 +150,10 @@ BD.Cannon.prototype = {
 	generateBase: function() {
 		var baseSize = this.projetilRadius * 4;
 
-		var geometry = new THREE.BoxGeometry( baseSize, baseSize /2, baseSize );
+		var geometry = new THREE.BoxGeometry( baseSize*1.5, baseSize /2, baseSize*1.1 );
 		var material = new THREE.MeshLambertMaterial( {color: 0x444444,  transparent: true} );
 		this.baseMesh = new THREE.Mesh(geometry, material);
-		this.baseMesh.position.x = this.position.x - this.projetilRadius;
+		this.baseMesh.position.x = this.position.x + this.projetilRadius/2;;
 		this.baseMesh.position.y = this.position.y + (baseSize/4);
 		this.baseMesh.position.z = this.position.z;
 		this.scene.add(this.baseMesh);
@@ -153,12 +161,12 @@ BD.Cannon.prototype = {
 
 	generateBody: function() {
 		var  material = new THREE.MeshLambertMaterial( { color: 0x444444, shading: THREE.SmoothShading } );
-		var geometryBall = new THREE.SphereGeometry(this.projetilRadius * 2, 32, 16);
-		this.bodyMesh = new THREE.Mesh(geometryBall, material);
-		this.bodyMesh.position.x = this.position.x;
-		this.bodyMesh.position.y = this.position.y + (this.projetilRadius * 2);
-		this.bodyMesh.position.z = this.position.z;
-		this.scene.add(this.bodyMesh);
+		var geometryBall = new THREE.SphereGeometry(this.projetilRadius * 2.1, 32, 16);
+		this.BasetubeMesh = new THREE.Mesh(geometryBall, material);
+		this.BasetubeMesh.position.x = this.position.x;
+		this.BasetubeMesh.position.y = this.position.y + (this.projetilRadius * 2);
+		this.BasetubeMesh.position.z = this.position.z;
+		this.scene.add(this.BasetubeMesh);
 
 	},
 
@@ -177,39 +185,47 @@ BD.Cannon.prototype = {
 		this.tubeMesh.doubleSided = true;
 		var tubePos = new THREE.Vector3(this.position.x + med, this.position.y + (med * 1.5), this.position.z);
 		GAMU.positionMesh(this.tubeMesh, tubePos, new THREE.Vector3(0, -90 *Math.PI/180, 0));
-
+		matrizOrigem = this.tubeMesh.matrix;
 		this.scene.add( this.tubeMesh );
 	},
 
 	rotateAround: function(axis, radians) {
+		//console.log(this.tubeMesh.rotation);
+		//console.log(this.tubeMesh.matrix);
 		var rotObjectMatrix = new THREE.Matrix4();
+		var matrizZerada = new THREE.Matrix4();
+		//matrizZerada.identity();
+		matrizZerada.set(-2.220446049250313e-16, 0, 1, 0, -0, 1, 0, 0, -1, -0, -2.220446049250313e-16, 0, -139.5, 15.75, -50, 1);
 		rotObjectMatrix.makeRotationAxis(axis.normalize(), radians);
+		this.tubeMesh.matrix.copy(matrizOrigem);
 
 		this.tubeMesh.matrix.multiply(rotObjectMatrix);
-
+		//matrizZerada.multiply(rotObjectMatrix);
 		this.tubeMesh.rotation.setFromRotationMatrix(this.tubeMesh.matrix);
+		//this.tubeMesh.rotation.setFromRotationMatrix(matrizZerada);
 	},
 
-	determineAngleVelocityVector: function(a,x) {
+	determineAngleVelocityVector: function(V) {
 		var vel = new THREE.Vector3();
 
 		//vx = v0 . cos?
 		//vel.x = Math.cos(this.angle * Math.PI / 180);
 		//Minha Tentativa em arrumar a velocidade:
-		vel.x = (Math.sqrt(2*a*x)) * Math.cos(this.angle * Math.PI / 180);
-
+		vel.x = V * Math.cos(this.angle * Math.PI / 180);
 		//v0y = v0 . sen?
 		//vel.y = Math.sin(this.angle * Math.PI / 180);
 		//Minha Tentativa em arrumar a velocidade:
-		vel.y = (Math.sqrt(2*a*x)) * Math.sin(this.angle * Math.PI / 180);
+		vel.y = V * Math.sin(this.angle * Math.PI / 180);
 
-		console.log(vel);
+		//console.log(vel);
 
 		return vel;
 	},
 
 	determineProjetilPosition: function() {
+		var vector = new THREE.Vector3(this.tubeMesh.position.x, 0, this.tubeMesh.position.z);
 		return this.tubeMesh.position;
+        //return vector;
 	}
 
 };
