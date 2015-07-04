@@ -243,9 +243,18 @@ function PainelAnimacao( editor ) {
 					currentDroneStep += 1;
 				}, 8000);
 			} else if( droneParado && currentDroneStep < currentAnimatios[selectedAnimation].length){
-				var valorX = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x > 0 ? 0.5: 0;
-				var valorY = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y > 0 ? 0.5: 0;
-				var valorZ = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z > 0 ? 0.5: 0;
+				var valorX = 0;
+				var valorY = 0;
+				var valorZ = 0;
+				if( currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x != 0 ){
+					valorX = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x > 0 ? 1.0: -1.0;
+				}
+				if( currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y != 0 ){
+					valorY = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y > 0 ? 1.0: -1.0;
+				}
+				if( currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z != 0 ){
+					valorZ = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z > 0 ? 1.0:  -1.0;
+				}
 				var wait = 0;
 				if( currentAnimatios[selectedAnimation][currentDroneStep].id == EIdsItens.TRANSLADAR ){
 					wait = calculateTime(currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x,
@@ -256,7 +265,7 @@ function PainelAnimacao( editor ) {
 				} else if( currentAnimatios[selectedAnimation][currentDroneStep].id == EIdsItens.ROTACIONAR ){
 					wait = calculateTime(0,0,0, currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y);
 					console.log('rotacionou - ' + new Date());
-					ros.move(0,0,0, 0.75);
+					ros.move(0,0,0, valorY);
 				}
 				droneParado = false;
 				setTimeout(function(){
@@ -283,21 +292,28 @@ function PainelAnimacao( editor ) {
 	 * informada pelo usuário
 	 */
 	function calculateTime(x, y, z, rotation){
+		if( x == undefined || y == undefined || z ==undefined || rotation == undefined)	{
+			return
+		}
 		var seconds = 0
-		if( x != undefined && x > 0 ){
-			seconds = distanceAverage.getValue() * x;
+		var absX = Math.abs(x);
+		var absY = Math.abs(y);
+		var absZ = Math.abs(z);
+		var absR = Math.abs(rotation);
+		if( absX > 0 ){
+			seconds = distanceAverage.getValue() * absX;
 		}
-		if( seconds == 0 && y != undefined && y > 0 ){
-			seconds = distanceAverage.getValue() * y;
+		if( absY > 0 ){
+			seconds = distanceAverage.getValue() * absY;
 		}
-		if( seconds == 0 && z != undefined && z > 0 ){
-			seconds = distanceAverage.getValue() * z;
+		if( absZ > 0 ){
+			seconds = distanceAverage.getValue() * absZ;
 		}
 		if( seconds != 0 ){
 			return seconds * 1000;
 		}
-		if( rotation != undefined && rotation != 0 ){
-			var time = ((rotation * rotationAverage.getValue()) / 360) * 1000;
+		if( absR != 0 ){
+			var time = ((absR * rotationAverage.getValue()) / 360) * 1000;
 			return time;
 		}
 		return 0;

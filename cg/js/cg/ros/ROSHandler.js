@@ -95,12 +95,13 @@ ROSHandler.prototype.stop = function(){
  * Método para movimentar o drone
  * @function move
  */
-ROSHandler.prototype.move = function(x,y,z,rotation) {
+ROSHandler.prototype.move = function(dx,dy,dz,rotation) {
+	console.log("X,Y,Z,rotation = (" + dx + "," + dy + "," + dz + "," + rotation + ")");
 	var twist = new ROSLIB.Message({
 		linear: {
-			x : x,
-			y : y,
-			z : z,
+			x : dx,
+			y : dy,
+			z : dz,
 
 		},
 		angular: {
@@ -109,6 +110,8 @@ ROSHandler.prototype.move = function(x,y,z,rotation) {
 			z : rotation,
 		}
 	});
+	console.log(twist.linear);
+	console.log(twist.angular);
 	this.cmdvel_topic.publish(twist);
 };
 
