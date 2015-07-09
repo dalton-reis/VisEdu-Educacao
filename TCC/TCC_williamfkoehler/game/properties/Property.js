@@ -3,14 +3,14 @@ function Property() {}
 Property.prototype.id = '';
 Property.prototype.type = '';
 Property.prototype.key = '';
-Property.prototype.realoadTree = false, 
+Property.prototype.reloadTree = false, 
 Property.prototype.reloadScene = true,
 
-Property.prototype.init = function (id, type, key, realoadTree, reloadScene, condition) {
+Property.prototype.init = function (id, type, key, reloadTree, reloadScene, condition) {
 	this.id = id;
 	this.type = type;
 	this.key = key;
-	this.realoadTree = realoadTree;
+	this.reloadTree = reloadTree;
 	this.reloadScene = reloadScene;
 	this.getElement().data("property", this);
 	this.condition = condition ? condition: true;

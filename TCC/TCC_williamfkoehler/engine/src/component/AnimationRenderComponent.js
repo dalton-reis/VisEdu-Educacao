@@ -7,7 +7,7 @@
 */
 function AnimationRenderComponent(){}
 
-AnimationRenderComponent.prototype = new Component();
+AnimationRenderComponent.prototype = new RenderableComponent();
 
 /**
 * Método construtor da classe AnimationRenderComponent.

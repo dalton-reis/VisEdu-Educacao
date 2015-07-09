@@ -33,6 +33,10 @@ CanvasScaleComponent.prototype.setScale = function(x, y){
 	this.owner.recreateBody = true;
 }
 
+CanvasScaleComponent.prototype.onBeforeRender = function(context){
+	this.scale(context);
+}
+
 /**
 * Função que realiza a transformação escala no canvas.
 *

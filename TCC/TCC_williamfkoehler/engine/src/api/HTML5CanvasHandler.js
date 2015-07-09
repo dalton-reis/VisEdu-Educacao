@@ -1,9 +1,22 @@
 /**
- * 
+ * Classe responsável por agrupar as funções necessárias para manter o contexto 2D da aplicação.
  */
 function HTML5CanvasHandler() {}
 
 HTML5CanvasHandler.prototype = new APIHandler();
+
+
+HTML5CanvasHandler.prototype.getContext = function() {
+	return Game.canvas.getContext("2d");
+}
+
+HTML5CanvasHandler.prototype.getComponentFactory = function() {
+	return new CanvasComponentFactory();
+}
+
+HTML5CanvasHandler.prototype.getObjectFactory = function() {
+	return new CanvasObjectFactory();
+}
 
 HTML5CanvasHandler.prototype.setupCanvas = function (element) {
 	return element;
@@ -40,11 +53,6 @@ HTML5CanvasHandler.prototype.startGameLoop = function () {
 	}
 	
 	windowLoop();
-}
-
-
-HTML5CanvasHandler.prototype.getContext = function() {
-	return Game.canvas.getContext("2d");
 }
 
 HTML5CanvasHandler.prototype.onRender = function (context) {
@@ -108,12 +116,4 @@ HTML5CanvasHandler.prototype.onRender = function (context) {
 		var component = Game[RenderSystem.getListName()][i];
 		component.onRender(context);
 	}
-}
-
-HTML5CanvasHandler.prototype.getComponentFactory = function() {
-	return new CanvasComponentFactory();
-}
-
-HTML5CanvasHandler.prototype.getObjectFactory = function() {
-	return new CanvasObjectFactory();
 }

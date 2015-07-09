@@ -8,7 +8,7 @@
 function CircleObject(){}
 
 CircleObject.prototype = new GameObject();
-
+CircleObject.prototype.$initialize = CircleObject.prototype.initialize;
 /**
 * Método construtor da classe CircleObject.
 *
@@ -21,17 +21,15 @@ CircleObject.prototype = new GameObject();
 * @param {String} fillStroke 
 * @return {CircleObject} object
 */
-JSUtils.addMethod(CircleObject.prototype, "initialize", 
-	function(x, y, z, radius, fillStyle, fillStroke){
-		this.initialize(x, y, 0);
-		this.radius = radius;
-		ComponentUtils.addComponent(this, new CircleRenderComponent().initialize(fillStyle, fillStroke));
-		ComponentUtils.addComponent(this, Game.componentFactory.getScaleComponent());
-		ComponentUtils.addComponent(this, Game.componentFactory.getTranslateComponent());
-		ComponentUtils.addComponent(this, Game.componentFactory.getRotateComponent());
-		return this;
-	}
-);
+CircleObject.prototype.initialize = function(x, y, z, radius, fillStyle, fillStroke){
+	this.$initialize(x, y, 0);
+	this.radius = radius;
+	ComponentUtils.addComponent(this, new CircleRenderComponent().initialize(fillStyle, fillStroke));
+	ComponentUtils.addComponent(this, Game.componentFactory.getScaleComponent());
+	ComponentUtils.addComponent(this, Game.componentFactory.getTranslateComponent());
+	ComponentUtils.addComponent(this, Game.componentFactory.getRotateComponent());
+	return this;
+}
 
 /**
 * Cria o formato do corpo para a Box2D.

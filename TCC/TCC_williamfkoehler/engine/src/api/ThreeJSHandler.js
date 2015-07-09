@@ -5,13 +5,15 @@ function ThreeJSHandler() {}
 
 ThreeJSHandler.prototype = new APIHandler();
 
+
+ThreeJSHandler.prototype.activeAnimations = [];
+
 ThreeJSHandler.prototype.setupCanvas = function(element) {
 	this.renderer = new THREE.WebGLRenderer({
 		antialias : true
 	});
 	element.append(this.renderer.domElement);
 	this.renderer.setSize(element.width(), element.height());
-	this.activeAnimations = [];
 	return this.renderer.domElement;
 }
 
@@ -35,7 +37,7 @@ ThreeJSHandler.prototype.playAnimations = function() {
 }
 
 ThreeJSHandler.prototype.getContext = function() {
-	return this.renderer;
+	return this.renderer.domElement;
 }
 
 ThreeJSHandler.prototype.setupScene = function(scene) {

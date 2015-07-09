@@ -11,6 +11,7 @@
 
 
 <script src="../engine/lib/prototype-1.6.0.2.js"></script>
+<script src="../engine/lib/stats.min.js"></script>
 <script src="../engine/src/physic/box2d/common/b2Settings.js"></script>
 <script src="../engine/src/physic/box2d/common/math/b2Vec2.js"></script>
 <script src="../engine/src/physic/box2d/common/math/b2Mat22.js"></script>
@@ -90,6 +91,7 @@
 <script src="../engine/src/game/Scene.js"></script>
 <script src="../engine/src/game/Camera.js"></script>
 
+<script src="../engine/src/geometric/Point.js"></script>
 <script src="../engine/src/geometric/Point2D.js"></script>
 <script src="../engine/src/geometric/Point3D.js"></script>
 
@@ -107,9 +109,9 @@
 <script src="../engine/src/gameobject/threeJS/ThreeJSObjectFactory.js"></script>
 
 <script src="../engine/src/component/Component.js"></script>
+<script src="../engine/src/component/RenderableComponent.js"></script>
 <script src="../engine/src/component/LightComponent.js"></script>
 <script src="../engine/src/component/TransformationComponent.js"></script>
-<script src="../engine/src/component/RenderableComponent.js"></script>
 <script src="../engine/src/component/BoxRenderComponent.js"></script>
 <script src="../engine/src/component/CubeRenderComponent.js"></script>
 <script src="../engine/src/component/PolygonRenderComponent.js"></script>
@@ -169,7 +171,7 @@
 <script src='./treebehaviour/TreeDNDBehaviour.js'></script>
 <script src='./treebehaviour/TreePluralDNDBehaviour.js'></script>
 <script src='./treebehaviour/TreeObjectDNDBehaviour.js'></script>
-<script src='./dragndrop/RenderDNDBehaviour.js'></script>
+<script src='./treebehaviour/TreeRenderDNDBehaviour.js'></script>
 <script src='./dragndrop/DNDBehaviour.js'></script>
 <script src='./dragndrop/TemplateDNDBehaviour.js'></script>
 <script src='./dragndrop/ElementDNDBehaviour.js'></script>
@@ -181,8 +183,8 @@
 <script src='./graphicalbehaviour/TransformationGraphicalBehaviour.js'></script>
 <script src='./graphicalbehaviour/CameraGraphicalBehaviour.js'></script>
 
-<script src='./pieces/Type.js'></script>
-<script src='./pieces/Types.js'></script>
+<script src='./type/Type.js'></script>
+<script src='./type/Types.js'></script>
 <script src='./pieces/Piece.js'></script>
 <script src='./pieces/ConnectorPiece.js'></script>
 
@@ -204,18 +206,15 @@
 <script src='./pieces/ConnectorDiamondPiece.js'></script>
 
 <script src='./pieces/PiecesController.js'></script>
-<script src='./controls/TrackballControls.js'></script>
 <script src='./controls/OrbitControls.js'></script>
 <script src='./controls/TouchControls.js'></script>
 <script src='./engine-custom/ThreeJSCustomHandler.js'></script>
-<script src='./VisEdu.js'></script>
+<script src='./visedu/VisEdu.js'></script>
 
 <script>
 
 	function init() {
-		var handler = new ThreeJSCustomHandler();
-		Game.loadAPI(handler);
-		VisEdu.create($('.world'), handler);
+		VisEdu.create($('.world'));
 		var tab = $( ".menu-tabs" );
 		tab.tabs(
 			{

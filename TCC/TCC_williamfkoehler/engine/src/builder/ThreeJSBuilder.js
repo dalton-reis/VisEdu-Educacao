@@ -24,9 +24,6 @@ var ThreeJSBuilder = new function() {
 	}
 	
 	this.createPolygonObject = function(x, y, z, points, faces, fillstyle, strokeStyle) {
-		ThreeJSObjectFactory.prototype.getPolygonObject = function(x, y, z, points, faces, fillStyle, fillStroke) {
-			return new PolygonObject().initialize(x, y, z, points, faces, fillStyle, fillStroke);	
-		}
 		var component = new PolygonRenderComponent().initialize(fillstyle, strokeStyle);
 		var object = this.createTemplateObject(x, y, z, 0, 0, 0, component, "POLYGON_OBJECT");
 		object.faces = faces;

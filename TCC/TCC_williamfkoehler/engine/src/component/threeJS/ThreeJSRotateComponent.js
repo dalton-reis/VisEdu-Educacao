@@ -81,7 +81,7 @@ ThreeJSRotateComponent.prototype.getAngleXYZ = function(){
 	return angle;
 }
 
-ThreeJSRotateComponent.prototype.onLoad = function(component, object) {
+ThreeJSRotateComponent.prototype.onLoad = function() {
 	this.doRotate();
 }
 

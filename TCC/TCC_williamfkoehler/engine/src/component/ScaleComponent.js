@@ -27,17 +27,6 @@ ScaleComponent.prototype.getSystems = function(){
 * Método sobrescrito da classe Component.
 *
 * @author Marcos Harbs
-* @method onBeforeRender
-* @param {Context} context
-*/
-ScaleComponent.prototype.onBeforeRender = function(context){
-	this.scale(context);
-}
-
-/**
-* Método sobrescrito da classe Component.
-*
-* @author Marcos Harbs
 * @method getTag
 * @return {String} tag
 */

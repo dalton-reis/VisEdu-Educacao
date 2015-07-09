@@ -7,7 +7,7 @@
 */
 function CircleRenderComponent(){}
 
-CircleRenderComponent.prototype = new Component();
+CircleRenderComponent.prototype = new RenderableComponent();
 
 /**
 * Método construtor da classe CircleRenderComponent.

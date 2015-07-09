@@ -7,6 +7,8 @@
 */
 function Point2D(){}
 
+Point2D.prototype = new Point();
+
 /**
 * Método construtor da classe Point2D.
 *

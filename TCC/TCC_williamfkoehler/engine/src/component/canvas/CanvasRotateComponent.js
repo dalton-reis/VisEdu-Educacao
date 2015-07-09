@@ -36,6 +36,10 @@ CanvasRotateComponent.prototype.setRotate = function(angle){
 	}
 }
 
+CanvasRotateComponent.prototype.onBeforeRender = function(context){
+	this.rotate(context);
+}
+
 /**
 * Retorna o ângulo do objeto.
 *

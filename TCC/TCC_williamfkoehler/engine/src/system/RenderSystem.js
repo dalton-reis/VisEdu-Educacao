@@ -1,4 +1,4 @@
-/**
+	/**
 * Classe responsável por propagar os eventos de renderização de objetos.
 *
 * @author Marcos Harbs

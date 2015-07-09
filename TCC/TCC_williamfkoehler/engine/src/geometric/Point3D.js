@@ -7,6 +7,8 @@
 */
 function Point3D(){}
 
+Point3D.prototype = new Point2D();
+
 /**
 * Método construtor da classe Point2D.
 *
@@ -19,8 +21,7 @@ function Point3D(){}
 */
 JSUtils.addMethod(Point3D.prototype, "initialize", 
 	function(x, y, z){
-		this.x = x;
-		this.y = y;
+		this.initialize(x, y);		
 		this.z = z;
 		return this;
 	}

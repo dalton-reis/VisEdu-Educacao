@@ -1,5 +1,7 @@
 function PropertiesWrapper() {}
 
+PropertiesWrapper.prototype = new Property();
+
 PropertiesWrapper.prototype.type;
 PropertiesWrapper.prototype.condition;
 

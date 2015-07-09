@@ -234,6 +234,4 @@ Component.prototype.onTouchEnd = function(touchList, changedTouches){}
 
 Component.prototype.onCreate = function(parent){}
 
-Component.prototype.genThreeObject = function(){}
-
 Component.prototype.addGameComponent = function(){}

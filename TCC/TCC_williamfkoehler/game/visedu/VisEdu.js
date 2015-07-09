@@ -1,6 +1,5 @@
 var VisEdu = new function() {
 	
-	this.handler = null;
 	this.root = null;
 	this.factory = null;
 	this.factory3D = new Factory3D();
@@ -11,6 +10,7 @@ var VisEdu = new function() {
 	this.properties = null;
 	this.mode = '';
 	this.helpers = [];
+	this.stats = null;
 	
 	this.setupFactory = function(mode) {
 		var current = this.factory;
@@ -39,6 +39,15 @@ var VisEdu = new function() {
 		this.scene.addLayer(this.root);
 	}
 	
+	this.loadStats = function() {
+		this.stats = new Stats();
+		this.stats.domElement.style.position = 'absolute';
+		this.stats.domElement.style.bottom = '50%';
+		this.stats.domElement.style.right = '0';
+		this.stats.domElement.style.zIndex = 100;
+		$(Game.apiHandler.getContext()).parent().append( this.stats.domElement );
+	}
+	
 	this.afterLoad = function() {		
 		VisEdu.axis = ThreeJSBuilder.createAxisObject(0, 0.1, 0, 450);
 		VisEdu.grid = ThreeJSBuilder.createGridObject(0, 0, 0, 400, 20);
@@ -61,8 +70,8 @@ var VisEdu = new function() {
 		Game.apiHandler.controls.noRotate=false;
 	}
 	
-	this.create = function (world, handler) {
-		this.handler =  handler;
+	this.create = function (world) {
+		Game.loadAPI(new ThreeJSCustomHandler());
 		window.addEventListener( 'resize', this.onResize, false );
 		VisEdu.aspect = world.width() / (world.height()/2);
 		this.setup();

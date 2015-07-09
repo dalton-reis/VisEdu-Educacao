@@ -2,7 +2,7 @@ var Types = new function() {
 	var treeDNDBehaviour = new TreeDNDBehaviour();
 	var treePluralDNDBehaviour = new TreePluralDNDBehaviour();
 	var treeObjectDNDBehaviour =  new TreeObjectDNDBehaviour();
-	var renderDNDBehaviour =  new RenderDNDBehaviour();
+	var treeRenderDNDBehaviour =  new TreeRenderDNDBehaviour();
 
 	var elementGraphicalBehaviour = new ElementGraphicalBehaviour(); 
 	var groupGraphicalBehaviour = new GroupGraphicalBehaviour(); 
@@ -11,7 +11,7 @@ var Types = new function() {
 	var lightGraphicalBehaviour = new LightGraphicalBehaviour(); 
 	
 	this.typeCamera = new Type().init('cross', 'camera', 'camera', 'Câmera', treeDNDBehaviour, cameraGraphicalBehaviour);
-	this.typeGraficObject = new Type().init('arrow', 'object', 'object', 'Objeto Gráfico', treeObjectDNDBehaviour, groupGraphicalBehaviour);
+	this.typeGraphicObject = new Type().init('arrow', 'object', 'object', 'Objeto Gráfico', treeObjectDNDBehaviour, groupGraphicalBehaviour);
 	var connectorComponent = 'square';
 	var classComponent = 'component';
 	this.typeCube = new Type().init(connectorComponent, classComponent, 'cube', 'Cubo', treeDNDBehaviour, elementGraphicalBehaviour);
@@ -26,7 +26,7 @@ var Types = new function() {
 
 	this.typeLight = new Type().init('arrow', 'light', 'light', 'Iluminação', treePluralDNDBehaviour, lightGraphicalBehaviour);
 
-	this.typeRenderer = new Type().init('', 'renderer', 'renderer', 'Renderer', renderDNDBehaviour);
+	this.typeRenderer = new Type().init('', 'renderer', 'renderer', 'Renderer', treeRenderDNDBehaviour);
 
 	this.typeConnectorCross = new Type().init('cross', 'connector');
 	this.typeConnectorArrow = new Type().init('arrow', 'connector');

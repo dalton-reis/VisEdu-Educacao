@@ -24,8 +24,8 @@ BoxObject.prototype = new GameObject();
 */
 JSUtils.addMethod(BoxObject.prototype, "initialize", 
 	function(x, y, z, width, height, fillStyle, fillStroke){
-		this.initialize(x, y, z, width, height);
-		ComponentUtils.addComponent(this, new BoxRenderComponent().initialize(fillStyle, fillStroke));
+		this.initialize(x, y, z, width, height, 0);
+		ComponentUtils.addComponent(this, new BoxRenderComponent().initialize(fillStyle, fillStroke, null));
 		ComponentUtils.addComponent(this, Game.componentFactory.getTranslateComponent());
 		ComponentUtils.addComponent(this, Game.componentFactory.getScaleComponent());
 		ComponentUtils.addComponent(this, Game.componentFactory.getRotateComponent());

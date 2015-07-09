@@ -35,7 +35,9 @@ var ComponentUtils = new function(){
 													  component.getTag(), 
 													  component);
 		component.owner = object;
-		Game.apiHandler.newGameElement(component, object);
+		if (component instanceof RenderableComponent) {
+			Game.apiHandler.newGameElement(component, object);
+		}
 		component.addGameComponent();
 	}
 

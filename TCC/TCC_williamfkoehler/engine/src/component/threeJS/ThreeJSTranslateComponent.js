@@ -51,7 +51,7 @@ ThreeJSTranslateComponent.prototype.doTranslate = function() {
 			this.translatePoint.z + this.owner.getCenterZ());
 }
 
-ThreeJSTranslateComponent.prototype.addGameComponent = function(component, element) {
+ThreeJSTranslateComponent.prototype.addGameComponent = function() {
 	this.doTranslate();
 }
 

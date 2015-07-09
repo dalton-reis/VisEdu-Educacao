@@ -37,7 +37,7 @@ ThreeJSScaleComponent.prototype.doScale = function() {
 	this.owner.threeObject.scale.set(this.scalePoint.x, this.scalePoint.y, this.scalePoint.z);
 }
 
-ThreeJSScaleComponent.prototype.addGameComponent= function(component, element) {
+ThreeJSScaleComponent.prototype.addGameComponent= function() {
 	this.doScale();
 }
 

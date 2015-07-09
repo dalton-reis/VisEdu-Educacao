@@ -154,14 +154,14 @@ Factory.prototype.createLinesPolygon = function(piece) {
 
 Factory.prototype.createLineLoopPolygon = function(piece) {
 	return Game.objectFactory.getPolygonObject(
-			0, 0, 0,
+			new THREE.Vector3(0, 0, 0),
 			this.convert(piece.properties['points']), null,
 			null, piece.properties['color']);	
 }
 
 Factory.prototype.createFilledPolygon = function(piece) {
 	return Game.objectFactory.getPolygonObject(
-			0, 0, 0,
+			new THREE.Vector3(0, 0, 0),
 			this.convert(piece.properties['points']), null,
 			piece.properties['color'], null);
 }

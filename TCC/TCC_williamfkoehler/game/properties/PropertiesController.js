@@ -209,19 +209,11 @@ var PropertiesController = new function() {
 	}
 	
 	this.check3DProperties = function () {
-		switch (VisEdu.mode) {
-			case '3D':
-				PropertiesController.show3DProperties();
-				break;
-			case '2D':
-				PropertiesController.hide3DProperties();
-				break;
+		if (VisEdu.mode === '2D') {
+			PropertiesController.hide3DProperties();	
 		}
 	}
 	
-	this.show3DProperties = function() {
-		//$('.3d').show();		
-	}
 
 	this.hide3DProperties = function() {
 		$('.3d:visible').hide();

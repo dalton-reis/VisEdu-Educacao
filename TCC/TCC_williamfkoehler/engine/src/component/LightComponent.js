@@ -7,7 +7,7 @@
 */
 function LightComponent(){}
 
-LightComponent.prototype = new Component();
+LightComponent.prototype = new RenderableComponent();
 
 /**
 * Retorna os sistemas que deverão gerenciar este component.

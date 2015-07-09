@@ -7,7 +7,7 @@
 */
 function CameraComponent(){}
 
-CameraComponent.prototype = new Component();
+CameraComponent.prototype = new RenderableComponent();
 
 /**
 * Método construtor da classe CubeRenderComponent.

@@ -28,17 +28,6 @@ RotateComponent.prototype.getSystems = function(){
 * Método sobrescrito da classe Component.
 *
 * @author Marcos Harbs
-* @method onBeforeRender
-* @param {Context} context
-*/
-RotateComponent.prototype.onBeforeRender = function(context){
-	this.rotate(context);
-}
-
-/**
-* Método sobrescrito da classe Component.
-*
-* @author Marcos Harbs
 * @method getTag
 * @return {String} tag
 */

@@ -28,7 +28,7 @@ var DragAndDropController = new function() {
 				disabled: false,			
 				tolerance: 'touch',			
 				drop: function(ev, ui) {
-					if (count++ < 1) { //caso large entre 2 objectos
+					if (count++ < 1) { //caso largue entre 2 objectos
 						piece.type.treeBehaviour.addPiece($(this), piece);
 						DragAndDropController.fitTree();
 					}				

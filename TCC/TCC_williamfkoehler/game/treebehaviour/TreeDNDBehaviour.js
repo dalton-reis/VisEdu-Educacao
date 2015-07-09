@@ -11,7 +11,7 @@ TreeDNDBehaviour.prototype.removePiece = function(piece) {
 }
 
 TreeDNDBehaviour.prototype.reloadPiece = function(piece, property) {
-	if (property.realoadTree) {
+	if (property.reloadTree) {
 		this.addPieceTreeObject(piece.htmlObject.parent(), piece);
 		PiecesController.onPieceClicked(piece.htmlObject[0]);
 	}

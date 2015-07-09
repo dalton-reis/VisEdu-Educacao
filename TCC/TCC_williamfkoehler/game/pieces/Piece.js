@@ -2,6 +2,7 @@ function Piece() {}
 
 Piece.prototype.htmlObject = null;
 Piece.prototype.gameObject = null;
+Piece.prototype.onDragBehaviour = null;
 
 Piece.prototype.properties = null;
 Piece.prototype.loading;
