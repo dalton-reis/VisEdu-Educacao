@@ -91,11 +91,9 @@ function PainelFabrica( editor, signals ) {
 
 			for (var i = 0; i < scope.fabrica.itensFabricados.length; i++) {
 
-				if (scope.fabrica.itensFabricados[i].id == EIdsItens.POLIGONO || scope.fabrica.itensFabricados[i].id == EIdsItens.SPLINE) {
+				if (scope.fabrica.itensFabricados[i].id == EIdsItens.POLIGONO || scope.fabrica.itensFabricados[i].id == EIdsItens.SPLINE
+					|| scope.fabrica.itensFabricados[i].id == EIdsItens.DRONE || scope.fabrica.itensFabricados[i].id == EIdsItens.TARGET) {
 					scope.fabrica.itensFabricados[i].objeto.position.x = scope.editor.pontoInicial.x + (xQuadrado += 100);
-					scope.fabrica.itensFabricados[i].objeto.position.y = scope.editor.pontoInicial.y - 22 - (distanciaEntreItens * 2);
-				} else if(scope.fabrica.itensFabricados[i].id == EIdsItens.DRONE || scope.fabrica.itensFabricados[i].id == EIdsItens.TARGET) {
-					scope.fabrica.itensFabricados[i].objeto.position.x = scope.editor.pontoInicial.x + (xQuadrado += 85);
 					scope.fabrica.itensFabricados[i].objeto.position.y = scope.editor.pontoInicial.y - 22 - (distanciaEntreItens * 2);
 				} else if (scope.fabrica.itensFabricados[i].id == EIdsItens.ROTACIONAR) {
 					scope.fabrica.itensFabricados[i].objeto.position.x = scope.editor.pontoInicial.x + 132;

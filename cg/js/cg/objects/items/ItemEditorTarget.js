@@ -20,12 +20,12 @@ function ItemEditorTarget() {
 	scope.afterChangeNome = function ( nomeAntigo ) {};
 	//propriedades
 	scope.id =  EIdsItens.TARGET
-	scope.valorXYZ.set( 100, 100, 100 );
+	scope.valorXYZ.set( 10, 0, 10 );
 	scope.propriedadeCor.setHex( 0xFFFFFF );
 	scope.object3D = createObject3D();
 
 	function createObject3D() {
-		var geometria = new THREE.PlaneGeometry( 10, 10);
+		var geometria = new THREE.PlaneGeometry( scope.valorXYZ.x, scope.valorXYZ.z);
 		var material  = new THREE.MeshPhongMaterial({ color: scope.propriedadeCor.getHex(), ambient: scope.propriedadeCor.getHex(), overdraw: true });
 		var target = new THREE.Mesh( geometria, material);
 		if( scope.object3D != undefined ){

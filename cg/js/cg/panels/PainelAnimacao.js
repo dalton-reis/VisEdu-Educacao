@@ -247,13 +247,13 @@ function PainelAnimacao( editor ) {
 				var valorY = 0;
 				var valorZ = 0;
 				if( currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x != 0 ){
-					valorX = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x > 0 ? 1.0: -1.0;
+					valorX = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.x > 0 ? 0.5: -0.5;
 				}
 				if( currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y != 0 ){
-					valorY = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y > 0 ? 1.0: -1.0;
+					valorY = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y > 0 ? 0.5: -0.5;
 				}
 				if( currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z != 0 ){
-					valorZ = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z > 0 ? 1.0:  -1.0;
+					valorZ = currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z > 0 ? 0.5:  -0.5;
 				}
 				var wait = 0;
 				if( currentAnimatios[selectedAnimation][currentDroneStep].id == EIdsItens.TRANSLADAR ){
@@ -261,11 +261,11 @@ function PainelAnimacao( editor ) {
 							     	currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y,
 								currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.z, 0.0);
 					console.log('transladou - ' + new Date());
-					ros.move(valorX,valorY,valorZ, 0.0);
+					ros.move(valorX,valorZ,valorY, 0.0);
 				} else if( currentAnimatios[selectedAnimation][currentDroneStep].id == EIdsItens.ROTACIONAR ){
 					wait = calculateTime(0,0,0, currentAnimatios[selectedAnimation][currentDroneStep].valorXYZ.y);
 					console.log('rotacionou - ' + new Date());
-					ros.move(0,0,0, valorY);
+					ros.move(0,0,0, valorY > 0 ? 0.75: -0.75);
 				}
 				droneParado = false;
 				setTimeout(function(){
@@ -346,7 +346,9 @@ function PainelAnimacao( editor ) {
 					for( var q = 0; q < filho.filhos.length; q++ ){
 						var animation = null;
 						if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.DIAMANTE ){
-							currentAnimatios[totalAnimations].push(filho.filhos[q]);
+							if( filho.filhos[q].id != EIdsItens.REDIMENSIONAR){
+								currentAnimatios[totalAnimations].push(filho.filhos[q]);
+							}
 						} else if( filho.filhos[q].id == EIdsItens.ANIMACAO ){
 							easing[totalAnimations] = filho.filhos[q].easing;
 						} else if( filho.filhos[q].tipoEncaixe == ETiposEncaixe.QUADRADO ){
