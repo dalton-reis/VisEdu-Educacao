@@ -1,1 +1,0 @@
-VisEdu-RA: módulo de CG.

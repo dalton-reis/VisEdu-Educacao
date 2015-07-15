@@ -1,3 +1,0 @@
-VisEdu-CG - comentários:
-
-1) cada pasta contem as classes de diferentes frameworks que precisaram ser alteradas para se adaptar a alguma necessidade do sistema.

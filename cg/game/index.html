@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>VisEdu</title>
+<link rel="stylesheet" type="text/css" href="./styles/visedu.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src='https://code.jquery.com/jquery-2.1.3.js'></script>
+<script src='https://code.jquery.com/ui/1.11.4/jquery-ui.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js'></script>
+
+
+<script src="../engine/lib/prototype-1.6.0.2.js"></script>
+<script src="../engine/lib/stats.min.js"></script>
+<script src="../engine/src/physic/box2d/common/b2Settings.js"></script>
+<script src="../engine/src/physic/box2d/common/math/b2Vec2.js"></script>
+<script src="../engine/src/physic/box2d/common/math/b2Mat22.js"></script>
+<script src="../engine/src/physic/box2d/common/math/b2Math.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2AABB.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2Bound.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2BoundValues.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2Pair.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2PairCallback.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2BufferedPair.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2PairManager.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2BroadPhase.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2Collision.js"></script>
+<script src="../engine/src/physic/box2d/collision/Features.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2ContactID.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2ContactPoint.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2Distance.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2Manifold.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2OBB.js"></script>
+<script src="../engine/src/physic/box2d/collision/b2Proxy.js"></script>
+<script src="../engine/src/physic/box2d/collision/ClipVertex.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2Shape.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2ShapeDef.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2BoxDef.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2CircleDef.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2CircleShape.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2MassData.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2PolyDef.js"></script>
+<script src="../engine/src/physic/box2d/collision/shapes/b2PolyShape.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2Body.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2BodyDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2CollisionFilter.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2Island.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2TimeStep.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2ContactNode.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2Contact.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2ContactConstraint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2ContactConstraintPoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2ContactRegister.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2ContactSolver.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2CircleContact.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2Conservative.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2NullContact.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2PolyAndCircleContact.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/contacts/b2PolyContact.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2ContactManager.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2World.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/b2WorldListener.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2JointNode.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2Joint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2JointDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2DistanceJoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2DistanceJointDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2Jacobian.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2GearJoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2GearJointDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2MouseJoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2MouseJointDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2PrismaticJoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2PrismaticJointDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2PulleyJoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2PulleyJointDef.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2RevoluteJoint.js"></script>
+<script src="../engine/src/physic/box2d/dynamics/joints/b2RevoluteJointDef.js"></script>
+
+<script src="../engine/src/utils/ArrayUtils.js"></script>
+<script src="../engine/src/utils/JSUtils.js"></script>
+<script src="../engine/src/utils/ComponentUtils.js"></script>
+<script src="../engine/src/utils/MathUtils.js"></script>
+<script src="../engine/src/utils/ColorUtils.js"></script>
+<script src="../engine/src/utils/ThreeUtils.js"></script>
+
+<script src="../engine/src/game/AssetStore.js"></script>
+<script src="../engine/src/game/Asset.js"></script>
+<script src="../engine/src/game/Game.js"></script>
+<script src="../engine/src/game/Layer.js"></script>
+<script src="../engine/src/game/Scene.js"></script>
+<script src="../engine/src/game/Camera.js"></script>
+
+<script src="../engine/src/geometric/Point.js"></script>
+<script src="../engine/src/geometric/Point2D.js"></script>
+<script src="../engine/src/geometric/Point3D.js"></script>
+
+<script src="../engine/src/gameobject/GameObject.js"></script>
+<script src="../engine/src/gameobject/PolygonObject.js"></script>
+<script src="../engine/src/gameobject/BoxObject.js"></script>
+<script src="../engine/src/gameobject/CircleObject.js"></script>
+<script src="../engine/src/gameobject/TemplateObject.js"></script>
+<script src="../engine/src/gameobject/TemplateWithPointsObject.js"></script>
+
+<script src="../engine/src/builder/ThreeJSBuilder.js"></script>
+
+<script src="../engine/src/gameobject/ObjectFactory.js"></script>
+<script src="../engine/src/gameobject/canvas/CanvasObjectFactory.js"></script>
+<script src="../engine/src/gameobject/threeJS/ThreeJSObjectFactory.js"></script>
+
+<script src="../engine/src/component/Component.js"></script>
+<script src="../engine/src/component/RenderableComponent.js"></script>
+<script src="../engine/src/component/LightComponent.js"></script>
+<script src="../engine/src/component/TransformationComponent.js"></script>
+<script src="../engine/src/component/BoxRenderComponent.js"></script>
+<script src="../engine/src/component/CubeRenderComponent.js"></script>
+<script src="../engine/src/component/PolygonRenderComponent.js"></script>
+<script src="../engine/src/component/LinesRenderComponent.js"></script>
+<script src="../engine/src/component/SpheresRenderComponent.js"></script>
+<script src="../engine/src/component/CirclesRenderComponent.js"></script>
+<script src="../engine/src/component/SplineRenderComponent.js"></script>
+<script src="../engine/src/component/ScaleComponent.js"></script>
+<script src="../engine/src/component/threeJS/ThreeJSScaleComponent.js"></script>
+<script src="../engine/src/component/TranslateComponent.js"></script>
+<script src="../engine/src/component/threeJS/ThreeJSTranslateComponent.js"></script>
+<script src="../engine/src/component/RotateComponent.js"></script>
+<script src="../engine/src/component/threeJS/ThreeJSRotateComponent.js"></script>
+<script src="../engine/src/component/ComponentFactory.js"></script>
+<script src="../engine/src/component/threeJS/ThreeJSComponentFactory.js"></script>
+<script src="../engine/src/component/ImageRenderComponent.js"></script>
+<script src="../engine/src/component/CircleRenderComponent.js"></script>
+<script src="../engine/src/component/AmbientLightComponent.js"></script>
+<script src="../engine/src/component/HemisphereLightComponent.js"></script>
+<script src="../engine/src/component/DirectionalLightComponent.js"></script>
+<script src="../engine/src/component/PointLightComponent.js"></script>
+<script src="../engine/src/component/SpotLightComponent.js"></script>
+<script src="../engine/src/component/AnimationRenderComponent.js"></script>
+<script src="../engine/src/component/GridRenderComponent.js"></script>
+<script src="../engine/src/component/AxisRenderComponent.js"></script>
+<script src="../engine/src/component/CameraComponent.js"></script>
+<script src="../engine/src/component/GroupComponent.js"></script>
+
+<script src="../engine/src/system/RenderSystem.js"></script>
+<script src="../engine/src/system/LogicSystem.js"></script>
+
+<script src="../engine/src/api/APIHandler.js"></script>
+<script src="../engine/src/api/ThreeJSHandler.js"></script>
+
+<script src='./factory/Factory.js'></script>
+<script src='./factory/Factory2D.js'></script>
+<script src='./factory/Factory3D.js'></script>
+
+<script src='./properties/Property.js'></script>
+<script src='./properties/TextInputProperty.js'></script>
+<script src='./properties/NumberInputProperty.js'></script>
+<script src='./properties/NumberSubProperty.js'></script>
+<script src='./properties/AngleSubProperty.js'></script>
+<script src='./properties/LabelMatrixProperty.js'></script>
+<script src='./properties/PointsNumberInputProperty.js'></script>
+<script src='./properties/FileInputProperty.js'></script>
+<script src='./properties/ColorInputProperty.js'></script>
+<script src='./properties/CheckBoxProperty.js'></script>
+<script src='./properties/ComboBoxProperty.js'></script>
+<script src='./properties/DynamicComboBoxProperty.js'></script>
+<script src='./properties/PointsDynamicComboBoxProperty.js'></script>
+<script src='./properties/PointsLengthProperty.js'></script>
+<script src='./properties/PropertiesController.js'></script>
+<script src='./properties/PropertiesWrapper.js'></script>
+
+<script src='./dragndrop/DragAndDropController.js'></script>
+<script src='./treebehaviour/TreeDNDBehaviour.js'></script>
+<script src='./treebehaviour/TreePluralDNDBehaviour.js'></script>
+<script src='./treebehaviour/TreeObjectDNDBehaviour.js'></script>
+<script src='./treebehaviour/TreeRenderDNDBehaviour.js'></script>
+<script src='./dragndrop/DNDBehaviour.js'></script>
+<script src='./dragndrop/TemplateDNDBehaviour.js'></script>
+<script src='./dragndrop/ElementDNDBehaviour.js'></script>
+
+<script src='./graphicalbehaviour/GraphicalBehaviour.js'></script>
+<script src='./graphicalbehaviour/ElementGraphicalBehaviour.js'></script>
+<script src='./graphicalbehaviour/LightGraphicalBehaviour.js'></script>
+<script src='./graphicalbehaviour/GroupGraphicalBehaviour.js'></script>
+<script src='./graphicalbehaviour/TransformationGraphicalBehaviour.js'></script>
+<script src='./graphicalbehaviour/CameraGraphicalBehaviour.js'></script>
+
+<script src='./type/Type.js'></script>
+<script src='./type/Types.js'></script>
+<script src='./pieces/Piece.js'></script>
+<script src='./pieces/ConnectorPiece.js'></script>
+
+<script src='./pieces/PiecesUtils.js'></script>
+<script src='./pieces/CameraPiece.js'></script>           
+<script src='./pieces/CubePiece.js'></script>
+<script src='./pieces/GraphicObjectPiece.js'></script>
+<script src='./pieces/PolygonPiece.js'></script>
+<script src='./pieces/SplinePiece.js'></script>
+<script src='./pieces/TransformPiece.js'></script>
+<script src='./pieces/TranslatePiece.js'></script>
+<script src='./pieces/RotatePiece.js'></script>
+<script src='./pieces/ScalePiece.js'></script>
+<script src='./pieces/LightPiece.js'></script>
+<script src='./pieces/RendererPiece.js'></script>
+<script src='./pieces/ConnectorCrossPiece.js'></script>
+<script src='./pieces/ConnectorArrowPiece.js'></script>
+<script src='./pieces/ConnectorSquarePiece.js'></script>
+<script src='./pieces/ConnectorDiamondPiece.js'></script>
+
+<script src='./pieces/PiecesController.js'></script>
+<script src='./controls/OrbitControls.js'></script>
+<script src='./controls/TouchControls.js'></script>
+<script src='./engine-custom/ThreeJSCustomHandler.js'></script>
+<script src='./visedu/VisEdu.js'></script>
+
+<script>
+
+	function init() {
+		VisEdu.create($('.world'));
+		var tab = $( ".menu-tabs" );
+		tab.tabs(
+			{
+				activate: function( event, ui ) {
+					onTabChange(ui);
+				}
+			});
+		tab.tabs("option", "active", 1);
+		PiecesController.tab = tab;
+		PiecesController.createPallet($('#pallet-tab'));
+		PiecesController.createTree($('.pieces-tree'));
+		PiecesController.setupDraggables();
+		PropertiesController.bindProperties();
+		setupAjuda();
+		setupExportar();
+		setupImportar();
+	}
+	
+	function setupAjuda() {
+		var tab = $('.ajuda-tabs');
+		tab.tabs();
+		var dialog = $('#dialog-ajuda');
+		dialog.dialog({
+			modal: true,
+		    resizable: false,
+			width: 800,
+			height: 700
+		}).dialog('close');
+	}
+	
+	function showDialogAjuda() {
+		$('#dialog-ajuda').dialog('open');
+	}
+
+	function setupExportar() {
+		var exp = $('#exportar');		
+		exp.on('click', function() {
+			var obj = PiecesUtils.genJSON($('.piece.renderer'));
+			var data = "data:text/json;charset=utf-8," + encodeURIComponent(obj);			
+			exp.attr('href', data)
+			console.log('expotar');
+		});
+	}
+	
+	function setupDialog() {
+		var dialog = $('#dialogImp');
+		dialog.dialog({
+			modal: true,
+		    resizable: false,
+			width: 800,
+			height: 700,
+			buttons: [
+	          {
+	            text: "Abrir",
+	            click: function() {
+	              $( this ).dialog( "close" );
+	              var txt = $('.source').val();
+	              if (txt) {
+	            	  PiecesUtils.readJSON($('.piece.renderer'), txt);
+	              }
+	            }
+	          }
+			]
+		}).dialog('close');
+	}
+	
+	function showImpDialog() {
+		$('#dialogImp').dialog('open');
+	}
+	
+	function setupImportar() {
+		setupDialog();
+		var imp = $('#importar');
+		imp.on('change', function (e) {
+			var val = e.target.files[0];
+			var fr = new FileReader();
+			$(fr).data('property', this);
+			fr.onload = function() {
+				json = this.result;
+				//PiecesUtils.readJSON($('.piece.renderer'), json);
+				$('#source').val(json);
+			};
+			fr.readAsText(val);
+		});
+	}
+	
+	function onTabChange(ui) {
+		var id = ui.newPanel.attr('id');
+		switch(id) {
+			case 'propriedades-tab':
+				PropertiesController.setupProperties();
+				break;
+		}
+	}
+	
+</script>
+</head>
+<body onload="init()" oncontextmenu="return false;">
+	<div class='wrapper'>
+		<div class='menu'>		
+			<div class='trashCan'></div>
+			<div class='menu-tabs'>
+			<ul>
+			    <li><a href="#arquivo-tab">Arquivos</a></li>
+			    <li><a href="#pallet-tab">Fábrica de Peças</a></li>
+			    <li><a href="#propriedades-tab">Propriedades da Peça</a></li>
+			    <li><a href="#ajuda-tab">Ajuda</a></li>
+		    </ul>
+				<div id='arquivo-tab' class='tab'>					
+			    	<a id='exportar' href='VisEdu.js' download='visedu.json'>Exportar</a><br>
+			    	<a id='importar-dialog' onclick="showImpDialog();">Importar</a><br>
+			    	<div id="dialogImp" class='dialog' title="Selecione o Arquivo ou cole o Texto desejado">
+				    	<span>Arquivo: </span><input style='font-size: 12px;' id='importar' type='file'/><br/>
+				    	<span>Texto:</span><br/>
+				    	<textarea id='source' class="source" rows="25"></textarea>
+					</div>
+			    </div>
+				<div id='pallet-tab' class='tab'></div>
+				<div id='propriedades-tab' class='tab'>
+					<div class='property none'>
+						<label class='msg'>Selecione um item</label>
+					</div>
+					<div class='property name camera object cube polygon spline translate rotate scale light'>
+						<div class='label'>Nome</div>
+						<input id='input' class='prop-field' type="text" />
+					</div>
+					<div class='property size cube'>
+						<div class='label'>Tamanho</div>
+						<span>x </span><input id='x' class='prop-field number' type="number" />
+						<span>y </span><input id='y' class='prop-field number' type="number" />
+						<span class='3d'>z </span><input id='z' class='prop-field number 3d' type="number" />
+					</div>
+					<div class='property lightType light'>
+						<div class='label'>Tipo de Luz</div>
+						<div class='prop-wrapper'>
+							<select id='types' class='prop-field'>
+								<option value='0'>Ambiente</option>
+								<option value='1'>Hemisphere</option>
+								<option value='2'>Directional</option>
+								<option value='3'>Point</option>
+								<option value='4'>Spot</option>
+							</select>
+						</div>
+					</div>
+					<div class='property position cube light'>
+						<div class='label'>Posição</div>
+						<span>x </span><input id='x' class='prop-field number' type="number" />
+						<span>y </span><input id='y' class='prop-field number' type="number" />
+						<span class='3d'>z </span><input id='z' class='prop-field number 3d' type="number" />
+					</div>
+					<div class='property position-camera camera'>
+						<div class='label'>Posição</div><div style="display: inline"></div><!-- workaround para aplicar margim -->
+						<span class='3d'>x </span><input id='x' class='prop-field number 3d' type="number" />
+						<span class='3d'>y </span><input id='y' class='prop-field number 3d' type="number" />
+						<span>z </span><input id='z' class='prop-field number' type="number" />
+					</div>
+					<div class='property lookat camera 3d'>
+						<div class='label'>Look At</div>
+						<span>x </span><input id='x' class='prop-field number' type="number" />
+						<span>y </span><input id='y' class='prop-field number' type="number" />
+						<span>z </span><input id='z' class='prop-field number' type="number" />
+					</div>
+					<div class='property points polygon'>
+						<div class='label'>Pontos</div>
+						<div class='prop-wrapper'>
+							<input id='length' class='prop-field number' type="number"/><span> Quantidade</span><br/>
+							<select id='points' class='prop-field'></select>
+							<span>x </span><input id='x' class='prop-field number' type="number" />
+							<span>y </span><input id='y' class='prop-field number' type="number" />
+							<span class='3d'>z </span><input id='z' class='prop-field number 3d' type="number" /><br/>
+						</div>
+					</div>
+					<div class='property primitive polygon'>
+						<div class='label'>Primitiva</div>
+						<div class='prop-wrapper'>						
+							<select id='select' class='prop-field'>
+								<option value='vertex'>Vértices</option>
+								<option value='open'>Aberto</option>
+								<option value='closed'>Fechado</option>
+								<option value='filled'>Cheio</option>
+							</select>
+						</div>
+					</div>
+					<div class='property p1 spline'>
+						<div class='label'>P1</div>
+						<div class='prop-wrapper'>
+							<span>x </span><input id='x' class='prop-field number' type="number" />
+							<span>y </span><input id='y' class='prop-field number' type="number" />
+							<span class='3d'>z </span><input id='z' class='prop-field number 3d' type="number" /><br/>
+						</div>
+					</div>
+					<div class='property p2 spline'>
+						<div class='label'>P2</div>
+						<div class='prop-wrapper'>
+							<span>x </span><input id='x' class='prop-field number' type="number" />
+							<span>y </span><input id='y' class='prop-field number' type="number" />
+							<span class='3d'>z </span><input id='z' class='prop-field number 3d' type="number" /><br/>
+						</div>
+					</div>
+					<div class='property p3 spline'>
+						<div class='label'>P3</div>
+						<div class='prop-wrapper'>
+							<span>x </span><input id='x' class='prop-field number' type="number" />
+							<span>y </span><input id='y' class='prop-field number' type="number" />
+							<span class='3d'>z </span><input id='z' class='prop-field number 3d' type="number" /><br/>
+						</div>
+					</div>
+					<div class='property p4 spline'>
+						<div class='label'>P4</div>
+						<div class='prop-wrapper'>
+							<span>x </span><input id='x' class='prop-field number' type="number" />
+							<span>y </span><input id='y' class='prop-field number' type="number" />
+							<span class='3d'>z </span><input id='z' class='prop-field number 3d' type="number" /><br/>
+						</div>
+					</div>
+					<div class='property values translate scale'>
+						<div class='label'>Valores</div>
+						<div class='prop-wrapper'>
+							<span>x </span><input id='x' class='prop-field number' type="number" />
+							<span>y </span><input id='y' class='prop-field number' type="number" />
+							<span class='3d'>z </span><input id='z' class='prop-field number 3d' type="number" /><br/>
+						</div>
+					</div>
+					<div class='property values-rotate rotate'>
+						<div class='label'>Valores</div>
+						<div class='prop-wrapper'>
+							<span class='3d'>x </span><input id='x' class='prop-field number 3d' type="number" />
+							<span class='3d'>y </span><input id='y' class='prop-field number 3d' type="number" />
+							<span>z </span><input id='z' class='prop-field number' type="number" /><br/>
+						</div>
+					</div>
+					<div class='property splineLength spline'>
+						<div class='label'>Qtds Pontos</div>
+						<input id='length' class='prop-field number' type="number"/><span> Quantidade</span><br/>
+					</div>							
+					<div class='property polyhedron spline'>
+						<div class='label'>Poliedro</div>
+						<div class='prop-wrapper'>
+							<input id='check' class='prop-field' type="checkbox" /><span>Ativo </span><input id='picker' class='prop-field' type="color" />
+						</div>
+					</div>
+					<div class='property color cube polygon spline light'>
+						<div class='label'>Cor</div>
+							<input id='picker' class='prop-field' type="color" />
+					</div>
+					<div class='property texture cube'>
+						<div class='label'>Textura</div>
+						<div class='prop-wrapper'>
+							<input id='check' class='prop-field' type="checkbox" /><span> Habilitar</span><br/>
+							<input id='chooser' class='prop-field' value='teste' type="file" /><br/>
+							<select id='select' class='prop-field'>
+								<option value=''>Não Usar</option>
+								<option value='imgs/texturas/logoGCG.png'>Logo Grupo CG</option>
+								<option value='imgs/texturas/caixaMadeira.jpg'>Caixa de Madeira</option>
+								<option value='imgs/texturas/caixaMetal.jpg'>Caixa de Metal</option>
+								<option value='imgs/texturas/cuboMagico.jpg'>Cubo Mágico</option>
+								<option value='imgs/texturas/marfim.jpg'>Piso de Marfim</option>
+								<option value='imgs/texturas/olho.jpg'>Olho</option>
+								<option value='imgs/texturas/pisoMetal1'>Piso Metal 1</option>
+								<option value='imgs/texturas/pisoMetal2'>Piso Metal 2</option>
+							</select>
+						</div>
+					</div>
+					<div class='property active object cube polygon spline translate rotate scale light'>
+						<div class='label'>Ativo</div>
+						<input id='check' class='prop-field' type="checkbox" />
+					</div>
+					<div class='property matrix object'>
+						<div class='label'>Matriz</div>
+						<div id='field' class='prop-field'></div>
+					</div>
+					<div class='property near camera'>
+						<div class='label'>Near</div>
+						<input id='near' class='prop-field number' type="text"/>
+					</div>							
+					<div class='property far camera'>
+						<div class='label'>Far</div>
+						<input id='far' class='prop-field number' type="text"/>
+					</div>
+					<div class='property fov camera'>
+						<div class='label'>FOV</div>
+						<input id='fov' class='prop-field number' type="text"/>
+					</div>
+					<div class='property intensity light'>
+						<div class='label'>Intensidade</div>
+						<input id='intensity' class='prop-field number' type="text"/>
+					</div>					
+					<div class='property clear renderer'>
+						<div class='label'>Cor de Limpeza</div>
+							<input id='picker' class='prop-field' type="color" />
+					</div>
+					<div class='property background-color renderer'>
+						<div class='label'>Cor de fundo</div>
+							<input id='picker' class='prop-field' type="color" />
+					</div>
+					<div class='property background light'>
+						<div class='label'>Cor de fundo</div>
+							<input id='picker' class='prop-field' type="color" />
+					</div>
+					<div class='property distance light'>
+						<div class='label'>Distância</div>
+							<input id='distance' class='prop-field number' type="text"/>
+					</div>
+					<div class='property angle light'>
+						<div class='label'>Ângulo</div>
+							<input id='angle' class='prop-field number' type="text"/>
+					</div>
+					<div class='property exponent light'>
+						<div class='label'>Expoente</div>
+							<input id='exponent' class='prop-field number' type="text"/>
+					</div>
+					<div class='property grid renderer 3d'>
+						<div class='label'>Grade</div>
+						<input id='check' class='prop-field' type="checkbox" />
+					</div>
+					<div class='property axis renderer'>
+						<div class='label'>Eixo</div>
+						<input id='check' class='prop-field' type="checkbox" />
+					</div>
+					<div class='property targetPosition light'>
+						<div class='label'>Valores</div>
+						<div class='prop-wrapper'>
+							<span>x </span><input id='x' class='prop-field number' type="number" />
+							<span>y </span><input id='y' class='prop-field number' type="number" />
+							<span>z </span><input id='z' class='prop-field number 3d' type="number" /><br/>
+						</div>
+					</div>
+					<div class='property mode renderer'>
+						<div class='label'>Gráficos</div>
+						<div class='prop-wrapper'>						
+							<select id='mode' class='prop-field'>
+								<option value='2D'>2D</option>
+								<option value='3D'>3D</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div id='ajuda-tab' class='tab'>
+					<a id='ajuda-dialog' onclick="showDialogAjuda();">Exibir</a><br>
+					<div id='dialog-ajuda' class='dialog'>
+						<div class='ajuda-tabs'>
+							<ul>
+								<li><a href="#introducao-ajuda">Introdução</a></li>
+								<li><a href="#dicas-ajuda">Dicas</a></li>
+								<li><a href="#fabrica-ajuda">Fábrica</a></li>
+								<li><a href="#espaco-grafico-ajuda">Espaço Gráfico</a></li>
+								<li><a href="#visao-camera-ajuda">Visão da Câmera</a></li>
+								<li><a href="#propriedaes-peca-ajuda">Propriedades de Peças</a></li>
+								<li><a href="#arquivo-ajuda">Arquivo</a></li>
+								<li><a href="#ajuda-ajuda">Ajuda</a></li>
+								<li><a href="#sobre-ajuda">Sobre</a></li>								
+							</ul>
+							<div id='introducao-ajuda' class=' tab-ajuda'>
+								O <b>VisEdu-CG</b> é um aplicativo didático para auxiliar no ensino da disciplina de Computação Gráfica (CG) na FURB. Ele visa a prática dos conceitos de CG aprendidos em sala de aula e não a introdução desses conceitos, portanto é um aplicativo voltado para pessoas que já possuem um conhecimento prévio em CG.
+								<br><br><br>
+								O aplicativo é composto de 8 painéis, sendo que 5 deles são exibidos logo na abertura do aplicativo: 
+								<br><br>
+								a) o painel <b>Fábrica</b> apresenta um editor onde o usuário pode realizar o encaixe de diversos tipos peças. Cada uma dessas peças representa e trabalha um conceito básico de computação gráfica;
+								<br><br>
+								b) o painel <b>Espaço Gráfico</b> exibe o resultado gráfico obtido através das peças encaixadas no editor;
+								<br><br>
+								c) o painel <b>Visão da Câmera</b> exibe a visão enxergada pela peça Câmera (inserida no editor) dentro do painel <b>Espaço Gráfico</b>;
+								<br><br>
+								d) o painel <b>Propriedades da Peça</b>, que fica embutido no painel <b>Fábrica</b>, exibe todas as propriedades gráficas pertinentes a peça selecionada no editor, permitindo o usuário alterá-las, a fim de modificar o resultado gráfico obtido no painel <b>Espaço Gráfico</b>;
+								<br><br>
+								e) o painel <b>Arquivo</b> permite exportar os encaixes de peças existentes no editor (através de uma string em formato JSON), abrir strings exportadas anteriormente ou abrir exemplos já prontos;
+								<br><br>
+								f) o painel <b>Ajuda</b> permite consultar informações e dicas a respeito do aplicativo e seu funcionamento.
+							</div>
+							<div id='dicas-ajuda' class=' tab-ajuda'>
+								- Utilize o duplo clique do mouse sobre um painel para chamar a tela de ajuda daquele painel
+								<br><br>
+								- Para selecionar uma peça basta pressionar sobre ela com o botão esquerdo do mouse ou selecionar a peça diretamente no <b>Espaço Gráfico</b>
+								<br><br>
+								- Para incluir um item, deve-se arrastar um item da fábrica até o painel de montagem
+								<br><br>
+								- Para remover uma peça, deve-se arrastar a peça até ficar sobre a fábrica
+								<br><br>
+								- Use a <b>Lista de Peças</b> para selecionar rapidamente uma peça do editor 
+							</div>
+							<div id='fabrica-ajuda' class=' tab-ajuda'>
+								O painel <b>Fábrica</b> compõe o editor do aplicativo, que é composto de dois painéis: o painel de montagem e a fábrica. 
+								<br><br>
+								<b>Painel de Montagem</b>
+								<br><br>
+								O painel de montagem, é o principal ambiente de desenvolvimento da aplicação. Ele possui uma peça principal denominada <b>Renderizador</b> e todas as demais peças deverão ser encaixadas nesta peça.<br>
+								Todos os outros painéis da aplicação irão tomar como base o resultado dos encaixes definidos neste painel.
+								<br><br>
+								<b>Fábrica</b>
+								<br><br>
+								A fábrica possibilita a criação de novas peças ou a remoção das peças já existentes dentro do painel de montagem. A fábrica permite a criação de 6 peças distintas: 
+								<br><br>
+								a) <b>Câmera</b>: peça que representa uma câmera no ambiente gráfico. Através desta peça é possível editar os atributos de uma câmera do tipo perspectiva e avaliar o impacto de cada atributo;
+								<br><br>
+								b) <b>Objeto gráfico</b>: peça que representa uma objeto gráfico no ambiente gráfico. Um objeto gráfico é definido por um isolamento de transformações, através do empilhamento da matriz principal, e pode ser composto por transformações geométricas, objetos geométricos, e outros objetos gráficos. Através desta peça é possível visualizar a matriz resultante das transformações existentes no objeto gráfico;
+								<br><br>
+								c) <b>Cubo</b>: peça que representa um objeto geométrico no ambiente gráfico. Através desta peça é possível editar os atributos de um objeto do tipo cubo e avaliar o impacto de cada atributo;
+								<br><br>
+								d) <b>Polígono</b>: peça que representa um objeto geométrico no ambiente gráfico. Através desta peça é possível editar os atributos de um objeto do tipo polígono e avaliar o impacto de cada atributo;
+								<br><br>
+								e) <b>Spline</b>: peça que representa um objeto geométrico no ambiente gráfico. Através desta peça é possível editar os atributos de um objeto do tipo spline e avaliar o impacto de cada atributo;
+								<br><br>
+								f) <b>Transladar</b>: peça que representa uma translação de um objeto gráfico no ambiente grafico. Através desta peça é possível editar os atributos de uma translação no ambiente gráfico e avaliar o impacto de cada atributo;
+								<br><br>
+								g) <b>Rotacionar</b>: peça que representa uma rotação de um objeto geométrico no ambiente gráfico. Através desta peça é possível editar os atributos de uma rotação e avaliar o impacto de cada atributo (cada atributo corresponde  a um valor em graus);
+								<br><br>
+								h) <b>Escalar</b>: peça que representa uma transformação escalar de um objeto geométrico no ambiente gráfico. Através desta peça é possível editar os atributos de uma transformação escalar e avaliar o impacto de cada atributo.
+								<br><br>
+								i) <b>Iluminação</b>: peça que representa a iluminaçãoda cena no ambiente gráfico. Através desta peça é possível editar os atributos da iluminação e avaliar o impacto de cada atributo.
+								<br><br><br>
+								<b>INCLUINDO PEÇAS</b>
+								<br><br><br>
+								Para incluir uma peça, deve-se arrastar uma das peças da fábrica até o painel de montagem.
+								<br><br><br>
+								<b>ENCAIXANDO PEÇAS</b>
+								<br><br><br>
+								Para encaixar uma peça, deve-se arrastar a peça até o cursor do mouse ficar posicionado sobre uma encaixe compatível com a peça sendo arrastada.
+								<br><br><br>
+								<b>SELECIONANDO PEÇAS</b>
+								<br><br><br>
+								A seleção pode ser efetuada de três formas: pressionanado o botão esquerdo do mouse sobre a peça, clicando na peça na <b>Lista de Peças</b> ou clicando diretamente sobre o objeto no <b>Espaço Gráfico</b>
+								Quando um objeto for selecionado, automaticamente será exibido o painel com as propriedades da peça.
+								<br><br><br>
+								<b>REMOVENDO PEÇAS</b>
+								<br><br><br>
+								Para remover uma peça, deve-se arrastar a peça até ficar sobre o painel Fábrica. Neste momento a cor da lixeira irá mudar, indicando que o item será removido quando o botão do mouse for solto.
+							</div>
+							<div id='espaco-grafico-ajuda' class=' tab-ajuda'>
+								O painel <b>Espaço Gráfico</b> exibe o resultado gráfico obtido através das peças encaixadas no editor.
+								<br><br>
+								O painel <b>Visão da Câmera</b> é um subcomponente deste painel.
+								<br><br>
+								Este painel exibe um espaço (2D/3D) que possui 4 componentes principais:
+								<br><br>
+								a) <b>indicador dos eixos x, y e z</b>: são tres retas que indicam a direção desses eixos a partir do ponto [0,0,0] que são identificadas pelas cores vermelho (x), verde (y) e azul (z);
+								  Caso o tipo de gráfico for 2D o eixo z não ficará visível.
+								<br><br>
+								b) <b>grade</b>: um plano em forma de grade, centralizado no ponto [0,0,0], que se estendo pelos planos x e z, auxiliando na percepção da profundidade do ambiente;
+								  Caso o tipo de gráfico for 2Da grade não ficará visível.
+								<br><br>
+								c) <b>pirâmide da câmera</b>: uma pirâmide tridimensional de 4 lados que indica a amplitude da visão da câmera dentro do ambiente gráfico;
+								<br><br>
+								d) <b>cubos</b>: são cubos que representam as peças cubos encaixadas no editor, levando em conta as transformações aplicadas sobre os as mesmas.
+								<br><br>
+								e) <b>polígonos</b>: são polígonos que representam as peças Polígono encaixadas no editor, levando em conta as transformações aplicadas sobre os as mesmas.
+								<br><br>
+								f) <b>splines</b>: são splines que representam as peças Spline encaixadas no editor, levando em conta as transformações aplicadas sobre os as mesmas.
+								<br><br><br>
+								<b>AJUSTANDO VISUALIZAÇÃO DO ESPAÇO GRÁFICO</b>
+								<br><br><br>
+								É possível ajustar o ponto de vista do <b>Espaço Gráfico</b> usando os botões do mouse:
+								<br><br>
+								a) <b>botão esquerdo</b>: ao pressionar o botão esquerdo e arrastar o mouse, o ponto de vista é rotacionado em relação ao ponto [0,0,0];
+								<br><br>
+								b) <b>botão direito</b>: ao pressionar o botão esquerdo e arrastar o mouse, o ponto de vista é transladado por um plano perpendicular a reta formada entre o ponto de vista atual e o ponto [0,0,0];
+								<br><br>
+								c) <b>botão de rolagem</b>: ao rolar o botão de rolagem do mouse, é possível aumentar ou diminuir o zoom do ponto de vista.
+							</div>
+							<div id='visao-camera-ajuda' class=' tab-ajuda'>
+								O painel <b>Visão da Câmera</b> exibe a visão enxergada pela peça <b>Câmera</b> dentro do painel <b>Espaço Gráfico</b>.
+								<br><br>
+								Através deste painel é possível observar o ponto de vista da peça <b>Câmera</b>, em relação aos objetos existentes no <b>Espaço Gráfico</b>. Os demais componentes do <b>Espaço Gráfico</b> (indicador dos eixos x, y e z, grade e pirâmide da câmera) não serão enxergados neste painel. 
+								<br><br>
+								A cor de limpeza do renderizador da <b>Visão da Câmera</b> usa a cor de limpeza definida nas propriedades da peça <b>Renderizador</b> do editor.
+							</div>
+							<div id='propriedaes-peca-ajuda' class=' tab-ajuda'>
+								O painel <b>Propriedades da Peça</b> fica embutido no painel <b>Fábrica</b> e exibe todas as propriedades gráficas pertinentes a peça selecionada no editor.
+								<br><br>
+								Ele permite que o usuário altere as propriedades de cada peça, afim de modificar o resultado gráfico obtido no painel <b>Espaço Gráfico</b>.
+								<br><br>
+								Entre as propriedades da cada peça, existem 6 tipos de dados diferentes:
+								<br><br>
+								a) <b>Texto</b>: é exibida uma caixa de texto editável. Os dados serão atualizados na peça assim que o foco sair da caixa de texto;
+								<br><br>
+								b) <b>Numérico</b>: é exibida uma caixa de texto editável. O valor será submetido somente quando for composto por valores numéricos. É possível incrementar o valor com as setas do teclado.
+								<br><br>
+								c) <b>Cor</b>: é exibida uma caixa de texto com o código RGB hexadecimal da cor. Ao entrar na caixa de texto, será exibido um painel colorido que permite selecionar uma cor qualquer apenas pressionando com o mouse, contudo também é possível informar uma cor através do valor RGB hexadecimal da mesma. Os dados serão atualizados na peça assim que o foco sair da caixa de texto;
+								<br><br>
+								d) <b>Caixa de seleção</b>: é exibida uma caixa de seleção que permite definir o valor positivo ou negativo para a propriedade;
+								<br><br>
+								e) <b>Imagem</b>: é exibido um botão que permite carregar uma imagem local;
+								<br><br>
+								f) <b>Lista</b>: exibe uma lista de opções, das quais o usuário poderá selecionar uma.
+							</div>
+							<div id='arquivo-ajuda' class=' tab-ajuda'>
+								O painel <b>Arquivo</b> permite exportar os encaixes de peças existentes no editor (através de uma string em formato JSON), abrir strings exportadas anteriormente ou abrir exemplos já prontos.
+								<br><br>
+								Ele possui 2 opções:
+								<br><br>
+								a) <b>Abrir:</b> exibe um painel onde é possível abrir uma string do aplicativo exportada anteriormente. É possível abrir essa string através de um arquivo local, informando a string diretamente no painel de texto ou selecionando um dos exemplos na lista de exemplos;
+								<br><br>
+								b) <b>Exportar:</b> abre uma nova janela/guia com uma string representando os encaixes existentes no editor.
+							</div>
+							<div id='ajuda-ajuda' class=' tab-ajuda'>
+								O painel <b>Ajuda</b> permite consultar informações e dicas a respeito do aplicativo e seu funcionamento.
+							</div>
+							<div id='sobre-ajuda' class='tab-ajuda'>
+								<b>VisEdu-CG - Aplicação Didática para Visualizar Material Educacional</b><br>  
+								Módulo Computação Gráfica <br>
+								<br>
+								
+								<b>Versão 1.0</b><br>
+								Acadêmico: Luciana Pereira de Araújo<br>
+								Orientador: Dalton Solano dos Reis<br><br><br>
+												
+								<b>Versão 2.0</b><br>
+								Acadêmico: James Perkison Montibeler<br>
+								Orientador: Dalton Solano dos Reis<br><br><br>				
+										
+								<b>Versão 3.0</b><br>
+								Acadêmico: Samuel Anderson Nunes<br>
+								Orientador: Dalton Solano dos Reis<br><br>
+								
+								<b>Versão 4.0</b><br>
+								Acadêmico: William Fernandes Koehler<br>
+								Orientador: Dalton Solano dos Reis<br>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='pieces-canvas'>
+				<div class='pieces-tree'></div>
+			</div>
+		</div>
+		<div class='world'>
+		</div>
+	</div>
+</body>
+</html>

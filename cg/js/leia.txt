@@ -1,4 +1,0 @@
-VisEdu-CG - comentários:
-
-1) na pasta "cg" estão contidos todas as classes criadas ou alteradas especificamente para o sistema;
-2) as demais pastas contem classes de frameworks usados pelo sistema, mas que não precisaram ser modificadas.
