@@ -1,5 +1,0 @@
-c:\users\felipe\documents\visual studio 2012\Projects\ProjetoAtividadeLaboralComKinect\ProjetoAtividadeLaboralComKinect\bin\ProjetoAtividadeLaboralComKinect.dll
-c:\users\felipe\documents\visual studio 2012\Projects\ProjetoAtividadeLaboralComKinect\ProjetoAtividadeLaboralComKinect\bin\ProjetoAtividadeLaboralComKinect.pdb
-c:\users\felipe\documents\visual studio 2012\Projects\ProjetoAtividadeLaboralComKinect\ProjetoAtividadeLaboralComKinect\obj\Debug\ProjetoAtividadeLaboralComKinect.csprojResolveAssemblyReference.cache
-c:\users\felipe\documents\visual studio 2012\Projects\ProjetoAtividadeLaboralComKinect\ProjetoAtividadeLaboralComKinect\obj\Debug\ProjetoAtividadeLaboralComKinect.dll
-c:\users\felipe\documents\visual studio 2012\Projects\ProjetoAtividadeLaboralComKinect\ProjetoAtividadeLaboralComKinect\obj\Debug\ProjetoAtividadeLaboralComKinect.pdb
