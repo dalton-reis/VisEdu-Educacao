@@ -19,7 +19,11 @@
 			<div class="header clearfix">
                <nav class="nav nav-pills pull-right">
                <ul >
-						<button class="btn btn-aula" onclick="rotacionarCanhao(10)">Home</button>
+						<button class="btn btn-aula" title="In&iacute;cio"
+                                data-toggle="tooltip"
+                                data-placement="bottom">
+                            <span class="glyphicon glyphicon-home"></span>
+                        </button>
                         <button id="btnDispara" class="btn btn-aula" onclick="createCanonBall();playPausa(true);"><span class="glyphicon glyphicon-screenshot " ></span> Disparar</button>
                         <button id="altGravidade" class="btn btn-aula" data-toggle="modal"
                                 data-target="#modalListaGravidade">Altera Gravidade</button>
@@ -32,7 +36,7 @@
                            title="Recarregar Simula&ccedil;&atilde;o"
                            data-toggle="tooltip"
                            data-placement="bottom"><span class="glyphicon glyphicon-refresh"></span></button>
-                        <button class="btn btn-aula" data-toggle="modal" data-target="#modalSobre" onclick="loadAbout()">About</button>
+                        <button class="btn btn-aula" data-toggle="modal" data-target="#modalSobre" onclick="loadAbout()">Sobre</button>
                        <button id="btnConfig" type="button" class="btn btn-aula" data-toggle="modal"
                                data-target="#modalConfig">
                           <span class="glyphicon glyphicon-cog"></span>
@@ -52,7 +56,7 @@
 						<img alt="F el"src="img/hooke_equation.png" width="200px" >
 					</div>
 					<div class="col-xs-4">
-						<div class="col-xs-6 form-group">
+						<div class="col-xs-6 form-group" style="margin-left: -40px; margin-right: 25px;">
 						    <label >K: </label>
 							<input id="fieldK" class="form-control fieldK" placeholder="K" value="1" />
 						</div>
@@ -70,7 +74,7 @@
 						<div class="col-xs-12" style="padding-left: 0px !important; padding-right: 0px !important;" >
 							<img id="silicone" src="img/silicone.png" title="Silicone" class="img-rounded"
 							 onclick="atualizarMaterial(this, BD.MaterialProjetil.SILICONE);" >
-							<img id="aluminio" src="img/aluminio.png" title="Alumínio" class="img-rounded"
+							<img id="aluminio" src="img/aluminio.png" title="Alum&iacute;nio" class="img-rounded"
 							 onclick="atualizarMaterial(this, BD.MaterialProjetil.ALUMINIO);" >
 							<img id="ferro" src="img/ferro.png" title="Ferro" class="img-rounded"
 							 onclick="atualizarMaterial(this, BD.MaterialProjetil.FERRO);" >
@@ -78,7 +82,7 @@
 							 onclick="atualizarMaterial(this, BD.MaterialProjetil.OURO);" >
 							<img id="vidro" src="img/vidro.png" title="Vidro" class="img-rounded"
 							 onclick="atualizarMaterial(this, BD.MaterialProjetil.VIDRO);" >
-							<img id="madeira-ipe" src="img/madeira_ipe.png" title="Ipê (Madeira seca)" class="img-rounded"
+							<img id="madeira-ipe" src="img/madeira_ipe.png" title="Ip&ecirc; (Madeira seca)" class="img-rounded"
 							 onclick="atualizarMaterial(this, BD.MaterialProjetil.IPE);" >
 							<img id="madeira-cedro" src="img/madeira_cedro.png" title="Cedro (Madeira seca)" class="img-rounded"
 							 onclick="atualizarMaterial(this, BD.MaterialProjetil.CEDRO);" >
@@ -309,9 +313,9 @@
                         </h4>
                     </div>
                     <div class="modal-body body-modal-aula">
-                        <div id="Dev"></div>
+                        <div id="Dev" class="text-modal"></div>
                         <p></p>
-                        <div id="Grupo"></div>
+                        <div id="Grupo" class="text-modal"></div>
                     </div>
                     <div class="modal-footer footer-modal-aula">
                         <button type="button" class="btn btn-aula" data-dismiss="modal">
@@ -332,7 +336,7 @@
 		<!--<script src="../lib/jquery.min.js"></script>-->
         <script src="../lib/jquery.min.js"></script>
         <script src="Aula/jquery-ui.js"></script>
-        <script src="../lib/bootstrap.min.js"></script>
+        <script src="../lib/bootstrap.js"></script>
 		<script src="../lib/bootstrap-dialog.min.js"></script>
 
 

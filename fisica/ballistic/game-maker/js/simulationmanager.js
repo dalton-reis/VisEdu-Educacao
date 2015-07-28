@@ -41,6 +41,7 @@ HEFESTO.SimulationManager = function(_canvas) {
 	var forces = [];
 
 
+
 	Object.defineProperties( this, {
 		simulation: {
 			enumerable: true,
@@ -87,6 +88,7 @@ HEFESTO.SimulationManager = function(_canvas) {
 };
 
 HEFESTO.SimulationManager.prototype = {
+
 	construtor: HEFESTO.SimulationManager,
 
 	initDrawableScene: function() {
@@ -145,13 +147,20 @@ HEFESTO.SimulationManager.prototype = {
 			if(play) {
 				this.simulation.integrate(this.timming.getLastFrameDuration() * 0.001);
 				//this.onIntegrate(); //listener para fazer alguma ação
+
 				if (rb !== undefined && isDesenhaTrajetoria) {
 					desenhaTrajetoria(rb);
+                    if(ant > rb.position.y && passouPosicao>0){
+                        console.log("Posicao: "+rb.position.y);
+                        passouPosicao--;
+                    }else{
+                        ant = rb.position.y;
+                    }
 				}
 				for (b in this.bodies){
 					var body = this.bodies[b];
 					if(body !== undefined) {
-						if (body.position.x > 600  || body.position.y < 0 || body.position.x < -300) {
+						if (body.position.x > 800  || body.position.y < 0 || body.position.x < -300) {
 							this.sb.scene.remove(body.mesh);
 							this.simulation.removeRigidBody(body);
 							this.bodies[b] = undefined;

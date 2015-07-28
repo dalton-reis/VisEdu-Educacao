@@ -26,13 +26,13 @@ BD.Material = function(id, densidade, img) {
 }
 
 BD.MaterialProjetil = {
-	SILICONE: new BD.Material('silicone', 0.95, new THREE.MeshLambertMaterial( {color: 0xFFFF00,  transparent: true} )),
-	ALUMINIO: new BD.Material('aluminio', 2.70, new THREE.MeshLambertMaterial( {color: 0xCCCCCC,  transparent: true} )),
-	FERRO: new BD.Material('ferro', 7.87, new THREE.MeshLambertMaterial( {color: 0x888888,  transparent: true} )),
-	OURO: new BD.Material('ouro', 19.28, new THREE.MeshLambertMaterial( {color: 0x7777FF,  transparent: true} )),
-	VIDRO: new BD.Material('vidro', 2.60, new THREE.MeshLambertMaterial( {color: 0x0000FF,  transparent: true, opacity:0.9} )),
-	IPE: new BD.Material('ipe', 0.485, new THREE.MeshLambertMaterial( {color: 0xCCFFCC,  transparent: true} )),
-	CEDRO: new BD.Material('cedro', 1.10, new THREE.MeshLambertMaterial( {color: 0x88FF88,  transparent: true} ))
+	SILICONE: new BD.Material('Silicone', 0.95, new THREE.MeshLambertMaterial( {color: 0xFFFF00,  transparent: true} )),
+	ALUMINIO: new BD.Material('Alum&iacute;nio', 2.70, new THREE.MeshLambertMaterial( {color: 0xCCCCCC,  transparent: true} )),
+	FERRO: new BD.Material('Ferro', 7.87, new THREE.MeshLambertMaterial( {color: 0x888888,  transparent: true} )),
+	OURO: new BD.Material('Ouro', 19.28, new THREE.MeshLambertMaterial( {color: 0x7777FF,  transparent: true} )),
+	VIDRO: new BD.Material('Vidro', 2.60, new THREE.MeshLambertMaterial( {color: 0x0000FF,  transparent: true, opacity:0.9} )),
+	IPE: new BD.Material('Ip&ecirc;', 0.485, new THREE.MeshLambertMaterial( {color: 0xCCFFCC,  transparent: true} )),
+	CEDRO: new BD.Material('Cedro', 1.10, new THREE.MeshLambertMaterial( {color: 0x88FF88,  transparent: true} ))
 };
 
 BD.Gravidade = function(id, _valor, _camiho) {
@@ -153,7 +153,7 @@ BD.Cannon.prototype = {
 		var geometry = new THREE.BoxGeometry( baseSize*1.5, baseSize /2, baseSize*1.1 );
 		var material = new THREE.MeshLambertMaterial( {color: 0x444444,  transparent: true} );
 		this.baseMesh = new THREE.Mesh(geometry, material);
-		this.baseMesh.position.x = this.position.x + this.projetilRadius/2;;
+		this.baseMesh.position.x = this.position.x + this.projetilRadius/2;
 		this.baseMesh.position.y = this.position.y + (baseSize/4);
 		this.baseMesh.position.z = this.position.z;
 		this.scene.add(this.baseMesh);
@@ -217,13 +217,15 @@ BD.Cannon.prototype = {
 		//Minha Tentativa em arrumar a velocidade:
 		vel.y = V * Math.sin(this.angle * Math.PI / 180);
 
-		//console.log(vel);
+		console.log(vel);
 
 		return vel;
 	},
 
 	determineProjetilPosition: function() {
-		var vector = new THREE.Vector3(this.tubeMesh.position.x, 0, this.tubeMesh.position.z);
+		//teste para sair do chão
+		var vector = new THREE.Vector3(-180, 5, this.tubeMesh.position.z);
+
 		return this.tubeMesh.position;
         //return vector;
 	}

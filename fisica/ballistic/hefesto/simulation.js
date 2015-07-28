@@ -1,42 +1,41 @@
-/** 
-
+/**
  * Tipos de comandos para o servidor.
  */
 HEFESTO.CommandType = {
 	/** Gera um novo corpo rigido */
 	NEW_SIMULATION: "NEW_SIMULATION",
 
-    /** Gera um novo corpo rigido */
-    BIND_RIGID_BODY: "BIND_RIGID_BODY",
-    /** Remove um novo corpo rigido */
-    REMOVE_RIGID_BODY: "REMOVE_RIGID_BODY",
-    /** Adiciona força para em um corpo rigido */
-    ADD_FORCE_TO_RIGID_BODY: "ADD_FORCE_TO_RIGID_BODY",
+	/** Gera um novo corpo rigido */
+	BIND_RIGID_BODY: "BIND_RIGID_BODY",
+	/** Remove um novo corpo rigido */
+	REMOVE_RIGID_BODY: "REMOVE_RIGID_BODY",
+	/** Adiciona força para em um corpo rigido */
+	ADD_FORCE_TO_RIGID_BODY: "ADD_FORCE_TO_RIGID_BODY",
 
-    /** Gera uma nova particula */
-    BIND_PARTICLE: "BIND_PARTICLE",
+	/** Gera uma nova particula */
+	BIND_PARTICLE: "BIND_PARTICLE",
 
-    	/** Gera uma nova força */
+	/** Gera uma nova força */
 	BIND_FORCE: "BIND_FORCE",
 	/** Adiciona uma força a um corpo */
 	ADD_FORCE_TO_BODY: "ADD_FORCE_TO_BODY",
 	/** REmove uma forca */
 	REMOVE_FORCE: "REMOVE_FORCE",
 
-    /** Gera uma nova collisao */
-    BIND_COLLISION: "BIND_COLLISION",
-    /** Remove uma nova collisao */
-    REMOVE_COLLISION: "REMOVE_COLLISION",
-    /** Gera novos dados de collisao */
-    BIND_COLLISION_DATA: "BIND_COLLISION_DATA",
+	/** Gera uma nova collisao */
+	BIND_COLLISION: "BIND_COLLISION",
+	/** Remove uma nova collisao */
+	REMOVE_COLLISION: "REMOVE_COLLISION",
+	/** Gera novos dados de collisao */
+	BIND_COLLISION_DATA: "BIND_COLLISION_DATA",
 
-    /** Altera o status da collisao */
-    CHANGE_COLLISION_STATE: "CHANGE_COLLISION_STATE",
+	/** Altera o status da collisao */
+	CHANGE_COLLISION_STATE: "CHANGE_COLLISION_STATE",
 
-    /** Integrate */
-    INTEGRATE: "INTEGRATE",
-    /** Obtem as informacoes de um corpo rigido */
-    GET_RIGID_BODY_DATA: "GET_RIGID_BODY_DATA"
+	/** Integrate */
+	INTEGRATE: "INTEGRATE",
+	/** Obtem as informacoes de um corpo rigido */
+	GET_RIGID_BODY_DATA: "GET_RIGID_BODY_DATA"
 };
 
 /**
@@ -64,6 +63,8 @@ HEFESTO.Simulation = function () {
 	this._contactListener = undefined;
 	// flag to bind rigid body data
 	this._rigidBodyDataListener = undefined;
+
+	this.tempos = [];
 };
 
 /**
@@ -96,9 +97,9 @@ HEFESTO.Simulation.prototype = {
 		this._simulationId = 0;
 	},
 
-	/** 
-	* Verifica se a inicialização da simulação não foi executada.
-	*/
+	/**
+	 * Verifica se a inicialização da simulação não foi executada.
+	 */
 	isNotInitialized: function() {
 		return this._simulationId == -1;
 	},
@@ -115,7 +116,7 @@ HEFESTO.Simulation.prototype = {
 			body.mesh = mesh;
 		}
 
-		this._rigidBodys[body.id] = body;	
+		this._rigidBodys[body.id] = body;
 		this.rigidBodyCount++;
 	},
 
@@ -133,7 +134,7 @@ HEFESTO.Simulation.prototype = {
 	 */
 	bindForce: function (force) {
 		this._simulationWS.sendMessage(HEFESTO.CommandType.BIND_FORCE, force);
-		
+
 		this._forces[force.id] = force;
 	},
 
@@ -153,7 +154,7 @@ HEFESTO.Simulation.prototype = {
 	 */
 	bindCollision: function (collision) {
 		this._simulationWS.sendMessage(HEFESTO.CommandType.BIND_COLLISION, collision);
-		
+
 		this._collisions[collision.id] = collision;
 	},
 
@@ -162,10 +163,10 @@ HEFESTO.Simulation.prototype = {
 	 */
 	bindCollisionData: function (data) {
 		this._simulationWS.sendMessage(HEFESTO.CommandType.BIND_COLLISION_DATA, data);
-		
+
 		this._collisionDatas[data.id] = data;
 	},
-	
+
 	/**
 	 * Remove o corpo no servidor.
 	 */
@@ -193,22 +194,22 @@ HEFESTO.Simulation.prototype = {
 	 */
 	removeForce:  function (force) {
 		var data = {};
-		data['force'] = force.id;
+		data['id'] = force.id;
 
 		this._simulationWS.sendMessage(HEFESTO.CommandType.REMOVE_FORCE, data);
-		
-		this._forces[force.id] = undefined;	
+
+		this._forces[force.id] = undefined;
 	},
 	/**
 	 * Remove a colisão no servidor.
 	 */
 	removeCollision:  function (collision) {
 		var data = {};
-		msg['id'] = collision.id;
+		data['id'] = collision.id;
 
 		this._simulationWS.sendMessage(HEFESTO.CommandType.REMOVE_COLLISION, data);
-		
-		this._collisions[collision.id] = undefined;	
+
+		this._collisions[collision.id] = undefined;
 	},
 
 	/**
@@ -228,7 +229,7 @@ HEFESTO.Simulation.prototype = {
 	 */
 	getRigidBodyData: function (body) {
 		var data = {
-			'body' : body
+			'body' : body.id
 		};
 		this._simulationWS.sendMessage(HEFESTO.CommandType.GET_RIGID_BODY_DATA, data);
 	},
@@ -261,7 +262,7 @@ HEFESTO.Simulation.prototype = {
 		} else if (type == HEFESTO.CommandType.BIND_RIGID_BODY) {
 			log('RigidBody successfully added.');
 		} else if(type == HEFESTO.CommandType.REMOVE_RIGID_BODY) {
-			this._rigidBodys[data.id] = undefined;	
+			this._rigidBodys[data.id] = undefined;
 			this.rigidBodyCount--;
 			log('RigidBody successfully removed.');
 		} else if (type == HEFESTO.CommandType.BIND_PARTICLE) {
@@ -275,11 +276,18 @@ HEFESTO.Simulation.prototype = {
 		} else if (type == HEFESTO.CommandType.CHANGE_COLLISION_STATE) {
 			log('Collision state successfully changed.');
 		} else if (type == HEFESTO.CommandType.INTEGRATE) {
-			var t = new HEFESTO.Timming();
-			t.start();
-			t.update();
+			var i = window.performance.now();
 			this.onintegrate(data);
-			log4(t.getLastFrameDuration());
+			this.tempos[this.tempos.length] = (window.performance.now() - i);
+
+			if (this.tempos.length % 10 == 0) {
+				var s = 0;
+				for(k = 0; k < this.tempos.length; k++) {
+					s += this.tempos[k];
+				}
+				log4(s / 10);
+				this.tempos = [];
+			}
 		} else if (type == HEFESTO.CommandType.GET_RIGID_BODY_DATA) {
 			this.onRigidBodyData(data);
 		} else {
@@ -291,49 +299,49 @@ HEFESTO.Simulation.prototype = {
 	 * Processa o resultado da integração.
 	 */
 	onintegrate: function (data) {
-		
-		for (i = 0; i < data._rigidBodys.length; i++) { 
-		    var _rb = data._rigidBodys[i];
 
-		    var rb = this._rigidBodys[_rb.id];
+		for (i = 0; i < data._rigidBodys.length; i++) {
+			var _rb = data._rigidBodys[i];
 
-		    var p = new THREE.Vector3();
-		    p.x =  _rb.position.x;
-		    p.y =  _rb.position.y;
-		    p.z =  _rb.position.z;
-		    
-		    rb.position = p;
+			var rb = this._rigidBodys[_rb.id];
 
-		    // caso nao possua mesh, nao precisa ajustar valores de exibicao
-		    if (rb.mesh == undefined) {
-		    	continue;
-		    }
+			var p = new THREE.Vector3();
+			p.x =  _rb.position.x;
+			p.y =  _rb.position.y;
+			p.z =  _rb.position.z;
 
-		    //rb._mesh.position.set(p);
-		    rb.mesh.position.x = p.x;
-		    rb.mesh.position.y = p.y;
-		    rb.mesh.position.z = p.z;
+			rb.position = p;
 
-		    //tentar setar o orientacao e posicao
-		    rb.mesh.matrix.identity();
+			// caso nao possua mesh, nao precisa ajustar valores de exibicao
+			if (rb.mesh == undefined) {
+				continue;
+			}
+
+			//rb._mesh.position.set(p);
+			rb.mesh.position.x = p.x;
+			rb.mesh.position.y = p.y;
+			rb.mesh.position.z = p.z;
+
+			//tentar setar o orientacao e posicao
+			rb.mesh.matrix.identity();
 
 
-		    var a = _rb.transform;
-		    var m = new THREE.Matrix4();
-		    m.set(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12], a[13], a[14], a[15]);
+			var a = _rb.transform;
+			var m = new THREE.Matrix4();
+			m.set(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12], a[13], a[14], a[15]);
 
-		    rb.mesh.applyMatrix(m);
+			rb.mesh.applyMatrix(m);
 
-		    rb.mesh.updateMatrix();
-		    rb.mesh.matrix.setPosition(p);
+			rb.mesh.updateMatrix();
+			rb.mesh.matrix.setPosition(p);
 		}
 
-	    if (this.contactListener != undefined && this.contactListener != null) {
-	    	var contacts = data._contacts;
-	    	for (j = 0; j < contacts.length; j++) { 
-	    		this.contactListener(contacts[0]);
-	    	}	    	
-	    }
+		if (this.contactListener != undefined && this.contactListener != null) {
+			var contacts = data._contacts;
+			for (j = 0; j < contacts.length; j++) {
+				this.contactListener(contacts[0]);
+			}
+		}
 
 		log('Integrate simulation: ' + this._simulationId);
 	},
@@ -341,9 +349,9 @@ HEFESTO.Simulation.prototype = {
 	onRigidBodyData: function (data) {
 
 		if (this.rigidBodyDataListener != undefined && this.rigidBodyDataListener != null) {
-			for (i = 0; i < data.bodys.length; i++) { 
-			    var rb = data.bodys[i];
-			    this.rigidBodyDataListener(rb);
+			for (i = 0; i < data.bodys.length; i++) {
+				var rb = data.bodys[i];
+				this.rigidBodyDataListener(rb);
 			}
 		}
 	}

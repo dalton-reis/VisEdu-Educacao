@@ -39,11 +39,8 @@ var play = false;
 var materialType = BD.MaterialProjetil.SILICONE;
 auxMaterial = materialType;
 
-var ant = 0;
-var passouPosicao = 5;
-
-var vectorColors = [0xFF0000, 0x0000FF, 0xF99008, 0x000000, 0x78008A, 0x002D8A, 0x930000, 0x370093, 0x000444, 0x314357, 0x2F4295, 0x952F65, 0xDB167E, 0xDB165C,
-                    0xDBA816,0x23814F, 0xE705FF, 0x049046, 0xFF6300, 0x00AEFF, 0x630046, 0xD17600, 0xD15100, 0x001087, 0x870021];
+var vectorColors = [0xFF0000, 0x00FF00, 0x0000FF, 0xF99008, 0x000000, 0x78008A, 0x002D8A, 0x930000, 0x370093, 0x000444, 0x314357, 0x2F4295, 0x952F65, 0xDB167E, 0xDB165C,
+                    0xDBA816,0x23814F, 0xE705FF, 0x049046, 0xFF6300, 0x00AEFF, 0x630046];
 
 $(function () { $("[data-toggle='tooltip']").tooltip({html:true}); });
 
@@ -87,7 +84,7 @@ function onWindowResize() {
 
 function inicializaCena(){
     //myVar();
-    cdGround = new HEFESTO.CollisionData(0.1, 0.1, 0.01);
+    cdGround = new HEFESTO.CollisionData(0.9, 0.9, 0.01);
     cdGround.id = 'ground';
     cdGround.maxCollision = 256 * 256 * 256;
     sm.addCollisionData(cdGround);
@@ -98,11 +95,7 @@ function inicializaCena(){
     var height = window.innerHeight - document.getElementById('canvas-div').getBoundingClientRect().top ;
     height -= 20; //ajuste de margem e footer
     sm.sb.renderer.setSize(width, height);
-    sm.sb.scene.add(new THREE.GridHelper(500, 15));
-
-    var grid = new THREE.GridHelper(300,15);
-    grid.rotation.x = Math.PI/2;
-    //sm.sb.scene.add(grid);
+    sm.sb.scene.add(new THREE.GridHelper(300, 15));
     sm.sb.camera.position.set(2, 30, 170);
 
     //$('#stats').remove();
@@ -114,7 +107,6 @@ function inicializaCena(){
 
     input = document.getElementById("fieldAngulo");
     input.addEventListener("keyup",onKeyPress);
-    document.addEventListener('keypress',whatKey);
     $("#altGravidade").prop('disabled', true);
     $("#btnTutorial").prop('disabled', true);
     $("#btnDispara").prop('disabled', true);
@@ -155,29 +147,6 @@ function inicializaCena(){
         }
     };
     //
-}
-
-
-function whatKey(event){
-    console.log("Valor:"+event.which);
-    switch (event.which){
-        case 65:case 97:
-            cannon.baseMesh.position.x-=1;
-            cannon.BasetubeMesh.position.x-=1;
-            cannon.tubeMesh.position.x-=1;
-            break;
-        case 68:case 100:
-            cannon.baseMesh.position.x+=1;
-            cannon.BasetubeMesh.position.x+=1;
-            cannon.tubeMesh.position.x+=1;
-            break;
-        case 87:case 119:
-            incAngle();
-            break;
-        case 83:case 115:
-            decAngle();
-            break;
-    }
 }
 
 function onKeyPress(event){
@@ -254,7 +223,7 @@ function criaAlvoDeEsfera(){
             var sphere = new THREE.Mesh(geometry, material);
             sphere.position.z = posAnterior.x;
             sphere.position.y = posAnterior.y;
-            console.log(posAnterior.x);
+            //console.log(posAnterior.x);
             posAnterior.x += tamanhoEsfera*2;
             sm.sb.scene.add(sphere);
             sm.sb.update();
@@ -478,6 +447,7 @@ function createCanonBall() {
         mesh.matrix.setPosition(position);
         sm.sb.update();
         color = new THREE.Color( vectorColors[Math.floor((Math.random() * vectorColors.length))]); //0xffffff * (800 * Math.random() - 400 * Math.random());
+        addLista();
         bindBall(mesh);
     }catch(e){
         alert(e);
@@ -485,9 +455,7 @@ function createCanonBall() {
 }
 var rb;
 var pComR = false;
-var deltaS = 2;
-var linear = 0.942;
-var angular = 0.04;
+var deltaS = 15;
 function bindBall(mesh){
     try {
         rb = new HEFESTO.RigidBody(undefined);
@@ -496,11 +464,11 @@ function bindBall(mesh){
         var pos = cannon.determineProjetilPosition();
         rb.position = new THREE.Vector3(pos.x, pos.y, pos.z);
         //rb.velocity = new THREE.Vector3();
-        rb.linearDamping = linear;
-        rb.angularDamping = angular;
+        rb.linearDamping = 0.8;
+        rb.angularDamping = 0.95;
 
         /** volume / massa */
-        var r = rb.radius * 0.15;
+        var r = rb.radius * 0.1;
         var volume = (4 * Math.PI * (r * r * r)) / 3;
         rb.mass = volume * materialType.densidade;
         rb.useWorldForces = false;
@@ -513,10 +481,10 @@ function bindBall(mesh){
         var x = document.getElementById('fieldX').value;
         exception(x);
         //lei de hooke F = K . x;
-        //K = K / 100;
-        var fel = K * x;
+        K = K / 100;
+        var f = K * x;
         console.log("Massa: "+rb.mass);
-        console.log("Fel = "+ fel);
+        console.log("Fel = "+ f);
 
         //Forca peso: P = m * g
         var P = (rb.mass * (gravidade.gravity.y)*-1);
@@ -527,14 +495,14 @@ function bindBall(mesh){
         console.log("P seno de Alfa: "+pSen);
 
         // aceleracao = f / m
-        var ac = (fel - pSen) / rb.mass;
+        var ac = (f) / rb.mass;
         console.log("Aceleração: "+ac);
 
         var velocidadeDeLancamento = Math.sqrt((2*ac)*deltaS);
-        console.log("Velocidade: "+velocidadeDeLancamento);
+        console.log(velocidadeDeLancamento);
         //aplica sobre a aceleracao baseada no angulo
         //rb.acceleration.x += ac;
-        //rb.acceleration.y += aceleracao;
+        //rb.acceleration.y += ac;
 
         /** velocidade dada pelo angulo */
         rb.velocity = new THREE.Vector3(cannon.determineAngleVelocityVector(velocidadeDeLancamento).x, cannon.determineAngleVelocityVector(velocidadeDeLancamento).y, 0);
@@ -558,9 +526,11 @@ function bindBall(mesh){
         //var collisionAll = new HEFESTO.Collision(HEFESTO.CollisionType.SPHERE_AND_SPHERE, cdGround, rb_target, rb);
         var collisionAll = new HEFESTO.Collision(HEFESTO.CollisionType.ALL, cdGround, rb, null);
         sm.addCollision(collisionAll, true);
-        addLista();
+
         //console.log(rb);
-            sm.simulation.addForceToBody(gravidade, rb);
+
+        sm.simulation.addForceToBody(gravidade,rb);
+
         //Implementações para o tutorial:
         if (tutorialLigado && option === "2" && passada > 0) {
             setTimeout(function () {
@@ -569,10 +539,10 @@ function bindBall(mesh){
 
                 passada--;
             }, 2500);
-            auxF = fel;
+            auxF = f;
         }
 
-        if (tutorialLigado && auxF != fel && option === "2") {
+        if (tutorialLigado && auxF != f && option === "2") {
             setTimeout(function () {
                 console.log("Delay...");
                 nextStep();
@@ -833,17 +803,7 @@ function addLista(){
     var divPricial = document.createElement('div');
     var r = 255;
     var divMaterial = document.createElement('div');
-    var paragraph = document.createElement('p');
-    paragraph.innerHTML= materialType.id;
-    //$(paragraph).attr('rel', "tooltip");
-    $(paragraph).popover({
-        placement: 'left',
-        html: true,
-        content : 'Velocidade<sub>x</sub> : '+rb.velocity.x.toFixed(2)+'<br> Velocidade<sub>y</sub> : '+rb.velocity.y.toFixed(2),
-        trigger: 'hover'
-    });
-    //divMaterial.innerHTML="<p>"+materialType.id+"</p>";
-    divMaterial.appendChild(paragraph);
+    divMaterial.innerHTML="<p>"+materialType.id+"</p>";
     divMaterial.style.width = "156px";
     divMaterial.style.marginRight = "10px"
     //divMaterial.className = "col-xs-3";
@@ -885,7 +845,7 @@ function resetSimulation(){
     sm.sb.camera.position.set(1.90, 28.50, 161.50);
     var list = document.getElementById("list");
     list.innerHTML = "<div style='margin-bottom: 25px;'>"+
-    "<button class='btn btn-aula' type='button' data-toggle='collapse' data-target='#collapseExample' aria-expanded='false' aria-controls='collapseExample' style='position: absolute; top: 0px; right: 0px; margin: 10px'>"+
+    "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#collapseExample' aria-expanded='false' aria-controls='collapseExample' style='position: absolute; top: 0px; right: 0px; margin: 10px'>"+
         "<span class='glyphicon glyphicon-chevron-up'></span>"+
         "</button>"+
        "</div>";
