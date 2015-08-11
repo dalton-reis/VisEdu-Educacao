@@ -73,9 +73,9 @@ HEFESTO.SceneBuilder.prototype = {
 		
 		// Initialize Orbit control		
 		this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
-	
+
 		// Add light
-		var directionalLight = new THREE.DirectionalLight(0xffff55, 1);
+		var directionalLight = new THREE.DirectionalLight(0xffffFF, 1);
 		directionalLight.position.set(-600, 300, 600);
 		this.scene.add(directionalLight);
 		

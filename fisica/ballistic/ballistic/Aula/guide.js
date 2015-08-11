@@ -53,8 +53,8 @@ function selectTutorial() {
 }
 
 function desativaMola(){
-    $("#fieldK").prop('disabled', true).val(50);
-    $("#fieldX").prop('disabled', true).val(70);
+    $("#fieldK").prop('disabled', true).val(1350);
+    $("#fieldX").prop('disabled', true).val(0.6);
 	$("#altGravidade").prop('disabled', true);
 	$("#btnTutorial").prop('disabled', true);
     $("#fieldAngulo").prop('disabled', true).val(0);
@@ -70,8 +70,8 @@ function ativaMola(){
 }
 
 function desativoAngulo(){
-    $("#fieldK").prop('disabled', true).val(75);
-    $("#fieldX").prop('disabled', true).val(80);
+    $("#fieldK").prop('disabled', true).val(1350);
+    $("#fieldX").prop('disabled', true).val(0.6);
 	$("#altGravidade").prop('disabled', true);
 	$("#btnTutorial").prop('disabled', true);
     desativaImagem();
@@ -299,7 +299,7 @@ function changeAngleS1() {
 				size : 'size-normal',
 				message : function(dialogRef) {
 					var $message = $('<div>'
-							+ '<p class="text-modal">Ol&aacute; nesse tutorial vou ensinar-lhe como mudar o 	&acirc;ngulo do chanh&atilde;o e o que essa mudan&ccedil;a pode interferir.</p>'
+							+ '<p class="text-modal">Ol&aacute; nesse tutorial vou ensinar-lhe como mudar o 	&acirc;ngulo do canh&atilde;o e o que essa mudan&ccedil;a pode interferir.</p>'
 							+ '<div class="media">'
 							+ '<div class="media-left">'
 							+ '<img alt="" src="img/AnguloCanhao.PNG" />'
@@ -566,7 +566,7 @@ function alterarMaterial() {
 					'</div>';
 					var paragrafoExp = document.createElement('p');
 					paragrafoExp.className = "text-modal";
-					paragrafoExp.innerHTML = "Nesse menu voc&ecirc; seleciona o material que vai quere na bola:";
+					paragrafoExp.innerHTML = "Nesse menu voc&ecirc; seleciona o material que vai querer na bola:";
 					message.appendChild(paragrafoExp);
 
 					var imgMate = document.createElement('img');
@@ -575,7 +575,7 @@ function alterarMaterial() {
 					message.appendChild(imgMate);
 					var paragrafo = document.createElement('p');
 					paragrafo.className = "text-modal";
-					paragrafo.innerHTML = "Podemos mudar o material da bola e isso acabar&aacute; interferindo no comportameto dela." +
+					paragrafo.innerHTML = "Mudando o material da bola e isso acabar&aacute; interferindo no comportameto dela." +
 							"<br>" +
 							"Vamos ver crie uma bola com o material já escolhido e depois crie outra com um material diferente." +
 							"<br>"+

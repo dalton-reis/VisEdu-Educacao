@@ -6,8 +6,8 @@ HEFESTO.SimulationWS = function (simulation) {
 	this._ws = undefined;
 
 	//lista de mensagens
-	this._messageQueue = []; 
-	this._messageCount = 0; 
+	this._messageQueue = [];
+	this._messageCount = 0;
 }
 
 /**
@@ -22,16 +22,15 @@ HEFESTO.SimulationWS.prototype = {
 	init: function () {
 		if ('WebSocket' in window) {
 			this._ws = new WebSocket("ws://" + HEFESTO._host + "/" + HEFESTO._service + "/" + HEFESTO._servlet);
-			console.log("Local: "+"ws://" + HEFESTO._host + "/" + HEFESTO._service + "/" + HEFESTO._servlet);
 		} else if ('MozWebSocket' in window) {
 			this._ws = new WebSocket("ws://" + HEFESTO._host + "/" + HEFESTO._service + "/" + HEFESTO._servlet);
-		} 
-		
+		}
+
 		if (this._ws == undefined) {
 			alert("Browser não suporta WebSocket");
 		} else {
 			this._ws.simulationScope = this;
-			
+
 			this._ws.onopen = function(evt) {
 				this.simulationScope.onopen();
 			};
@@ -74,11 +73,11 @@ HEFESTO.SimulationWS.prototype = {
 
 	/**
 	 * Método invocado quando recebe uma nova mensagem do servidor.
-	 * 
+	 *
 	 * Irá despachar a mensagem para a simulação e após o processamento irá marcar como 'ack na fila'.
 	 */
 	onmessage: function (data) {
-		log('RCV: ' + data.data);
+		log7('RCV: ' + data.data);
 
 		var _data = JSON.parse(data.data);
 		// notifica a simulação com a nova mensagem.
@@ -92,7 +91,7 @@ HEFESTO.SimulationWS.prototype = {
 				var actual = this._messageQueue.shift();
 				while (actual.id != _data.id & actual != first) {
 					this._messageQueue.push(actual);
-					 actual = this._messageQueue.shift();
+					actual = this._messageQueue.shift();
 				}
 			}
 		}
@@ -113,16 +112,14 @@ HEFESTO.SimulationWS.prototype = {
 		msg['id'] = this._messageCount++;
 		msg['type'] = type;
 		msg['data'] = data;
-        //console.log("id: "+ msg.id);
-        //console.log(msg.data);
 
 		// enfilera mensagem
 		log2(this._messageQueue.length);
 		this._messageQueue.push(msg);
-		
+
 		this._ws.send(JSON.prune(msg));
 
-		log('SND: ' + JSON.prune(msg));
+		log7('SND: ' + JSON.prune(msg));
 	},
 
 	/**

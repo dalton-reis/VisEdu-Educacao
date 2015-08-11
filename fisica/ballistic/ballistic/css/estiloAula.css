@@ -101,7 +101,7 @@
 
 .body-modal-aula {
 	background-color: #314357;
-	color: #D1574A;
+	color: #E1E1E1 !important;
 }
 
 .footer-modal-aula {
@@ -122,6 +122,26 @@
 
 .imgFormula{
 	width: 170px;
+}
+/*Arrumando o estilo do link para ficar default*/
+a{
+    color: #337ab7 !important;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: underline;
 }
 
 .divImagem{

@@ -16,7 +16,7 @@ HEFESTO.Timming.prototype.start = function() {
 
 HEFESTO.Timming.prototype.update = function() {
 	this._lastTime = this._actualTime;
-	this._actualTime = new Date().getTime();	
+	this._actualTime = new Date().getTime();
 	this._duration = this._actualTime - this._lastTime;
 };
 
