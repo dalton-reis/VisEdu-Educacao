@@ -172,7 +172,7 @@ html, body, div{
 
 .cross.connector > img {
 	content: url(../imgs/cross.png);
-	background: url(../imgs/cross.png) no-repeat;	
+	background: url(../imgs/cross.png);	
 }
 
 .camera.resting > img {
@@ -200,7 +200,7 @@ html, body, div{
 
 .arrow.connector > img {
 	content: url(../imgs/arrow.png);
-	background: url(../imgs/arrow.png) no-repeat;	
+	background: url(../imgs/arrow.png);	
 }
 
 .object.resting > img {
@@ -251,7 +251,7 @@ html, body, div{
 
 .square.connector > img {
 	content: url(../imgs/square.png);
-	background: url(../imgs/square.png) no-repeat;
+	background: url(../imgs/square.png);
 }
 
 .component.resting:hover > .txt {
@@ -275,7 +275,7 @@ html, body, div{
 
 .diamond > img {	
 	content: url(../imgs/diamond.png);
-	background: url(../imgs/diamond.png) no-repeat;
+	background: url(../imgs/diamond.png);
 }
 
 .transform.resting > .txt {
