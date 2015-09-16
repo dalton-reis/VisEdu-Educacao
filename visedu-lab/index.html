@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="img/favicon.ico">
+
+    <title>VisEdu Lab!</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/visedu-lab.css">
+	</head>
+
+
+	<body>
+    <script src="js/lib/jquery.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+
+		<script src="js/visedu-lab.js"></script>
+    <script src="js/visedu-libs.js"></script>
+    <script src="js/visedu-define-libs.js"></script>
+
+    <!-- HEADER -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <img alt="Brand" class="navbar-brand brand-img" src="img/logo_64.png">
+          <a class="navbar-brand brand-txt" href="http://getbootstrap.com/examples/dashboard/#">VisEdu Lab!</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://gcg.inf.furb.br/visedu/">Sobre</a></li>
+            <li><a href="http://google.com">Ajuda</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div id='component-store' class="col-sm-3 col-md-2 sidebar"></div>
+      </div>
+    </div>
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <div id='functions-space' class="row util-space" >
+        <a><img alt="Play" class="func-icon" src="img/icon/play_alt-128.png"></a>
+        <a><img alt="Reload" class="func-icon" src="img/icon/reload-128.png"></a>
+        <a><img alt="Download" class="func-icon" src="img/icon/download-128.png"></a>
+        <a><img alt="Upload" class="func-icon" src="img/icon/upload-128.png"></a>
+      </div>
+
+      <div class="row" style="height: 20px" > </div>
+
+
+      <div class="row render-space">
+      </div>
+    </div>
+
+		<script>
+      VLab.util.adjustRenderSpace();
+
+      VLab.util.drawComponentStore();
+
+      console.log(VLab.util.getRenderSpaceDimension());
+
+		</script>
+	</body>
+</html>
