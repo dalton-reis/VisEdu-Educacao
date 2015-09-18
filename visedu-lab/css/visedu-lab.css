@@ -4,7 +4,7 @@
 
 .navbar-brand { height: 64px !important; line-height: 32px; }
 
-.navbar-nav>li>a { line-height: 32px; }
+.navbar-nav>li>a { line-height: 16px; }
 
 .brand-img {
   padding: 6px !important;
@@ -20,10 +20,22 @@
 .sidebar-title {
   background-color: rgb(66, 139, 202);
   color: rgb(255, 255, 255);
-  padding-bottom: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 10px;
+  padding-bottom: 10px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  padding-top: 10px !important;
+}
+
+.component-store {
+  background-color: rgb(66, 39, 22);
+  color: rgb(255, 255, 255);
+  height: 50%;
+}
+
+.component-tree{
+  background-color: rgb(54, 23, 22);
+  color: rgb(255, 255, 255);
+  height: 50%;
 }
 
 body {
@@ -49,3 +61,68 @@ body {
   padding:1px;
 
 }
+
+
+
+/** */
+
+ul {
+  -webkit-padding-start: 20px;
+  padding: 10px 15px;
+}
+.nav-sidebar > li > span {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.nav > li > span {
+    position: relative;
+    display: block;
+    padding: 4px 15px;
+    margin-bottom: 3px;
+}
+
+li {
+  list-style-type: none !important;
+}
+
+.sidebar-lib-item {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+/** TREE */
+.tree-game > span{
+  background-color: rgb(66, 139, 202);
+  color: rgb(255, 255, 255);
+}
+
+.tree-game {
+  border-color: rgb(66, 139, 202) !important;
+}
+
+.component-item {
+  border-left: 5px solid;
+  padding-left: 5px;
+  margin-left: 10px;
+  margin-bottom: 3px;
+}
+
+.component-box {
+  border-top: 5px solid;
+  border-left: 5px solid;
+  border-right: 0px solid;
+  border-bottom: 5px solid;
+}
+
+.disable-component-box {
+  border-top: 0px solid !important;
+  border-left: 0px solid;
+  border-right: 0px solid;
+  border-bottom: 0px solid;
+}
+
+.BASIC-comp { border-color: red !important;  }
+.FORM2D-comp { border-color: purple !important; }
+.FORM3D-comp { border-color: blue !important; }
+.ACTION-comp { border-color: yellow !important;}
+.PHYSICS-comp { border-color: gold !important;}
