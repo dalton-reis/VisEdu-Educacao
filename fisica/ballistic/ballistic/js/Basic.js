@@ -98,6 +98,8 @@ function inicializaCena(){
     var height = window.innerHeight - document.getElementById('canvas-div').getBoundingClientRect().top ;
     height -= 20; //ajuste de margem e footer
     sm.sb.renderer.setSize(width, height);
+    var hellper = new THREE.GridHelper(500, 15);
+    hellper.position.y+= 10;
     sm.sb.scene.add(new THREE.GridHelper(500, 15));
 
     var grid = new THREE.GridHelper(300,15);
@@ -110,7 +112,7 @@ function inicializaCena(){
     sm.sb.update();
 
     atualizaImgaemGravidade(document.getElementById('listGravidades').value);
-    console.log("Gravidade: "+document.getElementById('listGravidades').value);
+    //console.log("Gravidade: "+document.getElementById('listGravidades').value);
 
     input = document.getElementById("fieldAngulo");
     input.addEventListener("keyup",onKeyPress);
@@ -140,7 +142,7 @@ function inicializaCena(){
     }
 
     isDesenhaTrajetoria = document.getElementById('desenhaTrajetoria').checked;
-    console.log("DEsenha: "+isDesenhaTrajetoria);
+    //console.log("Desenha: "+isDesenhaTrajetoria);
 
     console.log("Inicializou!!!");
     //Implementação para o tutorial:
@@ -159,29 +161,34 @@ function inicializaCena(){
 
 
 function whatKey(event){
-    console.log("Valor:"+event.which);
-    switch (event.which){
-        case 65:case 97:
-            cannon.baseMesh.position.x-=1;
-            cannon.BasetubeMesh.position.x-=1;
-            cannon.tubeMesh.position.x-=1;
-            break;
-        case 68:case 100:
-            cannon.baseMesh.position.x+=1;
-            cannon.BasetubeMesh.position.x+=1;
-            cannon.tubeMesh.position.x+=1;
-            break;
-        case 87:case 119:
-            incAngle();
-            break;
-        case 83:case 115:
-            decAngle();
-            break;
+    if(!tutorialLigado) {
+        switch (event.which) {
+            case 65:
+            case 97:
+                cannon.baseMesh.position.x -= 1;
+                cannon.BasetubeMesh.position.x -= 1;
+                cannon.tubeMesh.position.x -= 1;
+                break;
+            case 68:
+            case 100:
+                cannon.baseMesh.position.x += 1;
+                cannon.BasetubeMesh.position.x += 1;
+                cannon.tubeMesh.position.x += 1;
+                break;
+            case 87:
+            case 119:
+                incAngle();
+                break;
+            case 83:
+            case 115:
+                decAngle();
+                break;
+        }
     }
 }
 
 function onKeyPress(event){
-    console.log(input.value);
+    //console.log(input.value);
     exception(input.value);
     rotacionarCanhao(input.value);
 }
@@ -228,7 +235,7 @@ sm.onInitSimulation = function() {
     $("#btnConfig").prop('disabled', false);
 
     sm.bindAll();
-    console.log("Executou o bindAll");
+    //console.log("Executou o bindAll");
 };
 //Cria uma Parede de esfera:
 function criaAlvoDeEsfera(){
@@ -254,7 +261,7 @@ function criaAlvoDeEsfera(){
             var sphere = new THREE.Mesh(geometry, material);
             sphere.position.z = posAnterior.x;
             sphere.position.y = posAnterior.y;
-            console.log(posAnterior.x);
+            //console.log(posAnterior.x);
             posAnterior.x += tamanhoEsfera*2;
             sm.sb.scene.add(sphere);
             sm.sb.update();
@@ -381,9 +388,9 @@ function updateConfig(_id){
     isDesenhaTrajetoria = document.getElementById('desenhaTrajetoria').checked;
     var field = "camera";
     var posCamera = new THREE.Vector3(parseFloat(document.getElementById(field+'X').value),parseFloat(document.getElementById(field+'Y').value),parseFloat(document.getElementById(field+'Z').value));
-    console.log(posCamera);
+    //console.log(posCamera);
     sm.sb.camera.position.set(posCamera.x,posCamera.y,posCamera.z);
-    console.log("Show FPS: "+_showFPS);
+    //console.log("Show FPS: "+_showFPS);
     $("#"+id).modal('toggle');
 
 }
@@ -462,7 +469,7 @@ function createCanonBall() {
         if (angle) {
             cannon.angle = angleAterior;
             exception(angleAterior);
-            console.log("Angulo Atual: "+angleAterior);
+            //console.log("Angulo Atual: "+angleAterior);
         }
 
         //console.log(cannon.angle);
@@ -486,8 +493,11 @@ function createCanonBall() {
 var rb;
 var pComR = false;
 var deltaS = 2;
-var linear = 0.942;
-var angular = 0.04;
+//var linear = 1.0199988;
+//var linear = 1.019999999;
+//var linear = 1.789;
+var linear = 1;
+var angular = 0.05;
 function bindBall(mesh){
     try {
         rb = new HEFESTO.RigidBody(undefined);
@@ -515,31 +525,30 @@ function bindBall(mesh){
         //lei de hooke F = K . x;
         //K = K / 100;
         var fel = K * x;
-        console.log("Massa: "+rb.mass);
-        console.log("Fel = "+ fel);
+        //console.log("Massa: "+rb.mass);
+        //console.log("Fel = "+ fel);
 
         //Forca peso: P = m * g
         var P = (rb.mass * (gravidade.gravity.y)*-1);
-        console.log("P=" +P+" m="+rb.mass +"g="+(gravidade.gravity.y)*-1);
+        //console.log("P=" +P+" m="+rb.mass +"g="+(gravidade.gravity.y)*-1);
         //Psen de alfa:
         //var pSen = pComR ? P*Math.sin(cannon.angle): P*Math.sin(cannon.angle* Math.PI / 180);
         var pSen = P*Math.sin(cannon.angle* Math.PI / 180);
-        console.log("P seno de Alfa: "+pSen);
+        //console.log("P seno de Alfa: "+pSen);
 
         // aceleracao = f / m
         var ac = (fel - pSen) / rb.mass;
-        console.log("Aceleração: "+ac);
+        //console.log("Aceleração: "+ac);
 
         var velocidadeDeLancamento = Math.sqrt((2*ac)*deltaS);
         console.log("Velocidade: "+velocidadeDeLancamento);
         //aplica sobre a aceleracao baseada no angulo
         //rb.acceleration.x += ac;
         //rb.acceleration.y += aceleracao;
-
         /** velocidade dada pelo angulo */
         rb.velocity = new THREE.Vector3(cannon.determineAngleVelocityVector(velocidadeDeLancamento).x, cannon.determineAngleVelocityVector(velocidadeDeLancamento).y, 0);
-        console.log("VelX: "+cannon.determineAngleVelocityVector(velocidadeDeLancamento).x);
-        console.log("VelY: "+cannon.determineAngleVelocityVector(velocidadeDeLancamento).y);
+        //console.log("VelX: "+cannon.determineAngleVelocityVector(velocidadeDeLancamento).x);
+        //console.log("VelY: "+cannon.determineAngleVelocityVector(velocidadeDeLancamento).y);
 
         var tensor = getInertiaTensorCoeffs(rb.mass);
         rb.inertiaTensor.set(tensor.elements[0], tensor.elements[1], tensor.elements[2], tensor.elements[3], tensor.elements[4], tensor.elements[5], tensor.elements[6], tensor.elements[7], tensor.elements[8]);
@@ -558,7 +567,7 @@ function bindBall(mesh){
         //var collisionAll = new HEFESTO.Collision(HEFESTO.CollisionType.SPHERE_AND_SPHERE, cdGround, rb_target, rb);
         var collisionAll = new HEFESTO.Collision(HEFESTO.CollisionType.ALL, cdGround, rb, null);
         sm.addCollision(collisionAll, true);
-        addLista();
+        addLista(velocidadeDeLancamento);
         //console.log(rb);
             sm.simulation.addForceToBody(gravidade, rb);
         //Implementações para o tutorial:
@@ -828,7 +837,7 @@ var desenhaCirculo = function(mesh) {
     sm.sb.scene.add(circle);
 };
 
-function addLista(){
+function addLista(velocidade){
     var list = document.getElementById("list");
     var divPricial = document.createElement('div');
     var r = 255;
@@ -836,10 +845,10 @@ function addLista(){
     var paragraph = document.createElement('p');
     paragraph.innerHTML= materialType.id;
     //$(paragraph).attr('rel', "tooltip");
-    $(paragraph).popover({
+    $(divPricial).popover({
         placement: 'left',
         html: true,
-        content : 'Velocidade<sub>x</sub> : '+rb.velocity.x.toFixed(2)+'<br> Velocidade<sub>y</sub> : '+rb.velocity.y.toFixed(2),
+        content : 'Velocidade: '+ velocidade.toFixed(2)+  '<br> Velocidade<sub>x</sub>: '+rb.velocity.x.toFixed(2)+'<br> Velocidade<sub>y</sub>: '+rb.velocity.y.toFixed(2)+'<br>&Acirc;ngulo: '+cannon.angle+'&deg',
         trigger: 'hover'
     });
     //divMaterial.innerHTML="<p>"+materialType.id+"</p>";
@@ -851,7 +860,7 @@ function addLista(){
     var divCor = document.createElement('div');
     //divCor.style.backgroundColor = "rgb("+r+",0,0)";
     $( divCor ).css( "background-color", color.getStyle() );
-    console.log(color.getStyle()+"  "+ divCor.style.backgroundColor);
+    //console.log(color.getStyle()+"  "+ divCor.style.backgroundColor);
     divCor.style.width = "25px";
     divCor.style.height = "5px";
     divCor.style.position = "relative";
@@ -862,7 +871,7 @@ function addLista(){
     divPricial.appendChild(divCor);
 
     $(list).append(divPricial);
-    console.log("Adicionou!!!");
+    //console.log("Adicionou!!!");
 }
 
 function removeTrajetorias(){

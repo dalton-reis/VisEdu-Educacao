@@ -26,13 +26,13 @@ BD.Material = function(id, densidade, img) {
 }
 
 BD.MaterialProjetil = {
-	SILICONE: new BD.Material('Silicone', 0.95, new THREE.MeshLambertMaterial( {color: 0xFFFF00,  transparent: true} )),
-	ALUMINIO: new BD.Material('Alum&iacute;nio', 2.70, new THREE.MeshLambertMaterial( {color: 0xCCCCCC,  transparent: true} )),
-	FERRO: new BD.Material('Ferro', 7.87, new THREE.MeshLambertMaterial( {color: 0x888888,  transparent: true} )),
-	OURO: new BD.Material('Ouro', 19.28, new THREE.MeshLambertMaterial( {color: 0x7777FF,  transparent: true} )),
-	VIDRO: new BD.Material('Vidro', 2.60, new THREE.MeshLambertMaterial( {color: 0x0000FF,  transparent: true, opacity:0.9} )),
-	IPE: new BD.Material('Ip&ecirc;', 0.485, new THREE.MeshLambertMaterial( {color: 0xCCFFCC,  transparent: true} )),
-	CEDRO: new BD.Material('Cedro', 1.10, new THREE.MeshLambertMaterial( {color: 0x88FF88,  transparent: true} ))
+	SILICONE: new BD.Material('Silicone', 0.95, new THREE.MeshLambertMaterial( {color: 0xEB6427,  transparent: true} )),
+	ALUMINIO: new BD.Material('Alum&iacute;nio', 2.70, new THREE.MeshPhongMaterial( {color: 0xCCCCCC,  transparent: true} )),
+	FERRO: new BD.Material('Ferro', 7.87, new THREE.MeshLambertMaterial( {color: 0x666666,  transparent: true} )),
+	OURO: new BD.Material('Ouro', 19.28, new THREE.MeshLambertMaterial( {color: 0xFDCC2A,  transparent: true, shininess: 100.0, ambient: 0xff0000, emissive: 0x111111, specular: 0xbbbbbb} )),
+	VIDRO: new BD.Material('Vidro', 2.60, new THREE.MeshLambertMaterial( {color: 0xCEDEFE,  transparent: true, opacity:0.9} )),
+	IPE: new BD.Material('Ip&ecirc;', 0.485, new THREE.MeshLambertMaterial( {color: 0x957449,  transparent: true} )),
+	CEDRO: new BD.Material('Cedro', 1.10, new THREE.MeshLambertMaterial( {color: 0xD38F30,  transparent: true} ))
 };
 
 BD.Gravidade = function(id, _valor, _camiho) {
@@ -210,12 +210,17 @@ BD.Cannon.prototype = {
 
 		//vx = v0 . cos?
 		//vel.x = Math.cos(this.angle * Math.PI / 180);
+
 		//Minha Tentativa em arrumar a velocidade:
-		vel.x = V * Math.cos(this.angle * Math.PI / 180);
+		vel.x = parseInt(V * Math.cos(this.angle * Math.PI / 180));
+       //vel.x = V * Math.cos(this.angle * Math.PI / 180);
+
 		//v0y = v0 . sen?
 		//vel.y = Math.sin(this.angle * Math.PI / 180);
+
 		//Minha Tentativa em arrumar a velocidade:
-		vel.y = V * Math.sin(this.angle * Math.PI / 180);
+		vel.y = parseInt( V * Math.sin(this.angle * Math.PI / 180));
+        //vel.y = V * Math.sin(this.angle * Math.PI / 180);
 
 		console.log(vel);
 
@@ -224,7 +229,7 @@ BD.Cannon.prototype = {
 
 	determineProjetilPosition: function() {
 		//teste para sair do chão
-		var vector = new THREE.Vector3(-180, 5, this.tubeMesh.position.z);
+		var vector = new THREE.Vector3(-180, 0, this.tubeMesh.position.z);
 
 		return this.tubeMesh.position;
         //return vector;

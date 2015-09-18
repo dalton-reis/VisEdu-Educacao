@@ -63,7 +63,7 @@ HEFESTO.SceneBuilder.prototype = {
 	init: function () {
 		// Initialize Renderer, Camera and Scene
 		this.renderer = this.enable? new THREE.WebGLRenderer() : new THREE.CanvasRenderer();
-		this.renderer.setClearColor( 0xffffff, 1 );
+		this.renderer.setClearColor( 0xDBE7FF, 1 );
 		this.canvas.appendChild(this.renderer.domElement);
 		this.scene = new THREE.Scene();
 		
@@ -75,9 +75,28 @@ HEFESTO.SceneBuilder.prototype = {
 		this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
 
 		// Add light
-		var directionalLight = new THREE.DirectionalLight(0xffffFF, 1);
+
+		var directionalLight = new THREE.DirectionalLight(0xffffFF, 1.1);
 		directionalLight.position.set(-600, 300, 600);
 		this.scene.add(directionalLight);
+
+		var directionalLight2 = new THREE.DirectionalLight(0xffffFF, 0.9);
+		directionalLight2.position.set(600, 300, -600);
+		this.scene.add(directionalLight2);
+
+        /*var spotLight = new THREE.SpotLight( 0xffffff );
+         spotLight.position.set(-600, 300, 600 );
+
+         spotLight.castShadow = true;
+
+         spotLight.shadowMapWidth = 1024;
+         spotLight.shadowMapHeight = 1024;
+
+         spotLight.shadowCameraNear = 500;
+         spotLight.shadowCameraFar = 4000;
+         spotLight.shadowCameraFov = 30;
+
+         this.scene.add( spotLight );*/
 		
 		this.stats = new Stats();
 		this.stats.domElement.style.position = 'absolute';

@@ -1,5 +1,7 @@
 var option;
 
+var silicone= {src: "img/silicone.png",title:"Silicone"}
+
 $(document).ready(function() {
 	console.log("Funcionou");
 	$(function() {
@@ -29,20 +31,24 @@ function selectTutorial() {
 	resetSimulation();
 	switch (option) {
 	case "1":
+        atualizarMaterial(silicone ,BD.MaterialProjetil.SILICONE);
         $("#fieldAngulo").val(0);
         rotacionarCanhao(0);
 		changeAngleS1();
         desativoAngulo();
 		break;
 	case "2":
+        atualizarMaterial(silicone ,BD.MaterialProjetil.SILICONE);
 		alterarMola();
 		desativaMola();
 		break;
 	case "3":
+        atualizarMaterial(silicone ,BD.MaterialProjetil.SILICONE);
 		alterarMaterial();
         desativaMola();
 		break;
 	case "4":
+        atualizarMaterial(silicone ,BD.MaterialProjetil.SILICONE);
 		alteraGravidade();
 		desativaMola();
 		$("#altGravidade").prop('disabled', false);
@@ -57,8 +63,8 @@ function desativaMola(){
     $("#fieldX").prop('disabled', true).val(0.6);
 	$("#altGravidade").prop('disabled', true);
 	$("#btnTutorial").prop('disabled', true);
-    $("#fieldAngulo").prop('disabled', true).val(0);
-    rotacionarCanhao(0);
+    $("#fieldAngulo").prop('disabled', true).val(5);
+	rotacionarCanhao(5);
     desativaImagem();
 }
 
@@ -362,7 +368,7 @@ function changeAngleS2() {
 					div.appendChild(paragrafo);
 					var paragrafo2 = document.createElement('p');
 					paragrafo2.className = "text-modal";
-					paragrafo2.innerHTML ="Podem ser calculadas por: ";
+					paragrafo2.innerHTML ="Sendo causa pela diferen&ccedil;a na velocidade em x(V<sub>x</sub>) e na velocidade em y(V<sub>y</sub>) podemos calcular elas usando essas f&oacute;mulas: ";
 					div.appendChild(paragrafo2);
 					var divMidia = document.createElement('div');
 					divMidia.className = 'media divImagem';
@@ -371,39 +377,35 @@ function changeAngleS2() {
 					divMidiaLeft.className = 'media-left';
 					divMidia.appendChild(divMidiaLeft);
 					var imgFormulaA = document.createElement('img');
-					imgFormulaA.src = 'img/FormulaLancamentoAlcance2.png';
+					imgFormulaA.src = 'img/FormulaVelXModificada.png';
 					imgFormulaA.className = 'imgFormula';
 					divMidiaLeft.appendChild(imgFormulaA);
 					var divMidiaRight = document.createElement('div');
 					divMidiaRight.className = 'media-right';
 					divMidia.appendChild(divMidiaRight);
 					var imgFormulaAl = document.createElement('img');
-					imgFormulaAl.src = 'img/FormulaLancamentoAltura2.png';
-					imgFormulaAl.className = 'imgFormulaH';
+					imgFormulaAl.src = 'img/FormulaVelYModifica.png';
+					imgFormulaAl.className = 'imgFormula';
 					divMidiaRight.appendChild(imgFormulaAl);
 
 					$(imgFormulaA).attr('rel', 'popover');
 					$(imgFormulaA).popover({
-					    title: '<strong>Lan&ccedil;amento obl&iacute;quo - Alcance (dist&acirc;ncia)</strong>',
+					    title: '<strong>Velocidade Horizontal</strong>',
 					    placement: 'left',
-					    content:'<p>Onde:</p>'+ '<p><strong>d</strong> &eacute; a dist&acirc;ncia horizontal;</p>'
-					    + '<p><strong>V</strong> &eacute; a velocidade de lan&ccedilamento do proj&eacute;til;</p>'
-					    + '<p><strong>&theta;</strong> &eacute; o &acirc;ngulo de inclina&ccedil;&atilde;o do canh&atilde;o e</p>'
-					    + '<p><strong>t</strong> &eacute; o instante(tempo).</p>',
+					    content:'<p>Onde:</p>'+ '<p><strong>V<sub>x</sub></strong> - &eacute; a velocidade horizontal;</p>'
+					    + '<p><strong>V</strong> - &eacute; a velocidade do proj&eacute;til dentro do canh&atilde;o;</p>'
+					    + '<p><strong>&alpha;</strong> - &eacute; o &acirc;ngulo de inclina&ccedil;&atilde;o do canh&atilde;o.</p>',
 					    trigger: 'hover',
 					    html: true
 					});
 
 					$(imgFormulaAl).attr('rel', 'popover');
 					$(imgFormulaAl).popover({
-					    title: '<strong>Lan&ccedil;amento obl&iacute;quo - Posi&ccedil;&atilde;o vertical (Altura)</strong>',
+					    title: '<strong>Velocidade Vertical</strong>',
 					    placement: 'left',
-					    content:'<p>Onde:</p>'+ '<p><strong>h</strong> &eacute; a altura em qualquer instante;</p>'
-					    + '<p><strong>h<sub>0</sub></strong> &eacute; a altura inicial;</p>'
-					    + '<p><strong>V</strong> &eacute; a velocidade de lan&ccedil;amento do proj&eacute;til;</p>'
-					    + '<p><strong>&theta;</strong> &eacute; o &acirc;ngulo de inclina&ccedil;&atilde;o do canh&atilde;o; </p>'
-					    + '<p><strong>t</strong> &eacute; o instante(tempo) e </p>'
-					    + '<p><strong>g</strong> &eacute; a gravidade.</p>',
+					    content:'<p>Onde:</p>'+ '<p><strong>V<sub>y</sub></strong> - &eacute; a velocidade vertical;</p>'
+						+ '<p><strong>V</strong> - &eacute; a velocidade do proj&eacute;til dentro do canh&atilde;o;</p>'
+						+ '<p><strong>&alpha;</strong> - &eacute; o &acirc;ngulo de inclina&ccedil;&atilde;o do canh&atilde;o.</p>',
 					    trigger: 'hover',
 					    html: true
 					});

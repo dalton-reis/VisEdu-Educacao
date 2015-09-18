@@ -151,16 +151,16 @@ HEFESTO.SimulationManager.prototype = {
 				if (rb !== undefined && isDesenhaTrajetoria) {
 					desenhaTrajetoria(rb);
                     if(ant > rb.position.y && passouPosicao>0){
-                        console.log("Posicao: "+rb.position.y);
+                        //console.log("Posicao: "+rb.position.y);
                         passouPosicao--;
                     }else{
                         ant = rb.position.y;
                     }
 				}
-				for (b in this.bodies){
+				/*for (b in this.bodies){
 					var body = this.bodies[b];
 					if(body !== undefined) {
-						if (body.position.x > 800  || body.position.y < 0 || body.position.x < -300) {
+						if (body.position.x > 800  || body.position.y < 0 || body.position.x < -800) {
 							this.sb.scene.remove(body.mesh);
 							this.simulation.removeRigidBody(body);
 							this.bodies[b] = undefined;
@@ -168,7 +168,7 @@ HEFESTO.SimulationManager.prototype = {
 							//console.log( this.bodies.indexOf(body));
 						}
 					}
-				}
+				}*/
 			}
 	    	this.sb.update();
 			this.sb.stats.update();

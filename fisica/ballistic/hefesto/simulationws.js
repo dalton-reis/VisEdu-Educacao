@@ -25,7 +25,6 @@ HEFESTO.SimulationWS.prototype = {
 		} else if ('MozWebSocket' in window) {
 			this._ws = new WebSocket("ws://" + HEFESTO._host + "/" + HEFESTO._service + "/" + HEFESTO._servlet);
 		}
-
 		if (this._ws == undefined) {
 			alert("Browser não suporta WebSocket");
 		} else {
