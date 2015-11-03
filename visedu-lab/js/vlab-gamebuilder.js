@@ -34,8 +34,22 @@ GameBuilder = function(){
       parent = parent.children;
       node.parent = parent;
     }
+    if (node.type.singleShot) {
+      console.log('tres');
+      this.removeSingleShotInputByType(parent, node.type);
+    }
+
     parent.push(node);
     this.allNodes[node.id] = node;
+  };
+
+  this.removeSingleShotInputByType = function(parent, type) {
+    for (var c in parent) {
+      c = parent[c];
+      if (c.type.id == type.id) {
+        parent.splice(parent.indexOf(c), 1);
+      }
+    }
   };
 
   this.buildTreeData = function() {

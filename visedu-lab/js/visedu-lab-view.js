@@ -75,8 +75,10 @@ View = function(storeManager, gameBuilder) {
       var parent = origin.parent;
       origin.parent = undefined;
       try {
-        var copy = that.cloneComponent(that.storeManager.componentMap[source.id]);
+        var originalComp = that.storeManager.componentMap[source.id];
+        var copy = that.cloneComponent(originalComp);
         copy.id = VLab.util.guid();
+
         var parentId = that.gameTree.getParentNode(target.id).id;
 
         var parent = undefined;
@@ -93,8 +95,14 @@ View = function(storeManager, gameBuilder) {
           }
         }
 
-        //that.gameTree.addBrotherNode(source, target.id);
-        //that.gameTree.rebuildTree(); // rebuild 'other' tree
+        copy.bridge = new originalComp.bridge();
+        copy.bridge.load();
+        copy.bridge.onSucces = that.onSucess;
+        copy.bridge.onCancel = that.onCancel;
+
+        copy.bridge.execute();
+      } catch(err) {
+        console.log(error);
       } finally {
         origin.parent = parent;
       }

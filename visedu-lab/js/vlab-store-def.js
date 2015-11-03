@@ -19,15 +19,17 @@ VLab.Collection.prototype = {
   }
 };
 
-VLab.ComponentBridge = function() { };
+VLab.ComponentBridge = function() {
+
+};
 
 VLab.ComponentBridge.prototype = {
   construtor: VLab.ComponentBridge,
 
-  onSelect: function (parent) { },
-  onRemove: function (parent) { },
-  buildComponent: function (parent) { }
-
+  load: function() {},
+  execute: function() {},
+  onSuccess: function() {},
+  onCancel: function() {}
 };
 
 VLab.Component = function (title, type, bridge, description) {
@@ -49,7 +51,14 @@ VLab.Component = function (title, type, bridge, description) {
     parent: { enumerable: true, value: _parent, writable: true },
   });
 };
-VLab.Component.prototype = { construtor: VLab.Component, };
+VLab.Component.prototype = { construtor: VLab.Component,
+
+  load: function() {
+    if (this.bridge) {
+      this.bridge.load();
+    }
+  }
+};
 
 VLab.ComponentInput = function(type) {
   var _id  = VLab.util.guid();
@@ -70,15 +79,17 @@ VLab.ComponentInput.prototype = { construtor: VLab.ComponentInput, };
 
 /** COMPONENT TYPE */
 
-VLab.ComponentType = function (id, plugables, styleClass) {
+VLab.ComponentType = function (id, plugables, styleClass, singleShot) {
     var _id = id;
     var _plugables = plugables ? plugables : [];
     var _styleClass = styleClass ? styleClass : id + "-comp";
+    var _singleShot = singleShot ? singleShot : false;
 
     Object.defineProperties( this, {
         id: { enumerable: true, value: _id, writable: false },
         plugables: { enumerable: true, value: _plugables, writable: false },
         styleClass: { enumerable: true, value: _styleClass, writable: false },
+        singleShot: { enumerable: true, value: _singleShot, writable: false },
     });
 };
 VLab.ComponentType.prototype = { construtor: VLab.ComponentType, };

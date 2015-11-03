@@ -9,21 +9,22 @@
 
     <title>VisEdu Lab!</title>
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/visedu-lab.css">
 	</head>
 
 
 	<body>
-    <script src="js/lib/jquery.min.js"></script>
-    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/bootstrap/bootstrap.min.js"></script>
+		<script src="lib/jquery/jquery.easytree.js"></script>
 
 		<script src="js/visedu-lab.js"></script>
-		<script src="js/visedu-lab-library.js"></script>
-    <script src="js/visedu-libs.js"></script>
-    <script src="js/visedu-define-libs.js"></script>
+		<script src="js/vlab-store-def.js"></script>
+		<script src="js/vlab-store-manager.js"></script>
+		<script src="js/vlab-gamebuilder.js"></script>
 
     <!-- HEADER -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -44,8 +45,14 @@
 
     <div class="container-fluid">
       <div class="row">
-				<div id='component-library' class="col-sm-3 col-md-2 sidebar"> </div>
-				<div id='component-tree' class="col-sm-3 col-md-2 sidebar"> </div>
+				<div id='store-tree-component' class="col-sm-3 col-md-2 sidebar store-tree"> </div>
+				<div id="game-space" class="col-sm-3 col-md-2 sidebar">
+					<div>
+						<img id="trash-place" src="img/util/trash.png" class="img-responsive pull-right" alt="Lixeira" onmouseover="hover(this);" onmouseout="unhover(this);" >
+						<br clear="both"/>
+					</div>
+					<div id='game-tree-component' > </div>
+				</div>
       </div>
     </div>
 
@@ -64,15 +71,53 @@
       </div>
     </div>
 
+		<div id="append-area" > </div>
+
+
+		<script src="lib/vlab-plugins/vlab-define-libs.js"></script>
+		<script src="js/visedu-lab-view.js"></script>
+		
 		<script>
+
+			function hover(element) {
+				element.setAttribute('src', 'img/util/trash.gif');
+			};
+
+			function unhover(element) {
+				element.setAttribute('src', 'img/util/trash.png');
+			};
+
       VLab.util.adjustRenderSpace();
 
-      VLab.util.drawComponentStore();
+			var storeManager = new StoreManager();
+			for (c in VLab.allLibs) {
+				c = VLab.allLibs[c];
+				storeManager.addCollection(c);
+			}
+
+			var gameBuilder = new GameBuilder();
+			for (p in VLab.allGamePlugs) {
+				p = VLab.allGamePlugs[p];
+				gameBuilder.addPlugable(p);
+			}
+
+			var view = new View(storeManager, gameBuilder);
+			view.buildStoreTree();
+			view.buildGameTree();
 
 			VLab.util.adjustComponentTreeSpace();
 
-      console.log(VLab.util.getRenderSpaceDimension());
+	    for(var col in this.collections) {
+	      col = this.collections[col];
+	      for(var com in col.components) {
+	        com = col.components[com];
+
+	        com.load();
+	      }
+	    }
 
 		</script>
+
+
 	</body>
 </html>

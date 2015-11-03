@@ -128,8 +128,9 @@ li {
   border-bottom: 0px solid;
 }
 
-.BASIC-comp { border-color: red !important;  }
-.FORM2D-comp { border-color: purple !important; }
-.FORM3D-comp { border-color: blue !important; }
-.ACTION-comp { border-color: yellow !important;}
-.PHYSICS-comp { border-color: gold !important;}
+.PLUG-PANEL-comp { border-color: blue !important;  }
+.BG-IMAGE-comp { border-color: purple !important; }
+.HOT-POINT-comp { border-color: red !important; }
+.HP-ITEM-comp { border-color: gold !important;}
+.SCROLL-BAR-comp { border-color: brown !important; }
+.HP-VALUE-comp { border-color: silver !important; }
