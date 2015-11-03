@@ -15,7 +15,7 @@ VLab.util.guid = function() {
 
 VLab.util.adjustRenderSpace = function() {
   //adjust render-space height
-  var lmRect = document.getElementById('component-library').getBoundingClientRect();
+  var lmRect = document.getElementById('store-tree-component').getBoundingClientRect();
   var rsRect = document.getElementsByClassName('render-space')[0].getBoundingClientRect();
 
 
@@ -26,7 +26,7 @@ VLab.util.adjustRenderSpace = function() {
 
 
 VLab.util.adjustComponentTreeSpace = function() {
-  var csRect = document.getElementById('component-library').getBoundingClientRect();
+  var csRect = document.getElementById('store-tree-component').getBoundingClientRect();
 
   document.getElementById('game-space').style.left = (csRect.right + 1) + 'px';
 };

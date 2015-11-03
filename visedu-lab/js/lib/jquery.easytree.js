@@ -62,6 +62,7 @@
             canDrop: null,
             dropping: null,
             dropped: null,
+            afterDrop: null,
             stateChanged: null
         };
 
@@ -127,8 +128,8 @@
 
         this.getParentNode = function (id) {
             var result = {};
-            if (getParentNode(_nodes, id)) {
-              return resul.parent;
+            if (getParentNode(_nodes, id, result)) {
+              return result.parent;
             }
             return undefined;
         };
@@ -463,6 +464,9 @@
                     _settings.dropped(event, _nodes, isSourceNode, source, isTargetNode, target);
                 }
                 buildTree(_nodes);
+                if (_settings.afterDrop) {
+                  _settings.afterDrop(event, _nodes, isSourceNode, source, isTargetNode, target);
+                }
             }
 
             resetDnd(_dnd);
@@ -550,9 +554,11 @@
                 }
                 var hasChildren = n.children && n.children.length > 0;
                 if (hasChildren) {
-                    var node = getParentNode(n.children, id);
+                    var node = getParentNode(n.children, id, result);
                     if (node) {
-                        result.parent = n;
+                        if (!result.parent) {
+                          result.parent = n;
+                        }
                         return true;
                     }
                 }
@@ -793,8 +799,10 @@
                 if (n.styleClass) {
                   html += n.styleClass;
                 }
-                html +=  (n.children && n.children.length > 0) ?  ' component-box' : ' component-item';
-                html += '" ">';
+                if (n.children && n.children.length > 0){
+                html += ' component-box';
+                }
+                html += ' component-item" >';
                 html += '<span id="' + n.id + '" class="' + spanCss;
 
                 if (n.spanStyleClass) {

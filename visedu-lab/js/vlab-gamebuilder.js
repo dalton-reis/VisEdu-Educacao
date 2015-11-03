@@ -18,8 +18,8 @@ GameBuilder = function(){
       node = this.data;
     }
     if (node.children) {
-      node = node.children;
       input.parent = node;
+      node = node.children;
     }
     node.push(input);
 
@@ -48,17 +48,19 @@ GameBuilder = function(){
         comp.text = c.title;
         comp.styleClass = c.type.styleClass;
 
-        parent.children.push(comp);
-
         if (c.children) {
-          buildChildren(c.children, c);
+          comp.children = [];
+          comp.isExpanded = true;
+          buildChildren(c.children, comp);
         }
+        parent.children.push(comp);
       }
     }
 
     var data = [];
 
     var lib = {};
+    lib.id = 'root-node'
     lib.isExpanded = true;
     lib.isFolder = true;
     lib.text = 'Novo Jogo';
@@ -87,4 +89,3 @@ GameBuilder = function(){
   };
 
 };
-VLab.gamebuilder = new GameBuilder();

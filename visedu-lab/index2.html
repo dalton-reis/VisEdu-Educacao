@@ -47,13 +47,13 @@
 
     <div class="container-fluid">
       <div class="row">
-				<div id='component-library' class="col-sm-3 col-md-2 sidebar"> </div>
+				<div id='store-tree-component' class="col-sm-3 col-md-2 sidebar store-tree"> </div>
 				<div id="game-space" class="col-sm-3 col-md-2 sidebar">
 					<div>
 						<img id="trash-place" src="img/util/trash.png" class="img-responsive pull-right" alt="Lixeira" onmouseover="hover(this);" onmouseout="unhover(this);" >
 						<br clear="both"/>
 					</div>
-					<div id='component-tree' > </div>
+					<div id='game-tree-component' > </div>
 				</div>
       </div>
     </div>
@@ -77,18 +77,29 @@
 
 			function hover(element) {
 				element.setAttribute('src', 'img/util/trash.gif');
-			}
+			};
+
 			function unhover(element) {
 				element.setAttribute('src', 'img/util/trash.png');
-			}
+			};
 
       VLab.util.adjustRenderSpace();
 
-      var storeModel = VLab.storeManager.buildStoreModel();
-			var gameModel = VLab.gamebuilder.buildTreeData();
+			var storeManager = new StoreManager();
+			for (c in VLab.allLibs) {
+				c = VLab.allLibs[c];
+				storeManager.addCollection(c);
+			}
 
-			VLab.view.buildStoreTree(storeModel);
-			VLab.view.buildGameTree(gameModel);
+			var gameBuilder = new GameBuilder();
+			for (p in VLab.allGamePlugs) {
+				p = VLab.allGamePlugs[p];
+				gameBuilder.addPlugable(p);
+			}
+
+			var view = new View(storeManager, gameBuilder);
+			view.buildStoreTree();
+			view.buildGameTree();
 
 			VLab.util.adjustComponentTreeSpace();
 

@@ -98,6 +98,13 @@ li {
 
 .tree-game {
   border-color: rgb(66, 139, 202) !important;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
+}
+
+.store-tree {
+  padding-left: 0px !important;
+  margin-left: 0px !important;
 }
 
 .component-item {

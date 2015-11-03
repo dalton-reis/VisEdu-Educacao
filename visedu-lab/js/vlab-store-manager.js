@@ -39,8 +39,8 @@ StoreManager = function() {
   this.buildStoreModel = function() {
     var data = [];
 
-    for(var col in VLab.storeManager.collections) {
-      col = VLab.storeManager.collections[col];
+    for(var col in this.collections) {
+      col = this.collections[col];
 
       var c = {};
       c.isExpanded = true;
@@ -55,6 +55,7 @@ StoreManager = function() {
         com = col.components[com];
 
         var i = {};
+        i.id = com.id;
         i.text = com.title;
         i.tooltip = com.description;
         i.styleClass = com.type.styleClass;
@@ -70,5 +71,3 @@ StoreManager = function() {
 StoreManager.prototype = {
   construtor: VLab.StoreManager
 };
-
-VLab.storeManager = new StoreManager();
